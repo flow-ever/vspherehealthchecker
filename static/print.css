@@ -1,0 +1,46 @@
+/* 隐藏不必要的元素，如导航栏和页脚 */
+header, footer, .sidebar {
+    display: none;
+}
+
+/* 设置页面背景色为白色 */
+body {
+    background-color: white;
+}
+
+/* 设置字体和字体大小 */
+body, p, h1, h2, h3 {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+/* 设置行高，避免文字重叠 */
+p, h1, h2, h3 {
+    line-height: 1.4;
+}
+
+/* 调整页面的边距 */
+@page {
+    margin: 1cm;
+}
+
+/* 添加页眉和页脚 */
+@page {
+    size: A4; /* 设置页面尺寸，如A4或Letter */
+    margin: 1cm;
+}
+
+/* 在每页底部添加页码 */
+@page :after {
+    content: counter(page);
+}
+
+/* 打印链接 */
+a:after {
+    content: " (" attr(href) ")";
+}
+
+/* 隐藏链接URL */
+a[href]:after {
+    content: none;
+}

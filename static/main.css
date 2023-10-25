@@ -1,0 +1,229 @@
+body,div,address,blockquote,iframe,ul,ol,dl,dt,dd,li,dl,h1,h2,h3,h4,h5,h6,p,pre,table,  
+
+caption,th,td,form,legend,fieldset,input,button,select,textarea{margin:0;padding:0;  
+
+font-weight:normal;font-style:normal;font-size:100%;font-family:inherit;}  
+
+ol,ul,li{list-style:none;margin: 0;padding: 0;}  
+
+img{border:0;}  
+
+body{
+  color:#000;
+  background:#FFF;
+  text-align:center;
+  font:12px/1.5Arial,Helvetica,sans-serif;
+  height: 100%;
+}  
+
+/* .clearfix:after{clear:both;content:".";display:block;height:0pt;visibility:hidden;overflow:hidden;}  
+
+.clear{clear:both;height:1px;margin-top:-1px;width:100%;}  
+
+.dis{display:block;}  
+
+.undis{display:none;}  */
+
+
+
+#header,#centers,#footer{
+  width:100%;
+  margin:0 auto;
+  clear:both;
+  font-size:18px;
+  line-height:68px;
+  font-weight:bold;
+}  
+#header{height:68px;border:1px solid #CCCCCC;}  
+
+#header,#centers,#footer{
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+
+
+#centers {
+  display: flex;
+  /* background-color: #61a0f8; */
+
+  
+  flex-direction: row;
+
+  
+}
+
+#left {
+  flex: 1;
+  background-color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-size: 2rem;
+  margin: 2px;
+  flex-direction: column;
+}
+
+.left_item{
+  width: 100%;
+  flex: 1;
+  background-color: white;
+  display: flex;
+  align-items:stretch;
+  color: black;
+  font-size: 2rem;
+  margin-left: 5px;
+  margin-right: 5px;
+  border: #CCCCCC 1px solid;
+  padding-top: 5px;
+  
+}
+
+#right {
+  flex-grow: 6;
+  flex-shrink: 1;
+  flex-basis: 0%;
+  display: flex;
+  margin: 2px;
+  flex-direction: column;
+  
+  
+}
+
+.right_item{
+  width: 100%;
+  flex: 1;
+  background-color: white;
+  display: flex;
+  align-items:stretch;
+  color: black;
+  font-size: 1rem;
+  margin-left: 5px;
+  margin-right: 5px;
+
+  
+  /* border: #CCCCCC 1px solid; */
+  /* padding-top: 5px; */
+ 
+  
+}
+
+.li {
+  display: list-item;
+  text-align:left;
+  font-size: 12px;
+  font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
+  list-style-type:disc;
+  font-style:italic;
+  line-height: 30px;
+  /* margin-left: 20px; */
+  padding-left: 10px;
+  padding-right: 10px;
+  /* background:#F2F2F2; */
+  /* border: #CCCCCC 1px solid; */
+
+}
+
+
+.first-level-li {
+  display: list-item;
+  text-align:left;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
+  list-style-type:disc;
+  font-style:italic;
+  line-height: 30px;
+  margin-left: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background:#F2F2F2;
+  /* border: #CCCCCC 1px solid; */
+
+}
+
+.sec-level-li {
+  display: list-item;
+  text-align:left;
+  font-size: 15px;
+  font-family: 'Times New Roman', Times, serif;
+  list-style-type: circle;
+  line-height: 20px;
+  margin-left: 40px;
+}
+
+p{
+  text-align: center;
+  font-size: 1em;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style:italic
+}
+
+.table{
+  width:60%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style:italic;
+  border-spacing: 0;
+  line-height: 32px;
+  table-layout: fixed;
+  word-wrap:break-word;
+  word-break: break-all;
+  border-radius: 8px;
+  border-style: hidden;
+  box-shadow: 0 0 0 1px #eee;
+  
+  border: solid 2px #dfdfdf;
+  
+  
+}
+
+tr:hover{
+  background-color: #f7f7b3;
+}
+
+tr:nth-child(even) {
+  background-color: rgb(213, 243, 213);
+}
+
+tr:nth-child(even):hover {
+  background-color: #f7f7b3;
+}
+
+/* @property --progress {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+} */
+
+.g-progress {
+    margin: auto;
+    width: 80%;
+    height: 15px;
+    border-radius: 25px;
+    background: linear-gradient(90deg, #0f0, #0ff var(--progress), transparent 0);
+    border: 1px solid #eee;
+    /* transition: .3s --progress; */
+}
+
+
+.table th{
+  /* width:25%; */
+  border: #CCCCCC 1px solid;
+  font-weight: bold;
+  text-align: center;
+  font-size: 12px;
+}
+
+
+.table td {
+  /* width:25%;  */
+  border: #CCCCCC 1px solid;
+  font-weight: light;
+  text-align: center;
+  font-size: 9px;
+
+}
+
+#footer{border-top:1px solid #CCCCCC;background:#F2F2F2;}  

@@ -1,0 +1,295 @@
+{% extends "sample.html" %}
+{% block body %}
+
+
+<script>
+    includenav();
+</script>
+{% for item in host_detail %}
+    <div class="table-container">
+    <h1>Hostname:{{ item['host'] }}</h1>
+    <h2>ESXi主机基本信息</h2>
+
+        <table class="host_table">
+            <tr>
+                
+                <th scope="col">ESXi Version</th>
+                <th scope="col">vendor</th>
+                <th scope="col">Model</th>
+                <th scope="col">SN</th>
+                <th scope="col">Uptime(H)</th>
+
+            </tr>    
+            <tr>        
+                <td>{{ item['basic_info'][0]['esxi'] }}</td>
+                <td>{{ item['basic_info'][0]['vendor'] }}</td>
+                <td>{{ item['basic_info'][0]['model'] }}</td>
+                <td>{{ item['basic_info'][0]['sn'] }}</td>
+                <td>{{ item['basic_info'][0]['uptime'] }}</td>
+            </tr>
+            
+        </table>
+
+        <h2>BIOS信息</h2>
+        <table class="host_table">
+            <tr>
+                
+                <th scope="col">BIOS Version</th>
+                <th scope="col">Release Date</th>
+                <th scope="col">firmwareMajorRelease</th>
+                <th scope="col">firmwareMinorRelease</th>
+            </tr>
+            <tr>
+                
+                <td>{{ item['bios_info'][0]['biosVersion'] }}</td>
+                <td>{{ item['bios_info'][0]['releaseDate'] }}</td>
+                <td>{{ item['bios_info'][0]['firmwareMajorRelease'] }}</td>
+                <td>{{ item['bios_info'][0]['firmwareMinorRelease'] }}</td>
+                
+            </tr>
+        </table>
+        <h2>CPU和内存</h2>
+        <details class="details-1" open>
+        <summary>CPU&Memory</summary>
+        <ul>
+            <li>物理配置    </li>
+            <table class="host_table">
+                <tr>
+                    
+                    <th scope="col">CPU model</th>
+                    <th scope="col">Frequency(Mhz)</th>
+                    <th scope="col">Cores/Threads</th>
+                    <th scope="col">RAM(GB)</th>
+
+
+                </tr>
+
+                <tr>
+                    
+                    <td>{{ item['cpu_ram_config'][0]['cpuModel'] }}</td>
+                    <td>{{ item['cpu_ram_config'][0]['cpuMhz'] }}</td>
+                    <td>{{ item['cpu_ram_config'][0]['numCpuCores']|string }}/{{ item['cpu_ram_config'][0]['numCpuThreads']|string }}</td>
+                    <td>{{ item['cpu_ram_config'][0]['ramSize'] }}</td>
+                </tr>
+
+            </table>
+            <li>使用率（Usage） </li>
+            <table class="host_table">
+                <tr>
+                    <th scope="col">整合比（vCPU/Cores）</th>
+                    <th scope="col">CPU Usage（%）</th>
+                    <th scope="col">Memory Usage(%)</th>
+                </tr>
+
+                <tr>
+
+                    <td>{{ item['cpu_ram_usage'][0]['consolidate_ratio'] }}</td>
+                    <td>
+                        
+                        <div class="g-progress" style="--progress: {{ (item['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000))*100 }}%"><span>{{ "%2.1f" | format((item['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000))*100 ) }}</span></div>
+                    </td>
+                    <td>
+                        
+                        <div class="g-progress" style="--progress: {{ (item['cpu_ram_usage'][0]['ram_usage']|float(default=0.000))*100 }}%"><span>{{ "%2.1f" | format( item['cpu_ram_usage'][0]['ram_usage']|float(default=0.000)*100 ) }}</span></div>
+                    </td>
+                </tr>
+
+            </table>
+        </ul>
+        </details>
+        <details class="details-1" open>
+        <summary>存储（Storage）</summary>
+        <ul>
+            <li>数据存储（DataStore）</li>
+
+            <table class="host_table">
+                <tr>
+                    <th scope="col">数据存储名称</th>
+                    <th scope="col">总空间（GB）</th>
+                    <th scope="col">剩余空间（GB）</th>
+                    <th scope="col">类型</th>
+                    <th scope="col">多主机共享</th>
+                </tr>
+                {% for sub_item in item['datastores'] %}
+                <tr>
+                    <td>{{ sub_item['datatore name'] }}</td>
+                    <td>{{ sub_item['capacity'] }}</td>
+                    <td>{{ sub_item['free space'] }}</td>        
+                    <td>{{ sub_item['type'] }}</td>
+                    <td>{{ sub_item['multipleHostAccess'] }}</td>
+                    
+                </tr>
+                {% endfor %}
+            </table>
+
+            <li>存储适配器（HBAs）</li>
+            <table class="host_table">
+                <tr>
+                    <th scope="col">HBA Name</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Driver</th>
+                    <th scope="col">Protocol</th>
+                </tr>
+                {% for sub_item in item['hbas'] %}
+                <tr>
+                    <td>{{ sub_item['name'] }}</td>
+                    <td>{{ sub_item['model'] }}</td>
+                    <td>{{ sub_item['driver'] }}</td>
+                    <td>{{ sub_item['protocol'] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <li>多路径（Multipath）</li>
+            <table class="host_table">
+                <tr>
+                    <th scope="col">Path name</th>
+                    <th scope="col">Path State</th>
+                </tr>
+                {% for sub_item in item['multipaths'] %}
+                <tr>
+                    <td>{{ sub_item['path name']}}</td>
+                    <td>{{ sub_item['path state']}}</td>
+
+                </tr>
+                {% endfor %}
+            </table>
+
+
+            <li>LUN</li>
+            <table class="host_table">
+                <tr>
+                    <th scope="col">displayName</th>
+                    <th scope="col">lunType</th>
+                    <th scope="col">model</th>
+                </tr>
+                {% for sub_item in item['scsi_lun'] %}
+                <tr>
+                    <td>{{ sub_item['displayName']}}</td>
+                    <td>{{ sub_item['lunType']}}</td>
+                    <td>{{ sub_item['model']}}</td>
+
+                </tr>
+                {% endfor %}
+            </table>
+        </ul>
+        </details>
+        <details class="details-1" open>
+        <summary>网络（Network）</summary>
+        <ul>
+            <li>虚拟交换机(vSwitch)</li>
+            <table class="host_table">
+                <tr>
+                    <th scope="col">交换机名</th>
+                    <th scope="col">MTU</th>
+                    <th scope="col">连接物理网卡</th>
+                    <th scope="col">包含端口组</th>
+                </tr>
+                {% for sub_item in item['vswitches'] %}
+                <tr>
+                    <td>{{ sub_item['name'] }}</td>
+                    <td>{{ sub_item['mtu'] }}</td>
+                    <td>{{ sub_item['pnics'] }}</td>                   
+                    <td>{{ sub_item['portgroups'] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <li>物理网卡（PNIC）</li>
+            <table class="host_table">
+                <tr>
+                    <th scope="col">网卡名称</th>
+                    <th scope="col">Driver</th>
+                    <th scope="col">Speed(Mbps)</th>
+                    <th scope="col">duplex</th>
+                    <th scope="col">mac</th>
+                    <th scope="col">AutoNeg</th>
+                </tr>
+                {% for sub_item in item['pnics'] %}
+                <tr>
+                    <td>{{ sub_item['name'] }}</td>                    
+                    <td>{{ sub_item['driver'] }}</td>
+                    <td>{{ sub_item['speedMb'] }}</td>
+                    <td>{{ sub_item['duplex'] }}</td>
+                    <td>{{ sub_item['mac'] }}</td>
+                    <td>{{ sub_item['autoNego'] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <li>虚拟网卡（VNIC）</li>
+            <table class="host_table">
+                <tr>
+                    <th scope="col">虚拟网卡名称</th>
+                    <th scope="col">IP Addr</th>
+                    <th scope="col">Mask</th>
+                    <th scope="col">MAC</th>
+                    <th scope="col">MTU</th>
+                </tr>
+                {% for sub_item in item['vnics'] %}
+                <tr>
+
+                    <td>{{ sub_item['device'] }}</td>
+                    <td>{{ sub_item['ipAddress'] }}</td>
+                    <td>{{ sub_item['subnetMask'] }}</td>
+                    <td>{{ sub_item['mac'] }}</td>
+                    <td>{{ sub_item['mtu'] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </ul>
+        </details>
+        <details class="details-1">
+        <summary>其他（Miscellaneous）</summary>
+        <ul>
+            <li>时间（DataTime）</li>
+            <table class="host_table">
+                <tr>
+                    <th scope="col">时间同步启用</th>
+                    <th scope="col">时间服务器</th>
+                    <th scope="col">时区</th>
+                    <th scope="col">时间偏差（s）</th>
+
+                </tr>
+                <tr>
+
+                    <td>{{ item['datetime_info']['enabled'] }}</td>
+                    <td>{{ item['datetime_info']['ntpServer'][0] }}</td>
+                    <td>{{ item['timezone'] }}</td>
+                    <td>{{ item['deviation'] }}</td>
+                </tr>
+            </table>
+            <li>证书（Certificate）</li>
+            <table class="host_table">
+                <tr>
+                    
+                    <th scope="col">签发时间（Sign Date）</th>
+                    <th scope="col">过期时间（Expired Date）</th>
+                    <th scope="col">主题(Subject)</th>
+
+                </tr>
+                <tr>
+
+                    <td>{{ item['certificate']['sign_date'] }}</td>
+                    <td>{{ item['certificate']['expired_date'] }}</td>
+                    <td>{{ item['certificate']['subject'] }}</td>
+                </tr>
+            </table>
+        </ul>
+        </details>
+        <h2>虚拟机信息</h2>
+        <div class="vmlist" style="display: flex; flex-wrap: wrap;">
+            
+        {% for vm in host_vms %}
+        {% if vm['host']==item['host'] %}
+        <div class="vm">
+            {% if vm['powerState']=='poweredOn' %}
+                <div class="onButton"> </div> <div style="height: 40px; margin-top: 0;"> <a href="/virtualmachine/{{ vm['name'] }}">{{ vm['name'] }}</a></div>
+           {% else %}
+                <div class="offButton"> </div> <div style="height: 40px;margin-top: 0"><a href="/virtualmachine/{{ vm['name'] }}">{{ vm['name'] }}</a></div>
+           {% endif %}
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    </div>
+{% endfor %}
+{% endblock %}

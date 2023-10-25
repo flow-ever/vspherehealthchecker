@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<head>
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='treeview.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='print.css') }}" media="print">
+  <script type="text/javascript" src="{{ url_for('static',filename='treeview.js') }}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='echarts.js')}}"></script> 
+</head>
+
+  <body >
+ 
+  <div class="wrapper">
+    <div class="aside">
+      <div class="tree" id="tree"></div>
+    </div>
+    <div class="main" id="main">
+      {% block body %}
+
+      {% endblock %}
+    </div>
+  </div>
+  </body>
+
+<script type="text/javascript">
+  treeData = JSON.parse('{{ tree | tojson }}');
+  var tree=document.getElementById('tree')
+  tree.innerHTML=gen_tree(treeData)
+
+  // var t = new TreeView(tree, 'tree');
+  // t.on('select', function () { alert('select'); });
+  // t.on('expand', function () { alert('expand'); });
+  // t.on('collapse', function () { alert('collapse'); });
+</script>
+</html>

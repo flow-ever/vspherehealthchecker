@@ -1,0 +1,98 @@
+{% extends "sample.html" %}
+
+{% block body %}
+
+
+<script>
+    includenav();
+</script>
+<h1>vCenter Server信息</h1>
+<h2>vCenter Server文件系统空间</h2>
+<table>
+    <tr>
+        <th>文件系统</th>
+        <th>大小</th>
+        <th>已经使用</th>
+        <th>剩余可用空间</th>
+        <th>已用空间占比(%)</th>
+        <th>挂载点</th>
+    </tr>
+    {% for line in vcsa_fs %}
+        {% if (line['use_perct']|replace('%',"")|int)>85 %}
+            <tr>
+                <td><b><font color="red">{{ line['filesystem'] }}</td>
+                <td><b><font color="red">{{ line['size'] }}</font></b></td>
+                <td><b><font color="red">{{ line['used'] }}</font></b></td>
+                <td><b><font color="red">{{ line['avail'] }}</font></b></td>
+                <td><b><font color="red">{{ line['use_perct'] }}</font></b></td>                
+                <td><b><font color="red">{{ line['use_perct'] }}</font></b></td>                
+                <td><b><font color="red">{{ line['mounton'] }}</font></b></td>
+        
+            </tr>
+        {% else %}
+        <tr>
+            <td>{{ line['filesystem'] }}</td>
+            <td>{{ line['size'] }}</td>
+            <td>{{ line['used'] }}</td>
+            <td>{{ line['avail'] }}</td>
+            <td>{{ line['use_perct'] }}</td>                
+            <td>{{ line['use_perct'] }}</td>                
+            <td>{{ line['mounton'] }}</td>    
+        </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+<h2>vCenter Server证书</h2>
+<table>
+    <tr>
+        <th>证书存储名称 </th>
+        <th> 证书别名</th>
+        <th> 证书过期时间</th>
+        <th> 90天内过期</th>
+    </tr>
+    {% for cert in vcsa_certs_info %}
+        {%if cert['expirating']=="Y"  %}
+            <tr>
+                <td><b><font color="red">{{ cert['storename'] }}</font></b></td>
+                <td><b><font color="red">{{ cert['alias'] }}</font></b></td>
+                <td><b><font color="red">{{ cert['expiration_time'] }}</font></b></td>
+                <td><b><font color="red">{{ cert['expirating'] }}</font></b></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td>{{ cert['storename'] }}</td>
+                <td>{{ cert['alias'] }}</td>
+                <td>{{ cert['expiration_time'] }}</td>
+                <td>{{ cert['expirating'] }}</td>
+
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+<h2>告警情况</h2>
+<table>
+    <tr>
+        <th>告警时间 </th>
+        <th>告警对象名称 </th>        
+        <th> 对象类型</th>
+        <th> 告警状态</th>
+        <th> 警报名称</th>
+        <th> 警报描述</th>
+        <th> 是否确认</th>
+    </tr>
+    {% for alarm in alarm_list %}
+            <tr>
+                <td>{{ alarm['time'] }}</td>
+                <td>{{ alarm['entity_name'] }}</td>
+                <td>{{ alarm['entity_type'] }}</td>
+                <td>{{ alarm['alarm_status'] }}</td>
+                <td>{{ alarm['alarm_name'] }}</td>
+                <td>{{ alarm['alarm_decription'] }}</td>
+                <td>{{ alarm['acknowledged'] }}</td>
+
+            </tr>
+
+    {% endfor %}
+</table>
+
+{% endblock %}

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<head>
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='treeview.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='print.css') }}" media="print">
+  <script type="text/javascript" src="{{ url_for('static',filename='treeview.js') }}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='echarts.js')}}"></script> 
+</head>
+
+  <body >
+    <script>
+      includenav();
+  </script>
+    <div class="dashboard" ><h1>Summary of All VMs</h1></div>
+    
+  <div class="dashboard">
+    <div class="wedget" id="powerstate"></div>
+    <script type="text/javascript">
+      var dom=document.getElementById('powerstate')
+      var Chart = echarts.init(dom); 
+      option = {
+        title: {
+          text: 'VM PowerState',
+          left: 'center',
+          top:10,
+        },
+        grid:{
+          top: 10,
+        },
+        // tooltip: {
+        //   trigger: 'item',
+        //   formatter: '{a} <br/>{b} : {c} ({d}%)'
+        // },
+        legend: {
+          left: 'left',
+          // top: 'top',
+          top: 20,
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            mark: { show: true },
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
+        series: [
+          {
+            name: 'Area Mode',
+            type: 'pie',
+            radius: [50, 120],
+            center: ['50%', '50%'],
+            // roseType: 'area',
+            itemStyle: {
+              borderRadius: 5
+            },
+            startAngle:45,
+            label: {
+              // normal: {
+                show: true,
+                position: 'inside',
+                formatter(param) {
+                // correct the percentage
+                return param.name + ' (' + param.percent + '%)';
+              }
+              // }
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: 20,
+                fontWeight: 'bold'
+              }
+            },
+            data: [
+              { value: {{ vms_powerOn_num }}, name: 'PowerOn' },
+              { value: {{ vms_powerOff_num }}, name: 'PowerOff' },
+              // label: {
+              //   show:false
+              // }
+            ]
+          }
+        ]
+      };
+      Chart.setOption(option);   
+    </script>
+
+
+  <div class="wedget" id="vmtools"></div>
+  <script type="text/javascript">
+    
+    var dom=document.getElementById('vmtools')
+    var Chart = echarts.init(dom); 
+    option = {
+      title: {
+        text: 'VMware tools up to date check',
+        left: 'center',
+        top:10,
+      },
+      grid:{
+        top: 20,
+      },
+      // tooltip: {
+      //   trigger: 'item',
+      //   formatter: '{a} <br/>{b} : {c} ({d}%)'
+      // },
+      legend: {
+        left: 'left',
+        // top: 'top',
+        top: 'bottom',
+      },
+      // toolbox: {
+      //   show: true,
+      //   feature: {
+      //     mark: { show: true },
+      //     dataView: { show: true, readOnly: false },
+      //     restore: { show: true },
+      //     saveAsImage: { show: true }
+      //   }
+      // },
+      series: [
+        {
+          name: 'VMware tools up to date check',
+          type: 'pie',
+          radius: ['10%', '30%'],
+          center: ['50%', '50%'],
+          startAngle:45,
+          // roseType: 'area',
+          itemStyle: {
+            borderRadius: 5
+          },
+          label: {
+            normal: {
+              show: true,
+              position: 'inside',
+              formatter(param) {
+                // show the percentage
+                return param.name + ' (' + param.percent + '%)';
+              }
+
+            }
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: 20,
+              fontWeight: 'bold'
+            }
+          },
+          data: [
+            { value: {{ tools_up2date }}, name: 'Current' },
+            { value: {{ tools_outdate }}, name: 'Old' },
+            { value: {{ tools_notInstalled }}, name: 'NotInstalled' },
+            { value: {{ tools_Unmanaged }}, name: 'Unmanaged' },
+            // { value: 50, name: 'OutOfdate22' },
+          ]
+        },
+        {
+          name: 'tools version',
+          type: 'pie',
+          radius: ['40%', '70%'],
+          label: {
+              show: true,
+              position: 'inside',
+              formatter(param) {
+                // show the percentage
+                return param.name + ' (' + param.percent + '%)';
+              }
+          },
+          center: ['50%', '50%'],
+          // data: [{name: 10277, value: 1}, {name: 12357, value: 1}, {name: 9536, value: 1}, {name: 10357, value: 1}, {name: 10246, value: 1}, {name: 11264, value: 1}, {name: 10336, value: 2}, {name: 10359, value: 2}, {name: 10309, value: 2}, {name: 10346, value: 2}, {name: 11296, value: 3}, {name: 12352, value: 3}, {name: 12293, value: 4}, {name: 12288, value: 4}, {name: 11333, value: 5}, {name: 11301, value: 5}, {name: 9221, value: 6}, {name: 2147483647, value: 8}, {name: 12325, value: 9}, {name: 11265, value: 14}, {name: 11360, value: 18}, {name: 0, value: 22}, {name: 10249, value: 24}, {name: 11269, value: 34}, {name: 11365, value: 49}],
+          data: {{ vm_tools_list | safe }}
+        }
+      ]
+    };
+    Chart.setOption(option);   
+  </script>
+
+
+
+    <div class="wedget" id="guestos"></div>
+    <script type="text/javascript">
+      var legend=[];
+      {% for item in vms_guest_os_stastic_list %}
+        // alert({{ item['name'] }})
+        
+        legend.push("{{ item['name'] }}");
+      {% endfor %}
+      var dom=document.getElementById('guestos');
+      var Chart = echarts.init(dom); 
+      option = {
+        title: {
+          text: 'Type of Guest OS',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        // tooltip: {
+        //   trigger: 'item'
+        // },
+        legend: {
+          // type: 'scroll',
+          // orient: 'horizon',
+          // right: 10,
+          top: 'bottom',
+          // bottom: 20,
+          data: legend,
+          itemHeight:8,
+          
+          textStyle: {
+            fontSize:8,
+            // padding:[0,0,0,-2]
+          },
+          
+        },
+        series: [
+          {
+            name: 'OS Type',
+            type: 'pie',
+            // center: ['30%','%50'],
+            radius: ['30%', '60%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+              borderRadius: 10,
+              borderColor: '#fff',
+              borderWidth: 2
+            },
+            label: {
+              normal: {
+                show: true,
+                position: 'outside',  
+                width:100,
+                overflow:'truncate',
+                ellipsis: '...'              
+              },
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: 20,
+                fontWeight: 'bold'
+              }
+            },
+            labelLine: {
+              show: true
+            },
+            data: {{ vms_guest_os_stastic_list | safe }}
+          }
+        ]
+      };
+      Chart.setOption(option);   
+    </script>
+    <div class="wedget" id="top10_cpu"></div>
+    <script type="text/javascript">
+      var x_data=[];
+      var y_data=[];
+      {% for item in vms_top10_vCPU %}        
+        x_data.push("{{ item['name'] }}");
+        y_data.push("{{ item['value'] }}");
+      {% endfor %}
+      var dom=document.getElementById('top10_cpu');
+      var Chart = echarts.init(dom); 
+      option = {
+        title: {
+          text: 'Top10 VMs with most vCPU'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        legend: {},
+        color:['#66CCCC','#009999'],
+        // backgroundColor:'rgba(204, 204, 204, 0.1)',
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'value',
+          boundaryGap: [0, 0.01]
+        },
+        yAxis: {
+          type: 'category',
+          data: x_data,
+          axisLabel:{
+              rotate: 45,
+              // interval: 4,
+              fontSize: 10,
+              overflow:'truncate',
+              width: 80,
+              ellipsis: '...'     
+          }
+        },
+        series: [
+          {
+            name: 'vCPU #',
+            type: 'bar',
+            data: y_data,
+            colorBy: 'data',
+            
+            itemStyle:{
+              borderRadius:[0,5,5,0] //顺时针左上、右上，右下，左下
+            },
+            label: {
+              // normal: {
+                show: true,
+                position: 'outside',
+                overflow:'truncate',
+                width: 60,
+                ellipsis: '...'                
+              // },
+            },
+          },
+        ]
+      };      
+      Chart.setOption(option);   
+    </script>    
+    <div class="wedget" id="top10_mem"></div>
+    <script type="text/javascript">
+      var x_data=[];
+      var y_data=[];
+      {% for item in vms_top10_mem %}        
+        x_data.push("{{ item['name'] }}");
+        y_data.push({{ item['value']/1024 }}.toFixed(1));
+      {% endfor %}
+      var dom=document.getElementById('top10_mem');
+      var Chart = echarts.init(dom); 
+      option = {
+        title: {
+          text: 'Top10 VMs with most RAM'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        legend: {left: 'right'},
+        color:['#66CCCC','#009999'],
+        grid: {
+          left: '2%',
+          right: '4%',
+          bottom: '2%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'value',
+          boundaryGap: [0, 0.01],
+          name: 'GB',
+        },
+        yAxis: {
+          type: 'category',
+          data: x_data,
+          axisLabel:{
+              rotate: 45,
+              // interval: 4,
+              fontSize: 10,
+              overflow:'truncate',
+              width: 80,
+              ellipsis: '...'     
+          }
+        },
+        
+        series: [
+          {
+            name: 'MemoryGB #',
+            type: 'bar',
+            data: y_data,
+            colorBy: 'data',
+            barMaxWidth:30,
+            barMinWidth:10,
+            itemStyle:{
+              borderRadius:[0,5,5,0] //顺时针左上、右上，右下，左下
+            },
+            label: {
+              // normal: {
+                show: true,
+                position: 'outside', 
+                overflow:'truncate',
+                width: 60,
+                ellipsis: '...'                    
+              // },
+            },
+          },
+        ]
+      };      
+      Chart.setOption(option);   
+    </script> 
+    <div class="wedget" id="top10_used_disk"></div>
+    <script type="text/javascript">
+      var x_data=[];
+      var y_data=[];
+      {% for item in vms_top10_Used_diskSize %}        
+        x_data.push("{{ item['name'] }}");
+        y_data.push({{ item['value']/1024/1024/1024  }}.toFixed(1));
+      {% endfor %}
+      var dom=document.getElementById('top10_used_disk');
+      var Chart = echarts.init(dom); 
+      option = {
+        title: {
+          text: 'Top10 VMs with biggest disk capacity used(GB)'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        legend: {
+          left: 'right'
+        },
+        color:['#66CCCC','#009999'],
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'value',
+          boundaryGap: [0, 0.01],
+          name: 'GB',
+        },
+        yAxis: {
+          type: 'category',
+          data: x_data,
+          axisLabel:{
+              rotate: 45,
+              // interval: 4,
+              fontSize: 10,
+              overflow:'truncate',
+              width: 80,
+              ellipsis: '...'     
+          }
+        },
+        series: [
+          {
+            name: 'Total Disk(GB) #',
+            type: 'bar',
+            data: y_data,
+            colorBy: 'data',
+            barMaxWidth:30,
+            barMinWidth:10,
+            itemStyle:{
+              borderRadius:[0,5,5,0] //顺时针左上、右上，右下，左下
+            },
+            label: {
+              normal: {
+                show: true,
+                position: 'outside',    
+                overflow:'truncate',
+                width: 60,
+                ellipsis: '...'                 
+              },
+            },
+          },
+        ]
+      };      
+      Chart.setOption(option);   
+    </script>    
+    <div class="wedget" id="top10_prov_disk"></div>
+    <script type="text/javascript">
+      var x_data=[];
+      var y_data=[];
+      {% for item in vms_top10_Provisioned_diskSize %}        
+        x_data.push("{{ item['name'] }}");
+        y_data.push({{ item['value']/1024/1024/1024 }}.toFixed(1));
+      {% endfor %}
+      var dom=document.getElementById('top10_prov_disk');
+      var Chart = echarts.init(dom); 
+      option = {
+        title: {
+          text: 'Top10 VMs with biggest disk capacity Provisioned(GB)'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        color:['#66CCCC','#009999'],
+        legend: {
+          left: 'right'
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'value',
+          boundaryGap: [0, 0.01],
+          name: 'GB',
+        },
+        yAxis: {
+          type: 'category',
+          data: x_data,
+          axisLabel:{
+              rotate: 45,
+              // interval: 4,
+              fontSize: 10,
+              overflow:'truncate',
+              width: 80,
+              ellipsis: '...'     
+          }
+        },
+        series: [
+          {
+            name: 'Total Disk(GB) #',
+            type: 'bar',
+            data: y_data,
+            colorBy: 'data',
+            barMaxWidth:30,
+            barMinWidth:10,
+            itemStyle:{
+              borderRadius:[0,5,5,0] //顺时针左上、右上，右下，左下
+            },
+            label: {
+              normal: {
+                show: true,
+                position: 'outside',  
+               
+              },
+            },
+          },
+        ]
+      };      
+      Chart.setOption(option);   
+    </script>  
+    <div class="wedget" id="top10_snap_disk"></div>
+    <script type="text/javascript">
+      var x_data=[];
+      var y_data=[];
+      {% for item in vms_top10_snapshotSize %}        
+        x_data.push("{{ item['name'] }}");
+        y_data.push({{ item['value']/1024/1024/1024 }}.toFixed(1));
+      {% endfor %}
+      var dom=document.getElementById('top10_snap_disk');
+      var Chart = echarts.init(dom); 
+      option = {
+        title: {
+          text: 'Top10 VMs with biggest snapshot size(GB)'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        legend: {
+          left: 'right'
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true,
+          borderColor: '#ccc',
+          borderWidth: 1,
+          
+          show: true,
+        },
+        color:['#66CCCC','#009999'],
+
+        xAxis: {
+          type: 'value',
+          boundaryGap: [0, 0.01],
+          name: 'GB',
+        },
+        yAxis: {
+          type: 'category',
+          data: x_data,
+          axisLabel:{
+              rotate: 45,
+              // interval: 4,
+              fontSize: 10,
+              overflow:'truncate',
+              width: 80,
+              ellipsis: '...'     
+          }
+        },
+        series: [
+          {
+            name: 'Total Disk(GB) #',
+            type: 'bar',
+            data: y_data,
+            colorBy: 'data',
+            barMaxWidth:30,
+            barMinWidth:10,
+            itemStyle:{
+              borderRadius:[0,5,5,0] //顺时针左上、右上，右下，左下
+            },
+            label: {
+              normal: {
+                show: true,
+                position: 'outside',
+                  
+              },
+            },
+          },
+        ]
+      };      
+      Chart.setOption(option); 
+    </script>      
+  </div>
+  </body>
+
+
+</html>

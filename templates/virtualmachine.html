@@ -1,0 +1,370 @@
+{% extends "sample.html" %}
+{% block body %}
+
+<script type="text/javascript" src="{{url_for('static', filename='echarts.js')}}"></script> 
+
+
+<script>
+    includenav();
+</script>
+<div class="dashboard" ><h1>Virtual Machine——<strong>{{ vm_info[0]['Display_name'] }}</strong></h1></div>
+
+{% if vm_perf_metric | length %}
+    <h2>虚拟机关键性能指标</h2>
+    {% for perf_counter in vm_perf_metric %}
+            {% if perf_counter["counterId"]==6 %}
+
+                <div id="counterId6" style="width: 100%;height:500px;" ></div>
+                <script type="text/javascript">           
+                    // 基于准备好的dom，初始化echarts实例
+                    var ItemColor='#1FD6C1';
+                    var myChart = echarts.init(document.getElementById('counterId6'));                        
+                    // 指定图表的配置项和数据
+                    var option = {
+                        title: {
+                            text: 'VM CPU Usage(%)',
+                            left: 'center'
+                        },
+                        // tooltip: {trigger: 'axis'},
+                
+                        xAxis:{
+                            type: 'category',
+                            name: 'Time',
+                            data: {{ perf_counter["endTime"]|safe }},
+                            axisLabel:{
+                                rotate: 45,
+                                interval: 4,
+                                fontSize: 10,
+                            }
+                        },
+                        yAxis:{
+                            type:'value',
+                            name: '%'
+                        },
+                        series:[
+                        {                            
+                            data: {{ perf_counter["value"] | safe }}.map(
+                                item=>{
+                                    if(item >50){
+                                        return {
+                                            value: item,
+                                            itemStyle: {
+                                                color: '#f33'
+                                            }
+                                        }
+                                    }else{
+                                        return {
+                                            value: item,
+                                            itemStyle: {
+                                                color: '#90d6ff'
+                                            }
+                                        }                                            
+                                    }
+                                }
+                            ),
+                            type: 'line',
+                            smooth: true,
+                            // symbolSize: 8, //设定实心点大小
+                            lineStyle: {
+                                type:"solid",
+                                color:"rgb(203 65 65)",
+                                width: 1,
+                                normal: {
+                                    color: { //外边线颜色
+                                        type: 'linear',
+                                        colorStop: [
+                                            {
+                                                offset: 0,
+                                                color: '#A9F387'
+                                            },
+                                            {
+                                                offset: 1,
+                                                color: '#3ba6fd'
+                                            }
+                                        ],
+                                       
+                                    }
+                                },
+                                width: 1,
+                                shadowColor: '#90d6ff',
+                                showdowOffsetY: 15,
+                                shadowBlur: 20
+
+                            },
+                            markLine: { 
+                                    Symbol: 'none',
+                                    data: [
+                                        {  
+                                            name: '阈值', 
+                                            yAxis: 50
+                                        }
+                                    ],
+                                    lineStyle: {
+                                        type:"solid",
+                                        color:"rgb(203 65 65)",
+                                        width: 1
+                                    },
+                                },
+                            // itemStyle: {
+                            //     normal: {
+                            //         color: ItemColor,
+                            //         borderColor: ItemColor,
+                            //     }
+                            // },
+                            // showSymbol: true,
+
+                        }
+                        ]
+                    };
+                    myChart.setOption(option);                    
+
+
+                </script>
+            {% elif perf_counter["counterId"]==12 %}
+                <div id="counterId12" style="width: 100%;height:500px;">{{ perf_counter["value"] }}</div>
+                <script type="text/javascript">
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChart = echarts.init(document.getElementById('counterId12'));                        
+                    // 指定图表的配置项和数据
+                    var option = {
+                        title: {
+                            text: 'ready Time that the virtual machine was ready, but could not get scheduled to run on the physical CPU',
+                            left: 'center'
+                        },
+                        // tooltip: {trigger: 'axis'},
+                
+                        xAxis:{
+                            type: 'category',
+                            name: 'Time',
+                            data: {{ perf_counter["endTime"]|safe }},
+                            axisLabel:{
+                                rotate: 45,
+                                interval: 4,
+                                fontSize: 10,
+                            }
+                        },
+                        yAxis:{
+                            type:'value',
+                            name: '%'
+                        },
+                        series:[
+                        {
+                            data: {{ perf_counter["value"] | safe }}.map(
+                                    item=>{
+                                        if(item >5){
+                                            return {
+                                                value: item,
+                                                itemStyle: {
+                                                    color: '#f33'
+                                                }
+                                            }
+                                        }else{
+                                            return {
+                                                value: item,
+                                                itemStyle: {
+                                                    color: 'blue'
+                                                }
+                                            }                                            
+                                        }
+                                    }
+                                ),
+                                type: 'line',
+                                smooth: true,
+                                markLine: { 
+                                    data: [{  name: '阈值', yAxis: 5}],
+                                    lineStyle: {
+                                        type:"solid",
+                                        color:"rgb(203 65 65)",
+                                        width: 1
+                                    },
+
+                                }
+                            }
+                        ]
+                    };
+                    myChart.setOption(option); 
+                </script>                    
+            {% elif perf_counter["counterId"]==140 %}
+                <div id="counterId140" style="width: 100%;height:500px;"></div>
+                <script type="text/javascript">
+
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChart = echarts.init(document.getElementById('counterId140'));                        
+                    // 指定图表的配置项和数据
+                    var option = {
+                        title: {
+                            text: 'Disks Highest Latency(ms)',
+                            left: 'center'
+                        },
+                        // tooltip: {trigger: 'axis'},
+                
+                        xAxis:{
+                            type: 'category',
+                            name: 'Time',
+                            data: {{ perf_counter["endTime"]|safe }},
+                            axisLabel:{
+                                rotate: 45,
+                                interval: 4,
+                                fontSize: 10,
+                            }
+                        },
+                        yAxis:{
+                            type:'value',
+                            name: 'ms'
+                        },
+                        series:[
+                        {
+                            data: {{ perf_counter["value"] | safe }}.map(
+                                    item=>{
+                                        if(item >20){
+                                            return {
+                                                value: item,
+                                                itemStyle: {
+                                                    color: '#f33'
+                                                }
+                                            }
+                                        }else{
+                                            return {
+                                                value: item,
+                                                itemStyle: {
+                                                    color: 'blue'
+                                                }
+                                            }                                            
+                                        }
+                                    }
+                                ),
+                                type: 'line',
+                                smooth: true,
+                                markLine: { 
+                                    Symbol: 'none',
+                                    data: [
+                                        {  
+                                            name: '阈值', 
+                                            yAxis: 20
+                                        }
+                                    ],
+                                    lineStyle: {
+                                        type:"solid",
+                                        color:"rgb(203 65 65)",
+                                        width: 1
+                                    },
+                                },                                
+                            }
+                        ]
+                    };
+                    myChart.setOption(option); 
+                </script>
+            {% else %}
+            {% endif %}
+
+    {% endfor %}
+{% endif %}
+
+
+<h2>虚拟机参数</h2>
+<ol>
+    <li>
+        基本配置
+    </li>
+    <div class="table-container">
+        <table class="table2">
+        {% for item in vm_info %}
+        
+        
+                {% for key,value in item.items() %}
+                    {% if key=='disks_info' %}
+                         {% continue %}          
+                    {% elif key=='vnics' %}
+                        {% continue %} 
+                    {% elif key=='vm_perf_metric'%}
+                        {% continue %}               
+                    {% else %}
+                        <tr>
+                            <th>{{ key }}</th>
+                            <td align="left">{{ value }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+        
+        {% endfor %}
+        </table>
+        </div>
+    <li>
+        磁盘信息
+    </li>
+    <div class="table-container">
+        <table class="table2">
+    {% for item in vm_info %}
+            {% for key,value in item.items() %}
+                {% if key=='disks_info' %}
+                    <tr>
+                        <th>Disk #</th>
+                        <th>Disk Name</th>
+                        <th>Disk Path</th>
+                        <th>Used Disk Size</th>
+                        <th>Disk Snapshot #</th>
+                        <th>Disk Snapshot Size</th>
+                        <th>Provisioned Disk Size</th>
+                    </tr>
+                    {% for disk in value %}
+                            <tr>
+                                <td>disk {{ loop.index }}</td>
+                                {% for k,v in disk.items() %}
+                                
+                                <td align="left">{{ v }}</td>
+                                {% endfor %}
+                            </tr>
+    
+                    {% endfor %}                       
+                {% else %}
+                    {% continue %}
+                {% endif %}
+            {% endfor %}
+    
+    {% endfor %}
+    </table>
+    </div>
+    <li>
+        网卡信息
+    </li>
+    <div class="table-container">
+        <table class="table2">
+    {% for item in vm_info %}
+            {% for key,value in item.items() %}
+                {% if key=='vnics' %}
+                    <tr>
+                        <th>NIC #</th>
+                        <th>NIC label</th>
+                        <th>MAC Addr</th>
+                        <th>vSwitch_name</th>
+                        <th>portGroup</th>
+                        <th>VLANID</th>
+                        <th>Connected</th>
+                    </tr>
+                    {% for nic in value %}
+                            <tr>
+                                <td>NIC {{ loop.index }}</td>
+                                {% for k,v in nic.items() %}
+                                
+                                <td align="left">{{ v }}</td>
+                                {% endfor %}
+                            </tr>
+    
+                    {% endfor %}
+                {% else %}
+                    {% continue %}
+                {% endif %}
+            {% endfor %}
+    {% endfor %}
+    </table>
+    </div>
+
+</ol>
+
+
+
+
+
+
+
+{% endblock %}
