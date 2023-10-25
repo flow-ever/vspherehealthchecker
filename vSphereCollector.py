@@ -173,7 +173,7 @@ def data_collection_task(scriptname,vchost, vcuser, vcpassword, result_key):
 @app.route('/', methods=['GET','POST'])
 def index():
   if request.method == 'POST':
-    print(request.form)
+    # print(request.form)
     form_data=request.form.items()
     form_data_list = [[key, value] for key, value in form_data]
     
@@ -213,19 +213,19 @@ def index():
 
     #利用多进程发起信息收集任务
     cmd=f"{python_path} QueryHostInfo.py {vchost} {vcuser} {vcpassword}"
-    logger.info(f"{python_path} QueryHostInfo.py {vchost} {vcuser} ")
+    logger.info(f"运行脚本： QueryHostInfo.py {vchost} {vcuser} ")
     run_command(cmd)
 
     cmd=f"{python_path} QueryClusterInfo.py {vchost} {vcuser} {vcpassword}"
-    logger.info(f"{python_path} QueryClusterInfo.py {vchost} {vcuser}")
+    logger.info(f"运行脚本： QueryClusterInfo.py {vchost} {vcuser}")
     run_command(cmd)
 
     cmd=f"{python_path} QueryDCInfo.py {vchost} {vcuser} {vcpassword}"
-    logger.info(f"{python_path} QueryDCInfo.py {vchost} {vcuser}")
+    logger.info(f"运行脚本： QueryDCInfo.py {vchost} {vcuser}")
     run_command(cmd)
 
     cmd=f"{python_path} QueryVMInfo.py {vchost} {vcuser} {vcpassword}"
-    logger.info(f"{python_path} QueryVMInfo.py {vchost} {vcuser}")
+    logger.info(f"运行脚本： QueryVMInfo.py {vchost} {vcuser}")
     run_command(cmd)
     processes = []
     scriptname="QueryAlarmInfo.py"
@@ -308,7 +308,7 @@ def log_stream():
             end_flag=log_end_flags[i]
             if os.path.exists(file):
                 with open(file) as f:
-                    print(f)
+                    # print(f)
                     lines=f.read().splitlines()   
                     #event：表示事件的类别，data：需要传递给客户端的事件信息              
                     yield f"event:{eventType[i]}\ndata:{lines}\n\n"
@@ -318,8 +318,8 @@ def log_stream():
                           subs_end[i][1]=True
                 f.close()
 
-            # else:
-            #    print(file+ " doesn't exists")
+            else:
+               print("日志文件："+file+ " 还未生成！")
         
         for sub_end in subs_end:
             all_end=True and sub_end[1]
