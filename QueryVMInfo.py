@@ -50,15 +50,29 @@ def get_all_objs(content, vimtype):
 
 def get_host_portgroups(host):
     host_portgroups = []
-    for portgroup in host.config.network.portgroup:
+    for portgroup in host.config.network.portgroup:        
+        if isinstance(portgroup.spec.policy.nicTeaming,type(None)):
+            pg_nicteaming_policy=""
+        else:
+            pg_nicteaming_policy=portgroup.spec.policy.nicTeaming.policy
+        
+        if isinstance(portgroup.spec.policy.security,type(None)):
+            pg_sec_ap=""
+            pg_sec_macc=""
+            pg_sec_ft=""
+        else:
+            pg_sec_ap=portgroup.spec.policy.security.allowPromiscuous
+            pg_sec_macc=portgroup.spec.policy.security.macChanges
+            pg_sec_ft=portgroup.spec.policy.security.forgedTransmits
+
         portgroup_info = dict()
         portgroup_info.update(
             {'name': portgroup.spec.name, 'vlanId': portgroup.spec.vlanId,
              'vswitchName': portgroup.spec.vswitchName,
-             'nicTeamingPolicy': portgroup.spec.policy.nicTeaming.policy,
-             'allowPromiscuous': portgroup.spec.policy.security.allowPromiscuous,
-             'macChanges': portgroup.spec.policy.security.macChanges,
-             'forgedTransmits': portgroup.spec.policy.security.forgedTransmits})
+             'nicTeamingPolicy': pg_nicteaming_policy,
+             'allowPromiscuous': pg_sec_ap,
+             'macChanges': pg_sec_macc,
+             'forgedTransmits': pg_sec_ft})
         host_portgroups.append(portgroup_info)
 
     return host_portgroups

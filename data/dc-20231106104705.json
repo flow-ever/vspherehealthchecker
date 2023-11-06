@@ -1,0 +1,512 @@
+[
+    {
+        "name": "testDC",
+        "type": "datacenter",
+        "children": [
+            {
+                "name": "Cluster",
+                "type": "cluster",
+                "children": []
+            }
+        ],
+        "dvs": []
+    },
+    {
+        "name": "Datacenter",
+        "type": "datacenter",
+        "children": [
+            {
+                "name": "Cluster2",
+                "type": "cluster",
+                "children": []
+            },
+            {
+                "name": "Cluster",
+                "type": "cluster",
+                "children": [
+                    {
+                        "name": "192.168.10.235",
+                        "type": "host",
+                        "children": []
+                    },
+                    {
+                        "name": "192.168.10.233",
+                        "type": "host",
+                        "children": []
+                    },
+                    {
+                        "name": "192.168.10.236",
+                        "type": "host",
+                        "children": []
+                    },
+                    {
+                        "name": "192.168.10.234",
+                        "type": "host",
+                        "children": []
+                    }
+                ]
+            }
+        ],
+        "dvs": [
+            {
+                "name": "VDS01",
+                "portgroups": [
+                    {
+                        "name": "Lab-VM-Trunk",
+                        "key": "dvportgroup-6967",
+                        "vlan": 4095,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "DX_VLAN18",
+                        "key": "dvportgroup-7106",
+                        "vlan": 18,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "PG_VLAN1001",
+                        "key": "dvportgroup-5374",
+                        "vlan": 1001,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "PG_VLAN033",
+                        "key": "dvportgroup-10699",
+                        "vlan": 33,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "MGMT",
+                        "key": "dvportgroup-33",
+                        "vlan": 23,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": false
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1"
+                            ],
+                            "standbyUplinkPort": [
+                                "Uplink 2"
+                            ],
+                            "inherited": false
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "VDS01-DVUplinks-31",
+                        "key": "dvportgroup-32",
+                        "vlan": 4095,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": false
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [],
+                            "standbyUplinkPort": [],
+                            "inherited": false
+                        },
+                        "uplink": true
+                    },
+                    {
+                        "name": "DX_VLAN22",
+                        "key": "dvportgroup-6002",
+                        "vlan": 22,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "PG_VM",
+                        "key": "dvportgroup-34",
+                        "vlan": 23,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "VLAN333",
+                        "key": "dvportgroup-1489",
+                        "vlan": 333,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "SHE",
+                        "key": "dvportgroup-5028",
+                        "vlan": 1001,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "PG-VLAN100",
+                        "key": "dvportgroup-1422",
+                        "vlan": 100,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "Avi Internal",
+                        "key": "dvportgroup-4001",
+                        "vlan": 0,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "VSAN",
+                        "key": "dvportgroup-35",
+                        "vlan": 1010,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "PG_Trunk",
+                        "key": "dvportgroup-1122",
+                        "vlan": 4095,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "PG_VLAN101",
+                        "key": "dvportgroup-19038",
+                        "vlan": 101,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "VLAN27",
+                        "key": "dvportgroup-22022",
+                        "vlan": 55,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "Lab-VLAN31",
+                        "key": "dvportgroup-13046",
+                        "vlan": 31,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "Lab-VLAN29",
+                        "key": "dvportgroup-7055",
+                        "vlan": 29,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "Lab-VLAN32",
+                        "key": "dvportgroup-13047",
+                        "vlan": 32,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "PG_VLAN29",
+                        "key": "dvportgroup-1419",
+                        "vlan": 29,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "HAN",
+                        "key": "dvportgroup-5027",
+                        "vlan": 1011,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "PG_VLAN30",
+                        "key": "dvportgroup-1421",
+                        "vlan": 30,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "PG_native1",
+                        "key": "dvportgroup-1417",
+                        "vlan": 0,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "DX_VLAN24",
+                        "key": "dvportgroup-6289",
+                        "vlan": 24,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    },
+                    {
+                        "name": "DX_VLAN21",
+                        "key": "dvportgroup-6005",
+                        "vlan": 21,
+                        "uplinkTeamingPolicy": {
+                            "value": "loadbalance_srcid",
+                            "inherited": true
+                        },
+                        "uplinkPortOrder": {
+                            "activeUplinkPort": [
+                                "Uplink 1",
+                                "Uplink 2"
+                            ],
+                            "standbyUplinkPort": [],
+                            "inherited": true
+                        },
+                        "uplink": false
+                    }
+                ],
+                "connectedHosts": [
+                    "192.168.10.235",
+                    "192.168.10.236",
+                    "192.168.10.233",
+                    "192.168.10.234"
+                ]
+            }
+        ]
+    }
+]

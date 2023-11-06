@@ -1,13 +1,13 @@
 {% extends "sample.html" %}
 {% block body %}
 
-<script type="text/javascript" src="{{url_for('static', filename='echarts.js')}}"></script> 
+<!-- <script type="text/javascript" src="{{url_for('static', filename='echarts.js')}}"></script>  -->
 
 
-<script>
+<!-- <script>
     includenav();
-</script>
-<div class="dashboard" ><h1>Virtual Machine——<strong>{{ vm_info[0]['Display_name'] }}</strong></h1></div>
+</script> -->
+<div class="dashboard" ><h1>Virtual Machine:<strong>{{ vm_info[0]['Display_name'] }}</strong></h1></div>
 
 {% if vm_perf_metric | length %}
     <h2>虚拟机关键性能指标</h2>
@@ -266,7 +266,7 @@
     <li>
         基本配置
     </li>
-    <div class="table-container">
+    <div class="mid_table_container">
         <table class="table2">
         {% for item in vm_info %}
         
@@ -292,7 +292,7 @@
     <li>
         磁盘信息
     </li>
-    <div class="table-container">
+    <div class="long_table_container">
         <table class="table2">
     {% for item in vm_info %}
             {% for key,value in item.items() %}
@@ -327,7 +327,7 @@
     <li>
         网卡信息
     </li>
-    <div class="table-container">
+    <div class="long_table_container">
         <table class="table2">
     {% for item in vm_info %}
             {% for key,value in item.items() %}

@@ -1,167 +1,185 @@
 {% extends "sample.html" %}
 
 {% block body %}
-<link rel="stylesheet" type="text/css" href="print.css" media="print">
+<!-- <link rel="stylesheet" type="text/css" href="print.css" media="print"> -->
 
-<script>
-    includenav();
-</script>
+
 {% set hosts_num= host_detail | length %}
-<!-- <script>
-    document.writeln("<div>");
-    document.writeln("    <ul id=\'nav_head\'>");
-    document.writeln("        <li><a href=\'/cluster/Cluster'>群集状况</a></li>");
-    document.writeln("        <li></li><a href=\'/host\'>主机状况</a></li>");
-    document.writeln("        <li></li><a href=\'/virtualmachine\'>虚拟机总览</a></li>");
-    document.writeln("    </ul>");
-    document.writeln("</div>");
-</script> -->
-<!-- <div w3-include-html="nav.html"> </div> -->
 
-<div class="table-container">
+
+
 <h1>Cluster结构</h1>
 <div class="cluster_tree" id="cluster_tree"></div>
 
 <h1>Cluster配置信息</h1>
 <h2>HA配置信息</h2>
-
-<table class="table2" >
-    <tr>
-        <th>HA Enabled</th>        
-        <td colspan="2"> {{ cluster_config['ha_config']['enabled'] }} </td>
-    </tr>
-    <tr>
-        <th>hostMonitoring</th>
-        <td colspan="2">{{ cluster_config['ha_config']['hostMonitoring'] }} </td>
-    </tr>
-    <tr>
-        <th>admissionControlEnabled</th>
-        <td colspan="2">{{ cluster_config['ha_config']['admissionControlEnabled'] }} </td>
-    </tr>
-    <tr>
-        <th>vmIsolationResponse</th>
-        <td colspan="2">{{ cluster_config['ha_config']['vmIsolationResponse'] }} </td>
-    </tr>
-    <tr>
-        <th>heartbeatDatastore</th>
-        
-        <td colspan="2">{{ cluster_config['ha_config']['heartbeatDatastore'] }} </td>
-    </tr>
-    {% set advancedSettings=cluster_config['ha_config']['advancedSettings'] %}
-    {% if (advancedSettings | length )>0 %}
-        <tr><th colspan="3">AdvancedSettings</th></tr>
-        {% for item in advancedSettings %}
-            {% for key,value in item.items() %}
-
-                <tr>
-                    <td></td>
-                    <td>{{ key }}</td>
-                    <td>{{ value }} </td>
-                </tr>   
-            {% endfor %}     
-        {% else %}
-                
-        {% endfor %}
-    {% endif %}
-</table>
-<h2>DRS配置信息</h2>
-<table class="table2">
-    <tr>
-        <th>DRS Enabled</th>
-        {% if cluster_config['drs_config']['vmotionRate']<5 %}
-        <td> enabled </td>
-        {% else %}
-        <td> Disabled </td>
-        {% endif %}
-    </tr>
-    <tr>
-        <th>defaultVmBehavior</th>
-        <td>{{ cluster_config['drs_config']['defaultVmBehavior'] }}</td>
-    </tr>
-</table>
-<h2>EVC配置信息</h2>
-
-<table class="table2">
-    <tr>
-        <th>EVC Enabled</th>
-        <td>{{cluster_config['evc_config']['enabled'] }}</td>
-    </tr>
-    <tr>
-        <th>EVC Mode</th>
-        <td>{{cluster_config['evc_config']['EVCMode'] }}</td>
-    </tr>
-</table>
-<h1>ESXi主机基本信息</h1>
-<table class="table2">
-    <tr>
-        <th scope="col">主机名</th>
-        <th scope="col">ESXi version</th>
-        <th scope="col">vendor</th>
-        <th scope="col">Model</th>
-        <th scope="col">SN</th>
-        <th scope="col">Uptime(H)</th>
-
-    </tr> 
-    {% for i in range(hosts_num) %}   
-    <tr>
-        <td>{{ host_detail[i]['host'] }}</td>        
-        <td>{{ host_detail[i]['basic_info'][0]['esxi'] }}</td>
-        <td>{{ host_detail[i]['basic_info'][0]['vendor'] }}</td>
-        <td>{{ host_detail[i]['basic_info'][0]['model'] }}</td>
-        <td>{{ host_detail[i]['basic_info'][0]['sn'] }}</td>
-        <td>{{ host_detail[i]['basic_info'][0]['uptime'] }}</td>
-    </tr>
-    {% endfor %}
+<div class="short_table_container">
+    <table class="table2" >
+        <tr>
+            <th>HA Enabled</th>        
+            <td colspan="2"> {{ cluster_config['ha_config']['enabled'] }} </td>
+        </tr>
+        <tr>
+            <th>hostMonitoring</th>
+            <td colspan="2">{{ cluster_config['ha_config']['hostMonitoring'] }} </td>
+        </tr>
+        <tr>
+            <th>admissionControlEnabled</th>
+            <td colspan="2">{{ cluster_config['ha_config']['admissionControlEnabled'] }} </td>
+        </tr>
+        <tr>
+            <th>vmIsolationResponse</th>
+            <td colspan="2">{{ cluster_config['ha_config']['vmIsolationResponse'] }} </td>
+        </tr>
+        <tr>
+            <th>heartbeatDatastore</th>
+            
+            <td colspan="2">{{ cluster_config['ha_config']['heartbeatDatastore'] }} </td>
+        </tr>
+        {% set advancedSettings=cluster_config['ha_config']['advancedSettings'] %}
+        {% if (advancedSettings | length )>0 %}
+            <tr><th colspan="3">AdvancedSettings</th></tr>
+            {% for item in advancedSettings %}
+                {% for key,value in item.items() %}
     
-</table>
+                    <tr>
+                        <td></td>
+                        <td>{{ key }}</td>
+                        <td>{{ value }} </td>
+                    </tr>   
+                {% endfor %}     
+            {% else %}
+                    
+            {% endfor %}
+        {% endif %}
+    </table>
+</div>
 
+<h2>DRS配置信息</h2>
+<div class="short_table_container">
+    <table class="table2">
+        <tr>
+            <th>DRS Enabled</th>
+            {% if cluster_config['drs_config']['vmotionRate']<5 %}
+            <td> enabled </td>
+            {% else %}
+            <td> Disabled </td>
+            {% endif %}
+        </tr>
+        <tr>
+            <th>defaultVmBehavior</th>
+            <td>{{ cluster_config['drs_config']['defaultVmBehavior'] }}</td>
+        </tr>
+    </table>
+</div>
+<h2>EVC配置信息</h2>
+<div class="short_table_container">
+    <table class="table2">
+        <tr>
+            <th>EVC Enabled</th>
+            <td>{{cluster_config['evc_config']['enabled'] }}</td>
+        </tr>
+        <tr>
+            <th>EVC Mode</th>
+            <td>{{cluster_config['evc_config']['EVCMode'] }}</td>
+        </tr>
+    </table>
+</div>
+<h1>ESXi主机基本信息</h1>
+<div class="mid_table_container">
+    <table class="table2">
+        <tr>
+            <th scope="col">主机名</th>
+            <th scope="col">ESXi version</th>
+            <th scope="col">vendor</th>
+            <th scope="col">Model</th>
+            <th scope="col">SN</th>
+            <th scope="col">Uptime(H)</th>
+
+        </tr> 
+        {% for i in range(hosts_num) %}   
+        <tr>
+            <td>{{ host_detail[i]['host'] }}</td>        
+            <td>{{ host_detail[i]['basic_info'][0]['esxi'] }}</td>
+            <td>{{ host_detail[i]['basic_info'][0]['vendor'] }}</td>
+            <td>{{ host_detail[i]['basic_info'][0]['model'] }}</td>
+            <td>{{ host_detail[i]['basic_info'][0]['sn'] }}</td>
+            <td>{{ host_detail[i]['basic_info'][0]['uptime'] }}</td>
+        </tr>
+        {% endfor %}
+        
+    </table>
+</div>
 <details class="details-1" open>
 <summary>CPU&Memory</summary>
 <ul>
     <li>物理配置    </li>
-    <table class="table2">
-        <tr>
-            <th scope="col">主机名</th>
-            <th scope="col">CPU model</th>
-            <th scope="col">Frequency(Mhz)</th>
-            <th scope="col">Cores/Threads</th>
-            <th scope="col">RAM(GB)</th>
+    <div class="mid_table_container">
+        <table class="table2">
+            <tr>
+                <th scope="col">主机名</th>
+                <th scope="col">CPU model</th>
+                <th scope="col">Frequency(Mhz)</th>
+                <th scope="col">Cores/Threads</th>
+                <th scope="col">RAM(GB)</th>
 
 
-        </tr>
-        {% for i in range(hosts_num) %}   
-        <tr>
-            <td>{{ host_detail[i]['host'] }}</td>  
-            <td>{{ host_detail[i]['cpu_ram_config'][0]['cpuModel'] }}</td>
-            <td>{{ host_detail[i]['cpu_ram_config'][0]['cpuMhz'] }}</td>
-            <td>{{ host_detail[i]['cpu_ram_config'][0]['numCpuCores']|string }}/{{ host_detail[i]['cpu_ram_config'][0]['numCpuThreads']|string }}</td>
-            <td>{{ host_detail[i]['cpu_ram_config'][0]['ramSize'] }}</td>
-        </tr>
-        {% endfor %}  
-    </table>
+            </tr>
+            {% for i in range(hosts_num) %}   
+            <tr>
+                <td>{{ host_detail[i]['host'] }}</td>  
+                <td>{{ host_detail[i]['cpu_ram_config'][0]['cpuModel'] }}</td>
+                <td>{{ host_detail[i]['cpu_ram_config'][0]['cpuMhz'] }}</td>
+                <td>{{ host_detail[i]['cpu_ram_config'][0]['numCpuCores']|string }}/{{ host_detail[i]['cpu_ram_config'][0]['numCpuThreads']|string }}</td>
+                <td>{{ host_detail[i]['cpu_ram_config'][0]['ramSize'] }}</td>
+            </tr>
+            {% endfor %}  
+        </table>
+    </div>
     <li>使用率（Usage） </li>
-    <table class="table2">
-        <tr>
-            <th scope="col">主机名</th>
-            <th scope="col">整合比（vCPU/Cores）</th>
-            <th scope="col">CPU Usage（%）</th>
-            <th scope="col">Memory Usage(%)</th>
-        </tr>
-        {% for i in range(hosts_num) %}
-        <tr>
-            <td>{{ host_detail[i]['host'] }}</td>  
-            <td>{{ host_detail[i]['cpu_ram_usage'][0]['consolidate_ratio'] }}</td>
-            <td>
+    <div class="mid_table_container">
+        <table class="table2">
+            <tr>
+                <th scope="col">主机名</th>
+                <th scope="col">整合比（vCPU/Cores）</th>
+                <th scope="col">CPU Usage（%）</th>
+                <th scope="col">Memory Usage(%)</th>
+            </tr>
+            {% for i in range(hosts_num) %}
+            <tr>
+                <td>{{ host_detail[i]['host'] }}</td>  
+                <td>{{ host_detail[i]['cpu_ram_usage'][0]['consolidate_ratio'] }}</td>
+                <td>
+                    
+                    <div class="g-progress" progress="{{ (host_detail[i]['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000))*100 }}" style="--progress: {{ (host_detail[i]['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000))*100 }}%">
+                        <span>{{ "%2.1f" | format(host_detail[i]['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000)*100 ) }}%</span>
+                    </div>
+                </td>
+                <td>
+                    
+                    <div class="g-progress" progress="{{ (host_detail[i]['cpu_ram_usage'][0]['ram_usage']|float(default=0.000))*100 }}" style="--progress: {{ (host_detail[i]['cpu_ram_usage'][0]['ram_usage']|float(default=0.000))*100 }}%">
+                        <span>{{ "%2.1f" | format(host_detail[i]['cpu_ram_usage'][0]['ram_usage']|float(default=0.000)*100 ) }}%</span>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}  
+        </table>
+        <script>
+            const elements = document.querySelectorAll('[progress]');
+
+            elements.forEach(element => {
                 
-                <div class="g-progress" style="--progress: {{ (host_detail[i]['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000))*100 }}%"><span>{{ "%2.1f" | format(host_detail[i]['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000)*100 ) }}</span></div>
-            </td>
-            <td>
-                
-                <div class="g-progress" style="--progress: {{ (host_detail[i]['cpu_ram_usage'][0]['ram_usage']|float(default=0.000))*100 }}%"><span>{{ "%2.1f" | format(host_detail[i]['cpu_ram_usage'][0]['ram_usage']|float(default=0.000)*100 ) }}</span></div>
-            </td>
-        </tr>
-        {% endfor %}  
-    </table>
+            if (parseInt(element.getAttribute('progress')) <= 60) {
+                element.style.background = 'linear-gradient(90deg, #26de81, #20bf6b var(--progress), transparent 0)';
+            }else if (parseInt(element.getAttribute('progress')) > 90){
+                element.style.background = 'linear-gradient(90deg, #fc5c65, #eb3b5a var(--progress), transparent 0)';
+            }else{
+                element.style.background = 'linear-gradient(90deg, #fed330, #f7b731 var(--progress), transparent 0)';
+            }
+            });
+
+        </script>
+    </div>
 </ul>
 </details>
 
@@ -170,20 +188,21 @@
     <h2>VSAN信息</h2>
 
     <h3>VSAN硬盘清单</h3>
+    <div class="mid_table_container">
     {% for item in cluster_config['vsan_info'] %}
         {% if item['cluster_disMapInfo'] %}
             <table class="table2">
                 <thead>
                     <tr>
-                        <td>canonicalName</td>
-                        <td>displayName</td>
-                        <td>diskType</td>
-                        <td>model</td>
-                        <td>serialNumber</td>
-                        <td>operationalState</td>
-                        <td>capacity(GB)</td>
-                        <td>physicalLocation</td>
-                        <td>formatVersion</td>
+                        <th>canonicalName</th>
+                        <th>displayName</th>
+                        <th>diskType</th>
+                        <th>model</th>
+                        <th>serialNumber</th>
+                        <th>operationalState</th>
+                        <th>capacity(GB)</th>
+                        <th>physicalLocation</th>
+                        <th>formatVersion</th>
                     </tr>
                 </thead>
             {% for host in item['cluster_disMapInfo'] %}
@@ -229,89 +248,100 @@
             </table>
         {% endif %}
     {% endfor %}
+    </div>
     <h3>VSAN性能指标</h3>
     <div class="dashboard">
         <div class="wedget" id="cls_frontend_metric_iops"></div>
         <script type="text/javascript">           
             // 基于准备好的dom，初始化echarts实例
             var ItemColor='#1FD6C1';
-            var myChart = echarts.init(document.getElementById('cls_frontend_metric_iops'));                        
-            // 指定图表的配置项和数据
+            var chart_container=document.getElementById('cls_frontend_metric_iops');
+            // chart_container.width
+            var myChart = echarts.init(chart_container,'',{width:chart_container.clientWidth,}); 
+            // #根据窗口调整大小
+            // window.addEventListener('resize', function() {
+            //     myChart.resize();
+            // });
+                
             var option = {
-                title: {
-                    text: 'IOPS',
-                    left: 'center'
-                },
-                tooltip: {trigger: 'axis'},
-        
-                xAxis:{
-                    type: 'category',
-                    name: 'Time',
-                    data: {{ vsan_perf.cls_frontend_metric.sampleInfo |safe }},
-                    axisLabel:{
-                        rotate: 45,
-                        // interval: 4,
-                        fontSize: 10,
-                    }
-                },
-                yAxis:{
-                    type:'value',
-                    name: ''
-                },
-                legend:{
-                    left: 'right',
-                    top: 20
-                },
-                series:[
-                    {   name:"Read-Frontend",                       
-                        data: {{ vsan_perf.cls_frontend_metric.iopsRead | safe }},
-                        type: 'line',
-                        smooth: true,
-                        symbolSize: 6, //设定实心点大小
-                        lineStyle: {
-                            type:"solid",
-                            width: 1
+            title: {
+                text: 'IOPS',
+                left: 'center'
+            },
+            // tooltip: {trigger: 'axis'},
+    
 
-                        }
-                    },
-                    {   name:"Write-Frontend" ,                    
-                        data: {{ vsan_perf.cls_frontend_metric.iopsWrite | safe }},
-                        type: 'line',
-                        smooth: true,
-                        symbolSize: 6, //设定实心点大小
-                        lineStyle: {
-                            type:"solid",
-                            width: 1
-
-                        }
-
-                    },
-                    {   name:"Read-backend",                    
-                        data: {{ vsan_perf.cls_backend_metric.iopsRead | safe }},
-                        type: 'line',
-                        smooth: true,
-                        symbolSize: 6, //设定实心点大小
-                        lineStyle: {
-                            type:"solid",
-                            width: 1
-
-                        }
-                    },
-                    {   name:"Write-backend" ,                    
-                        data: {{ vsan_perf.cls_backend_metric.iopsWrite | safe }},
-                        type: 'line',
-                        smooth: true,
-                        symbolSize: 6, //设定实心点大小
-                        lineStyle: {
-                            type:"solid",
-                            width: 1
-
-                        }
+            xAxis:{
+                type: 'category',
+                name: 'Time',
+                data: {{ vsan_perf.cls_frontend_metric.sampleInfo |safe }},
+                axisLabel:{
+                    rotate: 45,
+                    // interval: 4,
+                    fontSize: 10,
+                }
+            },
+            yAxis:{
+                type:'value',
+                name: ''
+            },
+            legend:{
+                left: 'right',
+                top: 20
+            },
+            series:[
+                {   name:"Read-Frontend",                       
+                    data: {{ vsan_perf.cls_frontend_metric.iopsRead | safe }},
+                    type: 'line',
+                    smooth: true,
+                    symbolSize: 6, //设定实心点大小
+                    lineStyle: {
+                        type:"solid",
+                        width: 1
 
                     }
-                ]
+                },
+                {   name:"Write-Frontend" ,                    
+                    data: {{ vsan_perf.cls_frontend_metric.iopsWrite | safe }},
+                    type: 'line',
+                    smooth: true,
+                    symbolSize: 6, //设定实心点大小
+                    lineStyle: {
+                        type:"solid",
+                        width: 1
+
+                    }
+
+                },
+                {   name:"Read-backend",                    
+                    data: {{ vsan_perf.cls_backend_metric.iopsRead | safe }},
+                    type: 'line',
+                    smooth: true,
+                    symbolSize: 6, //设定实心点大小
+                    lineStyle: {
+                        type:"solid",
+                        width: 1
+
+                    }
+                },
+                {   name:"Write-backend" ,                    
+                    data: {{ vsan_perf.cls_backend_metric.iopsWrite | safe }},
+                    type: 'line',
+                    smooth: true,
+                    symbolSize: 6, //设定实心点大小
+                    lineStyle: {
+                        type:"solid",
+                        width: 1
+
+                    }
+
+                }
+            ]
             };
-            myChart.setOption(option);                 
+            myChart.setOption(option);   
+        
+            // 指定图表的配置项和数据
+              
         </script> 
 
         <!-- 吞吐量    -->
@@ -321,12 +351,14 @@
             var ItemColor='#1FD6C1';
             var myChart = echarts.init(document.getElementById('cls_frontend_metric_throughput'));                        
             // 指定图表的配置项和数据
+            var sampleInfo=Array({{ vsan_perf.cls_frontend_metric.sampleInfo |safe }}.length);
+
             var option = {
                 title: {
                     text: 'Throughput',
                     left: 'center'
                 },
-                tooltip: {trigger: 'axis'},
+                // tooltip: {trigger: 'axis'},
         
                 xAxis:{
                     type: 'category',
@@ -411,7 +443,7 @@
                     text: 'Latency',
                     left: 'center'
                 },
-                tooltip: {trigger: 'axis'},
+                // tooltip: {trigger: 'axis'},
         
                 xAxis:{
                     type: 'category',
@@ -512,7 +544,7 @@
                     text: 'Cache Disk:Read Cache Hit Rate',
                     left: 'center'
                 },
-                tooltip: {trigger: 'axis'},
+                // tooltip: {trigger: 'axis'},
         
                 xAxis:{
                     type: 'category',
@@ -564,7 +596,7 @@
                     text: 'Cache Disk:Free of Write Buffer(%)',
                     left: 'center'
                 },
-                tooltip: {trigger: 'axis'},
+                // tooltip: {trigger: 'axis'},
         
                 xAxis:{
                     type: 'category',
@@ -617,7 +649,7 @@
                     text: 'Cache Disk: Latency of Reading from Read Cache',
                     left: 'center'
                 },
-                tooltip: {trigger: 'axis'},
+                // tooltip: {trigger: 'axis'},
         
                 xAxis:{
                     type: 'category',
@@ -669,7 +701,7 @@
                     text: 'Cache Disk: Latency of Writing to Write Buffer',
                     left: 'center'
                 },
-                tooltip: {trigger: 'axis'},
+                // tooltip: {trigger: 'axis'},
         
                 xAxis:{
                     type: 'category',
@@ -721,7 +753,7 @@
                     text: 'VSAN Memory Usage',
                     left: 'center'
                 },
-                tooltip: {trigger: 'axis'},
+                // tooltip: {trigger: 'axis'},
         
                 xAxis:{
                     type: 'category',
@@ -768,16 +800,17 @@
 
     </div>
     <h3>VSAN健康检查信息</h3>
+    <div class="mid_table_container">
     {% for item in cluster_config['vsan_info'] %}
         {% if item['health_test'] %}
-
+        
             <table class="table2">
                 <thead>
                     <tr>
-                        <td>编号</td>
-                        <td>测试项目</td>
-                        <td style="width: 10%;">描述</td>
-                        <td style="width: 10%;">测试结果</td>
+                        <th>编号</th>
+                        <th>测试项目</th>
+                        <th >描述</th>
+                        <th >测试结果</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -794,21 +827,21 @@
                             </tr>
                         {% for test in tests %}
                         <tr>
-                            <td class="narrow" width="5%">{{ group_id }}.{{ loop.index }}</td>
-                            <td class="normal" width="30%">{{ test.testName }}</td>
-                            <td class="normal" width="55%">{{ test.testShortDescription }}</td>
+                            <td >{{ group_id }}.{{ loop.index }}</td>
+                            <td >{{ test.testName }}</td>
+                            <td style="word-wrap: break-word;">{{ test.testShortDescription }}</td>
                             {% if test.testHealth %}
                                 {% if test.testHealth=='green' %}
-                                    <td class="narrow" width="10%"><div class="correct">&#10004; </div></td>
+                                    <td ><div class="correct">&#10004; </div></td>
                                 {% elif test.testHealth=='red' %}
-                                <td class="narrow" width="10%"><div class="incorrect">&#10008;</div></td>
+                                <td ><div class="incorrect">&#10008;</div></td>
                                 {% elif test.testHealth=='yellow' %}
-                                    <td class="narrow" width="10%"><div class="warnning">&#161;</div></td>
+                                    <td ><div class="warnning">&#161;</div></td>
                                 {% else %}
                                 {% endif %}
                                 <!-- <td class="narrow" width="10%">{{ test.testHealth }}</td> -->
                             {% else %}
-                            <td class="narrow" width="10%">Not tested</td>
+                            <td >Not tested</td>
                             {% endif %}
                             
                         </tr>
@@ -816,11 +849,14 @@
                     {% endfor %}
                 </tbody>
             </table>
+        
+
         {% endif %}
     {% endfor %}
+    </div>
 {% endif %}
 
-</div>
+
 
 
 <script type="text/javascript">    

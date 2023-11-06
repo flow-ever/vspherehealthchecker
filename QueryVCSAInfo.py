@@ -31,6 +31,7 @@ def QueryVCSAInfo(vchost,rootPassword):
         # Automatically add the server's host key (for development/testing; improve security for production)
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
+        logger.info("Connecting to VCSA...")
         print("Connecting to VCSA...")
 
         # Connect to the VCSA SSH server
@@ -86,7 +87,7 @@ def QueryVCSAInfo(vchost,rootPassword):
         out=channel.recv(2048)
         # print(out.decode("ascii"))
         cert_info=out.decode("utf-8")
-        logger.info("收集证书信息")
+        logger.info("收集VCSA内部证书信息")
         with open(vcsa_json_file,'a') as f:
             f.writelines(cert_info)
         f.close()
@@ -97,14 +98,18 @@ def QueryVCSAInfo(vchost,rootPassword):
 
     except paramiko.ssh_exception.AuthenticationException as e:
         print(f"SSH error: {e}")
+        logger.info(f"SSH error: {e}")
         sys.exit(1)
     except paramiko.ssh_exception.SSHException as e:
         print(f"SSH error: {e}")
+        logger.info(f"SSH error: {e}")
         sys.exit(1)
     except socket.error:
         print("socket.error")
+        logger.info("socket.error")
     except Exception as e:
         print(f"An error occurred: {e}")
+        logger.info(f"An error occurred: {e}")
     finally:
         # Close the SSH connection
         client.close()

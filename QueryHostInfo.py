@@ -67,15 +67,29 @@ def get_host_vnics(host):
 
 def get_host_portgroups(host):
     host_portgroups = []
-    for portgroup in host.config.network.portgroup:
+    for portgroup in host.config.network.portgroup:        
+        if isinstance(portgroup.spec.policy.nicTeaming,type(None)):
+            pg_nicteaming_policy=""
+        else:
+            pg_nicteaming_policy=portgroup.spec.policy.nicTeaming.policy
+        
+        if isinstance(portgroup.spec.policy.security,type(None)):
+            pg_sec_ap=""
+            pg_sec_macc=""
+            pg_sec_ft=""
+        else:
+            pg_sec_ap=portgroup.spec.policy.security.allowPromiscuous
+            pg_sec_macc=portgroup.spec.policy.security.macChanges
+            pg_sec_ft=portgroup.spec.policy.security.forgedTransmits
+
         portgroup_info = dict()
         portgroup_info.update(
             {'name': portgroup.spec.name, 'vlanId': portgroup.spec.vlanId,
              'vswitchName': portgroup.spec.vswitchName,
-             'nicTeamingPolicy': portgroup.spec.policy.nicTeaming.policy,
-             'allowPromiscuous': portgroup.spec.policy.security.allowPromiscuous,
-             'macChanges': portgroup.spec.policy.security.macChanges,
-             'forgedTransmits': portgroup.spec.policy.security.forgedTransmits})
+             'nicTeamingPolicy': pg_nicteaming_policy,
+             'allowPromiscuous': pg_sec_ap,
+             'macChanges': pg_sec_macc,
+             'forgedTransmits': pg_sec_ft})
         host_portgroups.append(portgroup_info)
 
     return host_portgroups
@@ -117,12 +131,14 @@ def buildQuery(content, vchtime, counterIds, instance, obj):
     perfManager = content.perfManager
     if instance=="" or instance is None:
          instance="*"
+    # instance=""
     metricId = [vim.PerformanceManager.MetricId(counterId=counterId, instance=instance) for counterId in counterIds]
     startTime = vchtime - datetime.timedelta(days=1)
     endTime = vchtime - datetime.timedelta(minutes=1)
     query = vim.PerformanceManager.QuerySpec(intervalId=20, entity=obj, metricId=metricId, startTime=startTime,
                                              endTime=endTime)
     perfResults = perfManager.QueryPerf(querySpec=[query])
+    
     if perfResults:
         return perfResults
     else:
@@ -434,7 +450,7 @@ def QueryHostsInfo(si):
             # metric_ids=[vim.PerformanceManager.MetricId(counterId=counter,instance="*") for counter in counter_ids]
 
             #counter_id 150 network performace counter
-        counter_ids=[150]
+        counter_ids=[145]
         instance=""
 
 

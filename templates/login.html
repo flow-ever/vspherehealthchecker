@@ -6,21 +6,25 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='print.css') }}" media="print">
         <style >
             #vcenter_info{
-                background-color: aliceblue;
+                /* background-color: aliceblue; */
                 width: 50%;
                 padding: 10px;
                 margin-top: 10px;
                 margin-bottom: 10px;
+                border-radius: 5px;
+                border: solid 1px #ccc;
+                font-size: 12px;
             }
 
             #note{
                 background-color: white;
                 width: 50%;
                 height: 120px;
-                padding: 5px;
+                padding: 10px;
                 margin-top: 95px;
                 border-radius: 5px;
                 border: solid 1px #ccc;
+                font-size: 12px;
             }
 
             table {
@@ -33,7 +37,7 @@
                 height: 30px;
             }
             input{
-                height: 22px;
+                height: 20px;
             }
             #add_host_form input{
                 width: 120px;
@@ -67,6 +71,9 @@
                 border: solid 1px #ccc;
                 /* margin-left: 100px; */
                 text-align: center;
+                background-color: dodgerblue;
+                color: white;
+                
 
                 
             }
@@ -105,23 +112,18 @@
                 font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
                 visibility: hidden;
             }
+            input{
+                border-top: 0;
+                border-left: 0;
+                border-right: 0;
+                border-bottom: 1px solid #ccc;
+            }
         </style>
 
     
     </head>
     <body>
-        <div id="main_frame">
-            <div id="header" class="header" >工作流程</div>
-
-            <div>
-                <ol class="nav">
-                    <li class="active"><a href="{{ url_for('index') }}">登录信息输入</a></li>
-                    <li ><a href="{{ url_for('index') }}">信息收集</a></li>
-                    <li >数据展示</li>
-                    <li>报告生成</li>
-                  </ol>
-            </div>
-    
+        <div id="main_frame">    
             <div id="note">
                 <p class="notetext">Note:</p>
                 <p class="normaltext">为了能够收集服务器硬件和vSphere环境的信息，将需要登录凭据，所有的凭据将不会被程序保存！</p>
@@ -149,7 +151,7 @@
     
                     <p><input type="checkbox" name="add_ipmi_host" id="add_ipmi_host" onclick="toggle_div('div_add_ipmiHosts')">收集服务器硬件告警信息 </p>
                     <div id="div_add_ipmiHosts">
-                        <table id="add_host_table">
+                        <table id="add_host_table" class="table2">
                             <tr>
                                 <td class="no_col">
                                     #

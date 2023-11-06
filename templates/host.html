@@ -2,15 +2,15 @@
 {% block body %}
 
 
-<script>
+<!-- <script>
     includenav();
-</script>
+</script> -->
 {% for item in host_detail %}
     <div class="table-container">
     <h1>Hostname:{{ item['host'] }}</h1>
     <h2>ESXi主机基本信息</h2>
-
-        <table class="host_table">
+    <div class="mid_table_container">
+        <table class="table2">
             <tr>
                 
                 <th scope="col">ESXi Version</th>
@@ -29,9 +29,10 @@
             </tr>
             
         </table>
-
+    </div>    
         <h2>BIOS信息</h2>
-        <table class="host_table">
+        <div class="mid_table_container">
+        <table class="table2">
             <tr>
                 
                 <th scope="col">BIOS Version</th>
@@ -48,12 +49,14 @@
                 
             </tr>
         </table>
+        </div>
         <h2>CPU和内存</h2>
         <details class="details-1" open>
         <summary>CPU&Memory</summary>
         <ul>
             <li>物理配置    </li>
-            <table class="host_table">
+            <div class="mid_table_container">
+            <table class="table2">
                 <tr>
                     
                     <th scope="col">CPU model</th>
@@ -73,8 +76,10 @@
                 </tr>
 
             </table>
+            </div>
             <li>使用率（Usage） </li>
-            <table class="host_table">
+            <div class="mid_table_container">
+            <table class="table2">
                 <tr>
                     <th scope="col">整合比（vCPU/Cores）</th>
                     <th scope="col">CPU Usage（%）</th>
@@ -86,23 +91,43 @@
                     <td>{{ item['cpu_ram_usage'][0]['consolidate_ratio'] }}</td>
                     <td>
                         
-                        <div class="g-progress" style="--progress: {{ (item['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000))*100 }}%"><span>{{ "%2.1f" | format((item['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000))*100 ) }}</span></div>
+                        <div class="g-progress" progress="{{ (item['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000))*100 }}" id="cpu_usage_bar" style="--progress: {{ (item['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000))*100 }}%"
+                            <span>{{ "%2.1f" | format((item['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000))*100 ) }}%  </span>
+                                </div>
                     </td>
                     <td>
                         
-                        <div class="g-progress" style="--progress: {{ (item['cpu_ram_usage'][0]['ram_usage']|float(default=0.000))*100 }}%"><span>{{ "%2.1f" | format( item['cpu_ram_usage'][0]['ram_usage']|float(default=0.000)*100 ) }}</span></div>
+                        <div class="g-progress" progress="{{ (item['cpu_ram_usage'][0]['ram_usage']|float(default=0.000))*100 }}" id="ram_usage_bar" style="--progress: {{ (item['cpu_ram_usage'][0]['ram_usage']|float(default=0.000))*100 }}%">
+                            <span>{{ "%2.1f" | format( item['cpu_ram_usage'][0]['ram_usage']|float(default=0.000)*100 ) }}% </span>
+                                </div>
                     </td>
                 </tr>
+                <script>
+                    const elements = document.querySelectorAll('[progress]');
+
+                    elements.forEach(element => {
+                        
+                    if (parseInt(element.getAttribute('progress')) <= 60) {
+                        element.style.background = 'linear-gradient(90deg, #26de81, #20bf6b var(--progress), transparent 0)';
+                    }else if (parseInt(element.getAttribute('progress')) > 90){
+                        element.style.background = 'linear-gradient(90deg, #fc5c65, #eb3b5a var(--progress), transparent 0)';
+                    }else{
+                        element.style.background = 'linear-gradient(90deg, #fed330, #f7b731 var(--progress), transparent 0)';
+                    }
+                    });
+
+                </script>
 
             </table>
+            </div>
         </ul>
         </details>
         <details class="details-1" open>
         <summary>存储（Storage）</summary>
         <ul>
             <li>数据存储（DataStore）</li>
-
-            <table class="host_table">
+            <div class="mid_table_container">
+            <table class="table2">
                 <tr>
                     <th scope="col">数据存储名称</th>
                     <th scope="col">总空间（GB）</th>
@@ -121,9 +146,11 @@
                 </tr>
                 {% endfor %}
             </table>
+            </div>
 
             <li>存储适配器（HBAs）</li>
-            <table class="host_table">
+            <div class="mid_table_container">
+            <table class="table2">
                 <tr>
                     <th scope="col">HBA Name</th>
                     <th scope="col">Model</th>
@@ -139,9 +166,10 @@
                 </tr>
                 {% endfor %}
             </table>
-
+            </div>
             <li>多路径（Multipath）</li>
-            <table class="host_table">
+            <div class="short_table_container">
+            <table class="table2">
                 <tr>
                     <th scope="col">Path name</th>
                     <th scope="col">Path State</th>
@@ -154,10 +182,11 @@
                 </tr>
                 {% endfor %}
             </table>
-
+            </div>
 
             <li>LUN</li>
-            <table class="host_table">
+            <div class="mid_table_container">
+            <table class="table2">
                 <tr>
                     <th scope="col">displayName</th>
                     <th scope="col">lunType</th>
@@ -172,13 +201,15 @@
                 </tr>
                 {% endfor %}
             </table>
+            </div>
         </ul>
         </details>
         <details class="details-1" open>
         <summary>网络（Network）</summary>
         <ul>
             <li>虚拟交换机(vSwitch)</li>
-            <table class="host_table">
+            <div class="mid_table_container">
+            <table class="table2">
                 <tr>
                     <th scope="col">交换机名</th>
                     <th scope="col">MTU</th>
@@ -194,8 +225,10 @@
                 </tr>
                 {% endfor %}
             </table>
+            </div>
             <li>物理网卡（PNIC）</li>
-            <table class="host_table">
+            <div class="mid_table_container">
+            <table class="table2">
                 <tr>
                     <th scope="col">网卡名称</th>
                     <th scope="col">Driver</th>
@@ -215,8 +248,10 @@
                 </tr>
                 {% endfor %}
             </table>
+            </div>
             <li>虚拟网卡（VNIC）</li>
-            <table class="host_table">
+            <div class="mid_table_container">
+            <table class="table2">
                 <tr>
                     <th scope="col">虚拟网卡名称</th>
                     <th scope="col">IP Addr</th>
@@ -235,13 +270,15 @@
                 </tr>
                 {% endfor %}
             </table>
+            </div>
         </ul>
         </details>
         <details class="details-1">
         <summary>其他（Miscellaneous）</summary>
         <ul>
             <li>时间（DataTime）</li>
-            <table class="host_table">
+            <div class="mid_table_container">
+            <table class="table2">
                 <tr>
                     <th scope="col">时间同步启用</th>
                     <th scope="col">时间服务器</th>
@@ -257,8 +294,10 @@
                     <td>{{ item['deviation'] }}</td>
                 </tr>
             </table>
+            </div>
             <li>证书（Certificate）</li>
-            <table class="host_table">
+            <div class="long_table_container">
+            <table class="table2">
                 <tr>
                     
                     <th scope="col">签发时间（Sign Date）</th>
@@ -273,18 +312,20 @@
                     <td>{{ item['certificate']['subject'] }}</td>
                 </tr>
             </table>
+            </div>
         </ul>
         </details>
         <h2>虚拟机信息</h2>
-        <div class="vmlist" style="display: flex; flex-wrap: wrap;">
+        <div class="vmlist">
             
         {% for vm in host_vms %}
         {% if vm['host']==item['host'] %}
-        <div class="vm">
+        
+        <div class="vm_container">
             {% if vm['powerState']=='poweredOn' %}
-                <div class="onButton"> </div> <div style="height: 40px; margin-top: 0;"> <a href="/virtualmachine/{{ vm['name'] }}">{{ vm['name'] }}</a></div>
+                <div class="onButton"> </div> <div class="vm_name"> <a href="/virtualmachine/{{ vm['name'] }}">{{ vm['name'] }}</a></div>
            {% else %}
-                <div class="offButton"> </div> <div style="height: 40px;margin-top: 0"><a href="/virtualmachine/{{ vm['name'] }}">{{ vm['name'] }}</a></div>
+                <div class="offButton"> </div> <div class="vm_name"><a href="/virtualmachine/{{ vm['name'] }}">{{ vm['name'] }}</a></div>
            {% endif %}
         </div>
         {% endif %}

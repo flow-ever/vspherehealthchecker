@@ -7,10 +7,10 @@
 </head>
 
   <body >
-    <script>
-      includenav();
+  <script>
+    includenav()
   </script>
-    <div class="dashboard" ><h1>Summary of All VMs</h1></div>
+  <div class="dashboard" ><h1>Summary of All VMs</h1></div>
     
   <div class="dashboard">
     <div class="wedget" id="powerstate"></div>
@@ -65,6 +65,18 @@
               }
               // }
             },
+            itemStyle:{
+                    normal:{
+                      color:function(colors){
+                        var colorList=[
+                        '#26de81', 
+                        '#fed330',               
+                        
+                        ];
+                        return colorList[colors.dataIndex]
+                      }
+                    }
+                  },
             emphasis: {
               label: {
                 show: true,
@@ -167,6 +179,21 @@
                 return param.name + ' (' + param.percent + '%)';
               }
           },
+          // itemStyle:{
+          //           normal:{
+          //             color:function(colors){
+          //               var colorList=[
+          //               '#26de81', 
+          //               '#fed330',
+          //               '#fc5c65',
+          //               '#d1d8e0',
+                         
+                        
+          //               ];
+          //               return colorList[colors.dataIndex]
+          //             }
+          //           }
+          //         },
           center: ['50%', '50%'],
           // data: [{name: 10277, value: 1}, {name: 12357, value: 1}, {name: 9536, value: 1}, {name: 10357, value: 1}, {name: 10246, value: 1}, {name: 11264, value: 1}, {name: 10336, value: 2}, {name: 10359, value: 2}, {name: 10309, value: 2}, {name: 10346, value: 2}, {name: 11296, value: 3}, {name: 12352, value: 3}, {name: 12293, value: 4}, {name: 12288, value: 4}, {name: 11333, value: 5}, {name: 11301, value: 5}, {name: 9221, value: 6}, {name: 2147483647, value: 8}, {name: 12325, value: 9}, {name: 11265, value: 14}, {name: 11360, value: 18}, {name: 0, value: 22}, {name: 10249, value: 24}, {name: 11269, value: 34}, {name: 11365, value: 49}],
           data: {{ vm_tools_list | safe }}

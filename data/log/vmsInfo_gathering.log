@@ -1,0 +1,29 @@
+20231106 10:47:05 - vms_logger - INFO - The information acquisition of virtual machine(s) is started!
+20231106 10:47:05 - vms_logger - INFO - 收集虚拟机信息：VEEAM-ansible
+20231106 10:47:20 - vms_logger - INFO - 收集虚拟机信息：OCS-Report
+20231106 10:47:34 - vms_logger - INFO - 收集虚拟机信息：ZXL-erpnext_restored
+20231106 10:47:47 - vms_logger - INFO - 收集虚拟机信息：172.17.1.10-密码未知
+20231106 10:48:00 - vms_logger - INFO - 收集虚拟机信息：Jenkins
+20231106 10:48:16 - vms_logger - INFO - 收集虚拟机信息：Printer-scan
+20231106 10:48:32 - vms_logger - INFO - 收集虚拟机信息：webDX
+20231106 10:48:45 - vms_logger - INFO - 收集虚拟机信息：YUM
+20231106 10:49:00 - vms_logger - INFO - 收集虚拟机信息：ESXI1
+20231106 10:49:14 - vms_logger - INFO - 收集虚拟机信息：RDS-Host2
+20231106 10:49:26 - vms_logger - INFO - 收集虚拟机信息：LogServer
+20231106 10:49:38 - vms_logger - INFO - 收集虚拟机信息：Mof-VDI-01
+20231106 10:49:39 - vms_logger - INFO - 收集虚拟机信息：VIEWCS01
+20231106 10:49:51 - vms_logger - INFO - 收集虚拟机信息：VIEWUAG01
+20231106 10:50:05 - vms_logger - INFO - 收集虚拟机信息：windwos
+20231106 10:50:16 - vms_logger - INFO - 收集虚拟机信息：vCenter
+20231106 10:50:32 - vms_logger - INFO - 收集虚拟机信息：win10-rds-remote
+20231106 10:50:44 - vms_logger - INFO - 收集虚拟机信息：Remote-s
+20231106 10:50:57 - vms_logger - INFO - 收集虚拟机信息：VEEAM12
+20231106 10:51:09 - vms_logger - INFO - 收集虚拟机信息：Zabbix
+20231106 10:51:21 - vms_logger - INFO - 收集虚拟机信息：Avi-Mgmt
+20231106 10:51:33 - vms_logger - INFO - 收集虚拟机信息：Tech-VDI-11
+20231106 10:51:45 - vms_logger - INFO - 收集虚拟机信息：DXERP
+20231106 10:52:00 - vms_logger - INFO - 收集虚拟机信息：AD-ISCSI-Server
+20231106 10:52:13 - vms_logger - INFO - 收集虚拟机信息：Jump-chen
+20231106 10:52:26 - vms_logger - INFO - 收集虚拟机信息：MES01-XU 172.17.1.3
+20231106 10:52:41 - vms_logger - INFO - 收集虚拟机信息：win
+20231106 10:52:54 - vms_logger - INFO - 收集虚拟机信息：Redhat-Repo

@@ -1,0 +1,5 @@
+20231106 10:46:13 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231106 10:46:13 - vcsa_logger - INFO - Connecting to VCSA...
+20231106 10:46:26 - vcsa_logger - INFO - 收集文件系统使用信息
+20231106 10:46:29 - vcsa_logger - INFO - 收集VCSA内部证书信息
+20231106 10:46:29 - vcsa_logger - INFO - the information acquisition of vcsa is finished!

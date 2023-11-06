@@ -170,7 +170,7 @@ def QueryClustersInfo(si,vchost):
         cluster_config['drs_config']=drs_config
         cluster_config['evc_config']=evc_config
     #    print(cluster_config['ha_config'])
-        # clusters.append(cluster_config)
+        clusters.append(cluster_config)
 
     #######################################################################################
     ##

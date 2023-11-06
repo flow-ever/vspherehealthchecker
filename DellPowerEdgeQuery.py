@@ -1,51 +1,99 @@
 import requests
 import os
-import datetime
 import sys
 import logging
+import json
 
 
 
 def QueryiDRAC(host,ipmiuser,ipmipass,fname):
     logger.info('登录主机：'+host+" 获取IPMI日志信息。")
-
+    ipmi_info=[]
+    ipmi={}
     # host=['192.168.10.230','192.168.10.231','192.168.10.232','192.168.10.237']
-    system = requests.get('https://'+host+'/redfish/v1/Systems/System.Embedded.1',verify=False,auth=(ipmiuser,ipmipass))
-    storage = requests.get('https://'+host+'/redfish/v1/Systems/System.Embedded.1/Storage/Controllers/RAID.Integrated.1-1',verify=False,auth=(ipmiuser,ipmipass))
-    systemData = system.json()
-    storageData = storage.json()
-    file=open(fname,'a')
-    file.writelines("Model: {} \n".format(systemData[u'Model']),\
-                     "Manufacturer: {} \n".format(systemData[u'Manufacturer']),\
-                     "Service tag {}\n".format(systemData[u'SKU']),\
-                     "Serial number: {}\n".format(systemData[u'SerialNumber']),\
-                     "Hostname: {}\n".format(systemData[u'HostName']),\
-                     "Power state: {}\n".format(systemData[u'PowerState']),\
-                     "Asset tag: {}\n".format(systemData[u'AssetTag']),\
-                     "Memory size: {}\n".format(systemData[u'MemorySummary']    [u'TotalSystemMemoryGiB']),\
-                     "CPU type: {}\n".format(systemData[u'ProcessorSummary'][u'Model']),\
-                     "System status: {}\n".format(systemData[u'Status'][u'Health']),\
+    try:
+        system = requests.get('https://'+host+'/redfish/v1/Systems/System.Embedded.1',verify=False,auth=(ipmiuser,ipmipass))
+        if system.status_code==401:
+            logger.error('connect to '+ host +' failed! status code:'+str(system.status_code)+',authentication failed!')
+        elif  system.status_code==200:
+            logger.error('Successfully connected to '+ host +'!')
+            systemData = system.json()
+        elif not system.ok:
+            logger.error('connect to '+ host +' failed! status code:'+str(system.status_code)+',!')
+    except requests.exceptions.RequestException as e:
+        logger.error(e)    
+    
+    try:
+        storage = requests.get('https://'+host+'/redfish/v1/Systems/System.Embedded.1/Storage/Controllers/RAID.Integrated.1-1',verify=False,auth=(ipmiuser,ipmipass))
+        if system.status_code==401:
+            logger.error('connect to '+ host +' failed! status code:'+str(system.status_code)+',authentication failed!')
+        elif  system.status_code==200:
+            logger.error('Successfully connected to '+ host +'!')
+            storageData = storage.json()
+        elif not system.ok:
+            logger.error('connect to '+ host +' failed! status code:'+str(system.status_code)+',!')
+    except requests.exceptions.RequestException as e:
+        logger.error(e)    
+    
+
+    
+
                      
-                     )
-    print("Model: {}".format(systemData[u'Model']))
-    print ("Manufacturer: {}".format(systemData[u'Manufacturer']))
-    print ("Service tag {}".format(systemData[u'SKU']))
-    print ("Serial number: {}".format(systemData[u'SerialNumber']))
-    print ("Hostname: {}".format(systemData[u'HostName']))
-    print ("Power state: {}".format(systemData[u'PowerState']))
-    print ("Asset tag: {}".format(systemData[u'AssetTag']))
-    print ("Memory size: {}".format(systemData[u'MemorySummary']    [u'TotalSystemMemoryGiB']))
-    print ("CPU type: {}".format(systemData[u'ProcessorSummary'][u'Model']))
-    print ("Number of CPUs: {}".format(systemData[u'ProcessorSummary'][u'Count']))
-    print ("System status: {}".format(systemData[u'Status'][u'Health']))
+    logger.info("Model: {}".format(systemData[u'Model']))
+    logger.info ("Manufacturer: {}".format(systemData[u'Manufacturer']))
+    logger.info("Service tag {}".format(systemData[u'SKU']))
+    logger.info("Serial number: {}".format(systemData[u'SerialNumber']))
+    logger.info("Hostname: {}".format(systemData[u'HostName']))
+    logger.info("Power state: {}".format(systemData[u'PowerState']))
+    logger.info("Asset tag: {}".format(systemData[u'AssetTag']))
+    logger.info("Memory size: {}".format(systemData[u'MemorySummary']    [u'TotalSystemMemoryGiB']))
+    logger.info("CPU type: {}".format(systemData[u'ProcessorSummary'][u'Model']))
+    logger.info("Number of CPUs: {}".format(systemData[u'ProcessorSummary'][u'Count']))
+    logger.info("System status: {}".format(systemData[u'Status'][u'Health']))
     # print ("RAID health: {}".format(storageData[u'Status'][u'Health']))
 
-    sel_log = requests.get('https://'+host+'/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel',verify=False,auth=(ipmiuser,ipmipass))
-    systemData = sel_log.json()
-    for logEntry in systemData[u'Members']:
-        print(logEntry)
-        file.write("{}\n".format(logEntry))
-    file.close()
+    
+    
+    try:
+        sel_log = requests.get('https://'+host+'/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel',verify=False,auth=(ipmiuser,ipmipass))
+        if system.status_code==401:
+            logger.error('connect to '+ host +' failed! status code:'+str(system.status_code)+',authentication failed!')
+        elif  system.status_code==200:
+            logger.error('Successfully connected to '+ host +'!')
+            LogData = sel_log.json()
+        elif not system.ok:
+            logger.error('connect to '+ host +' failed! status code:'+str(system.status_code)+',!')
+    except requests.exceptions.RequestException as e:
+        logger.error(e) 
+
+
+    ipmi['host']=host
+    ipmi['systemData']=systemData
+    ipmi['StorageData']=storageData
+    ipmi['LogData']=LogData
+    
+    #如果文件存在，从文件中读入数据
+    if os.path.exists(fname):
+        try:
+            with open(fname,'r') as f:
+                ipmi_info=json.load(f)
+            f.close()
+        except json.decoder.JSONDecodeError: #file is empty
+            logger.critical(fname+':this json file is empty ')
+    else:
+        #文件不存在，创建文件
+        with open(fname,'x') as f:
+            logger.info('create file:'+fname)
+            
+        f.close()
+
+    ipmi_info.append(ipmi)
+
+
+    with open(fname,'w') as f:
+        json.dump(ipmi_info,f,indent=4,ensure_ascii=False,default=str)    
+        logger.info('write data to json file')
+    f.close()
 
 
 if __name__=="__main__":
@@ -63,7 +111,7 @@ if __name__=="__main__":
     cwd = os.getcwd()
 
 
-    logfile_path=os.path.join(cwd,"IPMIInfo_gathering.log")
+    logfile_path=os.path.join(cwd,'data','log',"IPMIInfo_gathering.log")
     log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
     logger=logging.getLogger('ipmi_logger')
     fh=logging.FileHandler(filename=logfile_path,mode='a')

@@ -1,5 +1,40 @@
-<ul id="nav_head">
+<!-- <ul id="nav_head">
     <li><a href="/cluster/Cluster">群集状况</a></li>
     <li></li><a href="/host">主机状况</a></li>
     <li></li><a href="/virtualmachine">虚拟机总览</a></li>
-</ul>
+</ul> -->
+<html>
+    <head>
+        <style>
+            #main{
+                display: flex;
+                flex-direction: column;
+            }
+            #a,#b{
+                width:40%;
+                background-color:aliceblue;
+                height: 400px;
+            }
+            #a{
+                display: flex;
+                flex-direction: row;
+            }
+            #a1,#a2{
+                width:40%;
+                background-color:aqua;
+                height: 200px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <div id="a" >
+                <div id="a1">a1</div>
+                <div id="a2">a2 </div>
+            </div>
+            
+            <div id="b">b</div>
+        
+        </div>
+    </body>
+</html>

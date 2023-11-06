@@ -42,12 +42,12 @@ log_dir=os.path.join(data_dir,'log')
 if not os.path.exists(data_dir):
    os.mkdir(data_dir)
    logger.info("创建文件夹："+data_dir)
-else:
-    try:
-        shutil.rmtree(data_dir)
-        os.mkdir(data_dir)
-    except OSError as e:
-       logger.error("删除 "+data_dir+" 出错,错误原因："+str(e))
+# else:
+#     try:
+#         shutil.rmtree(data_dir)
+#         os.mkdir(data_dir)
+#     except OSError as e:
+#        logger.error("删除 "+data_dir+" 出错,错误原因："+str(e))
        
 
 if not os.path.exists(log_dir):
@@ -64,17 +64,32 @@ clients=[]
 def get_num(e):
   return e.get('value')
 
-def run_command(command):
-    print(command)
-    result = subprocess.run(command, shell=True, capture_output=True, text=True)
-    print(result.stdout)
+def log_subprocess_output(pipe):
+    for line in iter(pipe.readline, b''):  # b'\n'-separated lines
+        logger.info('%r', line)
 
-def get_value(findstr,list):
+def run_command(command):
+    # print(command)
+    # result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    sub_process=subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+    logger.info("start to execute command:"+command+"!")
+    with sub_process.stdout:
+      log_subprocess_output(sub_process.stdout)
+    if sub_process.stderr is not None:
+      with sub_process.stderr:
+        log_subprocess_output(sub_process.stderr)
+    exitcode=sub_process.wait()
+    if exitcode==0:
+       logger.info(command+" executed success!")
+    else:
+       logger.error(command+" executed failed!")
+
+def get_value(findstr,strlist):
     ll=[]
-    for i in range(len(list)):
-      if findstr in list[i]:
-        if list[i][1] is not None:
-          ll.append(list[i][1])
+    for i in range(len(strlist)):
+      rx=re.search(findstr,"".join(strlist[i]))
+      if rx and strlist[i][1] is not None:
+          ll.append(strlist[i][1])
     if len(ll)==1:
       return ll[0]
     else:
@@ -100,57 +115,42 @@ def file_search(dir,prefix,surfix):
   for file in files:
     if file.startswith(prefix) and file.endswith(surfix):
       find_flag=True
-      return file
+      return os.path.join(dir,file)
   if not find_flag:
     return find_flag
     
 
-def BuildClusterInventoryTree():
-    hosts=[]
-    clusters=[]
-    cluster={}
-    cluster_file=file_search(data_dir,'cluster-','.json')
-    with open(cluster_file,'r') as f:
-      data=json.load(f)
-    f.close
-    for dic in data:    
-      cluster['name']=dic["name"]
-      cluster['type']="cluster"  
-      for i in dic['hosts']:      
-        host={}
-        host['name']=i
-        host['type']="host"
-        host['children']=[]
-        hosts.append(host)
-      cluster['children']=hosts
-      clusters.append(cluster)
-    return clusters
+# def BuildClusterInventoryTree():
+#     hosts=[]
+#     clusters=[]
+#     cluster={}
+#     cluster_file=file_search(data_dir,'cluster-','.json')
+#     with open(cluster_file,'r') as f:
+#       data=json.load(f)
+#     f.close
+#     for dic in data:    
+#       cluster['name']=dic["name"]
+#       cluster['type']="cluster"  
+#       for i in dic['hosts']:      
+#         host={}
+#         host['name']=i
+#         host['type']="host"
+#         host['children']=[]
+#         hosts.append(host)
+#       cluster['children']=hosts
+#       clusters.append(cluster)
+#     return clusters
     
 
-def BuildInventoryTree():
-  dc={}
-  dc_children=[]
-  inventory_tree=[]
-  # print("Check dc file exists")
-  
+def BuildInventoryTree():  
   dc_file=file_search(data_dir,'dc-','.json')
   with open(dc_file,'r') as f:
     data=json.load(f)
   f.close
     # print(data)+
   for dic in data:
-    dc['name']=dic['name']
-    dc['type']="datacenter"
-    
-    for cluster_name in dic['sub_clusters']:
-      for i in BuildClusterInventoryTree():
-        if i['name']==cluster_name:
-          dc_children.append(i)
-    dc['children']=dc_children
-
-    inventory_tree.append(dc)
-  
-  return inventory_tree
+     dic.pop('dvs')  
+  return data
 
 
 @app.template_global()
@@ -187,14 +187,21 @@ def index():
 
     #获取VCSA 虚拟机内部信息，文件系统使用情况、证书等
     if vcsa =='on':
+      logger.info("VCSA信息收集开启")
       cmd=f"{python_path} QueryVCSAInfo.py {vchost} {vcrootpassword}"
       logger.info("运行脚本："+f"{python_path} QueryVCSAInfo.py {vchost}")
       run_command(cmd)
 
     #获取Dell服务器的IPMI日志
     current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-    ipmi_file=os.path.join(os.getcwd(),"ipmi-"+current_time+".log")
+    ipmi_file=os.path.join(data_dir,"ipmi-"+current_time+".json")
+    logger.info("create file:"+ipmi_file)
+    with open(ipmi_file,'w+') as f:
+       f.writelines('#file start here')
+    f.close()
+       
     if add_ipmi_host=='on':
+      logger.info("IPMI信息收集开启")
       ipmihost_list=get_value('ipmiip',form_data_list)
       ipmiuser_list=get_value('ipmiuser',form_data_list)
       ipmipass_list=get_value('ipmipass',form_data_list)
@@ -206,48 +213,56 @@ def index():
         run_command(cmd)
 
 
-    cmd=f"{python_path} QueryAlarmInfo.py {vchost} {vcuser} {vcpassword}"
-    run_command(cmd)
+    # cmd=f"{python_path} QueryAlarmInfo.py {vchost} {vcuser} {vcpassword}"
+    # run_command(cmd)
 
 
 
     #利用多进程发起信息收集任务
-    cmd=f"{python_path} QueryHostInfo.py {vchost} {vcuser} {vcpassword}"
-    logger.info(f"运行脚本： QueryHostInfo.py {vchost} {vcuser} ")
-    run_command(cmd)
+    # cmd=f"{python_path} QueryHostInfo.py {vchost} {vcuser} {vcpassword}"
+    # logger.info(f"运行脚本： QueryHostInfo.py {vchost} {vcuser} ")
+    # run_command(cmd)
 
-    cmd=f"{python_path} QueryClusterInfo.py {vchost} {vcuser} {vcpassword}"
-    logger.info(f"运行脚本： QueryClusterInfo.py {vchost} {vcuser}")
-    run_command(cmd)
+    # cmd=f"{python_path} QueryClusterInfo.py {vchost} {vcuser} {vcpassword}"
+    # logger.info(f"运行脚本： QueryClusterInfo.py {vchost} {vcuser}")
+    # run_command(cmd)
 
-    cmd=f"{python_path} QueryDCInfo.py {vchost} {vcuser} {vcpassword}"
-    logger.info(f"运行脚本： QueryDCInfo.py {vchost} {vcuser}")
-    run_command(cmd)
+    # cmd=f"{python_path} QueryDCInfo.py {vchost} {vcuser} {vcpassword}"
+    # logger.info(f"运行脚本： QueryDCInfo.py {vchost} {vcuser}")
+    # run_command(cmd)
 
-    cmd=f"{python_path} QueryVMInfo.py {vchost} {vcuser} {vcpassword}"
-    logger.info(f"运行脚本： QueryVMInfo.py {vchost} {vcuser}")
-    run_command(cmd)
+    # cmd=f"{python_path} QueryVMInfo.py {vchost} {vcuser} {vcpassword}"
+    # logger.info(f"运行脚本： QueryVMInfo.py {vchost} {vcuser}")
+    # run_command(cmd)
+
     processes = []
+
+
+    logger.info(f"运行脚本： QueryAlarmInfo.py {vchost} {vcuser} ")
     scriptname="QueryAlarmInfo.py"
     process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'alarm_info'))
     process.start()
     processes.append(process)
 
+    logger.info(f"运行脚本： QueryVMInfo.py {vchost} {vcuser}")
     scriptname="QueryVMInfo.py"
     process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'vms_info'))
     process.start()
     processes.append(process)
 
+    logger.info(f"运行脚本： QueryClusterInfo.py {vchost} {vcuser}")
     scriptname="QueryHostInfo.py"
     process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'hosts_info'))
     process.start()
     processes.append(process)
 
-    scriptname="QueryClusterInfo.py"
-    process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'cluster_info'))
-    process.start()
-    processes.append(process)
+    # logger.info(f"运行脚本： QueryClusterInfo.py {vchost} {vcuser}")
+    # scriptname="QueryClusterInfo.py"
+    # process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'cluster_info'))
+    # process.start()
+    # processes.append(process)
 
+    logger.info(f"运行脚本： QueryDCInfo.py {vchost} {vcuser}")
     scriptname="QueryDCInfo.py"
     process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'datacenter_info'))
     process.start()
@@ -255,6 +270,9 @@ def index():
 
     for process in processes:
         process.join()
+
+
+
     return redirect(url_for('datacenter'))
 
   return render_template('login.html')
@@ -339,8 +357,10 @@ def sse():
 
 
 @app.route('/datacenter')
-def datacenter():
+@app.route('/datacenter/<name>')
+def datacenter(name=None):
   vcsa_file=file_search(data_dir,'vcsa-','.log')
+  # print(vcsa_file)
   with open(vcsa_file,'r') as f:
     data=f.readlines()
   f.close()
@@ -349,6 +369,14 @@ def datacenter():
   with open(alarm_file,'r') as f:
     alarm_list=json.load(f)
   f.close()
+  alarm_acked=0
+  alrm_noacked=0
+  for alarm in alarm_list:
+     if alarm['acknowledged']:
+        alarm_acked+=1
+     else:
+        alrm_noacked+=1
+  alarm_ack=[alarm_acked,alrm_noacked]
 
   df=False
   cert=False
@@ -414,13 +442,27 @@ def datacenter():
           vcsa_certs_info.append(certs_info_dict)
           certs_info_dict={}
 
+
+  cert_healthy_counter=0
+  cert_expired_counter=0
+  cert_expiring_counter=0  
   for cert_info in vcsa_certs_info:
     if isinstance(cert_info['expiration_time'],datetime.datetime):
-      if (cert_info['expiration_time']-datetime.datetime.utcnow()).days<90:
+      if (cert_info['expiration_time']-datetime.datetime.utcnow()).days<90 and (cert_info['expiration_time']-datetime.datetime.utcnow()).days>0:
           cert_info['expirating']="Y"
+          cert_expiring_counter+=1
+      elif (cert_info['expiration_time']-datetime.datetime.utcnow()).days<=0:
+         cert_info['expirated']="Y"
+         cert_expired_counter+=1
       else:
           cert_info['expirating']="N"
-  return render_template('datacenter.html', tree=BuildInventoryTree(),vcsa_fs=vcsa_info,vcsa_certs_info=vcsa_certs_info,alarm_list=alarm_list)
+          cert_healthy_counter+=1
+  cert_status_counter=[cert_healthy_counter,cert_expiring_counter,cert_expired_counter]
+  return render_template('datacenter.html', tree=BuildInventoryTree(),\
+                         vcsa_fs=vcsa_info,vcsa_certs_info=vcsa_certs_info,\
+                          cert_status_counter=cert_status_counter,\
+                            alarm_list=alarm_list,\
+                              alarm_ack=alarm_ack)
 
 
 
@@ -469,78 +511,91 @@ def cluster(clustername=None):
         cluster_config_dict['drs_config']=dic['drs_config']
         cluster_config_dict['evc_config']=dic['evc_config']
         
-        vsan_info=dic['vsan_info']
-        if len(vsan_info)>0:
+
+        vsanHealthTest=[]
+        cluster_disMapInfo=[]
+        cluster_diskSmartStat=[]
+        vsan_perf=[]
+        health_group_data=[]
+        # vsan_info=dic['vsan_info']
+        vsan_info=dic.get('vsan_info')
+        if vsan_info is not None:
           cluster_config_dict['vsan_enabled']=True
           cluster_config_dict['vsan_info']=vsan_info
+
+
+
+          vsanLogicalCapacity=vsanLogicalCapacityUsed=0
+          vsanPhysicalCapacity=vsanPhysicalCapacityUsed=0
+          vsanDedupMetadataSize=vsanCompressionMetadataSize=0
+          for item in vsan_info:
+            if item.get("health_test"):
+              vsanHealthTest=item.get("health_test")
+            if item.get("cluster_disMapInfo"):
+              cluster_disMapInfo=item.get("cluster_disMapInfo")
+            if item.get("cluster_diskSmartStat"):
+              cluster_diskSmartStat=item.get("cluster_diskSmartStat")
+            if item.get("vsan_perf"):
+              vsan_perf=item.get("vsan_perf")
+            if item.get("logicalCapacity"):
+              vsanLogicalCapacity=item.get("logicalCapacity")
+              vsanLogicalCapacity=Decimal(vsanLogicalCapacity/1024/1024/1024).quantize(Decimal("0"))
+            if item.get("logicalCapacityUsed"):
+              vsanLogicalCapacityUsed=item.get("logicalCapacityUsed")
+              vsanLogicalCapacityUsed=Decimal(vsanLogicalCapacityUsed/1024/1024/1024).quantize(Decimal("0"))
+            if item.get("physicalCapacity"):
+              vsanPhysicalCapacity=item.get("physicalCapacity")
+              vsanPhysicalCapacity=Decimal(vsanPhysicalCapacity/1024/1024/1024).quantize(Decimal("0"))
+            if item.get("physicalCapacityUsed"):
+              vsanPhysicalCapacityUsed=item.get("physicalCapacityUsed") 
+              vsanPhysicalCapacityUsed=Decimal(vsanPhysicalCapacityUsed/1024/1024/1024).quantize(Decimal("0"))
+            if item.get("dedupMetadataSize"):
+              vsanDedupMetadataSize=item.get("dedupMetadataSize") 
+              vsanDedupMetadataSize=Decimal(vsanDedupMetadataSize/1024/1024/1024).quantize(Decimal("0"))
+            if item.get("compressionMetadataSize"):
+              vsanCompressionMetadataSize=item.get("compressionMetadataSize")
+              vsanCompressionMetadataSize=Decimal(vsanCompressionMetadataSize/1024/1024/1024).quantize(Decimal("0"))
 
         # clusters.append(cluster)
         clusters_config.append(cluster_config_dict)
 
 
 
-    vsanHealthTest=[]
-    cluster_disMapInfo=[]
-    cluster_diskSmartStat=[]
-    vsan_perf=[]
 
-
-    vsanLogicalCapacity=vsanLogicalCapacityUsed=0
-    vsanPhysicalCapacity=vsanPhysicalCapacityUsed=0
-    vsanDedupMetadataSize=vsanCompressionMetadataSize=0
-    for item in vsan_info:
-      if item.get("health_test"):
-        vsanHealthTest=item.get("health_test")
-      if item.get("cluster_disMapInfo"):
-        cluster_disMapInfo=item.get("cluster_disMapInfo")
-      if item.get("cluster_diskSmartStat"):
-        cluster_diskSmartStat=item.get("cluster_diskSmartStat")
-      if item.get("vsan_perf"):
-        vsan_perf=item.get("vsan_perf")
-      if item.get("logicalCapacity"):
-        vsanLogicalCapacity=item.get("logicalCapacity")
-        vsanLogicalCapacity=Decimal(vsanLogicalCapacity/1024/1024/1024).quantize(Decimal("0"))
-      if item.get("logicalCapacityUsed"):
-        vsanLogicalCapacityUsed=item.get("logicalCapacityUsed")
-        vsanLogicalCapacityUsed=Decimal(vsanLogicalCapacityUsed/1024/1024/1024).quantize(Decimal("0"))
-      if item.get("physicalCapacity"):
-        vsanPhysicalCapacity=item.get("physicalCapacity")
-        vsanPhysicalCapacity=Decimal(vsanPhysicalCapacity/1024/1024/1024).quantize(Decimal("0"))
-      if item.get("physicalCapacityUsed"):
-        vsanPhysicalCapacityUsed=item.get("physicalCapacityUsed") 
-        vsanPhysicalCapacityUsed=Decimal(vsanPhysicalCapacityUsed/1024/1024/1024).quantize(Decimal("0"))
-      if item.get("dedupMetadataSize"):
-        vsanDedupMetadataSize=item.get("dedupMetadataSize") 
-        vsanDedupMetadataSize=Decimal(vsanDedupMetadataSize/1024/1024/1024).quantize(Decimal("0"))
-      if item.get("compressionMetadataSize"):
-        vsanCompressionMetadataSize=item.get("compressionMetadataSize")
-        vsanCompressionMetadataSize=Decimal(vsanCompressionMetadataSize/1024/1024/1024).quantize(Decimal("0"))
 
 
     if clustername is not None:
       for clsCfg in clusters_config:
         if clsCfg['name']==clustername:
           health_group_data=defaultdict(list)
-          for item_info in clsCfg['vsan_info']:   
-            if item_info.get('health_test'): 
-              for test in item_info['health_test']:        
-                group_name=test["groupName"]
-                health_group_data[group_name].append(test)
+          if clsCfg.get('vsan_info') is not None:
+            for item_info in clsCfg['vsan_info']:   
+              if item_info.get('health_test'): 
+                for test in item_info['health_test']:        
+                  group_name=test["groupName"]
+                  health_group_data[group_name].append(test)
 
-          return render_template('cluster.html', host_detail=hosts_info, \
-                                clusterHostMap=clusterHostMap,\
-                                  cluster_config=clsCfg,\
-                                  health_group_data=health_group_data,\
-                                  cluster_disMapInfo=cluster_disMapInfo,\
-                                  cluster_diskSmartStat=cluster_diskSmartStat,\
-                                  vsan_perf=vsan_perf,\
-                                  vsanLogicalCapacity=vsanLogicalCapacity,\
-                                  vsanLogicalCapacityUsed=vsanLogicalCapacityUsed,\
-                                  vsanPhysicalCapacity=vsanPhysicalCapacity,\
-                                  vsanPhysicalCapacityUsed=vsanPhysicalCapacityUsed,\
-                                  vsanDedupMetadataSize=vsanDedupMetadataSize, \
-                                  vsanCompressionMetadataSize=vsanCompressionMetadataSize,\
-                                  tree=BuildInventoryTree())
+          if clsCfg.get('vsan_info') is not None:
+            return render_template('cluster.html', host_detail=hosts_info, \
+                                  clusterHostMap=clusterHostMap,\
+                                    cluster_config=clsCfg,\
+                                    health_group_data=health_group_data,\
+                                    cluster_disMapInfo=cluster_disMapInfo,\
+                                    cluster_diskSmartStat=cluster_diskSmartStat,\
+                                    vsan_perf=vsan_perf,\
+                                    vsanLogicalCapacity=vsanLogicalCapacity,\
+                                    vsanLogicalCapacityUsed=vsanLogicalCapacityUsed,\
+                                    vsanPhysicalCapacity=vsanPhysicalCapacity,\
+                                    vsanPhysicalCapacityUsed=vsanPhysicalCapacityUsed,\
+                                    vsanDedupMetadataSize=vsanDedupMetadataSize, \
+                                    vsanCompressionMetadataSize=vsanCompressionMetadataSize,\
+                                    tree=BuildInventoryTree())
+          else:
+            return render_template('cluster.html', host_detail=hosts_info, \
+                    clusterHostMap=clusterHostMap,\
+                      cluster_config=clsCfg,\
+                      tree=BuildInventoryTree())
+             
 
 
 @app.route('/host')

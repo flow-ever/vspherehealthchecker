@@ -1,0 +1,5 @@
+20231106 10:47:05 - DC_logger - INFO - 开始收集Datacenter信息!
+20231106 10:47:05 - DC_logger - INFO - 开始收集Datacenter：testDC 信息
+20231106 10:47:05 - DC_logger - INFO - 开始收集Datacenter：Datacenter 信息
+20231106 10:47:09 - DC_logger - INFO - DC信息写入文件：D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\dc-20231106104705.json
+20231106 10:47:09 - DC_logger - INFO - the information acquisition of datacenter(s) is finished!

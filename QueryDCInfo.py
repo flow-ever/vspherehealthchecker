@@ -97,11 +97,24 @@ def QueryDCsInfo(si):
                 vds['connectedHosts']=connectedHosts
                 vdss.append(vds)
         for ces in dc.hostFolder.childEntity:
-            # print(ces.name)
-            sub_clusters.append(ces.name)
-            #   print(ces.childType)
+            if isinstance(ces,vim.ClusterComputeResource):
+                cluster={}
+                hosts=[]
+                cluster['name']=ces.name
+                cluster['type']='cluster'
+                for sub_host in ces.host:
+                    host={}
+                    host['name']=sub_host.name
+                    host['type']='host'
+                    host['children']=[]
+                    hosts.append(host)
+                cluster['children']=hosts
+            sub_clusters.append(cluster)
+
         dc_config['name']=dc.name
-        dc_config['sub_clusters']=sub_clusters
+        dc_config['type']='datacenter'
+        
+        dc_config['children']=sub_clusters
         dc_config['dvs']=vdss
         datacenters.append(dc_config)
         
