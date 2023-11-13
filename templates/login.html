@@ -2,7 +2,7 @@
 <html>
     <meta>
     <head>
-        <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='treeview.css') }}">
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='main.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='print.css') }}" media="print">
         <style >
             #vcenter_info{
@@ -305,7 +305,6 @@
                 });
 
                 eventSource.addEventListener("DATACENTER",(e) =>{
-                    
                     var data=e.data
                         .replace(/\[|\]/g, '')  // Remove '[' and ']'
                         .replace(/'/g,'')       //replace '''

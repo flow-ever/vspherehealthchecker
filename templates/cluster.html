@@ -1,4 +1,4 @@
-{% extends "sample.html" %}
+{% extends "header.html" %}
 
 {% block body %}
 <!-- <link rel="stylesheet" type="text/css" href="print.css" media="print"> -->
@@ -7,7 +7,7 @@
 {% set hosts_num= host_detail | length %}
 
 
-
+<h1>Cluster Name:{{ clusterdata.name }}</h1>
 <h1>Cluster结构</h1>
 <div class="cluster_tree" id="cluster_tree"></div>
 
@@ -17,26 +17,26 @@
     <table class="table2" >
         <tr>
             <th>HA Enabled</th>        
-            <td colspan="2"> {{ cluster_config['ha_config']['enabled'] }} </td>
+            <td colspan="2"> {{ clusterdata['ha_config']['enabled'] }} </td>
         </tr>
         <tr>
             <th>hostMonitoring</th>
-            <td colspan="2">{{ cluster_config['ha_config']['hostMonitoring'] }} </td>
+            <td colspan="2">{{ clusterdata['ha_config']['hostMonitoring'] }} </td>
         </tr>
         <tr>
             <th>admissionControlEnabled</th>
-            <td colspan="2">{{ cluster_config['ha_config']['admissionControlEnabled'] }} </td>
+            <td colspan="2">{{ clusterdata['ha_config']['admissionControlEnabled'] }} </td>
         </tr>
         <tr>
             <th>vmIsolationResponse</th>
-            <td colspan="2">{{ cluster_config['ha_config']['vmIsolationResponse'] }} </td>
+            <td colspan="2">{{ clusterdata['ha_config']['vmIsolationResponse'] }} </td>
         </tr>
         <tr>
             <th>heartbeatDatastore</th>
             
-            <td colspan="2">{{ cluster_config['ha_config']['heartbeatDatastore'] }} </td>
+            <td colspan="2">{{ clusterdata['ha_config']['heartbeatDatastore'] }} </td>
         </tr>
-        {% set advancedSettings=cluster_config['ha_config']['advancedSettings'] %}
+        {% set advancedSettings=clusterdata['ha_config']['advancedSettings'] %}
         {% if (advancedSettings | length )>0 %}
             <tr><th colspan="3">AdvancedSettings</th></tr>
             {% for item in advancedSettings %}
@@ -60,7 +60,7 @@
     <table class="table2">
         <tr>
             <th>DRS Enabled</th>
-            {% if cluster_config['drs_config']['vmotionRate']<5 %}
+            {% if clusterdata['drs_config']['vmotionRate']<5 %}
             <td> enabled </td>
             {% else %}
             <td> Disabled </td>
@@ -68,7 +68,7 @@
         </tr>
         <tr>
             <th>defaultVmBehavior</th>
-            <td>{{ cluster_config['drs_config']['defaultVmBehavior'] }}</td>
+            <td>{{ clusterdata['drs_config']['defaultVmBehavior'] }}</td>
         </tr>
     </table>
 </div>
@@ -77,11 +77,11 @@
     <table class="table2">
         <tr>
             <th>EVC Enabled</th>
-            <td>{{cluster_config['evc_config']['enabled'] }}</td>
+            <td>{{clusterdata['evc_config']['enabled'] }}</td>
         </tr>
         <tr>
             <th>EVC Mode</th>
-            <td>{{cluster_config['evc_config']['EVCMode'] }}</td>
+            <td>{{clusterdata['evc_config']['EVCMode'] }}</td>
         </tr>
     </table>
 </div>
@@ -89,6 +89,7 @@
 <div class="mid_table_container">
     <table class="table2">
         <tr>
+            <th scope="col">ID</th>
             <th scope="col">主机名</th>
             <th scope="col">ESXi version</th>
             <th scope="col">vendor</th>
@@ -97,14 +98,20 @@
             <th scope="col">Uptime(H)</th>
 
         </tr> 
-        {% for i in range(hosts_num) %}   
+        {% for i in range(len(clusterdata.hosts)) %}   
         <tr>
-            <td>{{ host_detail[i]['host'] }}</td>        
-            <td>{{ host_detail[i]['basic_info'][0]['esxi'] }}</td>
+            <td>{{ loop.index }}</td> 
+            <td>{{ clusterdata.hosts.name }}</td>    
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <!-- <td>{{ host_detail[i]['basic_info'][0]['esxi'] }}</td>
             <td>{{ host_detail[i]['basic_info'][0]['vendor'] }}</td>
             <td>{{ host_detail[i]['basic_info'][0]['model'] }}</td>
             <td>{{ host_detail[i]['basic_info'][0]['sn'] }}</td>
-            <td>{{ host_detail[i]['basic_info'][0]['uptime'] }}</td>
+            <td>{{ host_detail[i]['basic_info'][0]['uptime'] }}</td> -->
         </tr>
         {% endfor %}
         
@@ -184,12 +191,12 @@
 </details>
 
 
-{% if cluster_config['vsan_enabled'] %}
+{% if clusterdata['vsan_enabled'] %}
     <h2>VSAN信息</h2>
 
     <h3>VSAN硬盘清单</h3>
     <div class="mid_table_container">
-    {% for item in cluster_config['vsan_info'] %}
+    {% for item in clusterdata['vsan_info'] %}
         {% if item['cluster_disMapInfo'] %}
             <table class="table2">
                 <thead>
@@ -801,7 +808,7 @@
     </div>
     <h3>VSAN健康检查信息</h3>
     <div class="mid_table_container">
-    {% for item in cluster_config['vsan_info'] %}
+    {% for item in clusterdata['vsan_info'] %}
         {% if item['health_test'] %}
         
             <table class="table2">
