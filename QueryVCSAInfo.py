@@ -24,6 +24,8 @@ def QueryVCSAInfo(vchost,rootPassword):
     cmd_cert_check='for store in $(/usr/lib/vmware-vmafd/bin/vecs-cli store list | grep -v TRUSTED_ROOT_CRLS); \
                 do echo "[*] Store :" $store; /usr/lib/vmware-vmafd/bin/vecs-cli entry list --store $store --text \
                 | grep -ie "Alias" -ie "Not After";done;'
+    cmd_vcservice_check='service-control --status --all'
+    cmd_passwdExpire_check='chage -l root'
     try:
         # Create an SSH client object
         client = paramiko.SSHClient()
@@ -45,7 +47,7 @@ def QueryVCSAInfo(vchost,rootPassword):
 
         out=channel.recv(1024)
         # print(out.decode("ascii"))
-
+        logger.info("enable VCSA shell")
         channel.send('shell\n')
         while not channel.recv_ready():
             time.sleep(3)
@@ -78,8 +80,6 @@ def QueryVCSAInfo(vchost,rootPassword):
             f.writelines(fs_map_info)
         f.close()
 
-
-
         channel.send(cmd_cert_check+'\n')
         while not channel.recv_ready():
             time.sleep(3)
@@ -90,6 +90,30 @@ def QueryVCSAInfo(vchost,rootPassword):
         logger.info("收集VCSA内部证书信息")
         with open(vcsa_json_file,'a') as f:
             f.writelines(cert_info)
+        f.close()
+
+        channel.send(cmd_vcservice_check+'\n')
+        while not channel.recv_ready():
+            time.sleep(3)
+
+        out=channel.recv(2048)
+        # print(out.decode("ascii"))
+        vcservice_info=out.decode("utf-8")
+        logger.info("收集VCSA服务状态")
+        with open(vcsa_json_file,'a') as f:
+            f.writelines(vcservice_info)
+        f.close()
+
+        channel.send(cmd_passwdExpire_check+'\n')
+        while not channel.recv_ready():
+            time.sleep(3)
+
+        out=channel.recv(2048)
+        # print(out.decode("ascii"))
+        passwdExpire_info=out.decode("utf-8")
+        logger.info("收集root用户密码过期状态")
+        with open(vcsa_json_file,'a') as f:
+            f.writelines(passwdExpire_info)
         f.close()
 
         client.close()

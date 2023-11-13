@@ -12,17 +12,20 @@
 {% if vm_perf_metric | length %}
     <h2>虚拟机关键性能指标</h2>
     {% for perf_counter in vm_perf_metric %}
-            {% if perf_counter["counterId"]==6 %}
+            {% if perf_counter["countername"]=="cpu.usage.average" %}
 
                 <div id="counterId6" style="width: 100%;height:500px;" ></div>
                 <script type="text/javascript">           
                     // 基于准备好的dom，初始化echarts实例
                     var ItemColor='#1FD6C1';
-                    var myChart = echarts.init(document.getElementById('counterId6'));                        
+                    var myChart = echarts.init(document.getElementById('counterId6'));     
+                    var data={{ perf_counter["value"] | safe }}.map(item => item/100);
+
                     // 指定图表的配置项和数据
+
                     var option = {
                         title: {
-                            text: 'VM CPU Usage(%)',
+                            text: 'CPU average usage of VM (%)',
                             left: 'center'
                         },
                         // tooltip: {trigger: 'axis'},
@@ -43,7 +46,7 @@
                         },
                         series:[
                         {                            
-                            data: {{ perf_counter["value"] | safe }}.map(
+                            data: data.map(
                                 item=>{
                                     if(item >50){
                                         return {
@@ -69,22 +72,22 @@
                                 type:"solid",
                                 color:"rgb(203 65 65)",
                                 width: 1,
-                                normal: {
-                                    color: { //外边线颜色
-                                        type: 'linear',
-                                        colorStop: [
-                                            {
-                                                offset: 0,
-                                                color: '#A9F387'
-                                            },
-                                            {
-                                                offset: 1,
-                                                color: '#3ba6fd'
-                                            }
-                                        ],
-                                       
-                                    }
+
+                                color: { //外边线颜色
+                                    type: 'linear',
+                                    colorStop: [
+                                        {
+                                            offset: 0,
+                                            color: '#A9F387'
+                                        },
+                                        {
+                                            offset: 1,
+                                            color: '#3ba6fd'
+                                        }
+                                    ],
+                                    
                                 },
+
                                 width: 1,
                                 shadowColor: '#90d6ff',
                                 showdowOffsetY: 15,
@@ -120,7 +123,7 @@
 
 
                 </script>
-            {% elif perf_counter["counterId"]==12 %}
+            {% elif perf_counter["countername"]=="cpu.readiness.average" %}
                 <div id="counterId12" style="width: 100%;height:500px;">{{ perf_counter["value"] }}</div>
                 <script type="text/javascript">
                     // 基于准备好的dom，初始化echarts实例
@@ -128,7 +131,7 @@
                     // 指定图表的配置项和数据
                     var option = {
                         title: {
-                            text: 'ready Time that the virtual machine was ready, but could not get scheduled to run on the physical CPU',
+                            text: 'Percentage of time that the virtual machine was ready, but could not get scheduled to run on the physical CPU.',
                             left: 'center'
                         },
                         // tooltip: {trigger: 'axis'},
@@ -184,7 +187,7 @@
                     };
                     myChart.setOption(option); 
                 </script>                    
-            {% elif perf_counter["counterId"]==140 %}
+            {% elif perf_counter["countername"]=="disk.maxTotalLatency.latest" %}
                 <div id="counterId140" style="width: 100%;height:500px;"></div>
                 <script type="text/javascript">
 
@@ -301,17 +304,22 @@
                         <th>Disk #</th>
                         <th>Disk Name</th>
                         <th>Disk Path</th>
-                        <th>Used Disk Size</th>
+                        <th>Used Disk Size(GB)</th>
                         <th>Disk Snapshot #</th>
-                        <th>Disk Snapshot Size</th>
-                        <th>Provisioned Disk Size</th>
+                        <th>Disk Snapshot Size(GB)</th>
+                        <th>Provisioned Disk Size(GB)</th>
                     </tr>
                     {% for disk in value %}
                             <tr>
                                 <td>disk {{ loop.index }}</td>
                                 {% for k,v in disk.items() %}
+                                    {% if(k=='used_disk_size' or k=='provisioned_disk_size' or k=='disk_snap_size') %}
+                                        <td align="left">{{ "%.0f"| format(v/1024/1024/1024) }}</td>
+                                    {% else %}
+                                        <td align="left">{{ v }}</td>
+                                    {% endif %}
                                 
-                                <td align="left">{{ v }}</td>
+                                
                                 {% endfor %}
                             </tr>
     

@@ -14,85 +14,87 @@ def connect_vc(host, user, pwd, port):
     return si
  
  
-# def build_query(content, vc_time, counter_id, obj, interval):
-#     metric_id = vim.PerformanceManager.MetricId(counterId=counter_id, instance="")
-#     start_time = vc_time - timedelta(minutes=(interval + 1))
-#     end_time = vc_time - timedelta(minutes=1)
-#     query = vim.PerformanceManager.QuerySpec(intervalId=20,
-#                                              entity=obj,
-#                                              metricId=[metric_id],
-#                                              startTime=start_time,
-#                                              endTime=end_time)
-#     perf_results = content.perfManager.QueryPerf(querySpec=[query])
-#     if perf_results:
-#         return perf_results
-#     else:
-#         pass
+def build_query(content, vc_time, counter_id, obj, interval):
+    metric_id = vim.PerformanceManager.MetricId(counterId=counter_id, instance="")
+    start_time = vc_time - timedelta(minutes=(interval + 1))
+    end_time = vc_time - timedelta(minutes=1)
+    query = vim.PerformanceManager.QuerySpec(intervalId=20,
+                                             entity=obj,
+                                             metricId=[metric_id],
+                                             startTime=start_time,
+                                             endTime=end_time)
+    perf_results = content.perfManager.QueryPerf(querySpec=[query])
+    if perf_results:
+        return perf_results
+    else:
+        pass
  
  
-# def print_statistics(obj, content, vc_time, interval, perf_dict, ):
-#     stat_interval = interval * 3  # There are 3per 20s samples in each minute
+def print_statistics(obj, content, vc_time, interval, perf_dict, ):
+    stat_interval = interval * 3  # There are 3per 20s samples in each minute
  
-#     # Network usage (Tx/Rx)
-#     # statNetworkTx = BuildQuery(content, vchtime, (stat_check(perf_dict, 'net.usage.maximum')), obj, interval)
-#     # networkTx = (float(sum(statNetworkTx[0].value[0].value) * 8 / 1024) / statInt)
-#     # statNetworkRx = BuildQuery(content, vchtime, (stat_check(perf_dict, 'net.usage.minimum')), obj, interval)
-#     # networkRx = (float(sum(statNetworkRx[0].value[0].value) * 8 / 1024) / statInt)
+    # Network usage (Tx/Rx)
+    # statNetworkTx = BuildQuery(content, vchtime, (stat_check(perf_dict, 'net.usage.maximum')), obj, interval)
+    # networkTx = (float(sum(statNetworkTx[0].value[0].value) * 8 / 1024) / statInt)
+    # statNetworkRx = BuildQuery(content, vchtime, (stat_check(perf_dict, 'net.usage.minimum')), obj, interval)
+    # networkRx = (float(sum(statNetworkRx[0].value[0].value) * 8 / 1024) / statInt)
  
-#     # Network utilization (combined transmit-rates and receive-rates) during the interval = 145
-#     network_usage = build_query(content, vc_time, stat_check(perf_dict, 'net.usage.average'), obj, interval)
-#     try:
-#         print('statNetworkThroughput:%sMB' % (round((((sum(network_usage[0].value[0].value)) / 1024) / stat_interval), 2)))
+    # Network utilization (combined transmit-rates and receive-rates) during the interval = 145
+    network_usage = build_query(content, vc_time, stat_check(perf_dict, 'net.usage.average'), obj, interval)
+    try:
+        print('statNetworkThroughput:%sMB' % (round((((sum(network_usage[0].value[0].value)) / 1024) / stat_interval), 2)))
  
-#     except TypeError:
-#         # 关机的ESXi主机无法获取到数据
-#         pass
- 
- 
-# def stat_check(perf_dict, counter_name):
-#     """通过performance counter名称获取counter id"""
-#     counter_id = perf_dict[counter_name]
-#     return counter_id
+    except TypeError:
+        # 关机的ESXi主机无法获取到数据
+        pass
  
  
-# def main():
-#     username = 'administrator@vsphere.local'
-#     password = 'eRB$i5PUl@20211101'
-#     vc_ip = '192.168.83.212'
-#     vc_port = '443'
-#     statistics_interval_time = 10   # 分钟为单位
-#     si = connect_vc(host=vc_ip, user=username, pwd=password, port=vc_port)
-#     content = si.RetrieveContent()
- 
-#     # Get vCenter date and time for use as baseline when querying for counters
-#     vc_time = si.CurrentTime()
- 
-#     # 获取所有performance counter，并放入字典中
-#     perf_dict = {}
-#     perf_list = content.perfManager.perfCounter
-#     for counter in perf_list:
-#         counter_full = "{}.{}.{}".format(counter.groupInfo.key, counter.nameInfo.key, counter.rollupType)
-#         perf_dict[counter_full] = counter.key # perf_dict包含了所有的perfCounter
-#     print(perf_dict)
-#     # 获取ESXi主机对象
-#     container_view = content.viewManager.CreateContainerView(content.rootFolder, [vim.HostSystem], True)
- 
-#     for obj in container_view.view:
-#         print_statistics(obj, content, vc_time, statistics_interval_time, perf_dict)
+def stat_check(perf_dict, counter_name):
+    """通过performance counter名称获取counter id"""
+    counter_id = perf_dict[counter_name]
+    return counter_id
  
  
-# # Start program
-# if __name__ == "__main__":
-#     main()
+def main():
+    username = 'administrator@vsphere.local'
+    # password = 'eRB$i5PUl@20211101'
+    # vc_ip = '192.168.83.212'
+    password = '123Qwe,.'
+    vc_ip = '192.168.10.82'
+    vc_port = '443'
+    statistics_interval_time = 10   # 分钟为单位
+    si = connect_vc(host=vc_ip, user=username, pwd=password, port=vc_port)
+    content = si.RetrieveContent()
+ 
+    # Get vCenter date and time for use as baseline when querying for counters
+    vc_time = si.CurrentTime()
+ 
+    # 获取所有performance counter，并放入字典中
+    perf_dict = {}
+    perf_list = content.perfManager.perfCounter
+    for counter in perf_list:
+        counter_full = "{}.{}.{}".format(counter.groupInfo.key, counter.nameInfo.key, counter.rollupType)
+        perf_dict[counter_full] = counter.key # perf_dict包含了所有的perfCounter
+    print(perf_dict)
+    # 获取ESXi主机对象
+    container_view = content.viewManager.CreateContainerView(content.rootFolder, [vim.HostSystem], True)
+ 
+    for obj in container_view.view:
+        print_statistics(obj, content, vc_time, statistics_interval_time, perf_dict)
+ 
+ 
+# Start program
+if __name__ == "__main__":
+    main()
 
 
 
 
 
-# """
-# Python program that generates various statistics for one or more virtual machines
-# A list of virtual machines can be provided as a comma separated list.
-# """
+"""
+Python program that generates various statistics for one or more virtual machines
+A list of virtual machines can be provided as a comma separated list.
+"""
  
 # from __future__ import print_function
 # from pyVim.connect import SmartConnectNoSSL, Disconnect
@@ -324,78 +326,6 @@ def connect_vc(host, user, pwd, port):
 #         break
  
  
-# # Start program
-# if __name__ == "__main__":
-#     main()
-data_dir=os.path.join(os.getcwd(),'data')
-
-def file_search(dir,prefix,surfix):
-  find_flag=False
-  files=os.listdir(dir)
-  for file in files:
-    if file.startswith(prefix) and file.endswith(surfix):
-      find_flag=True
-      return os.path.join(dir,file)
-  if not find_flag:
-    return find_flag
-
-def BuildDCInventoryTree(dc_id:str):  
-  dc_file=file_search(data_dir,'dc-','.json')
-  with open(dc_file,'r') as f:
-    vcenter_data=json.load(f)
-  f.close
-  
-  inventory_tree=[]
-  for vc in vcenter_data:
-    vcenter={}
-    vcenter['name']=vc['name']
-    vcenter['path']=vc['id']
-    vcenter['children']=[]
-
-    
-    for dc in vc['datacenters']:
-        dc_tree={} 
-        clusters=[]   
-        
-        dc_tree['name']=dc['name']
-        dc_tree['path']=dc['parent']+'-'+dc['id']
-        if dc_tree['path']==dc_id:        
-          if len(dc['clusters'])>0:          
-              for cls in dc['clusters']:
-                  cluster={}
-                  cluster['name']=cls['name']
-                  cluster['path']=dc_tree['path']+'-'+cls['id']
-                  hosts=[]
-                  if len(cls['hosts'])>0:
-                      for item in cls['hosts']:
-                          host={}
-                          host['name']=item['name']
-                          host['path']=cluster['path']+'-'+item['id']
-                          host['children']=[]
-                          for v in item['vm_list']:
-                              vm={}
-                              vm['name']=v['name']
-                              vm['path']=host['path']+'-'+v['id']
-                              vm['children']=[]
-                              host['children'].append(vm)
-                          hosts.append(host)
-                      cluster['children']=hosts            
-                  else:               
-                      cluster['children']=[]
-                  # cluster['children']=cls['hosts']
-                  clusters.append(cluster)          
-              dc_tree['children']=clusters         
-          else:
-              dc_tree['children']=[]
-
-          inventory_tree.append(dc_tree)
-  return inventory_tree
-
-dc_id='vc1-dc2'
-print(BuildDCInventoryTree(dc_id))
-   
-       
-
-
-
-
+# Start program
+if __name__ == "__main__":
+    main()

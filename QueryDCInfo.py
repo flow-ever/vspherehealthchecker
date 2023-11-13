@@ -151,8 +151,28 @@ def get_host_datetime(host):
    host_datetime_info['ntpServer']=host.config.dateTimeInfo.ntpConfig.server  #server[]
    return host_datetime_info
 
-def buildQuery(content, vchtime, counterIds, instance, obj):
+def counterID2Name(content,counterId):
     perfManager = content.perfManager
+    perf_dict = {}
+    perf_list = perfManager.perfCounter
+    for counter in perf_list:
+        counter_fullName = "{}.{}.{}".format(counter.groupInfo.key, counter.nameInfo.key, counter.rollupType)
+        perf_dict[counter.key] =counter_fullName  # perf_dict包含了所有的perfCounter
+    if perf_dict.get(counterId) is not None:
+        return perf_dict.get(counterId)
+    else:
+        return None
+
+def buildQuery(content, vchtime, counternames, instance, obj):
+    perfManager = content.perfManager
+    perf_dict = {}
+    perf_list = perfManager.perfCounter
+    for counter in perf_list:
+        counter_fullName = "{}.{}.{}".format(counter.groupInfo.key, counter.nameInfo.key, counter.rollupType)
+        perf_dict[counter_fullName] = counter.key # perf_dict包含了所有的perfCounter
+
+    #注意，counterId在不同主机上表示的指标项可能不一样，但是counterName不会变化，所以查询要以countername为依据
+    counterIds=[perf_dict[counter_fullName] for counter_fullName in counternames ]
     if instance=="" or instance is None:
          instance="*"
     # instance=""
@@ -541,14 +561,14 @@ def QueryDCsInfo(si):
                         # objects for building the Query Spec    
                         # metric_ids=[vim.PerformanceManager.MetricId(counterId=counter,instance="*") for counter in counter_ids]
 
-                        #counter_id 150 network performace counter
-                    counter_ids=[142]
+                        #counter name:net.usage.average,net.usage.maximum,net.throughput.usage.average
+                    counter_names=['net.usage.average','net.usage.maximum','net.throughput.usage.average']
                     instance=""
 
 
                         # # Query the performance manager
                         # # based on the metrics created above    
-                    result_stats=buildQuery(content, vchtime, counter_ids,instance,sub_host)
+                    result_stats=buildQuery(content, vchtime, counter_names,instance,sub_host)
                     
                     for instance_metric in result_stats:
                             values=instance_metric.value
@@ -556,6 +576,7 @@ def QueryDCsInfo(si):
                                 network_metric={}
 
                                 network_metric["counterId"]=v.id.counterId
+                                network_metric["countername"]=counterID2Name(content,v.id.counterId)
                                 network_metric["endTime"]=vchtime.astimezone()
                                 if v.id.instance=="":
                                     network_metric["instance"]="all"
@@ -573,9 +594,10 @@ def QueryDCsInfo(si):
                     host['network_metrics']=network_metrics               
 
 
-                    counter_ids=[6,12,140] 
+                    #'cpu.usage.average','cpu.readiness.average','disk.maxTotalLatency.latest'
+                    counter_names=['cpu.usage.average','cpu.readiness.average','disk.maxTotalLatency.latest'] 
                     instance=""  
-                    result_stats=buildQuery(content, vchtime, counter_ids,instance,sub_host)
+                    result_stats=buildQuery(content, vchtime, counter_names,instance,sub_host)
                         # print(result_stats)
                     for instance_metric in result_stats:
                             values=instance_metric.value
@@ -584,6 +606,7 @@ def QueryDCsInfo(si):
                                 if v.id.instance=="":
                                     metric["endTime"]=vchtime.astimezone()
                                     metric["counterId"]=v.id.counterId
+                                    metric["countername"]=counterID2Name(content,v.id.counterId)
                                     if v.id.counterId==6:
                                         metric["value"]=[Decimal(value*100/(sub_host.summary.hardware.numCpuCores*sub_host.summary.hardware.cpuMhz)).quantize(Decimal(0.00)) for value in v.value]
                                     elif v.id.counterId==12:

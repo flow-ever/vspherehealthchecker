@@ -1,33 +1,69 @@
-20231106 10:46:29 - ipmi_logger - INFO - 登录主机：192.168.10.230 获取IPMI日志信息。
-20231106 10:46:36 - ipmi_logger - ERROR - Successfully connected to 192.168.10.230!
-20231106 10:46:41 - ipmi_logger - ERROR - Successfully connected to 192.168.10.230!
-20231106 10:46:41 - ipmi_logger - INFO - Model: PowerEdge R430
-20231106 10:46:41 - ipmi_logger - INFO - Manufacturer: Dell Inc.
-20231106 10:46:41 - ipmi_logger - INFO - Service tag 8DJ84J2
-20231106 10:46:41 - ipmi_logger - INFO - Serial number: CN779216CQ01H4
-20231106 10:46:41 - ipmi_logger - INFO - Hostname: vsan01
-20231106 10:46:41 - ipmi_logger - INFO - Power state: On
-20231106 10:46:41 - ipmi_logger - INFO - Asset tag: 
-20231106 10:46:41 - ipmi_logger - INFO - Memory size: 256.0
-20231106 10:46:41 - ipmi_logger - INFO - CPU type: Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz
-20231106 10:46:41 - ipmi_logger - INFO - Number of CPUs: 2
-20231106 10:46:41 - ipmi_logger - INFO - System status: OK
-20231106 10:46:45 - ipmi_logger - ERROR - Successfully connected to 192.168.10.230!
-20231106 10:46:45 - ipmi_logger - CRITICAL - D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\ipmi-20231106104629.json:this json file is empty 
-20231106 10:46:45 - ipmi_logger - INFO - write data to json file
-20231106 10:46:46 - ipmi_logger - INFO - 登录主机：192.168.10.231 获取IPMI日志信息。
-20231106 10:46:50 - ipmi_logger - ERROR - Successfully connected to 192.168.10.231!
-20231106 10:46:55 - ipmi_logger - ERROR - Successfully connected to 192.168.10.231!
-20231106 10:46:55 - ipmi_logger - INFO - Model: PowerEdge R430
-20231106 10:46:55 - ipmi_logger - INFO - Manufacturer: Dell Inc.
-20231106 10:46:55 - ipmi_logger - INFO - Service tag 2809LN2
-20231106 10:46:55 - ipmi_logger - INFO - Serial number: CNFCP007CK00PB
-20231106 10:46:55 - ipmi_logger - INFO - Hostname: vsan02
-20231106 10:46:55 - ipmi_logger - INFO - Power state: On
-20231106 10:46:55 - ipmi_logger - INFO - Asset tag: 
-20231106 10:46:55 - ipmi_logger - INFO - Memory size: 256.0
-20231106 10:46:55 - ipmi_logger - INFO - CPU type: Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz
-20231106 10:46:55 - ipmi_logger - INFO - Number of CPUs: 2
-20231106 10:46:55 - ipmi_logger - INFO - System status: OK
-20231106 10:47:00 - ipmi_logger - ERROR - Successfully connected to 192.168.10.231!
-20231106 10:47:00 - ipmi_logger - INFO - write data to json file
+20231113 18:38:04 - ipmi_logger - INFO - 登录主机：192.168.10.230 获取IPMI日志信息。
+20231113 18:38:08 - ipmi_logger - ERROR - Successfully connected to 192.168.10.230!
+20231113 18:38:13 - ipmi_logger - ERROR - Successfully connected to 192.168.10.230!
+20231113 18:38:13 - ipmi_logger - INFO - Model: PowerEdge R430
+20231113 18:38:13 - ipmi_logger - INFO - Manufacturer: Dell Inc.
+20231113 18:38:13 - ipmi_logger - INFO - Service tag 8DJ84J2
+20231113 18:38:13 - ipmi_logger - INFO - Serial number: CN779216CQ01H4
+20231113 18:38:13 - ipmi_logger - INFO - Hostname: vsan01
+20231113 18:38:13 - ipmi_logger - INFO - Power state: On
+20231113 18:38:13 - ipmi_logger - INFO - Asset tag: 
+20231113 18:38:13 - ipmi_logger - INFO - Memory size: 256.0
+20231113 18:38:13 - ipmi_logger - INFO - CPU type: Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz
+20231113 18:38:13 - ipmi_logger - INFO - Number of CPUs: 2
+20231113 18:38:13 - ipmi_logger - INFO - System status: OK
+20231113 18:38:19 - ipmi_logger - ERROR - Successfully connected to 192.168.10.230!
+20231113 18:38:19 - ipmi_logger - CRITICAL - D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\ipmi-20231113183804.json:this json file is empty 
+20231113 18:38:19 - ipmi_logger - INFO - write data to json file:D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\ipmi-20231113183804.json
+20231113 18:38:19 - ipmi_logger - INFO - the information acquisition of ipmi host(s) is finished!
+20231113 18:38:19 - ipmi_logger - INFO - 登录主机：192.168.10.231 获取IPMI日志信息。
+20231113 18:38:24 - ipmi_logger - ERROR - Successfully connected to 192.168.10.231!
+20231113 18:38:29 - ipmi_logger - ERROR - Successfully connected to 192.168.10.231!
+20231113 18:38:29 - ipmi_logger - INFO - Model: PowerEdge R430
+20231113 18:38:29 - ipmi_logger - INFO - Manufacturer: Dell Inc.
+20231113 18:38:29 - ipmi_logger - INFO - Service tag 2809LN2
+20231113 18:38:29 - ipmi_logger - INFO - Serial number: CNFCP007CK00PB
+20231113 18:38:29 - ipmi_logger - INFO - Hostname: vsan02
+20231113 18:38:29 - ipmi_logger - INFO - Power state: On
+20231113 18:38:29 - ipmi_logger - INFO - Asset tag: 
+20231113 18:38:29 - ipmi_logger - INFO - Memory size: 256.0
+20231113 18:38:29 - ipmi_logger - INFO - CPU type: Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz
+20231113 18:38:29 - ipmi_logger - INFO - Number of CPUs: 2
+20231113 18:38:29 - ipmi_logger - INFO - System status: OK
+20231113 18:38:33 - ipmi_logger - ERROR - Successfully connected to 192.168.10.231!
+20231113 18:38:33 - ipmi_logger - INFO - write data to json file:D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\ipmi-20231113183804.json
+20231113 18:38:33 - ipmi_logger - INFO - the information acquisition of ipmi host(s) is finished!
+20231113 18:38:33 - ipmi_logger - INFO - 登录主机：192.168.10.232 获取IPMI日志信息。
+20231113 18:38:40 - ipmi_logger - ERROR - Successfully connected to 192.168.10.232!
+20231113 18:38:44 - ipmi_logger - ERROR - Successfully connected to 192.168.10.232!
+20231113 18:38:44 - ipmi_logger - INFO - Model: PowerEdge R430
+20231113 18:38:44 - ipmi_logger - INFO - Manufacturer: Dell Inc.
+20231113 18:38:44 - ipmi_logger - INFO - Service tag 2CP6LN2
+20231113 18:38:44 - ipmi_logger - INFO - Serial number: CNFCP007CR02G0
+20231113 18:38:44 - ipmi_logger - INFO - Hostname: vsan03
+20231113 18:38:44 - ipmi_logger - INFO - Power state: On
+20231113 18:38:44 - ipmi_logger - INFO - Asset tag: 
+20231113 18:38:44 - ipmi_logger - INFO - Memory size: 256.0
+20231113 18:38:44 - ipmi_logger - INFO - CPU type: Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz
+20231113 18:38:44 - ipmi_logger - INFO - Number of CPUs: 2
+20231113 18:38:44 - ipmi_logger - INFO - System status: OK
+20231113 18:38:51 - ipmi_logger - ERROR - Successfully connected to 192.168.10.232!
+20231113 18:38:51 - ipmi_logger - INFO - write data to json file:D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\ipmi-20231113183804.json
+20231113 18:38:51 - ipmi_logger - INFO - the information acquisition of ipmi host(s) is finished!
+20231113 18:38:52 - ipmi_logger - INFO - 登录主机：192.168.10.237 获取IPMI日志信息。
+20231113 18:38:56 - ipmi_logger - ERROR - Successfully connected to 192.168.10.237!
+20231113 18:39:00 - ipmi_logger - ERROR - Successfully connected to 192.168.10.237!
+20231113 18:39:00 - ipmi_logger - INFO - Model: PowerEdge R430
+20231113 18:39:00 - ipmi_logger - INFO - Manufacturer: Dell Inc.
+20231113 18:39:00 - ipmi_logger - INFO - Service tag 662KCD2
+20231113 18:39:00 - ipmi_logger - INFO - Serial number: CN77921647000Z
+20231113 18:39:00 - ipmi_logger - INFO - Hostname: vsan04
+20231113 18:39:00 - ipmi_logger - INFO - Power state: On
+20231113 18:39:00 - ipmi_logger - INFO - Asset tag: 
+20231113 18:39:00 - ipmi_logger - INFO - Memory size: 238.418688
+20231113 18:39:00 - ipmi_logger - INFO - CPU type: Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz
+20231113 18:39:00 - ipmi_logger - INFO - Number of CPUs: 2
+20231113 18:39:00 - ipmi_logger - INFO - System status: OK
+20231113 18:39:05 - ipmi_logger - ERROR - Successfully connected to 192.168.10.237!
+20231113 18:39:05 - ipmi_logger - INFO - write data to json file:D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\ipmi-20231113183804.json
+20231113 18:39:05 - ipmi_logger - INFO - the information acquisition of ipmi host(s) is finished!

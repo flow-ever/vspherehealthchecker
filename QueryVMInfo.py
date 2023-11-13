@@ -14,7 +14,7 @@ import sys
 
 def establish_connection(vchost,vcuser,vcpassword):
     try:
-        si = SmartConnect(host=vchost, user=vcuser, pwd=vcpassword, sslContext=s)
+        si = SmartConnectNoSSL(host=vchost, user=vcuser, pwd=vcpassword)
         atexit.register(Disconnect, si)
         return si
     except Exception as e:
@@ -205,8 +205,31 @@ def vmtools_status_check(vm):
     if vm.guest.toolsVersionStatus2=='guestToolsNotInstalled':
         return "NotInstalled"
     
-def buildQuery(content, vchtime, counterIds, instance, obj):
+
+
+def counterID2Name(content,counterId):
     perfManager = content.perfManager
+    perf_dict = {}
+    perf_list = perfManager.perfCounter
+    for counter in perf_list:
+        counter_fullName = "{}.{}.{}".format(counter.groupInfo.key, counter.nameInfo.key, counter.rollupType)
+        perf_dict[counter.key] =counter_fullName  # perf_dict包含了所有的perfCounter
+    if perf_dict.get(counterId) is not None:
+        return perf_dict.get(counterId)
+    else:
+        return None
+
+
+def buildQuery(content, vchtime, counternames, instance, obj):
+    perfManager = content.perfManager
+    perf_dict = {}
+    perf_list = perfManager.perfCounter
+    for counter in perf_list:
+        counter_fullName = "{}.{}.{}".format(counter.groupInfo.key, counter.nameInfo.key, counter.rollupType)
+        perf_dict[counter_fullName] = counter.key # perf_dict包含了所有的perfCounter
+
+    #注意，counterId在不同主机上表示的指标项可能不一样，但是counterName不会变化，所以查询要以countername为依据
+    counterIds=[perf_dict[counter_fullName] for counter_fullName in counternames ]
     if instance=="" or instance is None:
          instance="*"
     metricId = [vim.PerformanceManager.MetricId(counterId=counterId, instance=instance) for counterId in counterIds]
@@ -296,8 +319,8 @@ def QueryVMsInfo(si):
     #         # 6:' usagemhz CPU usage in megahertz during the interval'
     #         # 12: ready Time that the virtual machine was ready, but could not get scheduled to run on the physical CPU during last measurement interval
     #         # 140:maxTotalLatency 'Highest latency value across all disks used by the host'
-        #counter_id 150 network performace counter
-        counter_ids=[6,12,140] 
+                    #'cpu.usage.average','cpu.readiness.average','disk.maxTotalLatency.latest'
+        counter_names=['cpu.usage.average','cpu.readiness.average','disk.maxTotalLatency.latest'] 
         instance=""
 
 
@@ -305,7 +328,7 @@ def QueryVMsInfo(si):
         # # based on the metrics created above
         # 
         if vm.runtime.powerState=="poweredOn":    
-            result_stats=buildQuery(content, vchtime, counter_ids,instance,vm)
+            result_stats=buildQuery(content, vchtime, counter_names,instance,vm)
             # print(result_stats)
             for instance_metric in result_stats:
                 values=instance_metric.value
@@ -313,6 +336,7 @@ def QueryVMsInfo(si):
                     if v.id.instance=="":
                         metric={}
                         metric["counterId"]=v.id.counterId
+                        metric["countername"]=counterID2Name(content,v.id.counterId)
                         if v.id.counterId==6:
                             metric["value"]=[ Decimal(value*100/(vm.runtime.host.summary.hardware.cpuMhz*vm.config.hardware.numCPU)).quantize(Decimal('0.00')) for value in v.value]  #vm.runtime.host.summary.hardware.cpuMhz* Decimal().quantize(Decimal("0.0"))
                         elif v.id.counterId==12:
@@ -429,8 +453,8 @@ if __name__=="__main__":
     vcuser = sys.argv[2]
     vcpassword = sys.argv[3]
 
-    s = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-    s.verify_mode = ssl.CERT_NONE
+    # s = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+    # s.verify_mode = ssl.CERT_NONE
     cwd = os.getcwd()
     current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
     vm_json_file=os.path.join(cwd,'data',"vms-"+current_time+".json")

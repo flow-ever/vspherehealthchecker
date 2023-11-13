@@ -70,7 +70,7 @@ def run_command(command):
     # print(command)
     # result = subprocess.run(command, shell=True, capture_output=True, text=True)
     sub_process=subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
-    logger.info("start to execute command:"+command+"!")
+    # logger.info("start to execute command:"+command+"!")
     with sub_process.stdout:
       log_subprocess_output(sub_process.stdout)
     if sub_process.stderr is not None:
@@ -339,7 +339,7 @@ def index():
 
 
 
-    return redirect(url_for('inventory'))
+    return redirect(url_for('datacenter'))
 
   return render_template('login.html')
   
@@ -417,7 +417,7 @@ def log_stream():
 def sse():
   # Add the client (browser) to the clients list
   # clients.append(request.environ['wsgi.input'])
-  return Response(log_stream(),content_type='text/event-stream')
+  return Response(log_stream(),mimetype='text/event-stream')
 
 def show_vcenter():
   vcsa_file=file_search(data_dir,'vcsa-','.log')
@@ -903,5 +903,5 @@ def datacenter():
      return render_template('virtualmachine.html',tree=BuildInventoryTree(),vm_info=para_list[0],vm_perf_metric=para_list[1])
 
 if __name__=='__main__':
-    app.run(debug=True,port=5000)
+    app.run(debug=True,port=9999)
     multiprocessing.freeze_support()  
