@@ -7,7 +7,7 @@ import vsanmgmtObjects
 import vsanapiutils
 from packaging.version import Version
 import logging
-from pyVim.connect import SmartConnect, Disconnect
+from pyVim.connect import SmartConnect, Disconnect,SmartConnectNoSSL
 import atexit
 import ssl
 import sys
@@ -27,11 +27,12 @@ import sys
 
 def establish_connection(vchost,vcuser,vcpassword):
     try:
-        si = SmartConnect(host=vchost, user=vcuser, pwd=vcpassword, sslContext=s)
+        si = SmartConnectNoSSL(host=vchost, user=vcuser, pwd=vcpassword)
         atexit.register(Disconnect, si)
         return si
     except Exception as e:
         print(f"Failed to connect to vCenter at {vchost}: {e}")
+        logger.error(f"Failed to connect to vCenter at {vchost}: {e}")
         return None
 
 
@@ -71,10 +72,11 @@ def QueryClustersInfo(si,vchost):
     content=si.content
     getCluster=get_all_objs(content,[vim.ClusterComputeResource])
     clusters=[]
-    vsan_info=[]
+    
     for cls in getCluster: 
         logger.info("开始收集集群："+ cls.name +" 信息")  
         cluster_config={}
+        vsan_info={}
     
         cls_hosts=[]
         for host in cls.host:
@@ -170,7 +172,7 @@ def QueryClustersInfo(si,vchost):
         cluster_config['drs_config']=drs_config
         cluster_config['evc_config']=evc_config
     #    print(cluster_config['ha_config'])
-        clusters.append(cluster_config)
+        # clusters.append(cluster_config)
 
     #######################################################################################
     ##
@@ -242,7 +244,7 @@ def QueryClustersInfo(si,vchost):
                     test["overallHealth"]=""
             # print(test_list)
             test_list.sort(key=lambda e:e['groupName']) #基于测试组名排序
-            vsan_info.append({"health_test":test_list})
+            vsan_info["health_test"]=test_list
             #获取VSAN集群的磁盘信息
             vdms=vcMos['vsan-disk-management-system']  
 
@@ -255,7 +257,7 @@ def QueryClustersInfo(si,vchost):
             dataEfficientState_dict['physicalCapacityUsed']=dataEfficientState.physicalCapacityUsed
             dataEfficientState_dict['dedupMetadataSize']=dataEfficientState.spaceEfficiencyMetadataSize.dedupMetadataSize
             dataEfficientState_dict['compressionMetadataSize']=dataEfficientState.spaceEfficiencyMetadataSize.compressionMetadataSize
-            vsan_info.append(dataEfficientState_dict)
+            vsan_info['dataEfficientState']=dataEfficientState_dict
 
             #get disk map info 
             cluster_diskMapInfo=[]
@@ -338,7 +340,7 @@ def QueryClustersInfo(si,vchost):
                 cluster_diskMapInfo.append(host_diskMapInfo_dict)
             cluster_diskMapInfo.sort(key=lambda e:e['hostname'])
             # print(cluster_diskMapInfo)
-            vsan_info.append({"cluster_disMapInfo":cluster_diskMapInfo})
+            vsan_info["cluster_disMapInfo"]=cluster_diskMapInfo
             
             #获取disk SMART 信息  
             vchs = vcMos['vsan-cluster-health-system']
@@ -375,7 +377,7 @@ def QueryClustersInfo(si,vchost):
                 cluster_smartstat.append(host_diskSmartstat_dict)
             cluster_smartstat.sort(key=lambda e:e['hostname'])
             # print(cluster_smartstat)
-            vsan_info.append({"cluster_diskSmartStat":cluster_smartstat})
+            vsan_info["cluster_diskSmartStat"]=cluster_smartstat
 
 
             hosts_uuid_map=[]
@@ -386,7 +388,7 @@ def QueryClustersInfo(si,vchost):
                 host_uuid_map['hostname']=host.name
                 hosts_uuid_map.append(host_uuid_map)
 
-        #vsan 性能指标
+            #vsan 性能指标
             vsan_perf={}
             vpm=vcMos['vsan-performance-manager']
             Spec = vim.cluster.VsanPerfQuerySpec()
@@ -732,11 +734,15 @@ def QueryClustersInfo(si,vchost):
             # vsan_perf.append({"hosts_memory_metric":hosts_memory_metric})
             vsan_perf["hosts_memory_metric"]=hosts_memory_metric
 
-            vsan_info.append({"vsan_perf":vsan_perf})
+            # vsan_info.append({"vsan_perf":vsan_perf})
+            vsan_info["vsan_perf"]=vsan_perf
             cluster_config['vsan_enabled']=True
             cluster_config['vsan_info']=vsan_info
 
             clusters.append(cluster_config)
+        else:
+            clusters.append(cluster_config)
+        
 
 
     
@@ -773,7 +779,7 @@ if __name__=="__main__":
     logger.addHandler(fh)
     logger.setLevel(logging.INFO)
 
-    s = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-    s.verify_mode = ssl.CERT_NONE
+    # s = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+    # s.verify_mode = ssl.CERT_NONE
     si=establish_connection(vchost,vcuser,vcpassword)
     QueryClustersInfo(si,vchost)

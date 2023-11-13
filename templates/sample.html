@@ -10,9 +10,9 @@
     <div id="head_memu">
       <ul id="nav_head">
         <li><a href='/'>数据收集</a></li>
-        <li><a href='/datacenter'>数据中心</a></li>
-        <li><a href='/cluster/Cluster'>群集状况</a></li>
-        <li><a href='/virtualmachine'>虚拟机总览</a></li>
+        <li><a href='/inventory'>数据中心</a></li>
+        <li><a href='{{ url_for('datacenter',vm_name='all') }}'>虚拟机总览</a></li>
+        <li><a href='/cluster/Cluster'>主机硬件状况</a></li>
       </ul>
     </div>
   <div class="wrapper">

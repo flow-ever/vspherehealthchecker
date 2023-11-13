@@ -5,7 +5,7 @@ from pyVmomi import vim
 import re
 import json
 import logging
-from pyVim.connect import SmartConnect, Disconnect
+from pyVim.connect import SmartConnect, Disconnect,SmartConnectNoSSL
 import atexit
 import ssl
 import sys
@@ -19,6 +19,7 @@ def establish_connection(vchost,vcuser,vcpassword):
         return si
     except Exception as e:
         print(f"Failed to connect to vCenter at {vchost}: {e}")
+        logger.error(f"Failed to connect to vCenter at {vchost}: {e}")
         return None
 
 

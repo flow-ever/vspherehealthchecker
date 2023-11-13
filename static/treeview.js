@@ -3,7 +3,7 @@ function gen_tree(childs){
   childs.forEach(el => {
       html+=`<details open>
           <summary>
-              <span class="tree-item" title="${el.name}"><a href="/${el.type}/${el.name}">${el.name}</a></span>
+              <span class="tree-item" path="${el.path}"><a href="?id=${el.path}">${el.name}</a></span>
           </summary>`
       // console.log(html)
       if (el.children && el.children.length) {

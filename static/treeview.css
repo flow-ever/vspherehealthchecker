@@ -544,7 +544,7 @@ right connector from last child*/
   flex-wrap: wrap; /*子元素换行*/
   /* justify-content: center;
   align-items:flex-start; */
-  width:80%;
+  width:90%;
   margin-left: 10px;
 
 }

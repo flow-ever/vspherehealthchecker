@@ -5,9 +5,9 @@
 <!-- <script>
     includenav();
 </script> -->
-{% for item in host_detail %}
+
     <div class="table-container">
-    <h1>Hostname:{{ item['host'] }}</h1>
+    <h1>Hostname:{{ host_data['name'] }}</h1>
     <h2>ESXi主机基本信息</h2>
     <div class="mid_table_container">
         <table class="table2">
@@ -21,11 +21,11 @@
 
             </tr>    
             <tr>        
-                <td>{{ item['basic_info'][0]['esxi'] }}</td>
-                <td>{{ item['basic_info'][0]['vendor'] }}</td>
-                <td>{{ item['basic_info'][0]['model'] }}</td>
-                <td>{{ item['basic_info'][0]['sn'] }}</td>
-                <td>{{ item['basic_info'][0]['uptime'] }}</td>
+                <td>{{ host_data['basic_info'][0]['esxi'] }}</td>
+                <td>{{ host_data['basic_info'][0]['vendor'] }}</td>
+                <td>{{ host_data['basic_info'][0]['model'] }}</td>
+                <td>{{ host_data['basic_info'][0]['sn'] }}</td>
+                <td>{{ host_data['basic_info'][0]['uptime'] }}</td>
             </tr>
             
         </table>
@@ -42,10 +42,10 @@
             </tr>
             <tr>
                 
-                <td>{{ item['bios_info'][0]['biosVersion'] }}</td>
-                <td>{{ item['bios_info'][0]['releaseDate'] }}</td>
-                <td>{{ item['bios_info'][0]['firmwareMajorRelease'] }}</td>
-                <td>{{ item['bios_info'][0]['firmwareMinorRelease'] }}</td>
+                <td>{{ host_data['bios_info'][0]['biosVersion'] }}</td>
+                <td>{{ host_data['bios_info'][0]['releaseDate'] }}</td>
+                <td>{{ host_data['bios_info'][0]['firmwareMajorRelease'] }}</td>
+                <td>{{ host_data['bios_info'][0]['firmwareMinorRelease'] }}</td>
                 
             </tr>
         </table>
@@ -69,10 +69,10 @@
 
                 <tr>
                     
-                    <td>{{ item['cpu_ram_config'][0]['cpuModel'] }}</td>
-                    <td>{{ item['cpu_ram_config'][0]['cpuMhz'] }}</td>
-                    <td>{{ item['cpu_ram_config'][0]['numCpuCores']|string }}/{{ item['cpu_ram_config'][0]['numCpuThreads']|string }}</td>
-                    <td>{{ item['cpu_ram_config'][0]['ramSize'] }}</td>
+                    <td>{{ host_data['cpu_ram_config'][0]['cpuModel'] }}</td>
+                    <td>{{ host_data['cpu_ram_config'][0]['cpuMhz'] }}</td>
+                    <td>{{ host_data['cpu_ram_config'][0]['numCpuCores']|string }}/{{ host_data['cpu_ram_config'][0]['numCpuThreads']|string }}</td>
+                    <td>{{ host_data['cpu_ram_config'][0]['ramSize'] }}</td>
                 </tr>
 
             </table>
@@ -88,17 +88,17 @@
 
                 <tr>
 
-                    <td>{{ item['cpu_ram_usage'][0]['consolidate_ratio'] }}</td>
+                    <td>{{ host_data['cpu_ram_usage'][0]['consolidate_ratio'] }}</td>
                     <td>
                         
-                        <div class="g-progress" progress="{{ (item['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000))*100 }}" id="cpu_usage_bar" style="--progress: {{ (item['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000))*100 }}%"
-                            <span>{{ "%2.1f" | format((item['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000))*100 ) }}%  </span>
+                        <div class="g-progress" progress="{{ (host_data['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000))*100 }}" id="cpu_usage_bar" style="--progress: {{ (host_data['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000))*100 }}%"
+                            <span>{{ "%2.1f" | format((host_data['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000))*100 ) }}%  </span>
                                 </div>
                     </td>
                     <td>
                         
-                        <div class="g-progress" progress="{{ (item['cpu_ram_usage'][0]['ram_usage']|float(default=0.000))*100 }}" id="ram_usage_bar" style="--progress: {{ (item['cpu_ram_usage'][0]['ram_usage']|float(default=0.000))*100 }}%">
-                            <span>{{ "%2.1f" | format( item['cpu_ram_usage'][0]['ram_usage']|float(default=0.000)*100 ) }}% </span>
+                        <div class="g-progress" progress="{{ (host_data['cpu_ram_usage'][0]['ram_usage']|float(default=0.000))*100 }}" id="ram_usage_bar" style="--progress: {{ (host_data['cpu_ram_usage'][0]['ram_usage']|float(default=0.000))*100 }}%">
+                            <span>{{ "%2.1f" | format( host_data['cpu_ram_usage'][0]['ram_usage']|float(default=0.000)*100 ) }}% </span>
                                 </div>
                     </td>
                 </tr>
@@ -135,13 +135,13 @@
                     <th scope="col">类型</th>
                     <th scope="col">多主机共享</th>
                 </tr>
-                {% for sub_item in item['datastores'] %}
+                {% for sub_host_data in host_data['datastores'] %}
                 <tr>
-                    <td>{{ sub_item['datatore name'] }}</td>
-                    <td>{{ sub_item['capacity'] }}</td>
-                    <td>{{ sub_item['free space'] }}</td>        
-                    <td>{{ sub_item['type'] }}</td>
-                    <td>{{ sub_item['multipleHostAccess'] }}</td>
+                    <td>{{ sub_host_data['datatore name'] }}</td>
+                    <td>{{ sub_host_data['capacity'] }}</td>
+                    <td>{{ sub_host_data['free space'] }}</td>        
+                    <td>{{ sub_host_data['type'] }}</td>
+                    <td>{{ sub_host_data['multipleHostAccess'] }}</td>
                     
                 </tr>
                 {% endfor %}
@@ -157,12 +157,12 @@
                     <th scope="col">Driver</th>
                     <th scope="col">Protocol</th>
                 </tr>
-                {% for sub_item in item['hbas'] %}
+                {% for sub_host_data in host_data['hbas'] %}
                 <tr>
-                    <td>{{ sub_item['name'] }}</td>
-                    <td>{{ sub_item['model'] }}</td>
-                    <td>{{ sub_item['driver'] }}</td>
-                    <td>{{ sub_item['protocol'] }}</td>
+                    <td>{{ sub_host_data['name'] }}</td>
+                    <td>{{ sub_host_data['model'] }}</td>
+                    <td>{{ sub_host_data['driver'] }}</td>
+                    <td>{{ sub_host_data['protocol'] }}</td>
                 </tr>
                 {% endfor %}
             </table>
@@ -174,10 +174,10 @@
                     <th scope="col">Path name</th>
                     <th scope="col">Path State</th>
                 </tr>
-                {% for sub_item in item['multipaths'] %}
+                {% for sub_host_data in host_data['multipaths'] %}
                 <tr>
-                    <td>{{ sub_item['path name']}}</td>
-                    <td>{{ sub_item['path state']}}</td>
+                    <td>{{ sub_host_data['path name']}}</td>
+                    <td>{{ sub_host_data['path state']}}</td>
 
                 </tr>
                 {% endfor %}
@@ -192,11 +192,11 @@
                     <th scope="col">lunType</th>
                     <th scope="col">model</th>
                 </tr>
-                {% for sub_item in item['scsi_lun'] %}
+                {% for sub_host_data in host_data['scsi_lun'] %}
                 <tr>
-                    <td>{{ sub_item['displayName']}}</td>
-                    <td>{{ sub_item['lunType']}}</td>
-                    <td>{{ sub_item['model']}}</td>
+                    <td>{{ sub_host_data['displayName']}}</td>
+                    <td>{{ sub_host_data['lunType']}}</td>
+                    <td>{{ sub_host_data['model']}}</td>
 
                 </tr>
                 {% endfor %}
@@ -216,12 +216,12 @@
                     <th scope="col">连接物理网卡</th>
                     <th scope="col">包含端口组</th>
                 </tr>
-                {% for sub_item in item['vswitches'] %}
+                {% for sub_host_data in host_data['vswitches'] %}
                 <tr>
-                    <td>{{ sub_item['name'] }}</td>
-                    <td>{{ sub_item['mtu'] }}</td>
-                    <td>{{ sub_item['pnics'] }}</td>                   
-                    <td>{{ sub_item['portgroups'] }}</td>
+                    <td>{{ sub_host_data['name'] }}</td>
+                    <td>{{ sub_host_data['mtu'] }}</td>
+                    <td>{{ sub_host_data['pnics'] }}</td>                   
+                    <td>{{ sub_host_data['portgroups'] }}</td>
                 </tr>
                 {% endfor %}
             </table>
@@ -237,14 +237,14 @@
                     <th scope="col">mac</th>
                     <th scope="col">AutoNeg</th>
                 </tr>
-                {% for sub_item in item['pnics'] %}
+                {% for sub_host_data in host_data['pnics'] %}
                 <tr>
-                    <td>{{ sub_item['name'] }}</td>                    
-                    <td>{{ sub_item['driver'] }}</td>
-                    <td>{{ sub_item['speedMb'] }}</td>
-                    <td>{{ sub_item['duplex'] }}</td>
-                    <td>{{ sub_item['mac'] }}</td>
-                    <td>{{ sub_item['autoNego'] }}</td>
+                    <td>{{ sub_host_data['name'] }}</td>                    
+                    <td>{{ sub_host_data['driver'] }}</td>
+                    <td>{{ sub_host_data['speedMb'] }}</td>
+                    <td>{{ sub_host_data['duplex'] }}</td>
+                    <td>{{ sub_host_data['mac'] }}</td>
+                    <td>{{ sub_host_data['autoNego'] }}</td>
                 </tr>
                 {% endfor %}
             </table>
@@ -259,14 +259,14 @@
                     <th scope="col">MAC</th>
                     <th scope="col">MTU</th>
                 </tr>
-                {% for sub_item in item['vnics'] %}
+                {% for sub_host_data in host_data['vnics'] %}
                 <tr>
 
-                    <td>{{ sub_item['device'] }}</td>
-                    <td>{{ sub_item['ipAddress'] }}</td>
-                    <td>{{ sub_item['subnetMask'] }}</td>
-                    <td>{{ sub_item['mac'] }}</td>
-                    <td>{{ sub_item['mtu'] }}</td>
+                    <td>{{ sub_host_data['device'] }}</td>
+                    <td>{{ sub_host_data['ipAddress'] }}</td>
+                    <td>{{ sub_host_data['subnetMask'] }}</td>
+                    <td>{{ sub_host_data['mac'] }}</td>
+                    <td>{{ sub_host_data['mtu'] }}</td>
                 </tr>
                 {% endfor %}
             </table>
@@ -288,10 +288,10 @@
                 </tr>
                 <tr>
 
-                    <td>{{ item['datetime_info']['enabled'] }}</td>
-                    <td>{{ item['datetime_info']['ntpServer'][0] }}</td>
-                    <td>{{ item['timezone'] }}</td>
-                    <td>{{ item['deviation'] }}</td>
+                    <td>{{ host_data['datetime_info']['enabled'] }}</td>
+                    <td>{{ host_data['datetime_info']['ntpServer'][0] }}</td>
+                    <td>{{ host_data['timezone'] }}</td>
+                    <td>{{ host_data['deviation'] }}</td>
                 </tr>
             </table>
             </div>
@@ -307,9 +307,9 @@
                 </tr>
                 <tr>
 
-                    <td>{{ item['certificate']['sign_date'] }}</td>
-                    <td>{{ item['certificate']['expired_date'] }}</td>
-                    <td>{{ item['certificate']['subject'] }}</td>
+                    <td>{{ host_data['certificate']['sign_date'] }}</td>
+                    <td>{{ host_data['certificate']['expired_date'] }}</td>
+                    <td>{{ host_data['certificate']['subject'] }}</td>
                 </tr>
             </table>
             </div>
@@ -318,19 +318,18 @@
         <h2>虚拟机信息</h2>
         <div class="vmlist">
             
-        {% for vm in host_vms %}
-        {% if vm['host']==item['host'] %}
+        {% for vm in host_data['vm_list'] %}
         
         <div class="vm_container">
-            {% if vm['powerState']=='poweredOn' %}
-                <div class="onButton"> </div> <div class="vm_name"> <a href="/virtualmachine/{{ vm['name'] }}">{{ vm['name'] }}</a></div>
+            {% if vm['Powerstate']=='poweredOn' %}
+                <div class="onButton"> </div> <div class="vm_name"> <a href="?vm_name={{ vm['name'] }}">{{ vm['name'] }}</a></div>
            {% else %}
-                <div class="offButton"> </div> <div class="vm_name"><a href="/virtualmachine/{{ vm['name'] }}">{{ vm['name'] }}</a></div>
+                <div class="offButton"> </div> <div class="vm_name"><a href="?vm_name={{ vm['name'] }}">{{ vm['name'] }}</a></div>
            {% endif %}
         </div>
-        {% endif %}
+
         {% endfor %}
     </div>
     </div>
-{% endfor %}
+
 {% endblock %}

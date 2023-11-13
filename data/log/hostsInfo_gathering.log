@@ -1,1 +1,8 @@
 20231106 10:47:05 - hosts_logger - INFO - 开始收集esxi主机信息：192.168.10.235
+20231106 11:18:17 - hosts_logger - INFO - 开始收集esxi主机信息：192.168.10.235
+20231106 11:20:32 - hosts_logger - INFO - 开始收集esxi主机信息：192.168.10.235
+20231106 11:20:49 - hosts_logger - INFO - 开始收集esxi主机信息：192.168.10.233
+20231106 11:21:07 - hosts_logger - INFO - 开始收集esxi主机信息：192.168.10.236
+20231106 11:21:25 - hosts_logger - INFO - 开始收集esxi主机信息：192.168.10.234
+20231106 11:21:45 - hosts_logger - INFO - 收集的主机信息写入文件：D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\hosts-20231106112032.json
+20231106 11:21:45 - hosts_logger - INFO - the information acquisition of ESXi host(s) is finished!

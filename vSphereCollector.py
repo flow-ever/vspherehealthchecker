@@ -58,8 +58,6 @@ if not os.path.exists(log_dir):
 
 
 
-# Maintain a list of clients (browsers) to send updates
-clients=[]
 
 def get_num(e):
   return e.get('value')
@@ -120,37 +118,109 @@ def file_search(dir,prefix,surfix):
     return find_flag
     
 
-# def BuildClusterInventoryTree():
-#     hosts=[]
-#     clusters=[]
-#     cluster={}
-#     cluster_file=file_search(data_dir,'cluster-','.json')
-#     with open(cluster_file,'r') as f:
-#       data=json.load(f)
-#     f.close
-#     for dic in data:    
-#       cluster['name']=dic["name"]
-#       cluster['type']="cluster"  
-#       for i in dic['hosts']:      
-#         host={}
-#         host['name']=i
-#         host['type']="host"
-#         host['children']=[]
-#         hosts.append(host)
-#       cluster['children']=hosts
-#       clusters.append(cluster)
-#     return clusters
     
-
+#构建整个vcenter的树状清单
 def BuildInventoryTree():  
   dc_file=file_search(data_dir,'dc-','.json')
   with open(dc_file,'r') as f:
-    data=json.load(f)
+    vcenter_data=json.load(f)
   f.close
-    # print(data)+
-  for dic in data:
-     dic.pop('dvs')  
-  return data
+  
+  inventory_tree=[]
+  
+  for vc in vcenter_data:
+      vcenter={}
+      vcenter['name']=vc['name']
+      vcenter['path']=vc['id']
+      vcenter['children']=[]
+
+  
+      for dc in vc['datacenters']:
+          dc_tree={} 
+          clusters=[]   
+          
+          dc_tree['name']=dc['name']
+          dc_tree['path']=dc['parent']+'-'+dc['id']
+          
+          if len(dc['clusters'])>0:          
+              for cls in dc['clusters']:
+                  cluster={}
+                  cluster['name']=cls['name']
+                  cluster['path']=dc_tree['path']+'-'+cls['id']
+                  hosts=[]
+                  if len(cls['hosts'])>0:
+                      for item in cls['hosts']:
+                          host={}
+                          host['name']=item['name']
+                          host['path']=cluster['path']+'-'+item['id']
+                          host['children']=[]
+                          hosts.append(host)
+                      cluster['children']=hosts            
+                  else:               
+                      cluster['children']=[]
+                  # cluster['children']=cls['hosts']
+                  clusters.append(cluster)          
+              dc_tree['children']=clusters         
+          else:
+              dc_tree['children']=[]
+          vcenter['children'].append(dc_tree)
+      inventory_tree.append(vcenter)
+  return inventory_tree
+
+#构建整个指定的数据中心（datacenter）的树状清单
+def BuildDCInventoryTree(dc_id:str):  
+  dc_file=file_search(data_dir,'dc-','.json')
+  with open(dc_file,'r') as f:
+    vcenter_data=json.load(f)
+  f.close
+  
+  inventory_tree=[]
+  for vc in vcenter_data:
+    vcenter={}
+    vcenter['name']=vc['name']
+    vcenter['path']=vc['id']
+    vcenter['children']=[]
+
+    
+    for dc in vc['datacenters']:
+        dc_tree={} 
+        clusters=[]   
+        
+        dc_tree['name']=dc['name']
+        dc_tree['path']=dc['parent']+'-'+dc['id']
+        if dc_tree['path']==dc_id:        
+          if len(dc['clusters'])>0:          
+              for cls in dc['clusters']:
+                  cluster={}
+                  cluster['name']=cls['name']
+                  cluster['path']=dc_tree['path']+'-'+cls['id']
+                  hosts=[]
+                  if len(cls['hosts'])>0:
+                      for item in cls['hosts']:
+                          host={}
+                          host['name']=item['name']
+                          host['path']=cluster['path']+'-'+item['id']
+                          host['children']=[]
+                          for v in item['vm_list']:
+                              vm={}
+                              vm['name']=v['name']
+                              vm['path']=host['path']+'-'+v['id']
+                              vm['children']=[]
+                              host['children'].append(vm)
+                          hosts.append(host)
+                      cluster['children']=hosts            
+                  else:               
+                      cluster['children']=[]
+                  # cluster['children']=cls['hosts']
+                  clusters.append(cluster)          
+              dc_tree['children']=clusters         
+          else:
+              dc_tree['children']=[]
+          inventory_tree.append(dc_tree)
+          break
+          
+  return inventory_tree
+
 
 
 @app.template_global()
@@ -170,6 +240,7 @@ def data_collection_task(scriptname,vchost, vcuser, vcpassword, result_key):
     except Exception as e:
         data_collection_results[result_key] = str(e)
 
+#数据收集首页，输入vcenter的SSO登录凭据以及vcsa虚拟机root用户密码等
 @app.route('/', methods=['GET','POST'])
 def index():
   if request.method == 'POST':
@@ -218,7 +289,7 @@ def index():
 
 
 
-    #利用多进程发起信息收集任务
+  
     # cmd=f"{python_path} QueryHostInfo.py {vchost} {vcuser} {vcpassword}"
     # logger.info(f"运行脚本： QueryHostInfo.py {vchost} {vcuser} ")
     # run_command(cmd)
@@ -235,6 +306,7 @@ def index():
     # logger.info(f"运行脚本： QueryVMInfo.py {vchost} {vcuser}")
     # run_command(cmd)
 
+  #利用多进程并行发起信息收集任务
     processes = []
 
 
@@ -250,15 +322,9 @@ def index():
     process.start()
     processes.append(process)
 
-    logger.info(f"运行脚本： QueryClusterInfo.py {vchost} {vcuser}")
-    scriptname="QueryHostInfo.py"
-    process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'hosts_info'))
-    process.start()
-    processes.append(process)
-
     # logger.info(f"运行脚本： QueryClusterInfo.py {vchost} {vcuser}")
-    # scriptname="QueryClusterInfo.py"
-    # process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'cluster_info'))
+    # scriptname="QueryHostInfo.py"
+    # process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'hosts_info'))
     # process.start()
     # processes.append(process)
 
@@ -273,49 +339,47 @@ def index():
 
 
 
-    return redirect(url_for('datacenter'))
+    return redirect(url_for('inventory'))
 
   return render_template('login.html')
   
 
 
-@app.route('/check_updates')
-def check_updates():
-    latest_updates=[]
-    log_file_name = request.args.get('log')
+# @app.route('/check_updates')
+# def check_updates():
+#     latest_updates=[]
+#     log_file_name = request.args.get('log')
 
-    if os.path.exists(log_file_name):
-      # Read the specified log file and return its content
-      with open(log_file_name, 'r') as log_file:
-          latest_updates = log_file.read()    
-    else:
-       latest_updates.append("该项信息收集未开始")  
-    return latest_updates
+#     if os.path.exists(log_file_name):
+#       # Read the specified log file and return its content
+#       with open(log_file_name, 'r') as log_file:
+#           latest_updates = log_file.read()    
+#     else:
+#        latest_updates.append("该项信息收集未开始")  
+#     return latest_updates
 
 
-
+#收集进度数据的函数
 def log_stream():
     #轮询检查各个信息收集脚本的生成的日志文件，读取更新进展日志，并按照类别进行输出
     log_dir=os.path.join(os.getcwd(),'data','log')
     vms_log_path=os.path.join(log_dir,"vmsInfo_gathering.log")
-    hosts_log_path=os.path.join(log_dir,"hostsInfo_gathering.log")
-    cluster_log_path=os.path.join(log_dir,"clusterInfo_gathering.log")
+    ipmi_log_path=os.path.join(log_dir,"IPMIInfo_gathering.log")
     dc_log_path=os.path.join(log_dir,"DCInfo_gathering.log")
     vcsa_log_path=os.path.join(log_dir,"vcsaInfo_gathering.log")
-    log_files_path=[vms_log_path,hosts_log_path,cluster_log_path,dc_log_path,vcsa_log_path]
+    log_files_path=[vms_log_path,ipmi_log_path,dc_log_path,vcsa_log_path]
     
 
     vm_log_end_flag='the information acquisition of virtual machine(s) is finished!'
-    host_log_end_flag='the information acquisition of ESXi host(s) is finished!'
-    cluster_log_end_flag='the information acquisition of cluster(s) is finished!'    
+    ipmi_log_end_flag='the information acquisition of ipmi host(s) is finished!'    
     dc_log_end_flag='the information acquisition of datacenter(s) is finished!'
     vcsa_log_end_flag='the information acquisition of vcsa is finished!'
-    log_end_flags=[vm_log_end_flag,host_log_end_flag,cluster_log_end_flag,dc_log_end_flag,vcsa_log_end_flag]
+    log_end_flags=[vm_log_end_flag,ipmi_log_end_flag,dc_log_end_flag,vcsa_log_end_flag]
 
-    eventType=['VM','HOST','CLUSTER','DATACENTER','VCSA']
+    eventType=['VM','CLUSTER','DATACENTER','VCSA']
 
     #收集结束标识
-    subs_end=[[key,False] for key in ['vm_end','host_end','cluster_end','datacenter_end','vcsa_end']]
+    subs_end=[[key,False] for key in ['vm_end','ipmi_end','datacenter_end','vcsa_end']]
     all_end=False
 
 
@@ -348,17 +412,14 @@ def log_stream():
         #     yield f"event:{update['eventType']}\ndata: {update['data'][0]}\n\n"
         #     # yield f"data: {update['data'][0]}\n\n"
 
+#将数据收集的进度数据发送到url /check_updates，浏览器客户端可以从该url获得数据，然后展现在前端页面
 @app.route('/progress')
 def sse():
   # Add the client (browser) to the clients list
   # clients.append(request.environ['wsgi.input'])
   return Response(log_stream(),content_type='text/event-stream')
 
-
-
-@app.route('/datacenter')
-@app.route('/datacenter/<name>')
-def datacenter(name=None):
+def show_vcenter():
   vcsa_file=file_search(data_dir,'vcsa-','.log')
   # print(vcsa_file)
   with open(vcsa_file,'r') as f:
@@ -372,9 +433,9 @@ def datacenter(name=None):
   alarm_acked=0
   alrm_noacked=0
   for alarm in alarm_list:
-     if alarm['acknowledged']:
+    if alarm['acknowledged']:
         alarm_acked+=1
-     else:
+    else:
         alrm_noacked+=1
   alarm_ack=[alarm_acked,alrm_noacked]
 
@@ -442,195 +503,105 @@ def datacenter(name=None):
           vcsa_certs_info.append(certs_info_dict)
           certs_info_dict={}
 
-
   cert_healthy_counter=0
   cert_expired_counter=0
-  cert_expiring_counter=0  
+  cert_expiring_counter=0
   for cert_info in vcsa_certs_info:
     if isinstance(cert_info['expiration_time'],datetime.datetime):
       if (cert_info['expiration_time']-datetime.datetime.utcnow()).days<90 and (cert_info['expiration_time']-datetime.datetime.utcnow()).days>0:
           cert_info['expirating']="Y"
           cert_expiring_counter+=1
       elif (cert_info['expiration_time']-datetime.datetime.utcnow()).days<=0:
-         cert_info['expirated']="Y"
-         cert_expired_counter+=1
+        cert_info['expirated']="Y"
+        cert_expired_counter+=1
       else:
           cert_info['expirating']="N"
           cert_healthy_counter+=1
   cert_status_counter=[cert_healthy_counter,cert_expiring_counter,cert_expired_counter]
-  return render_template('datacenter.html', tree=BuildInventoryTree(),\
-                         vcsa_fs=vcsa_info,vcsa_certs_info=vcsa_certs_info,\
-                          cert_status_counter=cert_status_counter,\
-                            alarm_list=alarm_list,\
-                              alarm_ack=alarm_ack)
+  # return render_template('vcenter.html', tree=BuildInventoryTree(),\
+  #                       vcsa_fs=vcsa_info,vcsa_certs_info=vcsa_certs_info,\
+  #                         cert_status_counter=cert_status_counter,\
+  #                           alarm_list=alarm_list,\
+  #                             alarm_ack=alarm_ack)
+  return [vcsa_info,vcsa_certs_info,\
+                          cert_status_counter,\
+                            alarm_list,\
+                              alarm_ack]
 
 
 
-@app.route('/cluster')
-@app.route('/cluster/<clustername>')
-def cluster(clustername=None):
-    hosts_info=[]
-    cluster_config_dict={}
-    clusters_config=[]
-
-
-    host_file=file_search(data_dir,'hosts-','.json')
-    with open(host_file,'r') as f:
-      data=json.load(f)
+def show_datacenter(path_list:list):
+    vcenter_id=path_list[0]
+    datacenter_id=path_list[1]
+    dc_file=file_search(data_dir,'dc-','.json')
+    with open(dc_file,) as f:
+      vc_data=json.load(f)
     f.close
 
-    for item in data:        
-        item.pop("network_metrics")  #删除多余信息，减少数据传输
-        item.pop("CPU_disk_metrics") #删除多余信息，减少数据传输
-        item.pop("certificate")
-        hosts_info.append(item)
+    dc_data={}
 
-    cluster_file=file_search(data_dir,'cluster-','.json')
-    with open(cluster_file,) as f:
-      data=json.load(f)
+    for vc in vc_data:
+       if vc['id']==vcenter_id:
+          for dc in vc['datacenters']:
+             if dc['id']==datacenter_id:
+                dc_data=dc
+    # return dc_data 
+
+    inventory_id='-'.join(path_list)
+    dc_tree=BuildDCInventoryTree(inventory_id)
+    return [dc_tree,dc_data]
+
+
+
+def show_cluster(path_list:list):
+    vcenter_id=path_list[0]
+    datacenter_id=path_list[1]
+    cls_id=path_list[2]
+    dc_file=file_search(data_dir,'dc-','.json')
+    with open(dc_file,) as f:
+      vc_data=json.load(f)
     f.close
 
-    clusterHostMap=[]
-    cluster_tree={}
-    for cls in data:
-      cluster_tree['name']=cls['name']
-      cluster_tree['type']="cluster"
-      cluster_tree['children']=[]
-      for esxihost in cls['hosts']:
-        child={}
-        child['name']=esxihost
-        child['type']="host"
-        child['Children']=[]
-        cluster_tree['children'].append(child)
-      clusterHostMap.append(cluster_tree)
+    cls_data={}
 
-
-      for dic in data: 
-        cluster_config_dict['name']=dic["name"]
-        cluster_config_dict['ha_config']=dic['ha_config']
-        cluster_config_dict['drs_config']=dic['drs_config']
-        cluster_config_dict['evc_config']=dic['evc_config']
-        
-
-        vsanHealthTest=[]
-        cluster_disMapInfo=[]
-        cluster_diskSmartStat=[]
-        vsan_perf=[]
-        health_group_data=[]
-        # vsan_info=dic['vsan_info']
-        vsan_info=dic.get('vsan_info')
-        if vsan_info is not None:
-          cluster_config_dict['vsan_enabled']=True
-          cluster_config_dict['vsan_info']=vsan_info
+    for vc in vc_data:
+       if vc['id']==vcenter_id:
+          for dc in vc['datacenters']:
+             if dc['id']==datacenter_id:
+                for cls in dc['clusters']:
+                   if cls['id']==cls_id:
+                      cls_data=cls
+    return cls_data                  
 
 
 
-          vsanLogicalCapacity=vsanLogicalCapacityUsed=0
-          vsanPhysicalCapacity=vsanPhysicalCapacityUsed=0
-          vsanDedupMetadataSize=vsanCompressionMetadataSize=0
-          for item in vsan_info:
-            if item.get("health_test"):
-              vsanHealthTest=item.get("health_test")
-            if item.get("cluster_disMapInfo"):
-              cluster_disMapInfo=item.get("cluster_disMapInfo")
-            if item.get("cluster_diskSmartStat"):
-              cluster_diskSmartStat=item.get("cluster_diskSmartStat")
-            if item.get("vsan_perf"):
-              vsan_perf=item.get("vsan_perf")
-            if item.get("logicalCapacity"):
-              vsanLogicalCapacity=item.get("logicalCapacity")
-              vsanLogicalCapacity=Decimal(vsanLogicalCapacity/1024/1024/1024).quantize(Decimal("0"))
-            if item.get("logicalCapacityUsed"):
-              vsanLogicalCapacityUsed=item.get("logicalCapacityUsed")
-              vsanLogicalCapacityUsed=Decimal(vsanLogicalCapacityUsed/1024/1024/1024).quantize(Decimal("0"))
-            if item.get("physicalCapacity"):
-              vsanPhysicalCapacity=item.get("physicalCapacity")
-              vsanPhysicalCapacity=Decimal(vsanPhysicalCapacity/1024/1024/1024).quantize(Decimal("0"))
-            if item.get("physicalCapacityUsed"):
-              vsanPhysicalCapacityUsed=item.get("physicalCapacityUsed") 
-              vsanPhysicalCapacityUsed=Decimal(vsanPhysicalCapacityUsed/1024/1024/1024).quantize(Decimal("0"))
-            if item.get("dedupMetadataSize"):
-              vsanDedupMetadataSize=item.get("dedupMetadataSize") 
-              vsanDedupMetadataSize=Decimal(vsanDedupMetadataSize/1024/1024/1024).quantize(Decimal("0"))
-            if item.get("compressionMetadataSize"):
-              vsanCompressionMetadataSize=item.get("compressionMetadataSize")
-              vsanCompressionMetadataSize=Decimal(vsanCompressionMetadataSize/1024/1024/1024).quantize(Decimal("0"))
+def show_host(path_list:list):
+    vcenter_id=path_list[0]
+    datacenter_id=path_list[1]
+    cls_id=path_list[2]
+    host_id=path_list[3]
+    dc_file=file_search(data_dir,'dc-','.json')
+    with open(dc_file,) as f:
+      vc_data=json.load(f)
+    f.close
 
-        # clusters.append(cluster)
-        clusters_config.append(cluster_config_dict)
+    host_data={}
+
+    for vc in vc_data:
+       if vc['id']==vcenter_id:
+          for dc in vc['datacenters']:
+             if dc['id']==datacenter_id:
+                for cls in dc['clusters']:
+                   if cls['id']==cls_id:
+                      for host in cls['hosts']:
+                         if host['id']==host_id:
+                            host_data=host                      
+    return host_data                          
 
 
 
-
-
-
-    if clustername is not None:
-      for clsCfg in clusters_config:
-        if clsCfg['name']==clustername:
-          health_group_data=defaultdict(list)
-          if clsCfg.get('vsan_info') is not None:
-            for item_info in clsCfg['vsan_info']:   
-              if item_info.get('health_test'): 
-                for test in item_info['health_test']:        
-                  group_name=test["groupName"]
-                  health_group_data[group_name].append(test)
-
-          if clsCfg.get('vsan_info') is not None:
-            return render_template('cluster.html', host_detail=hosts_info, \
-                                  clusterHostMap=clusterHostMap,\
-                                    cluster_config=clsCfg,\
-                                    health_group_data=health_group_data,\
-                                    cluster_disMapInfo=cluster_disMapInfo,\
-                                    cluster_diskSmartStat=cluster_diskSmartStat,\
-                                    vsan_perf=vsan_perf,\
-                                    vsanLogicalCapacity=vsanLogicalCapacity,\
-                                    vsanLogicalCapacityUsed=vsanLogicalCapacityUsed,\
-                                    vsanPhysicalCapacity=vsanPhysicalCapacity,\
-                                    vsanPhysicalCapacityUsed=vsanPhysicalCapacityUsed,\
-                                    vsanDedupMetadataSize=vsanDedupMetadataSize, \
-                                    vsanCompressionMetadataSize=vsanCompressionMetadataSize,\
-                                    tree=BuildInventoryTree())
-          else:
-            return render_template('cluster.html', host_detail=hosts_info, \
-                    clusterHostMap=clusterHostMap,\
-                      cluster_config=clsCfg,\
-                      tree=BuildInventoryTree())
-             
-
-
-@app.route('/host')
-@app.route('/host/<name>')
-def host(name=None):
-  vms_inventory=[]
-  vms_file=file_search(data_dir,'vms-','.json')
-  with open(vms_file,'r') as f:
-    data=json.load(f)
-  f.close
-  for dic in data:
-    vm={}
-    vm['name']=dic['Display_name']
-    vm['uuid']=dic['uuid']
-    vm['host']=dic['esxihostname']
-    vm['powerState']=dic['powerState']
-    vm['type']="virtualmachine"
-    vms_inventory.append(vm) 
-  
-  
-
-  host_detail=[]
-  host_file=file_search(data_dir,'hosts-','.json')
-  with open(host_file,'r') as f:
-    data=json.load(f)
-  f.close
-  if name is not None:
-    for item in data:
-      if item['host']==name:
-        host_detail.append(item)
-    return render_template('host.html', host_detail=host_detail,host_vms=vms_inventory,tree=BuildInventoryTree())
-  
-
-@app.route('/virtualmachine')
-def vms_summary():
+# @app.route('/virtualmachine')
+def show_VMSummary():
   vms_file=file_search(data_dir,'vms-','.json')
   with open(vms_file,) as f:
     data=json.load(f)
@@ -852,23 +823,25 @@ def vms_summary():
     if item['value'] in top10_snap_disk_list:
       vms_top10_snapshotSize.append(item)
   
-  return render_template('vms_summary.html',vms_top10_snapshotSize=vms_top10_snapshotSize,vms_top10_Used_diskSize=vms_top10_Used_diskSize, \
-                        vms_top10_Provisioned_diskSize=vms_top10_Provisioned_diskSize, \
-                        vms_top10_mem=vms_top10_mem,\
-                        vms_top10_vCPU=vms_top10_vCPU,\
-                        vms_guest_os_stastic_list=vms_guest_os_stastic_list, \
-                        vms_powerOn_num=vms_powerOn_num, \
-                        vms_powerOff_num=vms_powerOff_num,\
-                        vm_tools_list=vm_tools_list,\
-                        tools_outdate=tools_outdate, \
-                        tools_up2date=tools_up2date,\
-                        tools_notInstalled=tools_notInstalled,\
-                        tools_Unmanaged=tools_Unmanaged
-                        )
+  return [vms_top10_snapshotSize, \
+          vms_top10_Used_diskSize, \
+          vms_top10_Provisioned_diskSize, \
+          vms_top10_mem,\
+          vms_top10_vCPU,\
+          vms_guest_os_stastic_list, \
+          vms_powerOn_num, \
+          vms_powerOff_num,\
+          vm_tools_list,\
+          tools_outdate, \
+          tools_up2date,\
+          tools_notInstalled,\
+          tools_Unmanaged
+          ]
 
 
-@app.route('/virtualmachine/<vm_name>')
-def virtualmachine(vm_name=None):
+
+# @app.route('/virtualmachine/<vm_name>')
+def show_vm(vm_name:str):
   vms_file=file_search(data_dir,'vms-','.json')
   with open(vms_file,) as f:
     data=json.load(f)
@@ -879,9 +852,55 @@ def virtualmachine(vm_name=None):
     if vm['Display_name']==vm_name:
       vm_info.append(vm)
       vm_perf_metric=vm["vm_perf_metric"]
-  return render_template('virtualmachine.html',tree=BuildInventoryTree(),vm_info=vm_info,vm_perf_metric=vm_perf_metric)
+  return [vm_info,vm_perf_metric]
 
-
+#数据展现页面
+@app.route('/inventory',methods=['GET','POST'])
+def datacenter():
+  inventory_id=request.args.get('id',default="",type=str)
+  vm_name=request.args.get('vm_name',default="",type=str)
+  # print(vm_name)
+  if inventory_id=="" and vm_name=="":
+     para_list=show_vcenter()
+     return render_template('vcenter.html', tree=BuildInventoryTree(),\
+                        vcsa_fs=para_list[0],vcsa_certs_info=para_list[1],\
+                          cert_status_counter=para_list[2],\
+                            alarm_list=para_list[3],\
+                              alarm_ack=para_list[4])
+  elif len(inventory_id)>0:
+     path_list=inventory_id.split('-')
+     path_len=len(path_list)
+     if path_len==1:
+        return redirect('inventory')
+     elif path_len==2:
+        para_list=show_datacenter(path_list)
+        return render_template('datacenter.html',dc_tree=para_list[0],dc_data=para_list[1],tree=BuildInventoryTree())
+     elif path_len==3:
+        cls_data=show_cluster(path_list)
+        return render_template('clusters.html',cluster=cls_data,tree=BuildInventoryTree())
+     elif path_len==4:
+        host_data=show_host(path_list)
+        return render_template('host.html',host_data=host_data,tree=BuildInventoryTree())
+  
+  if vm_name=="all":
+      para_list=show_VMSummary()
+      return render_template('vms_summary.html',vms_top10_snapshotSize=para_list[0],vms_top10_Used_diskSize=para_list[1], \
+                      vms_top10_Provisioned_diskSize=para_list[2], \
+                      vms_top10_mem=para_list[3],\
+                      vms_top10_vCPU=para_list[4],\
+                      vms_guest_os_stastic_list=para_list[5], \
+                      vms_powerOn_num=para_list[6], \
+                      vms_powerOff_num=para_list[7],\
+                      vm_tools_list=para_list[8],\
+                      tools_outdate=para_list[9], \
+                      tools_up2date=para_list[10],\
+                      tools_notInstalled=para_list[11],\
+                      tools_Unmanaged=para_list[12],\
+                      tree=BuildInventoryTree()
+                      )
+  else:
+     para_list=show_vm(vm_name)
+     return render_template('virtualmachine.html',tree=BuildInventoryTree(),vm_info=para_list[0],vm_perf_metric=para_list[1])
 
 if __name__=='__main__':
     app.run(debug=True,port=5000)

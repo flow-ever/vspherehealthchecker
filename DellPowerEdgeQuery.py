@@ -92,7 +92,8 @@ def QueryiDRAC(host,ipmiuser,ipmipass,fname):
 
     with open(fname,'w') as f:
         json.dump(ipmi_info,f,indent=4,ensure_ascii=False,default=str)    
-        logger.info('write data to json file')
+        logger.info('write data to json file:'+fname)
+        logger.info('the information acquisition of ipmi host(s) is finished!')
     f.close()
 
 

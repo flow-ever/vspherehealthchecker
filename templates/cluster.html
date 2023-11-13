@@ -274,7 +274,7 @@
             xAxis:{
                 type: 'category',
                 name: 'Time',
-                data: {{ vsan_perf.cls_frontend_metric.sampleInfo |safe }},
+                data: {{ vsan_perf['cls_frontend_metric']['sampleInfo'] |safe }},
                 axisLabel:{
                     rotate: 45,
                     // interval: 4,
@@ -351,7 +351,7 @@
             var ItemColor='#1FD6C1';
             var myChart = echarts.init(document.getElementById('cls_frontend_metric_throughput'));                        
             // 指定图表的配置项和数据
-            var sampleInfo=Array({{ vsan_perf.cls_frontend_metric.sampleInfo |safe }}.length);
+            var sampleInfo=Array({{ vsan_perf['cls_frontend_metric']['sampleInfo'] |safe }}.length);
 
             var option = {
                 title: {
@@ -363,7 +363,7 @@
                 xAxis:{
                     type: 'category',
                     name: 'Time',
-                    data: {{ vsan_perf.cls_frontend_metric.sampleInfo |safe }},
+                    data: {{ vsan_perf['cls_frontend_metric']['sampleInfo'] | safe }},
                     axisLabel:{
                         rotate: 45,
                         // interval: 4,
@@ -380,7 +380,7 @@
                 },
                 series:[
                     {   name:"throughputRead-Front",                     
-                        data: {{ vsan_perf.cls_frontend_metric.throughputRead | safe }},
+                        data: {{ vsan_perf['cls_frontend_metric']['throughputRead'] | safe }},
                         type: 'line',
                         smooth: true,
                         symbolSize: 6, //设定实心点大小
@@ -391,7 +391,7 @@
                         }
                     },
                     {   name:"throughputWrite-Front" ,                    
-                        data: {{ vsan_perf.cls_frontend_metric.throughputWrite | safe }},
+                        data: {{ vsan_perf['cls_frontend_metric']['throughputWrite'] | safe }},
                         type: 'line',
                         smooth: true,
                         symbolSize: 6, //设定实心点大小
@@ -403,7 +403,7 @@
 
                     },
                     {   name:"throughputRead-Backend",                    
-                        data: {{ vsan_perf.cls_backend_metric.throughputRead | safe }},
+                        data: {{ vsan_perf['cls_backend_metric']['throughputRead'] | safe }},
                         type: 'line',
                         smooth: true,
                         symbolSize: 6, //设定实心点大小
@@ -414,7 +414,7 @@
                         }
                     },
                     {   name:"throughputWrite-Backend" ,                   
-                        data: {{ vsan_perf.cls_backend_metric.throughputWrite | safe }},
+                        data: {{ vsan_perf['cls_backend_metric']['throughputWrite'] | safe }},
                         type: 'line',
                         smooth: true,
                         symbolSize: 6, //设定实心点大小
@@ -448,7 +448,7 @@
                 xAxis:{
                     type: 'category',
                     name: 'Time',
-                    data: {{ vsan_perf.cls_frontend_metric.sampleInfo |safe }},
+                    data: {{ vsan_perf['cls_frontend_metric']['sampleInfo'] |safe }},
                     axisLabel:{
                         rotate: 45,
                         // interval: 4,
@@ -465,7 +465,7 @@
                 },
                 series:[
                     {   name:"latencyAvgRead",                     
-                        data: {{  vsan_perf.cls_frontend_metric.latencyAvgRead | safe }},
+                        data: {{  vsan_perf['cls_frontend_metric']['latencyAvgRead'] | safe }},
                         type: 'line',
                         smooth: true,
                         symbolSize: 6, //设定实心点大小
@@ -476,7 +476,7 @@
                         }
                     },
                     {   name:"latencyAvgWrite" ,                     
-                        data: {{ vsan_perf.cls_frontend_metric.latencyAvgWrite | safe }},
+                        data: {{ vsan_perf['cls_frontend_metric']['latencyAvgWrite'] | safe }},
                         type: 'line',
                         smooth: true,
                         symbolSize: 6, //设定实心点大小
@@ -502,7 +502,7 @@
 
                     },
                     {   name:"latencyAvgRead-backend",                       
-                        data: {{ vsan_perf.cls_backend_metric.latencyAvgRead | safe }},
+                        data: {{ vsan_perf['cls_backend_metric']['latencyAvgRead'] | safe }},
                         type: 'line',
                         smooth: true,
                         symbolSize: 6, //设定实心点大小
@@ -514,7 +514,7 @@
                         }
                     },
                     {   name:"latencyAvgWrite-backend" ,                     
-                        data: {{ vsan_perf.cls_backend_metric.latencyAvgWrite | safe }},
+                        data: {{ vsan_perf['cls_backend_metric']['latencyAvgWrite'] | safe }},
                         type: 'line',
                         smooth: true,
                         symbolSize: 6, //设定实心点大小

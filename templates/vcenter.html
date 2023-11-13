@@ -1,0 +1,256 @@
+{% extends "sample.html" %}
+
+{% block body %}
+
+
+
+<h1>vCenter Server信息</h1>
+<h2>vCenter Server文件系统空间</h2>
+<div class="long_table_container">
+  <table class="table2">
+      <tr>
+          <th>文件系统</th>
+          <th>大小</th>
+          <th>已经使用</th>
+          <th>剩余可用空间</th>
+          <th>已用空间占比(%)</th>
+          <th>挂载点</th>
+      </tr>
+      {% for line in vcsa_fs %}
+          {% if (line['use_perct']|replace('%',"")|int)>85 %}
+              <tr>
+                  <td><b><font color="red">{{ line['filesystem'] }}</td>
+                  <td><b><font color="red">{{ line['size'] }}</font></b></td>
+                  <td><b><font color="red">{{ line['used'] }}</font></b></td>
+                  <td><b><font color="red">{{ line['avail'] }}</font></b></td>
+                  <td><b><font color="red">{{ line['use_perct'] }}</font></b></td>                      
+                  <td><b><font color="red">{{ line['mounton'] }}</font></b></td>
+          
+              </tr>
+          {% else %}
+          <tr>
+              <td>{{ line['filesystem'] }}</td>
+              <td>{{ line['size'] }}</td>
+              <td>{{ line['used'] }}</td>
+              <td>{{ line['avail'] }}</td>
+              <td>{{ line['use_perct'] }}</td>                         
+              <td>{{ line['mounton'] }}</td>    
+          </tr>
+          {% endif %}
+      {% endfor %}
+  </table>
+</div>
+<h2>vCenter Server证书</h2>
+<div id="certificate" style="display: flex;flex-direction: row;justify-content:flex-start;">
+    <div id="cert_chart" style="height: 400px;width: 30%;background-color: white;">
+        <script type="text/javascript">
+            var dom=document.getElementById('cert_chart')
+            var Chart = echarts.init(dom); 
+            option = {
+              title: {
+                text: '证书状态',
+                left: 'center',
+                top:20,
+              },
+              grid:{
+                top: 10,
+              },
+
+              legend: {
+                left: 'left',
+                // top: 20,
+              },
+
+              series: [
+                {
+                  name: 'Area Mode',
+                  type: 'pie',
+                  radius: [50, 120],
+                  center: ['50%', '50%'],
+                  // roseType: 'area',
+                  itemStyle: {
+                    borderRadius: 5
+                  },
+                  startAngle:45,
+                  label: {
+                    // normal: {
+                      show: true,
+                      position: 'inside',
+                      formatter(param) {
+                      // correct the percentage
+                      return param.name +param.value+ ' (' + param.percent + '%)';
+                    }
+                    // }
+                  },
+                  itemStyle:{
+                    normal:{
+                      color:function(colors){
+                        var colorList=[
+                        '#26de81',  
+                        '#fed330',
+                        '#fc5c65'
+                        ];
+                        return colorList[colors.dataIndex]
+                      }
+                    }
+                  },
+                  emphasis: {
+                    label: {
+                      show: true,
+                      fontSize: 20,
+                      fontWeight: 'bold'
+                    }
+                  },
+                  data: [
+                    { value: {{ cert_status_counter[0] }}, name: '正常' },
+                    { value: {{ cert_status_counter[1] }}, name: '即将过期（90天内）' },
+                    { value: {{ cert_status_counter[2] }}, name: '过期' },
+                    // label: {
+                    //   show:false
+                    // }
+                  ]
+                }
+              ]
+            };
+            Chart.setOption(option);   
+          </script>
+    </div>
+    <div id="cert_table" style="height: 400px;width: 40%;">
+        <table class="table2">
+            <tr>
+                <th>证书存储名称 </th>
+                <th> 证书别名</th>
+                <th> 证书过期时间</th>
+                <th> 90天内过期</th>
+            </tr>
+            {% for cert in vcsa_certs_info %}
+                {%if cert['expirating']=="Y" or cert['expirated']=="Y" %}
+                    <tr>
+                        <td><b><font color="red">{{ cert['storename'] }}</font></b></td>
+                        <td><b><font color="red">{{ cert['alias'] }}</font></b></td>
+                        <td><b><font color="red">{{ cert['expiration_time'] }}</font></b></td>
+                        <td><b><font color="red">{{ cert['expirating'] }}</font></b></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td>{{ cert['storename'] }}</td>
+                        <td>{{ cert['alias'] }}</td>
+                        {% set time_list=(cert['expiration_time'] | string).split(" ") %} 
+                        <td>{{ time_list[0] }}</td>
+                        <td>{{ cert['expirating'] }}</td>
+        
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+
+<h2>告警情况</h2>
+<div id="alarm" >
+    <div id="alert_chart" style="height: 400px;">
+        <script type="text/javascript">
+            var dom=document.getElementById('alert_chart')
+            var Chart = echarts.init(dom); 
+            option = {
+              title: {
+                text: '系统警告',
+                left: 'center',
+                top:10,
+              },
+              grid:{
+                top: 10,
+              },
+
+              legend: {
+                left: 'left',
+                // top: 'top',
+                top: 20,
+              },
+
+              series: [
+                {
+                  name: 'Area Mode',
+                  type: 'pie',
+                  radius: [50, 120],
+                  center: ['50%', '50%'],
+                  // roseType: 'area',
+                  itemStyle: {
+                    borderRadius: 5
+                  },
+                  startAngle:45,
+                  label: {
+                    // normal: {
+                      show: true,
+                      position: 'inside',
+                      formatter(param) {
+                      // correct the percentage
+                      return param.name + ' (' + param.percent + '%)';
+                    }
+                    // }
+                  },
+                  itemStyle:{
+                    normal:{
+                      color:function(colors){
+                        var colorList=[
+                        '#26de81', 
+                        '#fed330',
+                         
+                        
+                        ];
+                        return colorList[colors.dataIndex]
+                      }
+                    }
+                  },
+                  emphasis: {
+                    label: {
+                      show: true,
+                      fontSize: 20,
+                      fontWeight: 'bold'
+                    }
+                  },
+                  data: [
+                    { value: {{ alarm_ack[0] }}, name: '已经确认' },
+                    { value: {{ alarm_ack[1] }}, name: '未确认' },
+                    
+                    // label: {
+                    //   show:false
+                    // }
+                  ]
+                }
+              ]
+            };
+            Chart.setOption(option);   
+          </script>
+    </div>
+    <div id="alert_table" class="long_table_container">
+        <table class="table2">
+            <tr>
+                <th>告警时间 </th>
+                <th>告警对象名称 </th>        
+                <th> 对象类型</th>
+                <th> 告警状态</th>
+                <th> 警报名称</th>
+                <th> 警报描述</th>
+                <th> 是否确认</th>
+            </tr>
+            {% for alarm in alarm_list %}
+                    <tr>
+                        <td>{{ alarm['time'] }}</td>
+                        <td>{{ alarm['entity_name'] }}</td>
+                        <td>{{ alarm['entity_type'] }}</td>
+                        <td>{{ alarm['alarm_status'] }}</td>
+                        <td>{{ alarm['alarm_name'] }}</td>
+                        <td>{{ alarm['alarm_decription'] }}</td>
+                        <td>{{ alarm['acknowledged'] }}</td>
+        
+                    </tr>
+        
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}

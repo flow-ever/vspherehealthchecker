@@ -21,6 +21,7 @@ def establish_connection(vchost,vcuser,vcpassword):
         return si
     except Exception as e:
         print(f"Failed to connect to vCenter at {vchost}: {e}")
+        logger.error(f"Failed to connect to vCenter at {vchost}: {e}")
         return None
 
 
@@ -172,16 +173,13 @@ def QueryHostsInfo(si):
         host_dict={}
         host_BASIC=[]
         host_BIOSINFO=[]
-        # host_CERTIFICATE=[]
         host_CPU_RAM_CONFIG=[]
         host_CPU_RAM_USAGE=[]
         host_STORAGE_DS=[]
         host_STORAGE_MULTIPATH=[]
         host_STORAGE_HBA=[]
         host_STORAGE_LUN=[]
-        # host_VSWITCH=[]
         host_PNIC=[]
-        # host_VNIC=[]
 
         print(host.name)
 
@@ -414,27 +412,10 @@ def QueryHostsInfo(si):
             
 
 
-        
-        # for vnic in host.config.network.vnic:
-        #      v_nic={}
-        #  #   print(vnic)
-        #      # print("key:"+vnic.key+" device:"+vnic.device+" \
-        #      #             IP:"+vnic.spec.ip.ipAddress+" Mask:"+vnic.spec.ip.subnetMask+" \
-        #      #                 mac:"+vnic.spec.mac+" MTU:"+str(vnic.spec.mtu)) 
-        #      # v_nic['host']=host.summary.config.name
-        #      v_nic['name']=vnic.device
-        #      v_nic['mac']=vnic.spec.mac
-        #      v_nic['IP']=vnic.spec.ip.ipAddress
-        #      v_nic['submask']=vnic.spec.ip.subnetMask
-        #      v_nic['mtu']=vnic.spec.mtu
-        #      # print(v_nic)
-        #      host_VNIC.append(v_nic)  
+         
         host_dict['vnics']=get_host_vnics(host)
 
         
-        
-        CPU_disk_metrics_dict={}
-        network_metrics_dict={}
         CPU_disk_metrics=[]
         network_metrics=[]
         vchtime=si.CurrentTime()
@@ -450,7 +431,7 @@ def QueryHostsInfo(si):
             # metric_ids=[vim.PerformanceManager.MetricId(counterId=counter,instance="*") for counter in counter_ids]
 
             #counter_id 150 network performace counter
-        counter_ids=[145]
+        counter_ids=[142]
         instance=""
 
 

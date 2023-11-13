@@ -327,7 +327,6 @@ def connect_vc(host, user, pwd, port):
 # # Start program
 # if __name__ == "__main__":
 #     main()
-
 data_dir=os.path.join(os.getcwd(),'data')
 
 def file_search(dir,prefix,surfix):
@@ -340,95 +339,62 @@ def file_search(dir,prefix,surfix):
   if not find_flag:
     return find_flag
 
-def BuildClusterInventoryTree():
-    hosts=[]
-    clusters=[]
-    cluster={}
-    cluster_file=file_search(data_dir,'cluster-','.json')
-    with open(cluster_file,'r') as f:
-      data=json.load(f)
-    f.close
-    for dic in data:    
-      cluster['name']=dic["name"]
-      cluster['type']="cluster"  
-      for i in dic['hosts']:      
-        host={}
-        host['name']=i
-        host['type']="host"
-        host['children']=[]
-        hosts.append(host)
-      cluster['children']=hosts
-      clusters.append(cluster)
-    return clusters
-    
-
-def BuildInventoryTree():
-  dc={}
-  dc_children=[]
-  dcs_inventory_tree=[]
-  # print("Check dc file exists")
-  
+def BuildDCInventoryTree(dc_id:str):  
   dc_file=file_search(data_dir,'dc-','.json')
   with open(dc_file,'r') as f:
-    data=json.load(f)
+    vcenter_data=json.load(f)
   f.close
-    # print(data)+
-  for dic in data:
-    dc['name']=dic['name']
-    dc['type']="datacenter"
-    
-    for cluster_name in dic['sub_clusters']:
-      for i in BuildClusterInventoryTree():
-        if i['name']==cluster_name:
-          dc_children.append(i)
-    dc['children']=dc_children
-
-    dcs_inventory_tree.append(dc)
   
-  return dcs_inventory_tree
+  inventory_tree=[]
+  for vc in vcenter_data:
+    vcenter={}
+    vcenter['name']=vc['name']
+    vcenter['path']=vc['id']
+    vcenter['children']=[]
 
+    
+    for dc in vc['datacenters']:
+        dc_tree={} 
+        clusters=[]   
+        
+        dc_tree['name']=dc['name']
+        dc_tree['path']=dc['parent']+'-'+dc['id']
+        if dc_tree['path']==dc_id:        
+          if len(dc['clusters'])>0:          
+              for cls in dc['clusters']:
+                  cluster={}
+                  cluster['name']=cls['name']
+                  cluster['path']=dc_tree['path']+'-'+cls['id']
+                  hosts=[]
+                  if len(cls['hosts'])>0:
+                      for item in cls['hosts']:
+                          host={}
+                          host['name']=item['name']
+                          host['path']=cluster['path']+'-'+item['id']
+                          host['children']=[]
+                          for v in item['vm_list']:
+                              vm={}
+                              vm['name']=v['name']
+                              vm['path']=host['path']+'-'+v['id']
+                              vm['children']=[]
+                              host['children'].append(vm)
+                          hosts.append(host)
+                      cluster['children']=hosts            
+                  else:               
+                      cluster['children']=[]
+                  # cluster['children']=cls['hosts']
+                  clusters.append(cluster)          
+              dc_tree['children']=clusters         
+          else:
+              dc_tree['children']=[]
 
+          inventory_tree.append(dc_tree)
+  return inventory_tree
 
-def get_all_objs(content, vimtype):
-    obj = []
-    container = content.viewManager.CreateContainerView(content.rootFolder, vimtype, True)
-    for managed_object_ref in container.view:
-        # obj.update({managed_object_ref: managed_object_ref.name})
-        obj.append(managed_object_ref)
-    return obj
-
-# print(BuildClusterInventoryTree())
-
-# print(BuildInventoryTree())
-
-si=connect_vc('192.168.10.82','administrator@vsphere.local','123Qwe,.',443)
-content=si.content
-
-
-# dcs=get_all_objs(content,[vim.Datacenter])
-dcs=get_all_objs(content,[vim.Datacenter])
-dcs=[]
-
-for dc in dcs:
-    dc_data={'name':dc.name,
-             'type':'datacenter',
-             'children':[]
-             }
-    sub_clusters=[]
-    for j in dc.hostFolder.childEntity:
-       if isinstance(j,vim.ClusterComputeResource):
-          cluster={}
-          hosts=[]
-          cluster['name']=j.name
-          cluster['type']='cluster'
-          
-          for sub_host in j.host:
-             hosts.append(sub_host)
-          cluster['children']=hosts
-          sub_clusters.append(cluster)
-
-    dc_data['children']=sub_clusters
-    dcs.append(dc_data)
+dc_id='vc1-dc2'
+print(BuildDCInventoryTree(dc_id))
+   
+       
 
 
 

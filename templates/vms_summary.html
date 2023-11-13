@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<head>
-  <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='treeview.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='print.css') }}" media="print">
-  <script type="text/javascript" src="{{ url_for('static',filename='treeview.js') }}"></script>
-  <script type="text/javascript" src="{{url_for('static', filename='echarts.js')}}"></script> 
-</head>
-
-  <body >
-  <script>
-    includenav()
-  </script>
+{% extends "sample.html" %}
+{% block body %}
   <div class="dashboard" ><h1>Summary of All VMs</h1></div>
     
   <div class="dashboard">
@@ -637,7 +627,4 @@
       Chart.setOption(option); 
     </script>      
   </div>
-  </body>
-
-
-</html>
+  {% endblock %}

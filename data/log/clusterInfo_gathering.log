@@ -14,3 +14,83 @@
 20231106 10:47:15 - cluster_logger - INFO - 开始收集集群：Cluster EVC信息
 20231106 10:47:16 - cluster_logger - INFO - 集群信息写入文件：D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\cluster-20231106104705.json
 20231106 10:47:16 - cluster_logger - INFO - the information acquisition of cluster(s) is finished!
+20231106 15:00:57 - cluster_logger - INFO - 开始收集集群信息
+20231106 15:00:57 - cluster_logger - INFO - 开始收集集群：Cluster2 信息
+20231106 15:00:57 - cluster_logger - INFO - 开始收集集群：Cluster2 HA信息
+20231106 15:00:57 - cluster_logger - INFO - 开始收集集群：Cluster2 DRS信息
+20231106 15:00:57 - cluster_logger - INFO - 开始收集集群：Cluster2 EVC信息
+20231106 15:00:58 - cluster_logger - INFO - 开始收集集群：Cluster 信息
+20231106 15:00:58 - cluster_logger - INFO - 开始收集集群：Cluster HA信息
+20231106 15:00:58 - cluster_logger - INFO - 开始收集集群：Cluster DRS信息
+20231106 15:00:58 - cluster_logger - INFO - 开始收集集群：Cluster EVC信息
+20231106 15:00:59 - cluster_logger - INFO - 开始收集集群：Cluster VSAN信息
+20231106 15:01:08 - cluster_logger - INFO - 开始收集集群：Cluster 信息
+20231106 15:01:08 - cluster_logger - INFO - 开始收集集群：Cluster HA信息
+20231106 15:01:08 - cluster_logger - INFO - 开始收集集群：Cluster DRS信息
+20231106 15:01:08 - cluster_logger - INFO - 开始收集集群：Cluster EVC信息
+20231106 15:01:09 - cluster_logger - INFO - 集群信息写入文件：D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\cluster-20231106150056.json
+20231106 15:01:09 - cluster_logger - INFO - the information acquisition of cluster(s) is finished!
+20231107 08:07:05 - cluster_logger - INFO - 开始收集集群信息
+20231107 08:07:05 - cluster_logger - INFO - 开始收集集群：Cluster2 信息
+20231107 08:07:05 - cluster_logger - INFO - 开始收集集群：Cluster2 HA信息
+20231107 08:07:05 - cluster_logger - INFO - 开始收集集群：Cluster2 DRS信息
+20231107 08:07:05 - cluster_logger - INFO - 开始收集集群：Cluster2 EVC信息
+20231107 08:07:06 - cluster_logger - INFO - 开始收集集群：Cluster 信息
+20231107 08:07:06 - cluster_logger - INFO - 开始收集集群：Cluster HA信息
+20231107 08:07:06 - cluster_logger - INFO - 开始收集集群：Cluster DRS信息
+20231107 08:07:06 - cluster_logger - INFO - 开始收集集群：Cluster EVC信息
+20231107 08:07:06 - cluster_logger - INFO - 开始收集集群：Cluster VSAN信息
+20231107 08:07:15 - cluster_logger - INFO - 开始收集集群：Cluster 信息
+20231107 08:07:15 - cluster_logger - INFO - 开始收集集群：Cluster HA信息
+20231107 08:07:16 - cluster_logger - INFO - 开始收集集群：Cluster DRS信息
+20231107 08:07:16 - cluster_logger - INFO - 开始收集集群：Cluster EVC信息
+20231107 08:07:16 - cluster_logger - INFO - 集群信息写入文件：D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\cluster-20231107080705.json
+20231107 08:07:16 - cluster_logger - INFO - the information acquisition of cluster(s) is finished!
+20231107 08:07:53 - cluster_logger - INFO - 开始收集集群信息
+20231107 08:07:53 - cluster_logger - INFO - 开始收集集群：Cluster2 信息
+20231107 08:07:53 - cluster_logger - INFO - 开始收集集群：Cluster2 HA信息
+20231107 08:07:53 - cluster_logger - INFO - 开始收集集群：Cluster2 DRS信息
+20231107 08:07:53 - cluster_logger - INFO - 开始收集集群：Cluster2 EVC信息
+20231107 08:07:53 - cluster_logger - INFO - 开始收集集群：Cluster 信息
+20231107 08:07:53 - cluster_logger - INFO - 开始收集集群：Cluster HA信息
+20231107 08:07:53 - cluster_logger - INFO - 开始收集集群：Cluster DRS信息
+20231107 08:07:53 - cluster_logger - INFO - 开始收集集群：Cluster EVC信息
+20231107 08:07:54 - cluster_logger - INFO - 开始收集集群：Cluster VSAN信息
+20231107 08:08:01 - cluster_logger - INFO - 开始收集集群：Cluster 信息
+20231107 08:08:01 - cluster_logger - INFO - 开始收集集群：Cluster HA信息
+20231107 08:08:01 - cluster_logger - INFO - 开始收集集群：Cluster DRS信息
+20231107 08:08:01 - cluster_logger - INFO - 开始收集集群：Cluster EVC信息
+20231107 08:08:02 - cluster_logger - INFO - 集群信息写入文件：D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\cluster-20231107080753.json
+20231107 08:08:02 - cluster_logger - INFO - the information acquisition of cluster(s) is finished!
+20231107 08:09:06 - cluster_logger - INFO - 开始收集集群信息
+20231107 08:09:06 - cluster_logger - INFO - 开始收集集群：Cluster2 信息
+20231107 08:09:06 - cluster_logger - INFO - 开始收集集群：Cluster2 HA信息
+20231107 08:09:06 - cluster_logger - INFO - 开始收集集群：Cluster2 DRS信息
+20231107 08:09:06 - cluster_logger - INFO - 开始收集集群：Cluster2 EVC信息
+20231107 08:09:06 - cluster_logger - INFO - 开始收集集群：Cluster 信息
+20231107 08:09:06 - cluster_logger - INFO - 开始收集集群：Cluster HA信息
+20231107 08:09:07 - cluster_logger - INFO - 开始收集集群：Cluster DRS信息
+20231107 08:09:07 - cluster_logger - INFO - 开始收集集群：Cluster EVC信息
+20231107 08:09:07 - cluster_logger - INFO - 开始收集集群：Cluster VSAN信息
+20231107 08:09:15 - cluster_logger - INFO - 开始收集集群：Cluster 信息
+20231107 08:09:15 - cluster_logger - INFO - 开始收集集群：Cluster HA信息
+20231107 08:09:15 - cluster_logger - INFO - 开始收集集群：Cluster DRS信息
+20231107 08:09:15 - cluster_logger - INFO - 开始收集集群：Cluster EVC信息
+20231107 08:09:15 - cluster_logger - INFO - 集群信息写入文件：D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\cluster-20231107080906.json
+20231107 08:09:15 - cluster_logger - INFO - the information acquisition of cluster(s) is finished!
+20231107 08:38:18 - cluster_logger - INFO - 开始收集集群信息
+20231107 08:38:18 - cluster_logger - INFO - 开始收集集群：Cluster2 信息
+20231107 08:38:18 - cluster_logger - INFO - 开始收集集群：Cluster2 HA信息
+20231107 08:38:18 - cluster_logger - INFO - 开始收集集群：Cluster2 DRS信息
+20231107 08:38:19 - cluster_logger - INFO - 开始收集集群：Cluster2 EVC信息
+20231107 08:38:19 - cluster_logger - INFO - 开始收集集群：Cluster 信息
+20231107 08:38:19 - cluster_logger - INFO - 开始收集集群：Cluster HA信息
+20231107 08:38:19 - cluster_logger - INFO - 开始收集集群：Cluster DRS信息
+20231107 08:38:19 - cluster_logger - INFO - 开始收集集群：Cluster EVC信息
+20231107 08:38:19 - cluster_logger - INFO - 开始收集集群：Cluster VSAN信息
+20231107 08:38:31 - cluster_logger - INFO - 开始收集集群：Cluster 信息
+20231107 08:38:31 - cluster_logger - INFO - 开始收集集群：Cluster HA信息
+20231107 08:38:31 - cluster_logger - INFO - 开始收集集群：Cluster DRS信息
+20231107 08:38:31 - cluster_logger - INFO - 开始收集集群：Cluster EVC信息
+20231107 08:38:31 - cluster_logger - INFO - 集群信息写入文件：D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\cluster-20231107083818.json
+20231107 08:38:31 - cluster_logger - INFO - the information acquisition of cluster(s) is finished!

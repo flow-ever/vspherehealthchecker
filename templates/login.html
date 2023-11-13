@@ -190,12 +190,10 @@
             <h2>数据收集进度</h2>
             <p class="logger_title">VCSA信息收集进度：</p>
             <div id="vcsa_gathering_progress" class="logger">     </div>
-            <p class="logger_title">vSphere datacenter信息收集进度：</p>
+            <p class="logger_title">vSphere datacenter&Cluster(s)&Host(s)信息收集进度：</p>
             <div id="dc_gathering_progress" class="logger">       </div>
-            <p class="logger_title">vSphere Cluster信息收集进度：</p>
-            <div id="cls_gathering_progress" class="logger">      </div>
-            <p class="logger_title">vSphere Hosts信息收集进度：</p>
-            <div id="host_gathering_progress" class="logger">     </div>
+            <p class="logger_title">IPMI信息收集进度：</p>
+            <div id="ipmi_gathering_progress" class="logger">      </div>
             <p class="logger_title">vSphere VM信息收集进度：</p>
             <div id="vm_gathering_progress" class="logger">       </div>      
         </div>      
@@ -271,8 +269,7 @@
     function sse() {
                 const eventSource = new EventSource("/progress");    
                 const vm_div=document.getElementById('vm_gathering_progress');
-                const host_div=document.getElementById('host_gathering_progress');
-                const cls_div=document.getElementById('cls_gathering_progress');
+                const ipmi_div=document.getElementById('ipmi_gathering_progress');
                 const dc_div=document.getElementById('dc_gathering_progress');
                 const vcsa_div=document.getElementById('vcsa_gathering_progress');
                 // const progress_Div = document.getElementById(div_id);        
@@ -297,23 +294,14 @@
                     vm_div.innerHTML=data;
                     console.log("VM: "+e.data);
                 });
-                eventSource.addEventListener("HOST",(e) =>{
-                    
-                    var data=e.data
-                        .replace(/\[|\]/g, '')  // Remove '[' and ']'
-                        .replace(/'/g,'')       //replace '''
-                        .replace(/,/g, '<br>')     // Remove commas
-                    host_div.innerHTML=data;
-                    console.log("HOST: "+e.data);
-                });
-                eventSource.addEventListener("CLUSTER",(e) =>{
+                eventSource.addEventListener("IPMI",(e) =>{
                     
                     var data=e.data
                         .replace(/\[|\]/g, '')  // Remove '[' and ']'
                         .replace(/'/g,'')       //replace '''
                         .replace(/,/g, '<br>')     // Remove commas
                     cls_div.innerHTML=data;
-                    console.log("CLUSTER: "+e.data);
+                    console.log("IPMI: "+e.data);
                 });
 
                 eventSource.addEventListener("DATACENTER",(e) =>{
