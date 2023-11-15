@@ -60,9 +60,11 @@
                 <tr>
                     
                     <th scope="col">CPU model</th>
-                    <th scope="col">Frequency(Mhz)</th>
                     <th scope="col">Cores/Threads</th>
                     <th scope="col">RAM(GB)</th>
+                    <th scope="col">CPU Usage（%）</th>
+                    <th scope="col">Memory Usage(%)</th>
+                    <th scope="col">整合比（vCPU/Cores）</th>
 
 
                 </tr>
@@ -70,25 +72,9 @@
                 <tr>
                     
                     <td>{{ host_data['cpu_ram_config'][0]['cpuModel'] }}</td>
-                    <td>{{ host_data['cpu_ram_config'][0]['cpuMhz'] }}</td>
+                    
                     <td>{{ host_data['cpu_ram_config'][0]['numCpuCores']|string }}/{{ host_data['cpu_ram_config'][0]['numCpuThreads']|string }}</td>
                     <td>{{ host_data['cpu_ram_config'][0]['ramSize'] }}</td>
-                </tr>
-
-            </table>
-            </div>
-            <li>使用率（Usage） </li>
-            <div class="mid_table_container">
-            <table class="table2">
-                <tr>
-                    <th scope="col">整合比（vCPU/Cores）</th>
-                    <th scope="col">CPU Usage（%）</th>
-                    <th scope="col">Memory Usage(%)</th>
-                </tr>
-
-                <tr>
-
-                    <td>{{ host_data['cpu_ram_usage'][0]['consolidate_ratio'] }}</td>
                     <td>
                         
                         <div class="g-progress" progress="{{ (host_data['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000))*100 }}" id="cpu_usage_bar" style="--progress: {{ (host_data['cpu_ram_usage'][0]['cpu_usage']|float(default=0.000))*100 }}%"
@@ -101,25 +87,27 @@
                             <span>{{ "%2.1f" | format( host_data['cpu_ram_usage'][0]['ram_usage']|float(default=0.000)*100 ) }}% </span>
                                 </div>
                     </td>
+                    <td>{{ host_data['cpu_ram_usage'][0]['consolidate_ratio'] }}</td>
                 </tr>
-                <script>
-                    const elements = document.querySelectorAll('[progress]');
-
-                    elements.forEach(element => {
-                        
-                    if (parseInt(element.getAttribute('progress')) <= 60) {
-                        element.style.background = 'linear-gradient(90deg, #26de81, #20bf6b var(--progress), transparent 0)';
-                    }else if (parseInt(element.getAttribute('progress')) > 90){
-                        element.style.background = 'linear-gradient(90deg, #fc5c65, #eb3b5a var(--progress), transparent 0)';
-                    }else{
-                        element.style.background = 'linear-gradient(90deg, #fed330, #f7b731 var(--progress), transparent 0)';
-                    }
-                    });
-
-                </script>
 
             </table>
+            <script>
+                const elements = document.querySelectorAll('[progress]');
+
+                elements.forEach(element => {
+                    
+                if (parseInt(element.getAttribute('progress')) <= 60) {
+                    element.style.background = 'linear-gradient(90deg, #26de81, #20bf6b var(--progress), transparent 0)';
+                }else if (parseInt(element.getAttribute('progress')) > 90){
+                    element.style.background = 'linear-gradient(90deg, #fc5c65, #eb3b5a var(--progress), transparent 0)';
+                }else{
+                    element.style.background = 'linear-gradient(90deg, #fed330, #f7b731 var(--progress), transparent 0)';
+                }
+                });
+
+            </script>
             </div>
+ 
         </ul>
         </details>
         <details class="details-1" open>

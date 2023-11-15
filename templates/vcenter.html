@@ -147,6 +147,41 @@
 
 </div>
 
+<h2>vCenter服务运行状况</h2>
+<div id="services_table" class="mid_table_container">
+  <table class="table2">
+      <tr>
+          <th>编号 </th>
+          <th>服务名称</th>        
+          <th> 运行状态</th>
+          <th> 启动类型</th>
+          <th> 健康状态</th>
+      </tr>
+      {% for svc in servicesStatus_list %}
+        {% if svc.get('full name') %}
+              <tr>
+                  <td>{{ loop.index }}</td>
+                  <td>{{ svc['full name'] }}</td>
+                  <td>{{ svc['RunState'] }}</td>
+                  <td>{{ svc['Starttype'] }}</td>
+                  <td>{{ svc['HealthState'] }}</td>  
+              </tr>
+        {% endif %}      
+      {% endfor %}
+  </table>
+</div>
+<h2>Root用户账号状态</h2>
+<div id="rootpass_table" class="mid_table_container">
+  <table class="table2">
+      <tr>
+        {% for line in root_pass_lines%}
+          {% set list=line.split(':') %}
+          <tr><th>{{ list[0] }}</th><th>{{ list[1] }}</th></tr>
+              
+        {% endfor %}
+  </table>
+</div>
+
 <h2>告警情况</h2>
 <div id="alarm" >
     <div id="alert_chart" style="height: 400px;">

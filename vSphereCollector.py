@@ -441,7 +441,7 @@ def show_vcenter():
 
   df=False
   cert=False
-  line_num=len(data)
+
 
   df_lines=[]
   cert_lines=[]
@@ -503,6 +503,79 @@ def show_vcenter():
           vcsa_certs_info.append(certs_info_dict)
           certs_info_dict={}
 
+  
+  #获取服务列表
+  service_dict={}
+  for line in data:
+      # vstats (VMware vStats Service)
+      rx=re.search('(.*)\s*\((.*)\)',line.strip())
+      if rx:
+          service_dict[rx.group(1).strip()]=rx.group(2)
+
+  #获取服务运行状态
+  # Name: applmgmt
+  # Starttype: AUTOMATIC
+  # RunState: STARTED
+  # RunAsUser: root
+  # CurrentRunStateDuration(ms): 3518736438
+  # HealthState: HEALTHY
+  # FailStop: N/A
+  # MainProcessId: 3534
+  servicesStatus_list=[]
+  find_flag=False
+  i=0
+  serviceStatus_dict={}
+  for line in data:
+      pattern_start='for i in \$\('
+      pattern_end='mchage -l root'
+      rx=re.search(pattern_end,line)
+      if rx:
+        find_flag=False 
+        print('end')     
+      
+      rx=re.search(pattern_start,line)
+      if rx:
+        find_flag=True
+        print('find')
+        
+        continue
+      
+      
+      if find_flag:
+        print(line)
+        key=line.strip().split(':')[0]          
+        if key in ['Name','Starttype','RunState','RunAsUser','CurrentRunStateDuration(ms)','FailStop','MainProcessId','HealthState']:
+            value=line.strip().split(':')[1].strip()
+            serviceStatus_dict[key]=value
+            i+=1
+            if i % 8 ==0:
+              # print(serviceStatus_dict)
+              servicesStatus_list.append(serviceStatus_dict)
+              serviceStatus_dict={}
+  for service_status in servicesStatus_list:
+     if service_status['Name'] in service_dict.keys():
+        service_status['full name']=service_dict[service_status['Name']]
+  
+  
+
+  #root用户密码过期情况
+  find_flag=False
+  root_pass_lines=[]
+  for line in data:
+      rx=re.search(']#.*chage -l root',line)
+      if rx:
+          print('find')
+          find_flag=True
+      if find_flag:
+          root_pass_lines.append(line.strip())   
+
+  root_pass_lines.pop(0) #删除首行（命令和命令提示符）
+  root_pass_lines.pop() #删除尾行（命令提示符）
+  null_str=''  #删除空行
+  while (null_str in root_pass_lines):
+      root_pass_lines.remove(null_str)
+     
+
   cert_healthy_counter=0
   cert_expired_counter=0
   cert_expiring_counter=0
@@ -518,15 +591,18 @@ def show_vcenter():
           cert_info['expirating']="N"
           cert_healthy_counter+=1
   cert_status_counter=[cert_healthy_counter,cert_expiring_counter,cert_expired_counter]
-  # return render_template('vcenter.html', tree=BuildInventoryTree(),\
-  #                       vcsa_fs=vcsa_info,vcsa_certs_info=vcsa_certs_info,\
-  #                         cert_status_counter=cert_status_counter,\
-  #                           alarm_list=alarm_list,\
-  #                             alarm_ack=alarm_ack)
-  return [vcsa_info,vcsa_certs_info,\
-                          cert_status_counter,\
-                            alarm_list,\
-                              alarm_ack]
+
+
+  
+
+  return [ 
+          vcsa_info, 
+          vcsa_certs_info,
+          cert_status_counter, 
+          servicesStatus_list, 
+          root_pass_lines,                        
+          alarm_list,
+          alarm_ack ]
 
 
 
@@ -722,19 +798,20 @@ def show_VMSummary():
     vms_mem.sort(key=get_num)
 
     
-    total_provisioned_disk=0
-    total_used_disk=0
+
+    total_used_disk=vm['TotalUsedSpace']
+    total_provisioned_disk=vm['TotalProvisionedSpace']
     total_snap_disk=0
-    
     for disk in vm['disks_info']:
-      if disk.get("provisioned_disk_size"): #VDI有磁盘不存在provisioned_disk属性
-        total_provisioned_disk+=disk["provisioned_disk_size"]  
-      total_used_disk+=disk["used_disk_size"]
+      # if disk.get("provisioned_disk_size"): #VDI有磁盘不存在provisioned_disk属性
+      #   total_provisioned_disk+=disk["provisioned_disk_size"]  
+      # total_used_disk+=disk["used_disk_size"]
       total_snap_disk+=disk["disk_snap_size"]
+    # total_snap_spaceinGB=Decimal(total_snap_spaceinByte/1024/1024/1024).quantize(Decimal('0.0'))
     # print("-----")
     # print("Total Provisioned disk: {}".format(total_provisioned_disk))
-    # print("Totaol used disk: {}".format(total_provisioned_disk))
-    # print("Totaol snapshot disk: {}".format(total_provisioned_disk))
+    # print("Total used disk: {}".format(total_provisioned_disk))
+    # print("Total snapshot disk: {}".format(total_provisioned_disk))
 
 
     vm_pro_disk_size={}
@@ -865,8 +942,18 @@ def datacenter():
      return render_template('vcenter.html', tree=BuildInventoryTree(),\
                         vcsa_fs=para_list[0],vcsa_certs_info=para_list[1],\
                           cert_status_counter=para_list[2],\
-                            alarm_list=para_list[3],\
-                              alarm_ack=para_list[4])
+                          servicesStatus_list=para_list[3], \
+                          root_pass_lines=para_list[4], \
+                            alarm_list=para_list[5],\
+                              alarm_ack=para_list[6])
+  # return [ 
+  #         vcsa_info, 
+  #         vcsa_certs_info,
+  #         cert_status_counter, 
+  #         servicesStatus_list, 
+  #         root_pass_lines,                        
+  #         alarm_list,
+  #         alarm_ack ]
   elif len(inventory_id)>0:
      path_list=inventory_id.split('-')
      path_len=len(path_list)

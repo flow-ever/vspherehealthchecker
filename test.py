@@ -5,7 +5,26 @@ from datetime import timedelta
 import atexit
 import os 
 import json
+import re
+import logging
+import datetime
+import paramiko
+import sys
+import time
+import socket
  
+data_dir=os.path.join(os.getcwd(),'data')
+
+def file_search(dir,prefix,surfix):
+  find_flag=False
+  files=os.listdir(dir)
+  for file in files:
+    if file.startswith(prefix) and file.endswith(surfix):
+      find_flag=True
+      return os.path.join(dir,file)
+  if not find_flag:
+    return find_flag
+
 def connect_vc(host, user, pwd, port):
     si = SmartConnectNoSSL(host=host, user=user, pwd=pwd, port=port)
  
@@ -14,78 +33,78 @@ def connect_vc(host, user, pwd, port):
     return si
  
  
-def build_query(content, vc_time, counter_id, obj, interval):
-    metric_id = vim.PerformanceManager.MetricId(counterId=counter_id, instance="")
-    start_time = vc_time - timedelta(minutes=(interval + 1))
-    end_time = vc_time - timedelta(minutes=1)
-    query = vim.PerformanceManager.QuerySpec(intervalId=20,
-                                             entity=obj,
-                                             metricId=[metric_id],
-                                             startTime=start_time,
-                                             endTime=end_time)
-    perf_results = content.perfManager.QueryPerf(querySpec=[query])
-    if perf_results:
-        return perf_results
-    else:
-        pass
+# def build_query(content, vc_time, counter_id, obj, interval):
+#     metric_id = vim.PerformanceManager.MetricId(counterId=counter_id, instance="")
+#     start_time = vc_time - timedelta(minutes=(interval + 1))
+#     end_time = vc_time - timedelta(minutes=1)
+#     query = vim.PerformanceManager.QuerySpec(intervalId=20,
+#                                              entity=obj,
+#                                              metricId=[metric_id],
+#                                              startTime=start_time,
+#                                              endTime=end_time)
+#     perf_results = content.perfManager.QueryPerf(querySpec=[query])
+#     if perf_results:
+#         return perf_results
+#     else:
+#         pass
  
  
-def print_statistics(obj, content, vc_time, interval, perf_dict, ):
-    stat_interval = interval * 3  # There are 3per 20s samples in each minute
+# def print_statistics(obj, content, vc_time, interval, perf_dict, ):
+#     stat_interval = interval * 3  # There are 3per 20s samples in each minute
  
-    # Network usage (Tx/Rx)
-    # statNetworkTx = BuildQuery(content, vchtime, (stat_check(perf_dict, 'net.usage.maximum')), obj, interval)
-    # networkTx = (float(sum(statNetworkTx[0].value[0].value) * 8 / 1024) / statInt)
-    # statNetworkRx = BuildQuery(content, vchtime, (stat_check(perf_dict, 'net.usage.minimum')), obj, interval)
-    # networkRx = (float(sum(statNetworkRx[0].value[0].value) * 8 / 1024) / statInt)
+#     # Network usage (Tx/Rx)
+#     # statNetworkTx = BuildQuery(content, vchtime, (stat_check(perf_dict, 'net.usage.maximum')), obj, interval)
+#     # networkTx = (float(sum(statNetworkTx[0].value[0].value) * 8 / 1024) / statInt)
+#     # statNetworkRx = BuildQuery(content, vchtime, (stat_check(perf_dict, 'net.usage.minimum')), obj, interval)
+#     # networkRx = (float(sum(statNetworkRx[0].value[0].value) * 8 / 1024) / statInt)
  
-    # Network utilization (combined transmit-rates and receive-rates) during the interval = 145
-    network_usage = build_query(content, vc_time, stat_check(perf_dict, 'net.usage.average'), obj, interval)
-    try:
-        print('statNetworkThroughput:%sMB' % (round((((sum(network_usage[0].value[0].value)) / 1024) / stat_interval), 2)))
+#     # Network utilization (combined transmit-rates and receive-rates) during the interval = 145
+#     network_usage = build_query(content, vc_time, stat_check(perf_dict, 'net.usage.average'), obj, interval)
+#     try:
+#         print('statNetworkThroughput:%sMB' % (round((((sum(network_usage[0].value[0].value)) / 1024) / stat_interval), 2)))
  
-    except TypeError:
-        # 关机的ESXi主机无法获取到数据
-        pass
- 
- 
-def stat_check(perf_dict, counter_name):
-    """通过performance counter名称获取counter id"""
-    counter_id = perf_dict[counter_name]
-    return counter_id
+#     except TypeError:
+#         # 关机的ESXi主机无法获取到数据
+#         pass
  
  
-def main():
-    username = 'administrator@vsphere.local'
-    # password = 'eRB$i5PUl@20211101'
-    # vc_ip = '192.168.83.212'
-    password = '123Qwe,.'
-    vc_ip = '192.168.10.82'
-    vc_port = '443'
-    statistics_interval_time = 10   # 分钟为单位
-    si = connect_vc(host=vc_ip, user=username, pwd=password, port=vc_port)
-    content = si.RetrieveContent()
- 
-    # Get vCenter date and time for use as baseline when querying for counters
-    vc_time = si.CurrentTime()
- 
-    # 获取所有performance counter，并放入字典中
-    perf_dict = {}
-    perf_list = content.perfManager.perfCounter
-    for counter in perf_list:
-        counter_full = "{}.{}.{}".format(counter.groupInfo.key, counter.nameInfo.key, counter.rollupType)
-        perf_dict[counter_full] = counter.key # perf_dict包含了所有的perfCounter
-    print(perf_dict)
-    # 获取ESXi主机对象
-    container_view = content.viewManager.CreateContainerView(content.rootFolder, [vim.HostSystem], True)
- 
-    for obj in container_view.view:
-        print_statistics(obj, content, vc_time, statistics_interval_time, perf_dict)
+# def stat_check(perf_dict, counter_name):
+#     """通过performance counter名称获取counter id"""
+#     counter_id = perf_dict[counter_name]
+#     return counter_id
  
  
-# Start program
-if __name__ == "__main__":
-    main()
+# def main():
+#     username = 'administrator@vsphere.local'
+#     # password = 'eRB$i5PUl@20211101'
+#     # vc_ip = '192.168.83.212'
+#     password = '123Qwe,.'
+#     vc_ip = '192.168.10.82'
+#     vc_port = '443'
+#     statistics_interval_time = 10   # 分钟为单位
+#     si = connect_vc(host=vc_ip, user=username, pwd=password, port=vc_port)
+#     content = si.RetrieveContent()
+ 
+#     # Get vCenter date and time for use as baseline when querying for counters
+#     vc_time = si.CurrentTime()
+ 
+#     # 获取所有performance counter，并放入字典中
+#     perf_dict = {}
+#     perf_list = content.perfManager.perfCounter
+#     for counter in perf_list:
+#         counter_full = "{}.{}.{}".format(counter.groupInfo.key, counter.nameInfo.key, counter.rollupType)
+#         perf_dict[counter_full] = counter.key # perf_dict包含了所有的perfCounter
+#     print(perf_dict)
+#     # 获取ESXi主机对象
+#     container_view = content.viewManager.CreateContainerView(content.rootFolder, [vim.HostSystem], True)
+ 
+#     for obj in container_view.view:
+#         print_statistics(obj, content, vc_time, statistics_interval_time, perf_dict)
+ 
+ 
+# # Start program
+# if __name__ == "__main__":
+#     main()
 
 
 
@@ -296,34 +315,224 @@ A list of virtual machines can be provided as a comma separated list.
 #         propDic['moref'] = eachProp.obj
 #         gpOutput.append(propDic)
 #     return gpOutput
- 
- 
-# def main():
+def get_all_objs(content, vimtype):
+    obj = []
+    container = content.viewManager.CreateContainerView(content.rootFolder, vimtype, True)
+    for managed_object_ref in container.view:
+        # obj.update({managed_object_ref: managed_object_ref.name})
+        obj.append(managed_object_ref)
+    return obj
+
+
+
+def main():    
+    vcsa_file=file_search(data_dir,'vcsa-','.log')
+    # print(vcsa_file)
+    with open(vcsa_file,'r') as f:
+        data=f.readlines()
+    f.close()
+
+    #获取服务列表，包含简称（全称）
+    services_dict={}
+    for line in data:
+        # vstats (VMware vStats Service)
+        rx=re.search('(.*)\s*\((.*)\)',line.strip())
+        if rx:
+            services_dict[rx.group(1).strip()]=rx.group(2)
+
+    #获取服务运行状态
+    # Name: applmgmt
+    # Starttype: AUTOMATIC
+    # RunState: STARTED
+    # RunAsUser: root
+    # CurrentRunStateDuration(ms): 3518736438
+    # HealthState: HEALTHY
+    # FailStop: N/A
+    # MainProcessId: 3534
+    servicesStatus_list=[]
+    find_flag=False
+    i=0
+    serviceStatus_dict={}
+    for line in data:
+       pattern_start='for i in \$\('
+       pattern_end='mchage -l root'
+       rx=re.search(pattern_end,line)
+       if rx:
+          find_flag=False 
+          print('end')     
+       
+       rx=re.search(pattern_start,line)
+       if rx:
+          find_flag=True
+          print('find')
+          
+          continue
+       
+       
+       if find_flag:
+          print(line)
+          key=line.strip().split(':')[0]          
+          if key in ['Name','Starttype','RunState','RunAsUser','CurrentRunStateDuration(ms)','FailStop','MainProcessId','HealthState']:
+             value=line.strip().split(':')[1].strip()
+             serviceStatus_dict[key]=value
+             i+=1
+             if i % 8 ==0:
+                # print(serviceStatus_dict)
+                servicesStatus_list.append(serviceStatus_dict)
+                serviceStatus_dict={}
+    print(servicesStatus_list)
+    for service_status in servicesStatus_list:
+        if service_status['Name'] in services_dict.keys():
+            service_status['full name']=services_dict[service_status['Name']]
+    
+    print(servicesStatus_list)
+          
+        
+          
+
+
+
 #     username = 'administrator@vsphere.local'
-#     password = 'xxxxxx'
-#     vc_ip = '172.16.65.99'
+#     password = 'eRB$i5PUl@20211101'
+#     vc_ip = '192.168.83.212'
+#     # password = '123Qwe,.'
+#     # vc_ip = '192.168.10.82'
 #     vc_port = '443'
-#     customization_spec_name = 'Ubuntu_Customization'
  
 #     si = connect_vc(host=vc_ip, user=username, pwd=password, port=vc_port)
  
 #     content = si.RetrieveContent()
-#     # Get vCenter date and time for use as baseline when querying for counters
-#     vchtime = si.CurrentTime()
+
+#     getallvms=get_all_objs(content,[vim.VirtualMachine])
+
+#     # Provisioned disk space:Total allocated space that the virtual machine can commit up to. Includes vmdk, swap, snapshot, and other virtual machine files such as NVRAM, configuration files, and logs. This metric includes uncommitted space.
+#     for vm in getallvms:
+#             print(vm.config.name)
+#         # if vm.config.name=='Nginx':
+#             TotalUsedSpaceinGB=vm.summary.storage.committed/1024/1024/1024
+#             TotalProvisionedSpaceinGB=(vm.summary.storage.committed+vm.summary.storage.uncommitted)/1024/1024/1024
+#             # print(vm.summary.storage)
+#             # print('_________________________________')
+#             # vm_hardware = vm.config.hardware
+#             # disk_list = []
+#             # network_list = []
+#             # for each_vm_hardware in vm_hardware.device:
+#             #     if isinstance(each_vm_hardware,vim.vm.device.VirtualDisk): 
+#             #         # print(each_vm_hardware)
+#             #         if (each_vm_hardware.key >= 2000) and (each_vm_hardware.key < 3000):
+#             #             disk_list.append('{} | {:.1f}GB | Thin: {} | {}'.format(each_vm_hardware.deviceInfo.label,
+#             #                                                         each_vm_hardware.capacityInKB/1024/1024,
+#             #                                                         each_vm_hardware.backing.thinProvisioned,
+#             #                                                         each_vm_hardware.backing.fileName))
+#             #     # elif (each_vm_hardware.key >= 4000) and (each_vm_hardware.key < 5000):
+#             #     #     network_list.append('{} | {} | {}'.format(each_vm_hardware.deviceInfo.label,
+#             #     #                                                 each_vm_hardware.deviceInfo.summary,
+#             #     #                                                 each_vm_hardware.macAddress))
+
+
+
+#             # print(disk_list)
+#             # print(network_list)
+#             des_disks=[]
+#             ext_disks=[]
+#             disks=[]
+#             for file in vm.layoutEx.file:
+#                     # print(file)
+                    
+#                     #在不同的类型的datastore，diskDescriptor类型的文件有不同的表现，vsan中的diskDescriptor类型的文件就代表硬盘，该文件的大小也就是硬盘的大小，VMFS下diskDescriptor文件只是一个描述文件，体积很小，代表磁盘的是diskExtent文件
+#                     #所以在vmfs情况下，需要将diskExtent和diskDescriptor2个文件进行合并
+#                     des_disk={}
+#                     ext_disk={}
+#                     if file.type=="diskDescriptor":
+                        
+#                         #从路径获取磁盘文件名
+#                         shortname=file.name.split("/")[-1]
+#                         print("file name:"+shortname)
+#                         print("file size:"+str(file.size))
+#                         rx=re.search('(.*)-(000\d\d\d\.vmdk)', shortname)
+#                         if  rx is None:
+#                             # disk['backingObjectId']=file.backingObjectId
+#                             des_disk['disk_name']=shortname
+#                             des_disk['disk_path']=file.name
+#                             des_disk['used_disk_size']=file.size
+#                             des_disk['disk_snap_num']=0
+#                             des_disk['disk_snap_size']=0
+#                             des_disks.append(des_disk)
+
+#                         else:
+#                             for i in range(len(des_disks)):
+#                                 if des_disks[i]['disk_name']==rx.group(1)+".vmdk":
+#                                     des_disks[i]['used_disk_size']+=file.size
+#                                     des_disks[i]['disk_snap_num']+=1
+#                                     des_disks[i]['disk_snap_size']+=file.size
+#                     if file.type=='diskExtent':
+#                         shortname=file.name.split("/")[-1]
+#                         rx=re.search('(.*)-(000\d\d\d\-delta.vmdk)', shortname)
+#                         if  rx is None:
+#                             # disk['backingObjectId']=file.backingObjectId
+#                             ext_disk['disk_name']=shortname
+#                             ext_disk['disk_path']=file.name
+#                             ext_disk['used_disk_size']=file.size
+#                             ext_disk['disk_snap_num']=0
+#                             ext_disk['disk_snap_size']=0
+#                             ext_disks.append(ext_disk)
+
+#                         else:
+#                             for i in range(len(ext_disks)):
+#                                 if ext_disks[i]['disk_name']==rx.group(1)+"-flat.vmdk":
+#                                     ext_disks[i]['used_disk_size']+=file.size
+#                                     ext_disks[i]['disk_snap_num']+=1
+#                                     ext_disks[i]['disk_snap_size']+=file.size
+                        
+#                     #将diskExtent和diskDescriptor2个文件进行合并
+#                     # des_disks:[{'disk_name': 'Niginx.vmdk', 'disk_path': '[SC01] Niginx/Niginx.vmdk', 'used_disk_size': 967, 'disk_snap_num': 1, 'disk_snap_size': 359}]
+#                     # ext_disks:[{'disk_name': 'Niginx-flat.vmdk', 'disk_path': '[SC01] Niginx/Niginx-flat.vmdk', 'used_disk_size': 11501130752, 'disk_snap_num': 1, 'disk_snap_size': 524288}]
+                    
+#             if len(ext_disks)>0:
+#                 for ext_disk in ext_disks:
+#                     ext_disk_short_name=ext_disk['disk_name'].split('-flat.vmdk')[0]
+#                     for des_disk in des_disks:
+#                         if des_disk['disk_name'].split('.vmdk')[0]==ext_disk_short_name:
+#                             consolidated_disk={}
+#                             consolidated_disk['disk_name']=des_disk['disk_name']
+#                             consolidated_disk['used_disk_size']=des_disk['used_disk_size']+ext_disk['used_disk_size']
+#                             consolidated_disk['disk_snap_size']=des_disk['disk_snap_size']+ext_disk['disk_snap_size']
+#                             consolidated_disk['disk_snap_num']=des_disk['disk_snap_num']
+#                             consolidated_disk['disk_path']=des_disk['disk_path']
+#                             disks.append(consolidated_disk)
+#             else:
+#                 disks=des_disks
+                    
+
+
+
+
+#             i=0
+#             for dev in vm.config.hardware.device:
+#                 if isinstance(dev,vim.vm.device.VirtualDisk):
+#                     disks[i]['provisioned_disk_size']=dev.capacityInBytes
+#                     print(i)
+#                     i=i+1
+
+
+#             print(disks)
+
+# #     # Get vCenter date and time for use as baseline when querying for counters
+# #     vchtime = si.CurrentTime()
  
-#     # Get all the performance counters
-#     perf_dict = {}
-#     perfList = content.perfManager.perfCounter
-#     for counter in perfList:
-#         counter_full = "{}.{}.{}".format(counter.groupInfo.key, counter.nameInfo.key, counter.rollupType)
-#         perf_dict[counter_full] = counter.key
+# #     # Get all the performance counters
+# #     perf_dict = {}
+# #     perfList = content.perfManager.perfCounter
+# #     for counter in perfList:
+# #         counter_full = "{}.{}.{}".format(counter.groupInfo.key, counter.nameInfo.key, counter.rollupType)
+# #         perf_dict[counter_full] = counter.key
  
-#     retProps = GetProperties(content, [vim.VirtualMachine], ['name', 'runtime.powerState'], vim.VirtualMachine)
+# #     retProps = GetProperties(content, [vim.VirtualMachine], ['name', 'runtime.powerState'], vim.VirtualMachine)
  
-#     #Find VM supplied as arg and use Managed Object Reference (moref) for the PrintVmInfo
-#     for vm in retProps:
-#         PrintVmInfo(vm['moref'], content, vchtime, 20, perf_dict)
-#         break
+# #     #Find VM supplied as arg and use Managed Object Reference (moref) for the PrintVmInfo
+# #     for vm in retProps:
+# #         PrintVmInfo(vm['moref'], content, vchtime, 20, perf_dict)
+# #         break
  
  
 # Start program

@@ -79,10 +79,18 @@ def get_host_portgroups(host):
     return host_portgroups
 
 def get_vm_disk_info(vm):
+    des_disks=[]
+    ext_disks=[]
     disks=[]
     for file in vm.layoutEx.file:
-            disk={}
+            # print(file)
+            
+            #在不同的类型的datastore，diskDescriptor类型的文件有不同的表现，vsan中的diskDescriptor类型的文件就代表硬盘，该文件的大小也就是硬盘的大小，VMFS下diskDescriptor文件只是一个描述文件，体积很小，代表磁盘的是diskExtent文件
+            #所以在vmfs情况下，需要将diskExtent和diskDescriptor2个文件进行合并
+            des_disk={}
+            ext_disk={}
             if file.type=="diskDescriptor":
+                
                 #从路径获取磁盘文件名
                 shortname=file.name.split("/")[-1]
                 # print("file name:"+shortname)
@@ -90,23 +98,62 @@ def get_vm_disk_info(vm):
                 rx=re.search('(.*)-(000\d\d\d\.vmdk)', shortname)
                 if  rx is None:
                     # disk['backingObjectId']=file.backingObjectId
-                    disk['disk_name']=shortname
-                    disk['disk_path']=file.name
-                    disk['used_disk_size']=file.size
-                    disk['disk_snap_num']=0
-                    disk['disk_snap_size']=0
-                    disks.append(disk)
+                    des_disk['disk_name']=shortname
+                    des_disk['disk_path']=file.name
+                    des_disk['used_disk_size']=file.size
+                    des_disk['disk_snap_num']=0
+                    des_disk['disk_snap_size']=0
+                    des_disks.append(des_disk)
 
                 else:
-                    for i in range(len(disks)):
-                        if disks[i]['disk_name']==rx.group(1)+".vmdk":
-                            disks[i]['used_disk_size']+=file.size
-                            disks[i]['disk_snap_num']+=1
-                            disks[i]['disk_snap_size']+=file.size
-    
+                    for i in range(len(des_disks)):
+                        if des_disks[i]['disk_name']==rx.group(1)+".vmdk":
+                            des_disks[i]['used_disk_size']+=file.size
+                            des_disks[i]['disk_snap_num']+=1
+                            des_disks[i]['disk_snap_size']+=file.size
+            if file.type=='diskExtent':
+                shortname=file.name.split("/")[-1]
+                rx=re.search('(.*)-(000\d\d\d\-delta.vmdk)', shortname)
+                if  rx is None:
+                    # disk['backingObjectId']=file.backingObjectId
+                    ext_disk['disk_name']=shortname
+                    ext_disk['disk_path']=file.name
+                    ext_disk['used_disk_size']=file.size
+                    ext_disk['disk_snap_num']=0
+                    ext_disk['disk_snap_size']=0
+                    ext_disks.append(ext_disk)
+
+                else:
+                    for i in range(len(ext_disks)):
+                        if ext_disks[i]['disk_name']==rx.group(1)+"-flat.vmdk":
+                            ext_disks[i]['used_disk_size']+=file.size
+                            ext_disks[i]['disk_snap_num']+=1
+                            ext_disks[i]['disk_snap_size']+=file.size
+                
+    #将diskExtent和diskDescriptor2个文件进行合并
+    # des_disks:[{'disk_name': 'Niginx.vmdk', 'disk_path': '[SC01] Niginx/Niginx.vmdk', 'used_disk_size': 967, 'disk_snap_num': 1, 'disk_snap_size': 359}]
+    # ext_disks:[{'disk_name': 'Niginx-flat.vmdk', 'disk_path': '[SC01] Niginx/Niginx-flat.vmdk', 'used_disk_size': 11501130752, 'disk_snap_num': 1, 'disk_snap_size': 524288}]            
+    if len(ext_disks)>0:
+        for ext_disk in ext_disks:
+            ext_disk_short_name=ext_disk['disk_name'].split('-flat.vmdk')[0]
+            for des_disk in des_disks:
+                if des_disk['disk_name'].split('.vmdk')[0]==ext_disk_short_name:
+                    consolidated_disk={}
+                    consolidated_disk['disk_name']=des_disk['disk_name']
+                    consolidated_disk['disk_path']=des_disk['disk_path']
+                    consolidated_disk['used_disk_size']=des_disk['used_disk_size']+ext_disk['used_disk_size']
+                    consolidated_disk['disk_snap_num']=des_disk['disk_snap_num']
+                    consolidated_disk['disk_snap_size']=des_disk['disk_snap_size']+ext_disk['disk_snap_size']
+                    
+                    
+                    disks.append(consolidated_disk)
+    else:
+        disks=des_disks
+            
+    # print(disks)
     i=0
     for dev in vm.config.hardware.device:
-        if type(dev).__name__ == 'vim.vm.device.VirtualDisk':
+        if isinstance(dev,vim.vm.device.VirtualDisk):
             disks[i]['provisioned_disk_size']=dev.capacityInBytes
             i=i+1
     
@@ -183,17 +230,6 @@ def get_vm_nics(vm,content):
             vm_nics.append(vm_nic)
    return vm_nics
 
-def esxi_vmtools_version_mapping_load(filepath):
-    mapping_lines=[]
-    with open(filepath,'r') as f:
-        lines=f.readlines()
-    f.close
-
-    for line in lines:
-        rx=re.search(r'^#',line)
-        if not rx:
-            mapping_lines.append(line)
-    return mapping_lines
 
 def vmtools_status_check(vm):
     if vm.guest.toolsVersionStatus2=='guestToolsSupportedOld':
@@ -260,6 +296,10 @@ def QueryVMsInfo(si):
     for vm in getallvms:
         logger.info('收集虚拟机信息：'+vm.config.name)
         vm_info={}
+        # TotalUsedSpaceinGB=Decimal(vm.summary.storage.committed/1024/1024/1024).quantize(Decimal('0.0'))
+        # TotalProvisionedSpaceinGB=Decimal((vm.summary.storage.committed+vm.summary.storage.uncommitted)/1024/1024/1024).quantize(Decimal('0.0'))
+        TotalUsedSpace=vm.summary.storage.committed
+        TotalProvisionedSpace=vm.summary.storage.committed+vm.summary.storage.uncommitted
 
         #列出VM所在的datastores
         datastores=[]
@@ -374,6 +414,8 @@ def QueryVMsInfo(si):
             'memoryMB',
             'memoryHotAddEnabled',
             'disks_info',
+            'TotalUsedSpace',
+            'TotalProvisionedSpace',
             'uuid',
             'hardwareVersion',
             'datastores',
@@ -411,6 +453,8 @@ def QueryVMsInfo(si):
             vm.config.hardware.memoryMB,
             vm.config.memoryHotAddEnabled,
             vm_disk_info,#[]
+            TotalUsedSpace,
+            TotalProvisionedSpace,
             vm.config.uuid,
             vm.config.version,
             datastores, #[]

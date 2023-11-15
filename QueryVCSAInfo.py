@@ -19,13 +19,18 @@ paramiko.util.log_to_file( 'ssh.log' )
 
 def QueryVCSAInfo(vchost,rootPassword):
     logger.info("开始收集VCSA虚拟机内部信息")
+    cmd_enable_shell='shell.set --enabled true\n'
+    cmd_entershell='shell'
     cmd_mem='free -h'
     cmd_df='df -h'
     cmd_cert_check='for store in $(/usr/lib/vmware-vmafd/bin/vecs-cli store list | grep -v TRUSTED_ROOT_CRLS); \
                 do echo "[*] Store :" $store; /usr/lib/vmware-vmafd/bin/vecs-cli entry list --store $store --text \
                 | grep -ie "Alias" -ie "Not After";done;'
-    cmd_vcservice_check='service-control --status --all'
+    cmd_vcservice_list='service-control --list-services'
+    cmd_vcservice_check='for i in $(/usr/lib/vmware-vmon/vmon-cli -l);do /usr/lib/vmware-vmon/vmon-cli -s $i;done'
     cmd_passwdExpire_check='chage -l root'
+    commands=[cmd_enable_shell,cmd_entershell,cmd_mem,cmd_df,cmd_cert_check,cmd_vcservice_list,cmd_vcservice_check,cmd_passwdExpire_check]
+    
     try:
         # Create an SSH client object
         client = paramiko.SSHClient()
@@ -39,86 +44,23 @@ def QueryVCSAInfo(vchost,rootPassword):
         # Connect to the VCSA SSH server
         client.connect(vchost, port=22, username='root', password=rootPassword, timeout=5)
         channel = client.invoke_shell()
-        out=channel.recv(1024)
-
-        channel.send('shell.set --enabled true\n')
-        while not channel.recv_ready():
+        
+        for cmd in commands:
+            channel.send(cmd+'\n')
+            logger.info('Executing command:'+cmd)
             time.sleep(2)
 
-        out=channel.recv(1024)
-        # print(out.decode("ascii"))
-        logger.info("enable VCSA shell")
-        channel.send('shell\n')
-        while not channel.recv_ready():
-            time.sleep(3)
+        if channel.recv_ready():
+            data=channel.recv(20480).decode('ascii').strip('\n')
+        print(data)     
 
-        out=channel.recv(1024)
-        # print(out.decode("ascii"))
-
-        channel.send(cmd_mem+'\n')
-        while not channel.recv_ready():
-            time.sleep(3)
-
-        out=channel.recv(2048)
-        
-        # print(out.decode("ascii"))
-        mem_info=out.decode("utf-8")
+        logger.info('收集的信息写入文件：'+vcsa_json_file)
         with open(vcsa_json_file,'a') as f:
-            f.writelines(mem_info)
-        f.close()
-
-        channel.send(cmd_df+'\n')
-        while not channel.recv_ready():
-            time.sleep(3)
-
-        out=channel.recv(2048)
-        
-        # print(out.decode("ascii"))
-        logger.info("收集文件系统使用信息")
-        fs_map_info=out.decode("utf-8")
-        with open(vcsa_json_file,'a') as f:
-            f.writelines(fs_map_info)
-        f.close()
-
-        channel.send(cmd_cert_check+'\n')
-        while not channel.recv_ready():
-            time.sleep(3)
-
-        out=channel.recv(2048)
-        # print(out.decode("ascii"))
-        cert_info=out.decode("utf-8")
-        logger.info("收集VCSA内部证书信息")
-        with open(vcsa_json_file,'a') as f:
-            f.writelines(cert_info)
-        f.close()
-
-        channel.send(cmd_vcservice_check+'\n')
-        while not channel.recv_ready():
-            time.sleep(3)
-
-        out=channel.recv(2048)
-        # print(out.decode("ascii"))
-        vcservice_info=out.decode("utf-8")
-        logger.info("收集VCSA服务状态")
-        with open(vcsa_json_file,'a') as f:
-            f.writelines(vcservice_info)
-        f.close()
-
-        channel.send(cmd_passwdExpire_check+'\n')
-        while not channel.recv_ready():
-            time.sleep(3)
-
-        out=channel.recv(2048)
-        # print(out.decode("ascii"))
-        passwdExpire_info=out.decode("utf-8")
-        logger.info("收集root用户密码过期状态")
-        with open(vcsa_json_file,'a') as f:
-            f.writelines(passwdExpire_info)
+            f.writelines(data)
         f.close()
 
         client.close()
-        logger.info("the information acquisition of vcsa is finished!")
-
+        logger.info("the information acquisition of vcsa is finished!")        
 
     except paramiko.ssh_exception.AuthenticationException as e:
         print(f"SSH error: {e}")

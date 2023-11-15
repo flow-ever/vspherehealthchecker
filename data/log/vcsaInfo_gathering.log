@@ -1,8 +1,172 @@
-20231113 18:37:41 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
-20231113 18:37:41 - vcsa_logger - INFO - Connecting to VCSA...
-20231113 18:37:46 - vcsa_logger - INFO - enable VCSA shell
-20231113 18:37:55 - vcsa_logger - INFO - 收集文件系统使用信息
-20231113 18:37:58 - vcsa_logger - INFO - 收集VCSA内部证书信息
-20231113 18:38:01 - vcsa_logger - INFO - 收集VCSA服务状态
-20231113 18:38:04 - vcsa_logger - INFO - 收集root用户密码过期状态
-20231113 18:38:04 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231114 10:05:05 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231114 10:05:05 - vcsa_logger - INFO - Connecting to VCSA...
+20231114 10:05:07 - vcsa_logger - INFO - enable VCSA shell
+20231114 10:05:16 - vcsa_logger - INFO - 收集文件系统使用信息
+20231114 10:05:19 - vcsa_logger - INFO - 收集VCSA内部证书信息
+20231114 10:05:19 - vcsa_logger - INFO - 收集VCSA服务状态
+20231114 10:05:22 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231114 10:05:22 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231114 19:12:59 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231114 19:12:59 - vcsa_logger - INFO - Connecting to VCSA...
+20231114 19:13:01 - vcsa_logger - INFO - enable VCSA shell
+20231114 19:13:10 - vcsa_logger - INFO - 收集文件系统使用信息
+20231114 19:13:13 - vcsa_logger - INFO - 收集VCSA内部证书信息
+20231114 19:13:13 - vcsa_logger - INFO - 收集VCSA服务状态
+20231114 19:13:16 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231114 19:13:16 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231114 19:15:59 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231114 19:15:59 - vcsa_logger - INFO - Connecting to VCSA...
+20231114 19:16:02 - vcsa_logger - INFO - enable VCSA shell
+20231114 19:16:11 - vcsa_logger - INFO - 收集文件系统使用信息
+20231114 19:16:14 - vcsa_logger - INFO - 收集VCSA内部证书信息
+20231114 19:16:14 - vcsa_logger - INFO - 收集VCSA服务状态
+20231114 19:16:17 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231114 19:16:17 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231114 19:20:31 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231114 19:20:31 - vcsa_logger - INFO - Connecting to VCSA...
+20231114 19:20:33 - vcsa_logger - INFO - enable VCSA shell
+20231114 19:20:42 - vcsa_logger - INFO - 收集文件系统使用信息
+20231114 19:20:45 - vcsa_logger - INFO - 收集VCSA内部证书信息
+20231114 19:20:45 - vcsa_logger - INFO - 收集VCSA服务状态
+20231114 19:20:50 - vcsa_logger - INFO - 收集VCSA服务清单
+20231114 19:20:53 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231114 19:20:53 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231114 19:40:09 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231114 19:40:09 - vcsa_logger - INFO - Connecting to VCSA...
+20231114 19:40:12 - vcsa_logger - INFO - enable VCSA shell
+20231114 19:40:21 - vcsa_logger - INFO - 收集文件系统使用信息
+20231114 19:40:24 - vcsa_logger - INFO - 收集VCSA内部证书信息
+20231114 19:40:24 - vcsa_logger - INFO - 收集VCSA服务状态
+20231114 19:40:29 - vcsa_logger - INFO - 收集VCSA服务清单
+20231114 19:40:29 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231114 19:40:29 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231114 19:41:08 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231114 19:41:08 - vcsa_logger - INFO - Connecting to VCSA...
+20231114 19:41:10 - vcsa_logger - INFO - enable VCSA shell
+20231114 19:41:19 - vcsa_logger - INFO - 收集文件系统使用信息
+20231114 19:41:22 - vcsa_logger - INFO - 收集VCSA内部证书信息
+20231114 19:41:22 - vcsa_logger - INFO - 收集VCSA服务状态
+20231114 19:41:27 - vcsa_logger - INFO - 收集VCSA服务清单
+20231114 19:41:27 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231114 19:41:27 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231114 19:42:09 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231114 19:42:09 - vcsa_logger - INFO - Connecting to VCSA...
+20231114 19:42:12 - vcsa_logger - INFO - enable VCSA shell
+20231114 19:42:21 - vcsa_logger - INFO - 收集文件系统使用信息
+20231114 19:42:24 - vcsa_logger - INFO - 收集VCSA内部证书信息
+20231114 19:42:24 - vcsa_logger - INFO - 收集VCSA服务状态
+20231114 19:42:29 - vcsa_logger - INFO - 收集VCSA服务清单
+20231114 19:42:29 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231114 19:42:29 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231114 19:43:13 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231114 19:43:13 - vcsa_logger - INFO - Connecting to VCSA...
+20231114 19:43:16 - vcsa_logger - INFO - enable VCSA shell
+20231114 19:43:25 - vcsa_logger - INFO - 收集文件系统使用信息
+20231114 19:43:28 - vcsa_logger - INFO - 收集VCSA内部证书信息
+20231114 19:43:28 - vcsa_logger - INFO - 收集VCSA服务状态
+20231114 19:43:33 - vcsa_logger - INFO - 收集VCSA服务清单
+20231114 19:43:33 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231114 19:43:33 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231115 09:44:19 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231115 09:44:19 - vcsa_logger - INFO - Connecting to VCSA...
+20231115 09:44:25 - vcsa_logger - INFO - enable VCSA shell
+20231115 09:44:49 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231115 09:44:49 - vcsa_logger - INFO - Connecting to VCSA...
+20231115 09:44:52 - vcsa_logger - INFO - enable VCSA shell
+20231115 09:44:52 - vcsa_logger - INFO - An error occurred: decode() argument 'encoding' must be str, not builtin_function_or_method
+20231115 09:45:32 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231115 09:45:32 - vcsa_logger - INFO - Connecting to VCSA...
+20231115 09:45:35 - vcsa_logger - INFO - enable VCSA shell
+20231115 09:45:35 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231115 09:45:35 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231115 09:46:50 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231115 09:46:50 - vcsa_logger - INFO - Connecting to VCSA...
+20231115 09:46:54 - vcsa_logger - INFO - enable VCSA shell
+20231115 09:46:54 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231115 09:46:54 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231115 09:47:24 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231115 09:47:24 - vcsa_logger - INFO - Connecting to VCSA...
+20231115 09:47:27 - vcsa_logger - INFO - enable VCSA shell
+20231115 09:47:27 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231115 09:47:27 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231115 09:57:50 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231115 09:57:50 - vcsa_logger - INFO - Connecting to VCSA...
+20231115 09:57:53 - vcsa_logger - INFO - enable VCSA shell
+20231115 09:57:53 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231115 09:57:53 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231115 09:58:38 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231115 09:58:38 - vcsa_logger - INFO - Connecting to VCSA...
+20231115 09:58:41 - vcsa_logger - INFO - enable VCSA shell
+20231115 09:58:44 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231115 09:58:44 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231115 09:59:05 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231115 09:59:05 - vcsa_logger - INFO - Connecting to VCSA...
+20231115 09:59:09 - vcsa_logger - INFO - enable VCSA shell
+20231115 09:59:12 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231115 09:59:12 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231115 09:59:28 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231115 09:59:28 - vcsa_logger - INFO - Connecting to VCSA...
+20231115 09:59:33 - vcsa_logger - INFO - enable VCSA shell
+20231115 09:59:38 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231115 09:59:38 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231115 09:59:57 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231115 09:59:57 - vcsa_logger - INFO - Connecting to VCSA...
+20231115 10:00:01 - vcsa_logger - INFO - enable VCSA shell
+20231115 10:00:08 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231115 10:00:08 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231115 10:01:44 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231115 10:01:44 - vcsa_logger - INFO - Connecting to VCSA...
+20231115 10:01:47 - vcsa_logger - INFO - enable VCSA shell
+20231115 10:02:01 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231115 10:02:01 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231115 10:04:02 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231115 10:04:02 - vcsa_logger - INFO - Connecting to VCSA...
+20231115 10:04:32 - vcsa_logger - INFO - SSH error: Authentication failed.
+20231115 10:04:50 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231115 10:04:50 - vcsa_logger - INFO - Connecting to VCSA...
+20231115 10:04:54 - vcsa_logger - INFO - enable VCSA shell
+20231115 10:05:08 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231115 10:05:08 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231115 10:06:51 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231115 10:06:51 - vcsa_logger - INFO - Connecting to VCSA...
+20231115 10:06:55 - vcsa_logger - INFO - enable VCSA shell
+20231115 10:07:09 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231115 10:07:09 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231115 10:07:44 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231115 10:07:44 - vcsa_logger - INFO - Connecting to VCSA...
+20231115 10:07:48 - vcsa_logger - INFO - enable VCSA shell
+20231115 10:08:02 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231115 10:08:02 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231115 10:14:58 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231115 10:14:58 - vcsa_logger - INFO - Connecting to VCSA...
+20231115 10:15:00 - vcsa_logger - INFO - Executing command:free -h
+20231115 10:15:02 - vcsa_logger - INFO - Executing command:df -h
+20231115 10:15:04 - vcsa_logger - INFO - Executing command:for store in $(/usr/lib/vmware-vmafd/bin/vecs-cli store list | grep -v TRUSTED_ROOT_CRLS);                 do echo "[*] Store :" $store; /usr/lib/vmware-vmafd/bin/vecs-cli entry list --store $store --text                 | grep -ie "Alias" -ie "Not After";done;
+20231115 10:15:06 - vcsa_logger - INFO - Executing command:service-control --list-services
+20231115 10:15:08 - vcsa_logger - INFO - Executing command:for i in $(/usr/lib/vmware-vmon/vmon-cli -l);do /usr/lib/vmware-vmon/vmon-cli -s $i;done
+20231115 10:15:10 - vcsa_logger - INFO - Executing command:chage -l root
+20231115 10:15:12 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231115 10:15:12 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231115 10:16:03 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231115 10:16:03 - vcsa_logger - INFO - Connecting to VCSA...
+20231115 10:16:04 - vcsa_logger - INFO - Executing command:free -h
+20231115 10:16:06 - vcsa_logger - INFO - Executing command:df -h
+20231115 10:16:08 - vcsa_logger - INFO - Executing command:for store in $(/usr/lib/vmware-vmafd/bin/vecs-cli store list | grep -v TRUSTED_ROOT_CRLS);                 do echo "[*] Store :" $store; /usr/lib/vmware-vmafd/bin/vecs-cli entry list --store $store --text                 | grep -ie "Alias" -ie "Not After";done;
+20231115 10:16:10 - vcsa_logger - INFO - Executing command:service-control --list-services
+20231115 10:16:12 - vcsa_logger - INFO - Executing command:for i in $(/usr/lib/vmware-vmon/vmon-cli -l);do /usr/lib/vmware-vmon/vmon-cli -s $i;done
+20231115 10:16:14 - vcsa_logger - INFO - Executing command:chage -l root
+20231115 10:16:16 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231115 10:16:16 - vcsa_logger - INFO - the information acquisition of vcsa is finished!
+20231115 10:17:41 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231115 10:17:41 - vcsa_logger - INFO - Connecting to VCSA...
+20231115 10:17:42 - vcsa_logger - INFO - Executing command:shell.set --enabled true
+
+20231115 10:17:44 - vcsa_logger - INFO - Executing command:shell
+20231115 10:17:46 - vcsa_logger - INFO - Executing command:free -h
+20231115 10:17:48 - vcsa_logger - INFO - Executing command:df -h
+20231115 10:17:50 - vcsa_logger - INFO - Executing command:for store in $(/usr/lib/vmware-vmafd/bin/vecs-cli store list | grep -v TRUSTED_ROOT_CRLS);                 do echo "[*] Store :" $store; /usr/lib/vmware-vmafd/bin/vecs-cli entry list --store $store --text                 | grep -ie "Alias" -ie "Not After";done;
+20231115 10:17:52 - vcsa_logger - INFO - Executing command:service-control --list-services
+20231115 10:17:54 - vcsa_logger - INFO - Executing command:for i in $(/usr/lib/vmware-vmon/vmon-cli -l);do /usr/lib/vmware-vmon/vmon-cli -s $i;done
+20231115 10:17:56 - vcsa_logger - INFO - Executing command:chage -l root
+20231115 10:17:58 - vcsa_logger - INFO - 收集root用户密码过期状态
+20231115 10:17:58 - vcsa_logger - INFO - the information acquisition of vcsa is finished!

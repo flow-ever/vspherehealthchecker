@@ -1,0 +1,48 @@
+vmware-vmon,VMware Service Lifecycle Manager 
+vmonapi,VMware Service Lifecycle Manager API 
+vmafdd,VMware Authentication Framework 
+vmdird,VMware Directory Service 
+vmcad,VMware Certificate Service 
+lookupsvc,VMware Lookup Service 
+vmware-sca,VMware Service Control Agent 
+vmware-stsd,VMware Security Token Service 
+vmware-rhttpproxy,VMware HTTP Reverse Proxy 
+vmware-envoy,VMware Envoy Proxy 
+vmware-netdumper,VMware vSphere ESXi Dump Collector 
+vmware-vapi-endpoint,VMware vAPI Endpoint 
+vmware-vpxd-svcs,VMware vCenter-Services 
+vmware-perfcharts,VMware Performance Charts 
+applmgmt,VMware Appliance Management Service 
+vmware-statsmonitor,VMware Appliance Monitoring Service 
+vmware-cis-license,VMware License Service 
+vmware-vpostgres,VMware Postgres 
+vmware-postgres-archiver,VMware Postgres Archiver 
+vmware-vdtc,VMware vSphere Distrubuted Tracing Collector 
+vmware-vpxd,VMware vCenter Server 
+vmware-eam,VMware ESX Agent Manager 
+vmware-vsm,VMware vService Manager 
+vmware-sps,VMware vSphere Profile-Driven Storage Service 
+pschealth,VMware Platform Services Controller Health Monitor 
+vmware-rbd-watchdog,VMware vSphere Auto Deploy Waiter 
+vmware-content-library,VMware Content Library Service 
+vmware-imagebuilder,VMware Image Builder Manager 
+lwsmd,Likewise Service Manager 
+vmcam,VMware vSphere Authentication Proxy 
+vmware-vcha,VMware vCenter High Availability 
+vmware-updatemgr,VMware Update Manager 
+vmware-vsan-health,VMware VSAN Health Service 
+vsphere-ui,VMware vSphere Client 
+vmware-hvc,VMware Hybrid VC Service 
+vmware-trustmanagement,VMware Trust Management Service 
+vmware-certificatemanagement,VMware Certificate Management Service 
+vmware-certificateauthority,VMware Certificate Authority Service 
+vmware-pod,VMware Patching and Host Management Service 
+vlcm,VMware vCenter Lifecycle API 
+vmware-analytics,VMware Analytics Service 
+vmware-topologysvc,VMware Topology Service 
+vmware-infraprofile,VMware Infraprofile Service 
+wcp,Workload Control Plane 
+vtsdb,VMware vTsdb Service 
+vstats,VMware vStats Service 
+observability,VMware VCSA Observability Service 
+observability-vapi,VMware VCSA Observability VAPI Service
