@@ -159,13 +159,23 @@
       </tr>
       {% for svc in servicesStatus_list %}
         {% if svc.get('full name') %}
-              <tr>
+            {% if svc['HealthState']=='UNHEALTHY' %}
+                <tr>
+                    <td><b><font color="red">{{ loop.index }}</font></b></td>
+                    <td><b><font color="red">{{ svc['full name'] }}</font></b></td>
+                    <td><b><font color="red">{{ svc['RunState'] }}</font></b></td>
+                    <td><b><font color="red">{{ svc['Starttype'] }}</font></b></td>
+                    <td><b><font color="red">{{ svc['HealthState'] }}</font></b></td>  
+                </tr>
+            {% else %}
+                <tr>
                   <td>{{ loop.index }}</td>
                   <td>{{ svc['full name'] }}</td>
                   <td>{{ svc['RunState'] }}</td>
                   <td>{{ svc['Starttype'] }}</td>
                   <td>{{ svc['HealthState'] }}</td>  
               </tr>
+            {% endif %}
         {% endif %}      
       {% endfor %}
   </table>

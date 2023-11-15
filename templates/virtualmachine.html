@@ -271,9 +271,7 @@
     </li>
     <div class="mid_table_container">
         <table class="table2">
-        {% for item in vm_info %}
-        
-        
+        {% for item in vm_info %} 
                 {% for key,value in item.items() %}
                     {% if key=='disks_info' %}
                          {% continue %}          
@@ -284,7 +282,7 @@
                     {% else %}
                         <tr>
                             <th>{{ key }}</th>
-                            <td align="left">{{ value }}</td>
+                            <th align="left">{{ value }}</th>
                         </tr>
                     {% endif %}
                 {% endfor %}

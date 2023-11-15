@@ -269,6 +269,7 @@
       };
       Chart.setOption(option);   
     </script>
+
     <div class="wedget" id="top10_cpu"></div>
     <script type="text/javascript">
       var x_data=[];
@@ -308,6 +309,8 @@
           axisLabel:{
               rotate: 45,
               // interval: 4,
+              show:true,
+              clickable:true,
               fontSize: 10,
               overflow:'truncate',
               width: 80,
@@ -337,6 +340,12 @@
         ]
       };      
       Chart.setOption(option);   
+
+      Chart.on('click',function(params){
+        // console.log(`/inventory?id=${params.name}`);
+        top.location.href=`/inventory?vm_name=${params.name}`;
+      });
+      window.addEventListener('resize', Chart.resize);
     </script>    
     <div class="wedget" id="top10_mem"></div>
     <script type="text/javascript">
@@ -377,6 +386,7 @@
           axisLabel:{
               rotate: 45,
               // interval: 4,
+              clickable:true,
               fontSize: 10,
               overflow:'truncate',
               width: 80,
@@ -407,7 +417,12 @@
           },
         ]
       };      
-      Chart.setOption(option);   
+      Chart.setOption(option);  
+      Chart.on('click',function(params){
+        // console.log(`/inventory?id=${params.name}`);
+        top.location.href=`/inventory?vm_name=${params.name}`;
+      });
+      window.addEventListener('resize', Chart.resize); 
     </script> 
     <div class="wedget" id="top10_used_disk"></div>
     <script type="text/javascript">
@@ -450,6 +465,7 @@
           axisLabel:{
               rotate: 45,
               // interval: 4,
+              clickable:true,
               fontSize: 10,
               overflow:'truncate',
               width: 80,
@@ -479,7 +495,12 @@
           },
         ]
       };      
-      Chart.setOption(option);   
+      Chart.setOption(option); 
+      Chart.on('click',function(params){
+        // console.log(`/inventory?id=${params.name}`);
+        top.location.href=`/inventory?vm_name=${params.name}`;
+      });
+      window.addEventListener('resize', Chart.resize);  
     </script>    
     <div class="wedget" id="top10_prov_disk"></div>
     <script type="text/javascript">
@@ -522,6 +543,7 @@
           axisLabel:{
               rotate: 45,
               // interval: 4,
+              clickable:true,
               fontSize: 10,
               overflow:'truncate',
               width: 80,
@@ -550,6 +572,11 @@
         ]
       };      
       Chart.setOption(option);   
+      Chart.on('click',function(params){
+        // console.log(`/inventory?id=${params.name}`);
+        top.location.href=`/inventory?vm_name=${params.name}`;
+      });
+      window.addEventListener('resize', Chart.resize);
     </script>  
     <div class="wedget" id="top10_snap_disk"></div>
     <script type="text/javascript">
@@ -597,6 +624,7 @@
           axisLabel:{
               rotate: 45,
               // interval: 4,
+              clickable:true,
               fontSize: 10,
               overflow:'truncate',
               width: 80,
@@ -625,6 +653,11 @@
         ]
       };      
       Chart.setOption(option); 
+      Chart.on('click',function(params){
+        // console.log(`/inventory?id=${params.name}`);
+        top.location.href=`/inventory?vm_name=${params.name}`;
+      });
+      window.addEventListener('resize', Chart.resize);
     </script>      
   </div>
   {% endblock %}
