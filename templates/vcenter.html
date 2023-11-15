@@ -42,7 +42,7 @@
 </div>
 <h2>vCenter Server证书</h2>
 <div id="certificate" style="display: flex;flex-direction: row;justify-content:flex-start;">
-    <div id="cert_chart" style="height: 400px;width: 30%;background-color: white;">
+    <div id="cert_chart" style="height: 500px;width: 30%;background-color: white;">
         <script type="text/javascript">
             var dom=document.getElementById('cert_chart')
             var Chart = echarts.init(dom); 
@@ -115,7 +115,7 @@
             Chart.setOption(option);   
           </script>
     </div>
-    <div id="cert_table" style="height: 400px;width: 40%;">
+    <div id="cert_table" style="height: 500px;width: 50%;">
         <table class="table2">
             <tr>
                 <th>证书存储名称 </th>
@@ -128,7 +128,8 @@
                     <tr>
                         <td><b><font color="red">{{ cert['storename'] }}</font></b></td>
                         <td><b><font color="red">{{ cert['alias'] }}</font></b></td>
-                        <td><b><font color="red">{{ cert['expiration_time'] }}</font></b></td>
+                        {% set time_list=(cert['expiration_time'] | string).split(" ") %} 
+                        <td><b><font color="red">{{ time_list[0] }}</font></b></td>
                         <td><b><font color="red">{{ cert['expirating'] }}</font></b></td>
                     </tr>
                 {% else %}

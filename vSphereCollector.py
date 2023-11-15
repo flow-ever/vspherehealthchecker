@@ -530,19 +530,15 @@ def show_vcenter():
       pattern_end='mchage -l root'
       rx=re.search(pattern_end,line)
       if rx:
-        find_flag=False 
-        print('end')     
+        find_flag=False    
       
       rx=re.search(pattern_start,line)
       if rx:
-        find_flag=True
-        print('find')
-        
+        find_flag=True        
         continue
       
       
       if find_flag:
-        print(line)
         key=line.strip().split(':')[0]          
         if key in ['Name','Starttype','RunState','RunAsUser','CurrentRunStateDuration(ms)','FailStop','MainProcessId','HealthState']:
             value=line.strip().split(':')[1].strip()

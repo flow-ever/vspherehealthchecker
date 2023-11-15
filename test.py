@@ -326,196 +326,151 @@ def get_all_objs(content, vimtype):
 
 
 def main():    
-    vcsa_file=file_search(data_dir,'vcsa-','.log')
-    # print(vcsa_file)
-    with open(vcsa_file,'r') as f:
-        data=f.readlines()
-    f.close()
 
-    #获取服务列表，包含简称（全称）
-    services_dict={}
-    for line in data:
-        # vstats (VMware vStats Service)
-        rx=re.search('(.*)\s*\((.*)\)',line.strip())
-        if rx:
-            services_dict[rx.group(1).strip()]=rx.group(2)
-
-    #获取服务运行状态
-    # Name: applmgmt
-    # Starttype: AUTOMATIC
-    # RunState: STARTED
-    # RunAsUser: root
-    # CurrentRunStateDuration(ms): 3518736438
-    # HealthState: HEALTHY
-    # FailStop: N/A
-    # MainProcessId: 3534
-    servicesStatus_list=[]
-    find_flag=False
-    i=0
-    serviceStatus_dict={}
-    for line in data:
-       pattern_start='for i in \$\('
-       pattern_end='mchage -l root'
-       rx=re.search(pattern_end,line)
-       if rx:
-          find_flag=False 
-          print('end')     
-       
-       rx=re.search(pattern_start,line)
-       if rx:
-          find_flag=True
-          print('find')
-          
-          continue
-       
-       
-       if find_flag:
-          print(line)
-          key=line.strip().split(':')[0]          
-          if key in ['Name','Starttype','RunState','RunAsUser','CurrentRunStateDuration(ms)','FailStop','MainProcessId','HealthState']:
-             value=line.strip().split(':')[1].strip()
-             serviceStatus_dict[key]=value
-             i+=1
-             if i % 8 ==0:
-                # print(serviceStatus_dict)
-                servicesStatus_list.append(serviceStatus_dict)
-                serviceStatus_dict={}
-    print(servicesStatus_list)
-    for service_status in servicesStatus_list:
-        if service_status['Name'] in services_dict.keys():
-            service_status['full name']=services_dict[service_status['Name']]
-    
-    print(servicesStatus_list)
           
         
           
 
 
 
-#     username = 'administrator@vsphere.local'
-#     password = 'eRB$i5PUl@20211101'
-#     vc_ip = '192.168.83.212'
-#     # password = '123Qwe,.'
-#     # vc_ip = '192.168.10.82'
-#     vc_port = '443'
+    username = 'administrator@vsphere.local'
+    # password = 'eRB$i5PUl@20211101'
+    # vc_ip = '192.168.83.212'
+    password = '123Qwe,.'
+    vc_ip = '192.168.10.82'
+    vc_port = '443'
  
-#     si = connect_vc(host=vc_ip, user=username, pwd=password, port=vc_port)
+    si = connect_vc(host=vc_ip, user=username, pwd=password, port=vc_port)
  
-#     content = si.RetrieveContent()
+    content = si.RetrieveContent()
 
-#     getallvms=get_all_objs(content,[vim.VirtualMachine])
+    getallvms=get_all_objs(content,[vim.VirtualMachine])
 
-#     # Provisioned disk space:Total allocated space that the virtual machine can commit up to. Includes vmdk, swap, snapshot, and other virtual machine files such as NVRAM, configuration files, and logs. This metric includes uncommitted space.
-#     for vm in getallvms:
-#             print(vm.config.name)
-#         # if vm.config.name=='Nginx':
-#             TotalUsedSpaceinGB=vm.summary.storage.committed/1024/1024/1024
-#             TotalProvisionedSpaceinGB=(vm.summary.storage.committed+vm.summary.storage.uncommitted)/1024/1024/1024
-#             # print(vm.summary.storage)
-#             # print('_________________________________')
-#             # vm_hardware = vm.config.hardware
-#             # disk_list = []
-#             # network_list = []
-#             # for each_vm_hardware in vm_hardware.device:
-#             #     if isinstance(each_vm_hardware,vim.vm.device.VirtualDisk): 
-#             #         # print(each_vm_hardware)
-#             #         if (each_vm_hardware.key >= 2000) and (each_vm_hardware.key < 3000):
-#             #             disk_list.append('{} | {:.1f}GB | Thin: {} | {}'.format(each_vm_hardware.deviceInfo.label,
-#             #                                                         each_vm_hardware.capacityInKB/1024/1024,
-#             #                                                         each_vm_hardware.backing.thinProvisioned,
-#             #                                                         each_vm_hardware.backing.fileName))
-#             #     # elif (each_vm_hardware.key >= 4000) and (each_vm_hardware.key < 5000):
-#             #     #     network_list.append('{} | {} | {}'.format(each_vm_hardware.deviceInfo.label,
-#             #     #                                                 each_vm_hardware.deviceInfo.summary,
-#             #     #                                                 each_vm_hardware.macAddress))
+    # Provisioned disk space:Total allocated space that the virtual machine can commit up to. Includes vmdk, swap, snapshot, and other virtual machine files such as NVRAM, configuration files, and logs. This metric includes uncommitted space.
+    for vm in getallvms:
+            print(vm.config.name)
+        # if vm.config.name=='Nginx':
+            TotalUsedSpaceinGB=vm.summary.storage.committed/1024/1024/1024
+            TotalProvisionedSpaceinGB=(vm.summary.storage.committed+vm.summary.storage.uncommitted)/1024/1024/1024
+            # print(vm.summary.storage)
+            # print('_________________________________')
+            # vm_hardware = vm.config.hardware
+            # disk_list = []
+            # network_list = []
+            # for each_vm_hardware in vm_hardware.device:
+            #     if isinstance(each_vm_hardware,vim.vm.device.VirtualDisk): 
+            #         # print(each_vm_hardware)
+            #         if (each_vm_hardware.key >= 2000) and (each_vm_hardware.key < 3000):
+            #             disk_list.append('{} | {:.1f}GB | Thin: {} | {}'.format(each_vm_hardware.deviceInfo.label,
+            #                                                         each_vm_hardware.capacityInKB/1024/1024,
+            #                                                         each_vm_hardware.backing.thinProvisioned,
+            #                                                         each_vm_hardware.backing.fileName))
+            #     # elif (each_vm_hardware.key >= 4000) and (each_vm_hardware.key < 5000):
+            #     #     network_list.append('{} | {} | {}'.format(each_vm_hardware.deviceInfo.label,
+            #     #                                                 each_vm_hardware.deviceInfo.summary,
+            #     #                                                 each_vm_hardware.macAddress))
 
 
 
-#             # print(disk_list)
-#             # print(network_list)
-#             des_disks=[]
-#             ext_disks=[]
-#             disks=[]
-#             for file in vm.layoutEx.file:
-#                     # print(file)
+            # print(disk_list)
+            # print(network_list)
+            des_disks=[]
+            ext_disks=[]
+            disks=[]
+            for file in vm.layoutEx.file:
+                    # print(file)
                     
-#                     #在不同的类型的datastore，diskDescriptor类型的文件有不同的表现，vsan中的diskDescriptor类型的文件就代表硬盘，该文件的大小也就是硬盘的大小，VMFS下diskDescriptor文件只是一个描述文件，体积很小，代表磁盘的是diskExtent文件
-#                     #所以在vmfs情况下，需要将diskExtent和diskDescriptor2个文件进行合并
-#                     des_disk={}
-#                     ext_disk={}
-#                     if file.type=="diskDescriptor":
+                    #在不同的类型的datastore，diskDescriptor类型的文件有不同的表现，vsan中的diskDescriptor类型的文件就代表硬盘，该文件的大小也就是硬盘的大小，VMFS下diskDescriptor文件只是一个描述文件，体积很小，代表磁盘的是diskExtent文件
+                    #所以在vmfs情况下，需要将diskExtent和diskDescriptor2个文件进行合并
+                    des_disk={}
+                    ext_disk={}
+                    if file.type=="diskDescriptor":
                         
-#                         #从路径获取磁盘文件名
-#                         shortname=file.name.split("/")[-1]
-#                         print("file name:"+shortname)
-#                         print("file size:"+str(file.size))
-#                         rx=re.search('(.*)-(000\d\d\d\.vmdk)', shortname)
-#                         if  rx is None:
-#                             # disk['backingObjectId']=file.backingObjectId
-#                             des_disk['disk_name']=shortname
-#                             des_disk['disk_path']=file.name
-#                             des_disk['used_disk_size']=file.size
-#                             des_disk['disk_snap_num']=0
-#                             des_disk['disk_snap_size']=0
-#                             des_disks.append(des_disk)
+                        #从路径获取磁盘文件名
+                        shortname=file.name.split("/")[-1]
+                        # print("file name:"+shortname)
+                        # print("file size:"+str(file.size))
+                        rx=re.search('(.*)-(000\d\d\d\.vmdk)', shortname)
+                        if  rx is None:
+                            # disk['backingObjectId']=file.backingObjectId
+                            des_disk['disk_name']=shortname
+                            des_disk['disk_path']=file.name
+                            des_disk['used_disk_size']=file.size
+                            des_disk['disk_snap_num']=0
+                            des_disk['disk_snap_size']=0
+                            des_disks.append(des_disk)
 
-#                         else:
-#                             for i in range(len(des_disks)):
-#                                 if des_disks[i]['disk_name']==rx.group(1)+".vmdk":
-#                                     des_disks[i]['used_disk_size']+=file.size
-#                                     des_disks[i]['disk_snap_num']+=1
-#                                     des_disks[i]['disk_snap_size']+=file.size
-#                     if file.type=='diskExtent':
-#                         shortname=file.name.split("/")[-1]
-#                         rx=re.search('(.*)-(000\d\d\d\-delta.vmdk)', shortname)
-#                         if  rx is None:
-#                             # disk['backingObjectId']=file.backingObjectId
-#                             ext_disk['disk_name']=shortname
-#                             ext_disk['disk_path']=file.name
-#                             ext_disk['used_disk_size']=file.size
-#                             ext_disk['disk_snap_num']=0
-#                             ext_disk['disk_snap_size']=0
-#                             ext_disks.append(ext_disk)
+                        else:
+                            for i in range(len(des_disks)):
+                                if des_disks[i]['disk_name']==rx.group(1)+".vmdk":
+                                    des_disks[i]['used_disk_size']+=file.size
+                                    des_disks[i]['disk_snap_num']+=1
+                                    des_disks[i]['disk_snap_size']+=file.size
+                    if file.type=='diskExtent':
+                        shortname=file.name.split("/")[-1]
+                        rx=re.search('(.*)-(000\d\d\d\-delta.vmdk)', shortname)
+                        if  rx is None:
+                            # disk['backingObjectId']=file.backingObjectId
+                            ext_disk['disk_name']=shortname
+                            ext_disk['disk_path']=file.name
+                            ext_disk['used_disk_size']=file.size
+                            ext_disk['disk_snap_num']=0
+                            ext_disk['disk_snap_size']=0
+                            ext_disks.append(ext_disk)
 
-#                         else:
-#                             for i in range(len(ext_disks)):
-#                                 if ext_disks[i]['disk_name']==rx.group(1)+"-flat.vmdk":
-#                                     ext_disks[i]['used_disk_size']+=file.size
-#                                     ext_disks[i]['disk_snap_num']+=1
-#                                     ext_disks[i]['disk_snap_size']+=file.size
+                        else:
+                            for i in range(len(ext_disks)):
+                                if ext_disks[i]['disk_name']==rx.group(1)+"-flat.vmdk":
+                                    ext_disks[i]['used_disk_size']+=file.size
+                                    ext_disks[i]['disk_snap_num']+=1
+                                    ext_disks[i]['disk_snap_size']+=file.size
                         
-#                     #将diskExtent和diskDescriptor2个文件进行合并
-#                     # des_disks:[{'disk_name': 'Niginx.vmdk', 'disk_path': '[SC01] Niginx/Niginx.vmdk', 'used_disk_size': 967, 'disk_snap_num': 1, 'disk_snap_size': 359}]
-#                     # ext_disks:[{'disk_name': 'Niginx-flat.vmdk', 'disk_path': '[SC01] Niginx/Niginx-flat.vmdk', 'used_disk_size': 11501130752, 'disk_snap_num': 1, 'disk_snap_size': 524288}]
+                    #将diskExtent和diskDescriptor2个文件进行合并
+                    # des_disks:[{'disk_name': 'Niginx.vmdk', 'disk_path': '[SC01] Niginx/Niginx.vmdk', 'used_disk_size': 967, 'disk_snap_num': 1, 'disk_snap_size': 359}]
+                    # ext_disks:[{'disk_name': 'Niginx-flat.vmdk', 'disk_path': '[SC01] Niginx/Niginx-flat.vmdk', 'used_disk_size': 11501130752, 'disk_snap_num': 1, 'disk_snap_size': 524288}]
                     
-#             if len(ext_disks)>0:
-#                 for ext_disk in ext_disks:
-#                     ext_disk_short_name=ext_disk['disk_name'].split('-flat.vmdk')[0]
-#                     for des_disk in des_disks:
-#                         if des_disk['disk_name'].split('.vmdk')[0]==ext_disk_short_name:
-#                             consolidated_disk={}
-#                             consolidated_disk['disk_name']=des_disk['disk_name']
-#                             consolidated_disk['used_disk_size']=des_disk['used_disk_size']+ext_disk['used_disk_size']
-#                             consolidated_disk['disk_snap_size']=des_disk['disk_snap_size']+ext_disk['disk_snap_size']
-#                             consolidated_disk['disk_snap_num']=des_disk['disk_snap_num']
-#                             consolidated_disk['disk_path']=des_disk['disk_path']
-#                             disks.append(consolidated_disk)
-#             else:
-#                 disks=des_disks
+            if len(ext_disks)>0:
+                for ext_disk in ext_disks:
+                    ext_disk_short_name=ext_disk['disk_name'].split('-flat.vmdk')[0]
+                    for des_disk in des_disks:
+                        if des_disk['disk_name'].split('.vmdk')[0]==ext_disk_short_name:
+                            consolidated_disk={}
+                            consolidated_disk['disk_name']=des_disk['disk_name']
+                            consolidated_disk['used_disk_size']=des_disk['used_disk_size']+ext_disk['used_disk_size']
+                            consolidated_disk['disk_snap_size']=des_disk['disk_snap_size']+ext_disk['disk_snap_size']
+                            consolidated_disk['disk_snap_num']=des_disk['disk_snap_num']
+                            consolidated_disk['disk_path']=des_disk['disk_path']
+                            disks.append(consolidated_disk)
+                        else:
+                            consolidated_disk={}
+                            consolidated_disk['disk_name']=des_disk['disk_name']
+                            consolidated_disk['used_disk_size']=des_disk['used_disk_size']
+                            consolidated_disk['disk_snap_size']=des_disk['disk_snap_size']
+                            consolidated_disk['disk_snap_num']=des_disk['disk_snap_num']
+                            consolidated_disk['disk_path']=des_disk['disk_path']
+                            disks.append(consolidated_disk)
+
+            else:
+                disks=des_disks
+            
+            print('DES DISK:{}'.format(des_disks))
+            print('EXT DISK:{}'.format(ext_disks))
+            print('DISK:{}'.format(disks))
+
                     
 
 
 
 
-#             i=0
-#             for dev in vm.config.hardware.device:
-#                 if isinstance(dev,vim.vm.device.VirtualDisk):
-#                     disks[i]['provisioned_disk_size']=dev.capacityInBytes
-#                     print(i)
-#                     i=i+1
+            i=0
+            for dev in vm.config.hardware.device:
+                if isinstance(dev,vim.vm.device.VirtualDisk):
+                    disks[i]['provisioned_disk_size']=dev.capacityInBytes
+                    print(i)
+                    i=i+1
 
 
-#             print(disks)
+            
 
 # #     # Get vCenter date and time for use as baseline when querying for counters
 # #     vchtime = si.CurrentTime()

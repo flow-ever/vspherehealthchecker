@@ -46,7 +46,7 @@ h2{
   display: flex;
   justify-content: start;
   flex-direction: column;
-  margin-left: 5px;
+  margin-left: 20px;
 }
 
 .wrapper {

@@ -136,7 +136,7 @@
     
                 <p>输入VC的登录凭据，收集VMware vSphere虚拟化环境信息</p>
                 <form  id="credential_form" method="post">
-                    <table id="add_vcsso_table">
+                    <table id="add_vcsso_table" class="table2">
                         <tr><td>vCenter Server IP/FQDN:</td><td class="col"><input type="text" name="vchost" /></td></tr>
                         <tr><td>SSO Username:</td><td class="col"><input type="text" name="vcuser" size="30" />*（SSO用户名格式举例：administrator@vsphere.local）</td></tr>
                         <tr><td>SSO password:</td><td class="col"><input type="password" name="vc_password" size="30" /></td></tr>
@@ -324,14 +324,11 @@
                     console.log("VCSA: "+data);
                 });
                 
-                eventSource.addEventListener("message",(e) =>{
-                    console.log(e.data)
-                });
 
 
                 
                 eventSource.onerror=(event) => {
-                    console.error('SSE error:', event);
+                    console.log('connection state: ' + eventSource.readyState + ', error: ' + event);
                     // progress_Div.innerText=event.error;
                 };    
             }

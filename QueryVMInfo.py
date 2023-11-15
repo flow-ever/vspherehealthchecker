@@ -143,10 +143,16 @@ def get_vm_disk_info(vm):
                     consolidated_disk['disk_path']=des_disk['disk_path']
                     consolidated_disk['used_disk_size']=des_disk['used_disk_size']+ext_disk['used_disk_size']
                     consolidated_disk['disk_snap_num']=des_disk['disk_snap_num']
-                    consolidated_disk['disk_snap_size']=des_disk['disk_snap_size']+ext_disk['disk_snap_size']
-                    
-                    
+                    consolidated_disk['disk_snap_size']=des_disk['disk_snap_size']+ext_disk['disk_snap_size']                   
                     disks.append(consolidated_disk)
+                else: #des_disks包含磁盘数量和ext_disks包含的磁盘数量不等的时候，不能合并的部分，以des_disk作为合并磁盘的数据
+                    consolidated_disk={}
+                    consolidated_disk['disk_name']=des_disk['disk_name']
+                    consolidated_disk['disk_path']=des_disk['disk_path']
+                    consolidated_disk['used_disk_size']=des_disk['used_disk_size']
+                    consolidated_disk['disk_snap_num']=des_disk['disk_snap_num']
+                    consolidated_disk['disk_snap_size']=des_disk['disk_snap_size']                  
+                    disks.append(consolidated_disk)                  
     else:
         disks=des_disks
             
