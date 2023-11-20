@@ -1,4 +1,4 @@
-from datetime import timedelta,datetime
+from datetime import datetime
 import os
 import atexit
 from pyVmomi import vim
@@ -6,7 +6,8 @@ import re
 import json
 import ssl
 import sys
-from pyVim.connect import SmartConnect,Disconnect
+from pyVim.connect import SmartConnect,Disconnect,SmartConnectNoSSL
+
 import logging
 
 
@@ -38,19 +39,35 @@ def get_all_objs(content, vimtype):
 
 def establish_connection(vchost,vcuser,vcpassword):
     try:
-        si = SmartConnect(host=vchost, user=vcuser, pwd=vcpassword, sslContext=s)
+        si = SmartConnectNoSSL(host=vchost, user=vcuser, pwd=vcpassword)
         atexit.register(Disconnect, si)
         return si
     except Exception as e:
         print(f"Failed to connect to vCenter at {vchost}: {e}")
+        logger.error(f"Failed to connect to vCenter at {vchost}: {e}")
         return None
 
 
 
 
 
-def QueryAlarmInfo(si):
+def QueryAlarmInfo(vchost,vcuser,vcpassword):
+
+    cwd = os.getcwd()
+    current_time=datetime.now().strftime('%Y%m%d%H%M%S')    
+    alarm_json_file=os.path.join(cwd,'data',"alarm-"+current_time+".json")
+    logfile_path=os.path.join(cwd,'data','log',"alarmInfo_gathering.log")
+    log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
+    logger=logging.getLogger('alarm_logger')
+    fh=logging.FileHandler(filename=logfile_path,mode='a')
+    fh.setLevel(logging.INFO)
+    fh.setFormatter(log_formatter)
+    logger.addHandler(fh)
+    logger.setLevel(logging.INFO)
+
     logger.info("开始收集Alarm信息!")
+
+    si=establish_connection(vchost,vcuser,vcpassword)
     content = si.content
     allAlarms=content.rootFolder.triggeredAlarmState
     alarm_list=[]
@@ -58,13 +75,13 @@ def QueryAlarmInfo(si):
             alarm_dict={}
         # if not alarm.acknowledged:
             if alarm.overallStatus=='yellow' or alarm.overallStatus=='red':
-                print("--"*30)
+                # print("--"*30)
                 # print(type(alarm.entity))
                 rx=re.search("\'(?P<classname>.*)\'",str(type(alarm.entity)))
                 entity_type=rx.group('classname')
                 
-                print("{} {} {}  {}  {}  {} {}" .format(alarm.entity.name,entity_type.split(".")[-1],alarm.alarm.info.name,alarm.alarm.info.description,alarm.overallStatus,\
-                                            alarm.time,alarm.acknowledged))
+                # print("{} {} {}  {}  {}  {} {}" .format(alarm.entity.name,entity_type.split(".")[-1],alarm.alarm.info.name,alarm.alarm.info.description,alarm.overallStatus,\
+                #                             alarm.time,alarm.acknowledged))
                 alarm_dict['entity_name']=alarm.entity.name
                 alarm_dict['time']=alarm.time
                 alarm_dict['entity_type']=entity_type.split(".")[-1]
@@ -95,23 +112,8 @@ if __name__=="__main__":
     vchost = sys.argv[1]
     vcuser = sys.argv[2]
     vcpassword = sys.argv[3]
-
-
-
-    s = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-    s.verify_mode = ssl.CERT_NONE
     
-    cwd = os.getcwd()
-    current_time=datetime.now().strftime('%Y%m%d%H%M%S')    
-    alarm_json_file=os.path.join(cwd,'data',"alarm-"+current_time+".json")
-    logfile_path=os.path.join(cwd,'data','log',"alarmInfo_gathering.log")
-    log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
-    logger=logging.getLogger('alarm_logger')
-    fh=logging.FileHandler(filename=logfile_path,mode='a')
-    fh.setLevel(logging.INFO)
-    fh.setFormatter(log_formatter)
-    logger.addHandler(fh)
-    logger.setLevel(logging.INFO)
+
 
     si=establish_connection(vchost,vcuser,vcpassword)
     QueryAlarmInfo(si)

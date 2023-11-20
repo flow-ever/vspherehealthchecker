@@ -12,6 +12,9 @@ import paramiko
 import sys
 import time
 import socket
+import paramiko 
+
+print(paramiko.__file__)
  
 data_dir=os.path.join(os.getcwd(),'data')
 
@@ -348,7 +351,7 @@ def main():
 
     # Provisioned disk space:Total allocated space that the virtual machine can commit up to. Includes vmdk, swap, snapshot, and other virtual machine files such as NVRAM, configuration files, and logs. This metric includes uncommitted space.
     for vm in getallvms:
-            print(vm.config.name)
+            # print(vm.config.name)
         # if vm.config.name=='Nginx':
             TotalUsedSpaceinGB=vm.summary.storage.committed/1024/1024/1024
             TotalProvisionedSpaceinGB=(vm.summary.storage.committed+vm.summary.storage.uncommitted)/1024/1024/1024
@@ -453,9 +456,9 @@ def main():
             else:
                 disks=des_disks
             
-            print('DES DISK:{}'.format(des_disks))
-            print('EXT DISK:{}'.format(ext_disks))
-            print('DISK:{}'.format(disks))
+            # print('DES DISK:{}'.format(des_disks))
+            # print('EXT DISK:{}'.format(ext_disks))
+            # print('DISK:{}'.format(disks))
 
                     
 
@@ -466,7 +469,7 @@ def main():
             for dev in vm.config.hardware.device:
                 if isinstance(dev,vim.vm.device.VirtualDisk):
                     disks[i]['provisioned_disk_size']=dev.capacityInBytes
-                    print(i)
+                    # print(i)
                     i=i+1
 
 

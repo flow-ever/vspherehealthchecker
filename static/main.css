@@ -12,6 +12,11 @@ h1{
 h2{
   font-size: 18px;
 }
+
+
+
+
+
 #head_memu {
 
   padding: 0;
@@ -47,6 +52,108 @@ h2{
   justify-content: start;
   flex-direction: column;
   margin-left: 20px;
+  position: absolute;
+  top:10px;
+  
+}
+
+.title{
+  position: relative;
+  width: 800px;
+  height: 100px;
+  
+  
+}
+
+/* .title.img{
+  position: absolute;
+  width: 120px;
+  height: 30px;
+  right:10px;
+  top:5px
+
+} */
+
+.title .img img{
+  position: absolute;
+  width: 120px;
+  height: 30px;
+  right:10px;
+  top:5px
+
+}
+
+.title span{
+  position:relative ;
+  top:30px;
+  font-size: 32px;
+  font-weight: 900;
+  margin-left:20%;
+
+}  
+
+#note{
+  background-color: white;
+  width: 800px;
+  height: 100px;
+  padding: 10px;
+  border-radius: 5px;
+  border: solid 1px #ccc;
+  font-size: 14px;
+}
+
+p.notetitle{
+  font-weight:bolder;
+  font-size: 18px;
+  padding: 0;
+  margin: 0;
+}
+
+
+p.normaltext {
+  margin: 0;
+  
+}
+
+#vcenter_info{
+  /* background-color: aliceblue; */
+  width: 800px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: solid 1px #ccc;
+  font-size: 14px;
+}
+
+input{
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid #ccc;
+  border-radius: 5px;
+}
+input[type="checkbox"]{
+  width: 18px;
+  height: 18px;
+
+}
+
+#show_progress{
+  margin-top: 60px;
+  
+}
+
+.logger{
+  font-size: 10px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  visibility: hidden;
+}
+.logger_title {
+  font-size: 15px;
+  font-weight: bold;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  visibility: hidden;
 }
 
 .wrapper {
@@ -671,16 +778,7 @@ a:visited { text-decoration: none;color: }
   }
 
 
-p.notetext{
-  margin-top: 2px;
-  font-weight: bold;
-} 
 
-p.normaltext {
-  margin-top: 2px;
-  margin-bottom: 2px;
-  
-}
 .vmlist{
   display: flex; 
   flex-wrap: wrap;
@@ -709,4 +807,58 @@ p.normaltext {
   height: 40px; 
   margin-top: 0;
   border-radius: 5px;
+}
+
+.pass{
+  position: relative;
+  width: 210px;
+  height: 30px;
+  border-radius: 5px;
+  border-bottom: 1px solid #ccc;
+  /* box-shadow: inset 5px 5px 10px rgba(204, 197, 197,.5),
+              inset -5px -5px 8px rgba(204, 197, 197,.5); */
+  background-color: white;
+
+}
+
+.pass input {
+  position: absolute;
+  /* top: 5px; */
+  bottom: 0px;
+  left: px;
+  height: 20px;
+  width: 180px;
+  font-size: 18px;
+  outline: none;
+  border: none;
+  /* background-color:transparent;  */
+  background-color:white; 
+
+
+}
+
+
+.pass input::placeholder{
+  color: rgba(68, 67, 67,.8);
+  font-size: 14px;
+}
+
+.eye {
+  position: absolute;
+  margin-right: 5px;
+  top: 5px;
+  right: 5px;
+  width: 25px;
+  height: 25px;
+  background-image: url(./image/closeEye.svg);
+  background-size: 100% 100%;   
+  cursor: pointer;
+  background-color: white;
+}
+
+.eye.reveal {
+
+  background-image: url(./image/openeye.svg);
+  background-size: 100% 100%;   
+
 }

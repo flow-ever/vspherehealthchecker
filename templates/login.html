@@ -5,39 +5,14 @@
         <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='main.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='print.css') }}" media="print">
         <style >
-            #vcenter_info{
-                /* background-color: aliceblue; */
-                width: 50%;
-                padding: 10px;
-                margin-top: 10px;
-                margin-bottom: 10px;
-                border-radius: 5px;
-                border: solid 1px #ccc;
-                font-size: 12px;
-            }
 
-            #note{
-                background-color: white;
-                width: 50%;
-                height: 120px;
-                padding: 10px;
-                margin-top: 95px;
-                border-radius: 5px;
-                border: solid 1px #ccc;
-                font-size: 12px;
-            }
 
-            table {
-                background-color: white;
-                margin-left: 10px;   
-                border: solid 1px #ccc;
-                border-radius: 5px;    
-            }
+
             tr {
                 height: 30px;
             }
             input{
-                height: 20px;
+                height: 25px;
             }
             #add_host_form input{
                 width: 120px;
@@ -57,8 +32,7 @@
                 border: solid 1px #ccc;
                 margin-left: 10px;
                 text-align: center;
-                background-color: #ccc;
-                
+                background-color: #ccc;                
                 
             }
 
@@ -101,31 +75,22 @@
                 display: none;
             }
 
-            .logger{
-                font-size: 9px;
-                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-                visibility: hidden;
-            }
-            .logger_title {
-                font-size: 12px;
-                font-weight: bold;
-                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-                visibility: hidden;
-            }
-            input{
-                border-top: 0;
-                border-left: 0;
-                border-right: 0;
-                border-bottom: 1px solid #ccc;
-            }
+
+
         </style>
 
     
     </head>
     <body>
+        
+
         <div id="main_frame">    
+            <div class="title">
+                <div class="img"><img src="{{ url_for('static',filename='image/川流信息LOGO.png') }}"></div>
+                <div class="tools_title"><span>vSphere Health Checker v{{ release  }}</span></div>
+            </div>
             <div id="note">
-                <p class="notetext">Note:</p>
+                <p class="notetitle">Note:</p>
                 <p class="normaltext">为了能够收集服务器硬件和vSphere环境的信息，将需要登录凭据，所有的凭据将不会被程序保存！</p>
                 <ul>目前仅支持收集如下品牌服务器硬件信息：
                     <li>Dell PowerEdge（IDRAC 8）</li>
@@ -138,16 +103,24 @@
                 <form  id="credential_form" method="post">
                     <table id="add_vcsso_table" class="table2">
                         <tr><td>vCenter Server IP/FQDN:</td><td class="col"><input type="text" name="vchost" /></td></tr>
-                        <tr><td>SSO Username:</td><td class="col"><input type="text" name="vcuser" size="30" />*（SSO用户名格式举例：administrator@vsphere.local）</td></tr>
-                        <tr><td>SSO password:</td><td class="col"><input type="password" name="vc_password" size="30" /></td></tr>
+                        <tr><td>SSO Username:</td><td class="col">
+                                <input type="text" name="vcuser" size="25" placeholder="administrator@vsphere.local" />                            
+                        </td></tr>
+                        <tr><td>SSO password:</td><td class="col">                            
+                            <div class="pass">
+                                <input type="password" name="vc_password" id="vc_password" size="30" />
+                                <div class="eye" id="show_vc_password" onclick="reveal_pass('show_vc_password','vc_password')"></div>                                
+                            </div>
+                        </td></tr>
+                        <tr><td>VCSA root用户密码:</td><td class="col">
+                                
+                            <div class="pass">
+                                <input type="password" id="vcrootpassword" name="vcrootpassword"  size="30" />
+                                <div class="eye" id="show_vcroot_password" onclick="reveal_pass('show_vcroot_password','vcrootpassword')"></div>                                
+                            </div>
+                            </td></tr>
                     </table>
-    
-                    <p><input type="checkbox" name="vcsa" id="vcsa" onclick="toggle_div('div_add_vcsa_root_cred')" >是否收集VCSA虚拟机的内部信息，如：文件系统空间使用情况，证书是否过期等，建议收集！ </p>
-                    <div id="div_add_vcsa_root_cred">
-                        <table id="add_vcsa_root_cred">
-                            <tr><td>root password:</td><td class="col"><input type="password" id="vcrootpassword" name="vcrootpassword"  size="30" />VCSA root用户密码</td></tr>
-                        </table>                    
-                    </div>
+                    <p>*root用户登录用于收集VCSA虚拟机的内部信息，如：文件系统空间使用情况，证书是否过期等，vCenter各项服务的运行状况等！ </p>
     
                     <p><input type="checkbox" name="add_ipmi_host" id="add_ipmi_host" onclick="toggle_div('div_add_ipmiHosts')">收集服务器硬件告警信息 </p>
                     <div id="div_add_ipmiHosts">
@@ -166,7 +139,13 @@
                                 <td class="select_col"><input type="checkbox" name="checkbox1"></td>
                                 <td class="col"><input type="text" name="ipmiip1"/></td>
                                 <td class="col"><input type="text" name="ipmiuser1"/></td>            
-                                <td class="col"><input type="password" name="ipmipass1" /></td>
+                                <td class="col">
+                                    
+                                    <div class="pass">
+                                        <input type="password" name="ipmipass1" id="ipmipass1" />
+                                        <div class="eye" id="show_ipmipass1" onclick="reveal_pass('show_ipmipass1','ipmipass1')"></div>                                
+                                    </div>
+                                </td>
                             </tr>
                             
                         </table>
@@ -184,19 +163,20 @@
             </div>
 
             <div id="submit_buttn" onclick="submit('credential_form');"><b>Submit</b></div>
-
+            <div id="show_data" ><b><a href="/inventory">数据展示</a></b></div>
+            <div id="show_progress" style="visibility: hidden;">
+                <h2>数据收集进度</h2>
+                <p class="logger_title">VCSA信息收集进度：</p>
+                <div id="vcsa_gathering_progress" class="logger">     </div>
+                <p class="logger_title">vSphere信息收集进度：</p>
+                <div id="dc_gathering_progress" class="logger">       </div>
+                <p class="logger_title" id="ipmi_gathering_progress_title">IPMI信息收集进度：</p>
+                <div id="ipmi_gathering_progress" class="logger">      </div>
+                <p class="logger_title">vSphere VM信息收集进度：</p>
+                <div id="vm_gathering_progress" class="logger">       </div>      
+            </div>    
         </div>
-        <div id="show_progress" style="visibility: hidden;">
-            <h2>数据收集进度</h2>
-            <p class="logger_title">VCSA信息收集进度：</p>
-            <div id="vcsa_gathering_progress" class="logger">     </div>
-            <p class="logger_title">vSphere datacenter&Cluster(s)&Host(s)信息收集进度：</p>
-            <div id="dc_gathering_progress" class="logger">       </div>
-            <p class="logger_title">IPMI信息收集进度：</p>
-            <div id="ipmi_gathering_progress" class="logger">      </div>
-            <p class="logger_title">vSphere VM信息收集进度：</p>
-            <div id="vm_gathering_progress" class="logger">       </div>      
-        </div>      
+  
         
         
 
@@ -207,7 +187,6 @@
 
 </html>
 <script type="text/javascript">
-
     function toggle_div(div_id){
         var div = document.getElementById(div_id);
         if (div.style.display === "none" || div.style.display === "") {
@@ -236,17 +215,19 @@
 
         // Add some text to the new cells:
         cell1.innerHTML = "<td class=\"no_col\">"+currentRowIndex+"<\/td>";
-        cell2.innerHTML = "<td class=\"select_col\"><input type=\"checkbox\" name=\"chekbox"+  currentRowIndex.toString()+"\"></td>";
+        cell2.innerHTML = "<td class=\"select_col\"><input type=\"checkbox\" class=\"ipmicheckbox\" name=\"chekbox"+  currentRowIndex.toString()+"\"></td>";
         cell3.innerHTML = "<td class=\"input_col\"><input type=\"text\" name=\"ipmiip"+  currentRowIndex.toString()+"\" ></td>";
         cell4.innerHTML = "<td class=\"input_col\"><input type=\"text\" name=\"ipmiuser"+  currentRowIndex.toString()+"\"></td>";
-        cell5.innerHTML = "<td class=\"input_col\"><input type=\"password\" name=\"ipmipass"+  currentRowIndex.toString()+"\"></td>";
+        cell5.innerHTML = "<td class=\"col\"><div class=\"pass\"><input type=\"password\" name=\"ipmipass"+currentRowIndex.toString()+"\" id=\"ipmipass"+currentRowIndex.toString()+"\" /><div class=\"eye\" id=\"show_ipmipass"+currentRowIndex.toString() + "\" onclick=\"reveal_pass(\'show_ipmipass"+currentRowIndex.toString()+"\',\'ipmipass"+currentRowIndex.toString()+"\')\"></div></div></td>";
+        console.log(cell5.innerHTML)
     }
 
     function del_row(){                
-        var ckbxList=document.querySelectorAll("input[type=checkbox]:checked");
+        var ckbxList=document.querySelectorAll("input[class*='ipmicheckbox']:checked");
         // alert(ckbxList.length.toString());
         if (ckbxList.length>0){
             ckbxList.forEach(function(e) {
+                console.log(e.parentElement);
                 e.parentElement.parentElement.remove();
             }); 
         }else{
@@ -266,86 +247,127 @@
         del_row();
     });
 
-    function sse() {
-                const eventSource = new EventSource("/progress");    
-                const vm_div=document.getElementById('vm_gathering_progress');
-                const ipmi_div=document.getElementById('ipmi_gathering_progress');
-                const dc_div=document.getElementById('dc_gathering_progress');
-                const vcsa_div=document.getElementById('vcsa_gathering_progress');
-                // const progress_Div = document.getElementById(div_id);        
-                // eventSource.onopen = (event) => {
-                    
-                //     if (progress_Div.style.display==='none' || progress_Div.style.display==='' ) {
-                //         progress_Div.style.display='block'
-                //         progress_Div.innerText="开始数据收集..."
-                //     }
-                // };
-                
-                // eventSource.onmessage=(event) =>{
-                //     progress_Div.innerText=event.data
+    function createeventSource(eventtype,elementId){
+        const VM_log_end_flag='the information acquisition of virtual machine(s) is finished!'
+        const IPMI_log_end_flag='the information acquisition of ipmi host(s) is finished!'    
+        const DATACENTER_log_end_flag='the information acquisition of datacenter(s) is finished!'
+        const VCSA_log_end_flag='the information acquisition of vcsa is finished!'
+        var eventend={}
+        eventend={
+            "VM":VM_log_end_flag,
+            "IPMI":IPMI_log_end_flag,
+            "DATACENTER":DATACENTER_log_end_flag,
+            "VCSA":VCSA_log_end_flag
+        };
 
-                // }; 
-                eventSource.addEventListener("VM",(e) =>{
-                    
-                    var data=e.data
-                        .replace(/\[|\]/g, '')  // Remove '[' and ']'
-                        .replace(/'/g,'')       //replace '''
-                        .replace(/,/g, '<br>')     // Remove commas
-                    vm_div.innerHTML=data;
-                    console.log("VM: "+e.data);
-                });
-                eventSource.addEventListener("IPMI",(e) =>{
-                    
-                    var data=e.data
-                        .replace(/\[|\]/g, '')  // Remove '[' and ']'
-                        .replace(/'/g,'')       //replace '''
-                        .replace(/,/g, '<br>')     // Remove commas
-                    cls_div.innerHTML=data;
-                    console.log("IPMI: "+e.data);
-                });
+        const eventSource = new EventSource(`/progress/${eventtype}`);
+        const element = document.getElementById(elementId);
 
-                eventSource.addEventListener("DATACENTER",(e) =>{
-                    var data=e.data
-                        .replace(/\[|\]/g, '')  // Remove '[' and ']'
-                        .replace(/'/g,'')       //replace '''
-                        .replace(/,/g, '<br>')     // Remove commas
-                    dc_div.innerHTML=data;
-                    console.log("dc: "+e.data);
-                });
-
-                eventSource.addEventListener("VCSA",(e) =>{
-                    console.log(typeof e.data)
-                    var data=e.data
-                        .replace(/\[|\]/g, '')  // Remove '[' and ']'
-                        .replace(/'/g,'')       //replace '''
-                        .replace(/,/g, '<br>')     // Remove commas
-
-                    vcsa_div.innerHTML=data;
-                    console.log("VCSA: "+data);
-                });
-                
-
-
-                
-                eventSource.onerror=(event) => {
-                    console.log('connection state: ' + eventSource.readyState + ', error: ' + event);
-                    // progress_Div.innerText=event.error;
-                };    
+        eventSource.addEventListener(eventtype,(e) =>{
+        
+            var data=e.data
+                .replace(/\[|\]/g, '')  // Remove '[' and ']'
+                .replace(/'/g,'')       //replace '''
+                .replace(/,/g, '<br>')     // Remove commas
+            if (data.match(eventend[eventtype])){
+                eventSource.close();
+            }else{
+                element.innerHTML=data;
             }
+
+
+        });
+        eventSource.onerror = function (error) {
+                console.error('EventSource failed:', error);
+                eventSource.close();
+            };
+    }
+
+    
+    function sse() {
+        const VM_log_end_flag='the information acquisition of virtual machine(s) is finished!'
+        const ipmi_checkbox=document.getElementById('add_ipmi_host');
+        const eventSource = new EventSource("/progress");    
+        const vm_div=document.getElementById('vm_gathering_progress');
+        const ipmi_div=document.getElementById('ipmi_gathering_progress');
+        const dc_div=document.getElementById('dc_gathering_progress');
+        const vcsa_div=document.getElementById('vcsa_gathering_progress');
+
+
+        // const progress_Div = document.getElementById(div_id);        
+        // eventSource.onopen = (event) => {
+            
+        //     if (progress_Div.style.display==='none' || progress_Div.style.display==='' ) {
+        //         progress_Div.style.display='block'
+        //         progress_Div.innerText="开始数据收集..."
+        //     }
+        // };
+        
+        // eventSource.onmessage=(event) =>{
+        //     progress_Div.innerText=event.data
+
+        // }; 
+        eventSource.addEventListener("VM",(e) =>{
+            
+            var data=e.data
+                .replace(/\[|\]/g, '')  // Remove '[' and ']'
+                .replace(/'/g,'')       //replace '''
+                .replace(/,/g, '<br>')     // Remove commas
+            if (data.match(VM_log_end_flag)){
+                eventSource.close();
+            }else{
+                vm_div.innerHTML=data;
+            }
+            
+            // console.log("VM: "+e.data);
+        });
+        if (ipmi_checkbox.checked==true){
+                eventSource.addEventListener("IPMI",(e) =>{
+                
+                var data=e.data
+                    .replace(/\[|\]/g, '')  // Remove '[' and ']'
+                    .replace(/'/g,'')       //replace '''
+                    .replace(/,/g, '<br>')     // Remove commas
+                cls_div.innerHTML=data;
+                // console.log("IPMI: "+e.data);
+            });
+        }
+
+
+        eventSource.addEventListener("DATACENTER",(e) =>{
+            var data=e.data
+                .replace(/\[|\]/g, '')  // Remove '[' and ']'
+                .replace(/'/g,'')       //replace '''
+                .replace(/,/g, '<br>')     // Remove commas
+            dc_div.innerHTML=data;
+            // console.log("dc: "+e.data);
+        });
+        
+
+            eventSource.addEventListener("VCSA",(e) =>{
+            // console.log(typeof e.data)
+            var data=e.data
+                .replace(/\[|\]/g, '')  // Remove '[' and ']'
+                .replace(/'/g,'')       //replace '''
+                .replace(/,/g, '<br>')     // Remove commas
+
+            vcsa_div.innerHTML=data;
+            // console.log("VCSA: "+data);
+        });
+        
+        
+        eventSource.onerror=(event) => {
+            console.log('connection state: ' + eventSource.readyState + ', error: ' + event);
+            // progress_Div.innerText=event.error;
+        };    
+    }
     
     function submit(form_id){
         var form=document.getElementById(form_id);
         var inputs=document.getElementsByTagName("INPUT");
-        var chkbx_vcsa=document.getElementById('vcsa');
         var chkbx_ipmi=document.getElementById('add_ipmi_host');
-        // 如果检查VCSA虚拟机没有勾选，删除对root用户密码的填写检查
-        if (!chkbx_vcsa.checked){
-            for (let i=0;i<inputs.length-1;i++){
-                if (inputs[i].name=="vcrootpassword"){
-                    inputs[i].remove()
-                }
-            }
-        }
+
+
         // 如果检查ipmi没有勾选，删除对ipmi登录凭据填写检查
         if (!chkbx_ipmi.checked){
             for (let i=0;i<inputs.length;i++){
@@ -355,11 +377,7 @@
             }
         }
 
-        var input_null=false;
-        for (i=0;i<inputs.length;i++){
-            console.log(inputs[i].name+":"+inputs[i].value);
-        }
-        
+        var input_null=false;        
         
         for (var i=0;i<inputs.length-1;i++){
             if (inputs[i].type !="checkbox"){
@@ -368,7 +386,6 @@
                     input_null=true;
                     break;
                 }
-
             }
         }
         
@@ -378,13 +395,32 @@
             const logger_title_divs=document.querySelectorAll('.logger_title');
             const logger_divs=document.querySelectorAll('.logger');
             for (i=0;i<logger_title_divs.length;i++){
+                if (logger_title_divs[i].id=='ipmi_gathering_progress_title') {
+                    if (! chkbx_ipmi.checked){
+                        logger_title_divs[i].style.visibility='hidden';
+                    }else{
+                        logger_title_divs[i].style.visibility='visible';
+                    }
+                    continue;
+                }
+                
                 logger_title_divs[i].style.visibility='visible';
             }
-            for (i=0;i<logger_divs.length;i++){
+
+            for (i=0;i<logger_divs.length;i++){                
+                if (logger_divs[i].id=='ipmi_gathering_progress') {
+                    console.log(logger_divs[i].id)
+                    if (! chkbx_ipmi.checked){
+                        logger_title_divs[i].style.visibility='hidden';
+                    }else{
+                        logger_title_divs[i].style.visibility='visible';
+                    }
+                    continue;
+                }
+                
                 logger_divs[i].style.visibility='visible';
-            }
-
-
+                }
+            
             sse();
         }
     }
@@ -399,4 +435,42 @@
             // console.log('非空');
         }
     }
+
+    function reveal_pass(self_id,input_id){
+        var eye = document.getElementById(self_id);        
+        var password = document.getElementById(input_id);        
+           if(password.type==='password')
+           {
+               password.setAttribute('type','text');
+               eye.classList.add('reveal');
+           }else{
+            password.setAttribute('type','password');
+               eye.classList.remove('reveal');
+           }
+
+    }
+
+    function ifUrlExist(url, callback) {
+    let request = new XMLHttpRequest;
+    request.open('GET', url, true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    request.setRequestHeader('Accept', '*/*');
+    request.onprogress = function(event) {
+        let status = event.target.status;
+        let statusFirstNumber = (status).toString()[0];
+        switch (statusFirstNumber) {
+            case '2':
+                request.abort();
+                return callback(true);
+            default:
+                request.abort();
+                return callback(false);
+        };
+    };
+    request.send('');
+};       
+
+
+
+    
 </script>

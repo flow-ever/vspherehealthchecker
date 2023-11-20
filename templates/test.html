@@ -9,6 +9,10 @@
     <script src='main.js'></script> -->
 </head>
 <body>
-    {{ cluster }}
+    <script>
+        var currentRowIndex=10
+        var str = "<td class=\"col\"><div class=\"pass\"><input type=\"password\" name=\"ipmipass1\" id=\"ipmipass"+currentRowIndex.toString()+"\" /><div class=\"eye\" id=\"show_ipmipass"+currentRowIndex.toString() + "\" onclick=\"reveal_pass(\'show_ipmipass"+currentRowIndex.toString()+"\',\'ipmipass"+currentRowIndex.toString()+"\')\"></div></div></td>";
+        console.log(str)
+    </script>
 </body>
 </html>

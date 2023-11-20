@@ -1,14 +1,14 @@
 import time,datetime
-import os,shutil
+import os
 import subprocess
 import multiprocessing 
 import sys
 import re
 import json
-from decimal import Decimal
-from collections import defaultdict
+# from decimal import Decimal
 import logging
-
+import requests
+import importlib.util
 
 
 
@@ -28,6 +28,9 @@ logger.setLevel(logging.INFO)
 app=Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 app.jinja_env.add_extension('jinja2.ext.loopcontrols')
+# script_directory = os.path.dirname(sys.argv[0])
+
+# python_path=os.path.join(script_directory, 'python.exe')
 python_path=sys.executable
 
 
@@ -64,23 +67,58 @@ def get_num(e):
 
 def log_subprocess_output(pipe):
     for line in iter(pipe.readline, b''):  # b'\n'-separated lines
-        logger.info('%r', line)
+        print(repr(line))
+        logger.info(line.decode('utf-8',errors='ignore').strip())
+
+def run_script(script_path,function_name, args):
+    try:
+        # Load the script as a module
+        spec = importlib.util.spec_from_file_location("script_module", script_path)
+        script_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(script_module)
+
+        # Call the specified function in the loaded script with arguments
+        getattr(script_module, function_name)(*args)
+        # script_module.run(*args)
+        print(f"Script {script_path} executed successfully with args.")
+        # logger.info(f"Script {script_path} executed successfully with args: {args}")
+    except Exception as e:
+        print(f"Error executing script {script_path}: {e}")
+        # logger.error(f"Error executing script {script_path}: {e}")
+
 
 def run_command(command):
-    # print(command)
-    # result = subprocess.run(command, shell=True, capture_output=True, text=True)
-    sub_process=subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
-    # logger.info("start to execute command:"+command+"!")
-    with sub_process.stdout:
-      log_subprocess_output(sub_process.stdout)
-    if sub_process.stderr is not None:
-      with sub_process.stderr:
-        log_subprocess_output(sub_process.stderr)
-    exitcode=sub_process.wait()
-    if exitcode==0:
-       logger.info(command+" executed success!")
-    else:
-       logger.error(command+" executed failed!")
+    try:
+      # print(command)
+      # result = subprocess.run(command, shell=True, capture_output=True, text=True)
+      # sub_process=subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)  #shell=true 命令在后台非阻塞运行  pyinstaller 打包之后运行失败
+      sub_process=subprocess.Popen(command,shell=True,stdout=subprocess.PIPE, stderr=subprocess.STDOUT, stdin=subprocess.PIPE)  #shell=true 命令在后台非阻塞运行
+      # logger.info("start to execute command:"+command+"!")
+      with sub_process.stdout:
+        log_subprocess_output(sub_process.stdout)
+      if sub_process.stderr is not None:
+        with sub_process.stderr:
+          log_subprocess_output(sub_process.stderr)
+
+      exitcode=sub_process.wait(timeout=60) #timeout=60确保子进程有足够的执行时间
+
+      if exitcode==0:
+        logger.info(f"{command} executed successfully!")
+      else:
+        logger.error(f"{command} executed failed with exit code {exitcode}!")
+    except Exception as e:
+        logger.error(f"An error occurred while executing {command}: {e}")
+
+# def run_command(command):
+#     print(f"start to execute Command: {command}")
+#     exitcode = os.system(command)
+#     if exitcode == 0:
+#         print(f"Command executed successfully: {command}")
+#         logger.info(f"Command executed successfully: {command}")
+#     else:
+#         print(f"Command execution failed with exit code {exitcode}: {command}")
+#         logger.error(f"Command execution failed with exit code {exitcode}: {command}")
+#     return exitcode
 
 def get_value(findstr,strlist):
     ll=[]
@@ -229,6 +267,12 @@ def static_include(filename):
     with open(fullpath, 'r') as f:
         return f.read()
     
+def check_url(url:str):
+   x=requests.get(url,timeout=2)
+   if x.status_code==200:
+      return True
+   else:
+      return False
 
 
 
@@ -237,39 +281,54 @@ def data_collection_task(scriptname,vchost, vcuser, vcpassword, result_key):
     try:
         result = run_command(command)
         data_collection_results[result_key] = result
+    except subprocess.CalledProcessError as e:
+        data_collection_results[result_key] = f"Command execution error: {e}"
+        logger.error(f"Command execution error: {e}, Command: {command}")
     except Exception as e:
-        data_collection_results[result_key] = str(e)
+        data_collection_results[result_key] = f"An unexpected error occurred: {e}"
+        logger.error(f"An unexpected error occurred: {e}, Command: {command}")
+
 
 #数据收集首页，输入vcenter的SSO登录凭据以及vcsa虚拟机root用户密码等
 @app.route('/', methods=['GET','POST'])
 def index():
+  if request.method=='GET':
+     release=request.args.get('version',default="1.0",type=str)
+     return render_template('login.html',release=release)
+
   if request.method == 'POST':
     # print(request.form)
     form_data=request.form.items()
     form_data_list = [[key, value] for key, value in form_data]
-    
+
 
     vchost = request.form.get('vchost')
     vcuser = request.form.get('vcuser')
     vcpassword = request.form.get('vc_password')
-    vcsa = request.form.get('vcsa')
+    # vcsa = request.form.get('vcsa')
     vcrootpassword = request.form.get('vcrootpassword')
     add_ipmi_host = request.form.get('add_ipmi_host')
 
-    #获取VCSA 虚拟机内部信息，文件系统使用情况、证书等
-    if vcsa =='on':
-      logger.info("VCSA信息收集开启")
-      cmd=f"{python_path} QueryVCSAInfo.py {vchost} {vcrootpassword}"
-      logger.info("运行脚本："+f"{python_path} QueryVCSAInfo.py {vchost}")
-      run_command(cmd)
+    # #获取VCSA 虚拟机内部信息，文件系统使用情况、证书等
+    # logger.info("VCSA信息收集开启")
+    # cmd=f"{python_path} QueryVCSAInfo.py {vchost} {vcrootpassword}"
+    # logger.info("运行脚本："+f"{python_path} QueryVCSAInfo.py {vchost}")
+    # run_command(cmd)
 
-    #获取Dell服务器的IPMI日志
-    current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-    ipmi_file=os.path.join(data_dir,"ipmi-"+current_time+".json")
-    logger.info("create file:"+ipmi_file)
-    with open(ipmi_file,'w+') as f:
-       f.writelines('#file start here')
-    f.close()
+    scripts_to_run=[
+       ('QueryVCSAInfo.py', 'QueryVCSAInfo',(vchost,vcrootpassword)),
+       ('QueryAlarmInfo.py', 'QueryAlarmInfo',(vchost,vcuser,vcpassword)),
+       ('QueryVMInfo.py','QueryVMsInfo', (vchost,vcuser,vcpassword)),
+       ('QueryDCInfo.py', 'QueryDCsInfo',(vchost,vcuser,vcpassword)),
+    ]
+
+    # #获取Dell服务器的IPMI日志
+    # current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+    # ipmi_file=os.path.join(data_dir,"ipmi-"+current_time+".json")
+    
+    # if (os.path.exists(ipmi_file) == False):
+    #   f = open(ipmi_file, "w")
+    #   logger.info("create file:"+ipmi_file)
        
     if add_ipmi_host=='on':
       logger.info("IPMI信息收集开启")
@@ -277,71 +336,73 @@ def index():
       ipmiuser_list=get_value('ipmiuser',form_data_list)
       ipmipass_list=get_value('ipmipass',form_data_list)
 
+      
       for i in range(len(ipmihost_list)):
         # cmd = ["python", "DellPowerEdgeQuery.py", ipmihost_list[i],ipmiuser_list[i],ipmipass_list[i]]
-        cmd = f"{python_path} DellPowerEdgeQuery.py {ipmihost_list[i]} {ipmiuser_list[i]} {ipmipass_list[i]} {ipmi_file}"
-        logger.info("运行脚本："+f"{python_path} DellPowerEdgeQuery.py {ipmihost_list[i]} {ipmiuser_list[i]} {ipmi_file}")
-        run_command(cmd)
+        # cmd = f"{python_path} DellPowerEdgeQuery.py {ipmihost_list[i]} {ipmiuser_list[i]} {ipmipass_list[i]} {ipmi_file}"
+        # logger.info("运行脚本："+f"{python_path} DellPowerEdgeQuery.py {ipmihost_list[i]} {ipmiuser_list[i]} {ipmi_file}")
+        # run_command(cmd)
+        cmd=('DellPowerEdgeQuery.py','QueryiDRAC',( ipmihost_list[i], ipmiuser_list[i],ipmipass_list[i]))
+        scripts_to_run.append(cmd)
 
-
+    # logger.info(f"运行脚本： QueryAlarmInfo.py {vchost} {vcuser} ")
     # cmd=f"{python_path} QueryAlarmInfo.py {vchost} {vcuser} {vcpassword}"
-    # run_command(cmd)
+    # logger.info("运行脚本："+f"{python_path} QueryAlarmInfo.py {vchost}")
+    # run_command(cmd)  
 
+    # logger.info(f"运行脚本： QueryDCInfo.py  {vchost} {vcuser} ")
+    # cmd=f"{python_path} QueryDCInfo.py  {vchost} {vcuser} {vcpassword}"
+    # logger.info("运行脚本："+f"{python_path} QueryDCInfo.py  {vchost}")
+    # run_command(cmd)  
 
+    # logger.info(f"运行脚本： QueryVMInfo.py  {vchost} {vcuser} ")
+    # cmd=f"{python_path} QueryVMInfo.py  {vchost} {vcuser} {vcpassword}"
+    # logger.info("运行脚本："+f"{python_path} QueryVMInfo.py  {vchost}")
+    # run_command(cmd)  
 
-  
-    # cmd=f"{python_path} QueryHostInfo.py {vchost} {vcuser} {vcpassword}"
-    # logger.info(f"运行脚本： QueryHostInfo.py {vchost} {vcuser} ")
-    # run_command(cmd)
-
-    # cmd=f"{python_path} QueryClusterInfo.py {vchost} {vcuser} {vcpassword}"
-    # logger.info(f"运行脚本： QueryClusterInfo.py {vchost} {vcuser}")
-    # run_command(cmd)
-
-    # cmd=f"{python_path} QueryDCInfo.py {vchost} {vcuser} {vcpassword}"
-    # logger.info(f"运行脚本： QueryDCInfo.py {vchost} {vcuser}")
-    # run_command(cmd)
-
-    # cmd=f"{python_path} QueryVMInfo.py {vchost} {vcuser} {vcpassword}"
-    # logger.info(f"运行脚本： QueryVMInfo.py {vchost} {vcuser}")
-    # run_command(cmd)
 
   #利用多进程并行发起信息收集任务
-    processes = []
+    # processes = []
 
-
-    logger.info(f"运行脚本： QueryAlarmInfo.py {vchost} {vcuser} ")
-    scriptname="QueryAlarmInfo.py"
-    process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'alarm_info'))
-    process.start()
-    processes.append(process)
-
-    logger.info(f"运行脚本： QueryVMInfo.py {vchost} {vcuser}")
-    scriptname="QueryVMInfo.py"
-    process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'vms_info'))
-    process.start()
-    processes.append(process)
-
-    # logger.info(f"运行脚本： QueryClusterInfo.py {vchost} {vcuser}")
-    # scriptname="QueryHostInfo.py"
-    # process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'hosts_info'))
+    # logger.info(f"运行脚本： QueryAlarmInfo.py {vchost} {vcuser} ")
+    # scriptname="QueryAlarmInfo.py"
+    # process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'alarm_info'))
     # process.start()
     # processes.append(process)
 
-    logger.info(f"运行脚本： QueryDCInfo.py {vchost} {vcuser}")
-    scriptname="QueryDCInfo.py"
-    process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'datacenter_info'))
-    process.start()
-    processes.append(process)
+    # logger.info(f"运行脚本： QueryVMInfo.py {vchost} {vcuser}")
+    # scriptname="QueryVMInfo.py"
+    # process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'vms_info'))
+    # process.start()
+    # processes.append(process)
 
-    for process in processes:
-        process.join()
+    # # logger.info(f"运行脚本： QueryClusterInfo.py {vchost} {vcuser}")
+    # # scriptname="QueryHostInfo.py"
+    # # process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'hosts_info'))
+    # # process.start()
+    # # processes.append(process)
+
+    # logger.info(f"运行脚本： QueryDCInfo.py {vchost} {vcuser}")
+    # scriptname="QueryDCInfo.py"
+    # process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'datacenter_info'))
+    # process.start()
+    # processes.append(process)
+
+    # for process in processes:
+    #     process.join()
 
 
+    num_processes=len(scripts_to_run)
+
+    # Create a multiprocessing pool
+    with multiprocessing.Pool(processes=num_processes) as pool:
+        # Map the run_script function to the list of script paths and arguments
+        pool.starmap(run_script, scripts_to_run)    
+  
 
     return redirect(url_for('datacenter'))
 
-  return render_template('login.html')
+  return redirect(url_for('index'))
   
 
 
@@ -357,6 +418,41 @@ def index():
 #     else:
 #        latest_updates.append("该项信息收集未开始")  
 #     return latest_updates
+
+
+def gathering_progress(eventtype:str):
+    log_dir=os.path.join(os.getcwd(),'data','log')
+    vms_log_path=os.path.join(log_dir,"vmsInfo_gathering.log")
+    ipmi_log_path=os.path.join(log_dir,"IPMIInfo_gathering.log")
+    dc_log_path=os.path.join(log_dir,"DCInfo_gathering.log")
+    vcsa_log_path=os.path.join(log_dir,"vcsaInfo_gathering.log")
+    log_files_path=[vms_log_path,ipmi_log_path,dc_log_path,vcsa_log_path]
+    
+
+    vm_log_end_flag='the information acquisition of virtual machine(s) is finished!'
+    ipmi_log_end_flag='the information acquisition of ipmi host(s) is finished!'    
+    dc_log_end_flag='the information acquisition of datacenter(s) is finished!'
+    vcsa_log_end_flag='the information acquisition of vcsa is finished!'
+    log_end_flags=[vm_log_end_flag,ipmi_log_end_flag,dc_log_end_flag,vcsa_log_end_flag]
+
+    eventType_list=['VM','IPMI','DATACENTER','VCSA']
+    k=0
+    for i in range(len(eventType_list)):
+       if eventType_list[i]==eventtype:
+          k=i
+          break
+
+    file_end=False
+    while not file_end:
+      if os.path.exists(log_files_path[k]):
+          with open(log_files_path[k]) as f:
+            lines=f.read().splitlines()
+            #event：表示事件的类别，data：需要传递给客户端的事件信息              
+            yield f"event:{'VM'}\ndata:{lines}\n\n"  
+            if len(lines)>0:
+              lastline=lines[-1]
+              if log_end_flags[k] in lastline:
+                  file_end=True   
 
 
 #收集进度数据的函数
@@ -413,6 +509,11 @@ def log_stream():
         #     # yield f"data: {update['data'][0]}\n\n"
 
 #将数据收集的进度数据发送到url /check_updates，浏览器客户端可以从该url获得数据，然后展现在前端页面
+# @app.route('/progress/<string:eventtype>')
+# def sse(eventtype):
+#   # Add the client (browser) to the clients list
+#   # clients.append(request.environ['wsgi.input'])
+#   return Response(gathering_progress(eventtype),mimetype='text/event-stream')
 @app.route('/progress')
 def sse():
   # Add the client (browser) to the clients list
@@ -950,6 +1051,7 @@ def datacenter():
   #         root_pass_lines,                        
   #         alarm_list,
   #         alarm_ack ]
+
   elif len(inventory_id)>0:
      path_list=inventory_id.split('-')
      path_len=len(path_list)
@@ -987,4 +1089,4 @@ def datacenter():
 
 if __name__=='__main__':
     app.run(debug=True,port=9999)
-    multiprocessing.freeze_support()  
+    multiprocessing.freeze_support()

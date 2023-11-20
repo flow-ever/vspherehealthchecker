@@ -9,7 +9,7 @@ import logging
 
 
 
-paramiko.util.log_to_file( 'ssh.log' )
+# paramiko.util.log_to_file( 'ssh.log' )
 
 # cmds=[]
 
@@ -18,6 +18,19 @@ paramiko.util.log_to_file( 'ssh.log' )
 # print("write retrieved information abouts vcenter Server in to json file {}".format(vcsa_json_file))
 
 def QueryVCSAInfo(vchost,rootPassword):
+    cwd = os.getcwd()
+    current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+    vcsa_json_file=os.path.join(cwd,'data',"vcsa-"+current_time+".log")   
+    logfile_path=os.path.join(cwd,'data','log',"vcsaInfo_gathering.log")
+
+    log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
+    logger=logging.getLogger('vcsa_logger')
+    fh=logging.FileHandler(filename=logfile_path,mode='a')
+    fh.setLevel(logging.INFO)
+    fh.setFormatter(log_formatter)
+    logger.addHandler(fh)
+    logger.setLevel(logging.INFO)
+    
     logger.info("开始收集VCSA虚拟机内部信息")
     cmd_enable_shell='shell.set --enabled true\n'
     cmd_entershell='shell'
@@ -45,39 +58,40 @@ def QueryVCSAInfo(vchost,rootPassword):
         client.connect(vchost, port=22, username='root', password=rootPassword, timeout=5)
         channel = client.invoke_shell()
         
+        data = ''
         for cmd in commands:
-            channel.send(cmd+'\n')
-            logger.info('Executing command:'+cmd)
+            channel.send(cmd + '\n')
+            logger.info('Executing command:' + cmd)
             time.sleep(2)
 
-        if channel.recv_ready():
-            data=channel.recv(20480).decode('ascii').strip('\n')
-        print(data)     
+            while not  channel.recv_ready():
+                time.sleep(1)
+
+            data += channel.recv(20480).decode('ascii').strip('\n')
+    
 
         logger.info('收集的信息写入文件：'+vcsa_json_file)
         with open(vcsa_json_file,'a') as f:
             f.writelines(data)
         f.close()
+              
 
-        client.close()
-        logger.info("the information acquisition of vcsa is finished!")        
-
-    except paramiko.ssh_exception.AuthenticationException as e:
+    except paramiko.AuthenticationException as e:
+        print(f"SSH authentication error: {e}")
+        logger.info(f"SSH authentication error: {e}")
+    except paramiko.SSHException as e:
         print(f"SSH error: {e}")
         logger.info(f"SSH error: {e}")
-        sys.exit(1)
-    except paramiko.ssh_exception.SSHException as e:
-        print(f"SSH error: {e}")
-        logger.info(f"SSH error: {e}")
-        sys.exit(1)
-    except socket.error:
-        print("socket.error")
-        logger.info("socket.error")
+    except socket.error as e:
+        print(f"Socket error: {e}")
+        logger.info(f"Socket error: {e}")
     except Exception as e:
-        print(f"An error occurred: {e}")
-        logger.info(f"An error occurred: {e}")
+        print(f"An unexpected error occurred: {e}")
+        logger.info(f"An unexpected error occurred: {e}")
+
     finally:
         # Close the SSH connection
+        logger.info("the information acquisition of vcsa is finished!")  
         client.close()
 
 
@@ -92,20 +106,9 @@ if __name__=='__main__':
     vchost = sys.argv[1]
     rootPassword = sys.argv[2]
 
-    cwd = os.getcwd()
-    current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-    vcsa_json_file=os.path.join(cwd,'data',"vcsa-"+current_time+".log")   
-    logfile_path=os.path.join(cwd,'data','log',"vcsaInfo_gathering.log")
-
-    log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
-    logger=logging.getLogger('vcsa_logger')
-    fh=logging.FileHandler(filename=logfile_path,mode='a')
-    fh.setLevel(logging.INFO)
-    fh.setFormatter(log_formatter)
-    logger.addHandler(fh)
-    logger.setLevel(logging.INFO)
 
     QueryVCSAInfo(vchost,rootPassword)
+
 
 
 

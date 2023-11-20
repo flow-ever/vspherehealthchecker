@@ -1,0 +1,1 @@
+pyinstaller -p D:\myproject\env\Scripts --add-data templates:templates --add-data static:static -F -i D:\myproject\vspherehealthChecker\static\image\check.ico vSphereCollector.py

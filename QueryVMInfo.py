@@ -5,9 +5,8 @@ from pyVmomi import vim
 import re
 import json
 import logging
-from pyVim.connect import SmartConnect, Disconnect,SmartConnectNoSSL
+from pyVim.connect import  Disconnect,SmartConnectNoSSL
 import atexit
-import ssl
 import sys
 
 
@@ -291,12 +290,23 @@ def buildQuery(content, vchtime, counternames, instance, obj):
         print(query)
         exit()
 
-def QueryVMsInfo(si):
-    
+def QueryVMsInfo(vchost,vcuser,vcpassword): 
+    cwd = os.getcwd()
+    current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+    vm_json_file=os.path.join(cwd,'data',"vms-"+current_time+".json")
+
+    logfile_path=os.path.join(cwd,'data','log',"vmsInfo_gathering.log")
+    log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
+    logger=logging.getLogger('vms_logger')
+    fh=logging.FileHandler(filename=logfile_path,mode='a')
+    fh.setLevel(logging.INFO)
+    fh.setFormatter(log_formatter)
+    logger.addHandler(fh)
+    logger.setLevel(logging.INFO)   
     logger.info("The information acquisition of virtual machine(s) is started!")
     vmlist=[]
-    content=si.content
-    
+    si=establish_connection(vchost,vcuser,vcpassword)
+    content=si.content    
 
     getallvms=get_all_objs(content,[vim.VirtualMachine])
     for vm in getallvms:
@@ -505,18 +515,6 @@ if __name__=="__main__":
 
     # s = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
     # s.verify_mode = ssl.CERT_NONE
-    cwd = os.getcwd()
-    current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-    vm_json_file=os.path.join(cwd,'data',"vms-"+current_time+".json")
 
-    logfile_path=os.path.join(cwd,'data','log',"vmsInfo_gathering.log")
-    log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
-    logger=logging.getLogger('vms_logger')
-    fh=logging.FileHandler(filename=logfile_path,mode='a')
-    fh.setLevel(logging.INFO)
-    fh.setFormatter(log_formatter)
-    logger.addHandler(fh)
-    logger.setLevel(logging.INFO)
 
-    si=establish_connection(vchost=vchost,vcuser=vcuser,vcpassword=vcpassword)
-    QueryVMsInfo(si)
+    QueryVMsInfo(vchost=vchost,vcuser=vcuser,vcpassword=vcpassword)

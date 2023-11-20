@@ -5,7 +5,6 @@ import datetime
 import logging
 from pyVim.connect import Disconnect,SmartConnectNoSSL
 import atexit
-import ssl
 import sys
 import vsanmgmtObjects
 import vsanapiutils
@@ -28,7 +27,18 @@ import pytz
 #                                 va--vapp
 #                                 nw--network
 #                                 ds--datastore
+cwd = os.getcwd()
+current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+dc_json_file=os.path.join(cwd,'data',"dc-"+current_time+".json")
 
+logfile_path=os.path.join(cwd,'data','log',"dcInfo_gathering.log")
+log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
+logger=logging.getLogger('DC_logger')
+fh=logging.FileHandler(filename=logfile_path,mode='a')
+fh.setLevel(logging.INFO)
+fh.setFormatter(log_formatter)
+logger.addHandler(fh)
+logger.setLevel(logging.INFO)
 
 
 def str2list(string):
@@ -204,7 +214,8 @@ def get_all_objs(content, vimtype):
         obj.append(managed_object_ref)
     return obj
 
-def QueryDCsInfo(si):
+def QueryDCsInfo(vchost,vcuser,vcpassword):
+    si=establish_connection(vchost,vcuser,vcpassword)
     content=si.content
     print("Gathering vSphere Datacenters information")
     logger.info("开始收集Datacenter信息!")
@@ -691,23 +702,23 @@ def QueryDCsInfo(si):
                         evc_config['enabled']=False
                         # quit()
 
-                feature_capabilities = evc_state.featureCapability
+                # feature_capabilities = evc_state.featureCapability
 
-                for capability in feature_capabilities:
-                        print("Feature Capability\n") 
-                        print(capability.featureName) 
-                        print(capability.key) 
-                        print(capability.value) 
-                        print("-------------") 
+                # for capability in feature_capabilities:
+                #         print("Feature Capability\n") 
+                #         print(capability.featureName) 
+                #         print(capability.key) 
+                #         print(capability.value) 
+                #         print("-------------") 
 
-                features_masked = evc_state.featureMask
+                # features_masked = evc_state.featureMask
 
-                for mask in features_masked:
-                        print("Feature Masked\n") 
-                        print(mask.featureName) 
-                        print(mask.key) 
-                        print(mask.value) 
-                        print("-------------" )   
+                # for mask in features_masked:
+                #         print("Feature Masked\n") 
+                #         print(mask.featureName) 
+                #         print(mask.key) 
+                #         print(mask.value) 
+                #         print("-------------" )   
 
                 cluster_config['name']=cls.name
                 cluster_config['hosts']=hosts
@@ -1319,19 +1330,4 @@ if __name__=="__main__":
     # print(sys.argv)
 
 
-
-    cwd = os.getcwd()
-    current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-    dc_json_file=os.path.join(cwd,'data',"dc-"+current_time+".json")
-
-    logfile_path=os.path.join(cwd,'data','log',"dcInfo_gathering.log")
-    log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
-    logger=logging.getLogger('DC_logger')
-    fh=logging.FileHandler(filename=logfile_path,mode='a')
-    fh.setLevel(logging.INFO)
-    fh.setFormatter(log_formatter)
-    logger.addHandler(fh)
-    logger.setLevel(logging.INFO)
-
-    si=establish_connection(vchost=vchost,vcuser=vcuser,vcpassword=vcpassword)
-    QueryDCsInfo(si)
+    QueryDCsInfo(vchost=vchost,vcuser=vcuser,vcpassword=vcpassword)
