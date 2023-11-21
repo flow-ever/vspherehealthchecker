@@ -1,0 +1,6 @@
+python -m nuitka vSphereCollector.py --company-name='Jiangsu flow-ever tech info co., Ltd' --product-name='vSphere health Checker' --product-version=1.0 --windows-icon-from-ico=static/image/check.png  --include-data-dir=static=static  --include-data-dir=templates=templates --onefile --output-dir=vSphereCollector.dist --include-module=paramiko --include-module=pyVmomi --include-module=pyVim --include-module=vsanmgmtObjects --run
+
+
+set clang.exe='C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\Llvm\bin'
+set clang++.exe='C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\Llvm\x64\bin'
+set clang-cl.exe='

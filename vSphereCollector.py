@@ -126,10 +126,7 @@ def get_value(findstr,strlist):
       rx=re.search(findstr,"".join(strlist[i]))
       if rx and strlist[i][1] is not None:
           ll.append(strlist[i][1])
-    if len(ll)==1:
-      return ll[0]
-    else:
-      return ll
+    return ll
       
 
 # def logging_finished(fname,end_flag):    
