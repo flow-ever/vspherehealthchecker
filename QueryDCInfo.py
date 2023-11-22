@@ -202,7 +202,8 @@ def buildQuery(content, vchtime, counternames, instance, obj):
         print('Start perf counter time   :  {}'.format(startTime))
         print('End perf counter time     :  {}'.format(endTime))
         print(query)
-        exit()
+        # exit()
+        return perfResults
 
 
 # Method that populates objects of type vimtype
