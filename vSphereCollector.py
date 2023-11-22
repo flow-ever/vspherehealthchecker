@@ -589,7 +589,7 @@ def show_vcenter():
   for line in data:
       rx=re.search(']#.*chage -l root',line)
       if rx:
-          print('find')
+          # print('find')
           find_flag=True
       if find_flag:
           root_pass_lines.append(line.strip())   
