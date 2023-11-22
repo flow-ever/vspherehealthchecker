@@ -409,7 +409,11 @@ def QueryVMsInfo(vchost,vcuser,vcpassword):
                         vm_perf_metrics.append(metric)
 
         # vm_perf_metric[]={}
-
+        # createDate attribution exists since vsphere API 6.7
+        if hasattr(vm.config,'createDate'):
+            vm_createdate=vm.config.createDate.strftime("%m/%d/%Y, %H:%M:%S")
+        else:
+            vm_createdate='null'
 
 
         vmindex=[
@@ -459,7 +463,7 @@ def QueryVMsInfo(vchost,vcuser,vcpassword):
             vm.config.tools.syncTimeWithHost,
             vm.config.tools.toolsVersion,
             vmtools_status_check(vm),
-            vm.config.createDate.strftime("%m/%d/%Y, %H:%M:%S"),
+            vm_createdate, # since vSphere API 6.7
             #  vm.config.files,
             vm.config.guestFullName,
             vm.guest.guestFullName,
