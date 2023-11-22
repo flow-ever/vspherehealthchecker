@@ -304,7 +304,7 @@ def index():
     vcpassword = request.form.get('vc_password')
     # vcsa = request.form.get('vcsa')
     vcrootpassword = request.form.get('vcrootpassword')
-    add_ipmi_host = request.form.get('add_ipmi_host')
+
 
     # #获取VCSA 虚拟机内部信息，文件系统使用情况、证书等
     # logger.info("VCSA信息收集开启")
@@ -313,80 +313,15 @@ def index():
     # run_command(cmd)
 
     scripts_to_run=[
+       #获取VCSA 虚拟机内部信息，文件系统使用情况、证书等
        ('QueryVCSAInfo.py', 'QueryVCSAInfo',(vchost,vcrootpassword)),
+       #获取VC的警告信息
        ('QueryAlarmInfo.py', 'QueryAlarmInfo',(vchost,vcuser,vcpassword)),
+       #获取虚拟机信息
        ('QueryVMInfo.py','QueryVMsInfo', (vchost,vcuser,vcpassword)),
+       #获取Datacenter，Cluster、hosts信息
        ('QueryDCInfo.py', 'QueryDCsInfo',(vchost,vcuser,vcpassword)),
     ]
-
-    # #获取Dell服务器的IPMI日志
-    # current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-    # ipmi_file=os.path.join(data_dir,"ipmi-"+current_time+".json")
-    
-    # if (os.path.exists(ipmi_file) == False):
-    #   f = open(ipmi_file, "w")
-    #   logger.info("create file:"+ipmi_file)
-       
-    if add_ipmi_host=='on':
-      logger.info("IPMI信息收集开启")
-      ipmihost_list=get_value('ipmiip',form_data_list)
-      ipmiuser_list=get_value('ipmiuser',form_data_list)
-      ipmipass_list=get_value('ipmipass',form_data_list)
-
-      
-      for i in range(len(ipmihost_list)):
-        # cmd = ["python", "DellPowerEdgeQuery.py", ipmihost_list[i],ipmiuser_list[i],ipmipass_list[i]]
-        # cmd = f"{python_path} DellPowerEdgeQuery.py {ipmihost_list[i]} {ipmiuser_list[i]} {ipmipass_list[i]} {ipmi_file}"
-        # logger.info("运行脚本："+f"{python_path} DellPowerEdgeQuery.py {ipmihost_list[i]} {ipmiuser_list[i]} {ipmi_file}")
-        # run_command(cmd)
-        cmd=('DellPowerEdgeQuery.py','QueryiDRAC',( ipmihost_list[i], ipmiuser_list[i],ipmipass_list[i]))
-        scripts_to_run.append(cmd)
-
-    # logger.info(f"运行脚本： QueryAlarmInfo.py {vchost} {vcuser} ")
-    # cmd=f"{python_path} QueryAlarmInfo.py {vchost} {vcuser} {vcpassword}"
-    # logger.info("运行脚本："+f"{python_path} QueryAlarmInfo.py {vchost}")
-    # run_command(cmd)  
-
-    # logger.info(f"运行脚本： QueryDCInfo.py  {vchost} {vcuser} ")
-    # cmd=f"{python_path} QueryDCInfo.py  {vchost} {vcuser} {vcpassword}"
-    # logger.info("运行脚本："+f"{python_path} QueryDCInfo.py  {vchost}")
-    # run_command(cmd)  
-
-    # logger.info(f"运行脚本： QueryVMInfo.py  {vchost} {vcuser} ")
-    # cmd=f"{python_path} QueryVMInfo.py  {vchost} {vcuser} {vcpassword}"
-    # logger.info("运行脚本："+f"{python_path} QueryVMInfo.py  {vchost}")
-    # run_command(cmd)  
-
-
-  #利用多进程并行发起信息收集任务
-    # processes = []
-
-    # logger.info(f"运行脚本： QueryAlarmInfo.py {vchost} {vcuser} ")
-    # scriptname="QueryAlarmInfo.py"
-    # process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'alarm_info'))
-    # process.start()
-    # processes.append(process)
-
-    # logger.info(f"运行脚本： QueryVMInfo.py {vchost} {vcuser}")
-    # scriptname="QueryVMInfo.py"
-    # process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'vms_info'))
-    # process.start()
-    # processes.append(process)
-
-    # # logger.info(f"运行脚本： QueryClusterInfo.py {vchost} {vcuser}")
-    # # scriptname="QueryHostInfo.py"
-    # # process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'hosts_info'))
-    # # process.start()
-    # # processes.append(process)
-
-    # logger.info(f"运行脚本： QueryDCInfo.py {vchost} {vcuser}")
-    # scriptname="QueryDCInfo.py"
-    # process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'datacenter_info'))
-    # process.start()
-    # processes.append(process)
-
-    # for process in processes:
-    #     process.join()
 
 
     num_processes=len(scripts_to_run)
@@ -420,19 +355,17 @@ def index():
 def gathering_progress(eventtype:str):
     log_dir=os.path.join(os.getcwd(),'data','log')
     vms_log_path=os.path.join(log_dir,"vmsInfo_gathering.log")
-    ipmi_log_path=os.path.join(log_dir,"IPMIInfo_gathering.log")
     dc_log_path=os.path.join(log_dir,"DCInfo_gathering.log")
     vcsa_log_path=os.path.join(log_dir,"vcsaInfo_gathering.log")
-    log_files_path=[vms_log_path,ipmi_log_path,dc_log_path,vcsa_log_path]
+    log_files_path=[vms_log_path,dc_log_path,vcsa_log_path]
     
 
     vm_log_end_flag='the information acquisition of virtual machine(s) is finished!'
-    ipmi_log_end_flag='the information acquisition of ipmi host(s) is finished!'    
     dc_log_end_flag='the information acquisition of datacenter(s) is finished!'
     vcsa_log_end_flag='the information acquisition of vcsa is finished!'
-    log_end_flags=[vm_log_end_flag,ipmi_log_end_flag,dc_log_end_flag,vcsa_log_end_flag]
+    log_end_flags=[vm_log_end_flag,dc_log_end_flag,vcsa_log_end_flag]
 
-    eventType_list=['VM','IPMI','DATACENTER','VCSA']
+    eventType_list=['VM','DATACENTER','VCSA']
     k=0
     for i in range(len(eventType_list)):
        if eventType_list[i]==eventtype:
@@ -457,22 +390,20 @@ def log_stream():
     #轮询检查各个信息收集脚本的生成的日志文件，读取更新进展日志，并按照类别进行输出
     log_dir=os.path.join(os.getcwd(),'data','log')
     vms_log_path=os.path.join(log_dir,"vmsInfo_gathering.log")
-    ipmi_log_path=os.path.join(log_dir,"IPMIInfo_gathering.log")
     dc_log_path=os.path.join(log_dir,"DCInfo_gathering.log")
     vcsa_log_path=os.path.join(log_dir,"vcsaInfo_gathering.log")
-    log_files_path=[vms_log_path,ipmi_log_path,dc_log_path,vcsa_log_path]
+    log_files_path=[vms_log_path,dc_log_path,vcsa_log_path]
     
 
-    vm_log_end_flag='the information acquisition of virtual machine(s) is finished!'
-    ipmi_log_end_flag='the information acquisition of ipmi host(s) is finished!'    
+    vm_log_end_flag='the information acquisition of virtual machine(s) is finished!' 
     dc_log_end_flag='the information acquisition of datacenter(s) is finished!'
     vcsa_log_end_flag='the information acquisition of vcsa is finished!'
-    log_end_flags=[vm_log_end_flag,ipmi_log_end_flag,dc_log_end_flag,vcsa_log_end_flag]
+    log_end_flags=[vm_log_end_flag,dc_log_end_flag,vcsa_log_end_flag]
 
     eventType=['VM','CLUSTER','DATACENTER','VCSA']
 
     #收集结束标识
-    subs_end=[[key,False] for key in ['vm_end','ipmi_end','datacenter_end','vcsa_end']]
+    subs_end=[[key,False] for key in ['vm_end','datacenter_end','vcsa_end']]
     all_end=False
 
 
