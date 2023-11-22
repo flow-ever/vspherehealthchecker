@@ -91,10 +91,7 @@
             </div>
             <div id="note">
                 <p class="notetitle">Note:</p>
-                <p class="normaltext">为了能够收集服务器硬件和vSphere环境的信息，将需要登录凭据，所有的凭据将不会被程序保存！</p>
-                <ul>目前仅支持收集如下品牌服务器硬件信息：
-                    <li>Dell PowerEdge（IDRAC 8）</li>
-                </ul>
+                <p class="normaltext">为了能够收集vSphere环境的信息，将需要登录凭据，所有的凭据将不会被程序保存！</p>
             </div>   
 
             <div id="vcenter_info"> 
@@ -120,7 +117,7 @@
                             </div>
                             </td></tr>
                     </table>
-                    <p>*root用户登录用于收集VCSA虚拟机的内部信息，如：文件系统空间使用情况，证书是否过期等，vCenter各项服务的运行状况等！ </p>
+                    <p>*root用户登录用于收集VCSA虚拟机的内部信息，如：文件系统空间使用情况，证书是否过期等，各项服务的运行状况等！ </p>
     
     
     
@@ -196,19 +193,7 @@
         const vcsa_div=document.getElementById('vcsa_gathering_progress');
 
 
-        // const progress_Div = document.getElementById(div_id);        
-        // eventSource.onopen = (event) => {
-            
-        //     if (progress_Div.style.display==='none' || progress_Div.style.display==='' ) {
-        //         progress_Div.style.display='block'
-        //         progress_Div.innerText="开始数据收集..."
-        //     }
-        // };
-        
-        // eventSource.onmessage=(event) =>{
-        //     progress_Div.innerText=event.data
 
-        // }; 
         eventSource.addEventListener("VM",(e) =>{
             
             var data=e.data
