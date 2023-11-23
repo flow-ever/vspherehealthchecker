@@ -27,18 +27,7 @@ import pytz
 #                                 va--vapp
 #                                 nw--network
 #                                 ds--datastore
-cwd = os.getcwd()
-current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-dc_json_file=os.path.join(cwd,'data',"dc-"+current_time+".json")
 
-logfile_path=os.path.join(cwd,'data','log',"dcInfo_gathering.log")
-log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
-logger=logging.getLogger('DC_logger')
-fh=logging.FileHandler(filename=logfile_path,mode='a')
-fh.setLevel(logging.INFO)
-fh.setFormatter(log_formatter)
-logger.addHandler(fh)
-logger.setLevel(logging.INFO)
 
 
 def str2list(string):
@@ -216,6 +205,18 @@ def get_all_objs(content, vimtype):
     return obj
 
 def QueryDCsInfo(vchost,vcuser,vcpassword):
+    cwd = os.getcwd()
+    current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+    dc_json_file=os.path.join(cwd,'data',"dc-"+current_time+".json")
+
+    logfile_path=os.path.join(cwd,'data','log',"dcInfo_gathering.log")
+    log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
+    logger=logging.getLogger('DC_logger')
+    fh=logging.FileHandler(filename=logfile_path,mode='a')
+    fh.setLevel(logging.INFO)
+    fh.setFormatter(log_formatter)
+    logger.addHandler(fh)
+    logger.setLevel(logging.INFO)
     si=establish_connection(vchost,vcuser,vcpassword)
     content=si.content
     print("Gathering vSphere Datacenters information")
