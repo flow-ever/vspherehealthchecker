@@ -9,6 +9,10 @@ import json
 import logging
 import requests
 import importlib.util
+from QueryVCSAInfo import QueryVCSAInfo
+from QueryAlarmInfo import QueryAlarmInfo
+from QueryDCInfo import QueryDCsInfo
+from QueryVMInfo import QueryVMsInfo
 
 
 
@@ -67,7 +71,7 @@ def get_num(e):
 
 def log_subprocess_output(pipe):
     for line in iter(pipe.readline, b''):  # b'\n'-separated lines
-        print(repr(line))
+        # print(repr(line))
         logger.info(line.decode('utf-8',errors='ignore').strip())
 
 def run_script(script_path,function_name, args):
@@ -312,24 +316,41 @@ def index():
     # logger.info("运行脚本："+f"{python_path} QueryVCSAInfo.py {vchost}")
     # run_command(cmd)
 
-    scripts_to_run=[
-       #获取VCSA 虚拟机内部信息，文件系统使用情况、证书等
-       ('QueryVCSAInfo.py', 'QueryVCSAInfo',(vchost,vcrootpassword)),
-       #获取VC的警告信息
-       ('QueryAlarmInfo.py', 'QueryAlarmInfo',(vchost,vcuser,vcpassword)),
-       #获取虚拟机信息
-       ('QueryVMInfo.py','QueryVMsInfo', (vchost,vcuser,vcpassword)),
-       #获取Datacenter，Cluster、hosts信息
-       ('QueryDCInfo.py', 'QueryDCsInfo',(vchost,vcuser,vcpassword)),
-    ]
+    # scripts_to_run=[
+    #    #获取VCSA 虚拟机内部信息，文件系统使用情况、证书等
+    #    ('QueryVCSAInfo.py', 'QueryVCSAInfo',(vchost,vcrootpassword)),
+    #    #获取VC的警告信息
+    #    ('QueryAlarmInfo.py', 'QueryAlarmInfo',(vchost,vcuser,vcpassword)),
+    #    #获取虚拟机信息
+    #    ('QueryVMInfo.py','QueryVMsInfo', (vchost,vcuser,vcpassword)),
+    #    #获取Datacenter，Cluster、hosts信息
+    #    ('QueryDCInfo.py', 'QueryDCsInfo',(vchost,vcuser,vcpassword)),
+    # ]
 
 
-    num_processes=len(scripts_to_run)
+    # num_processes=len(scripts_to_run)
 
-    # Create a multiprocessing pool
-    with multiprocessing.Pool(processes=num_processes) as pool:
-        # Map the run_script function to the list of script paths and arguments
-        pool.starmap(run_script, scripts_to_run)    
+    # # Create a multiprocessing pool
+    # with multiprocessing.Pool(processes=num_processes) as pool:
+    #     # Map the run_script function to the list of script paths and arguments
+    #     pool.starmap(run_script, scripts_to_run) 
+
+    p1=multiprocessing.Process(target=QueryVCSAInfo,args=(vchost,vcrootpassword))  
+    p2=multiprocessing.Process(target=QueryAlarmInfo,args=(vchost,vcuser,vcpassword))   
+    p3=multiprocessing.Process(target=QueryDCsInfo,args=(vchost,vcuser,vcpassword))   
+    p4=multiprocessing.Process(target=QueryVMsInfo,args=(vchost,vcuser,vcpassword))    
+
+    p1.start()
+    p2.start()
+    p3.start()
+    p4.start()
+
+    p1.join()
+    p2.join()
+    p3.join()
+    p4.join()
+
+
   
 
     return redirect(url_for('datacenter'))
