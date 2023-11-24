@@ -32,7 +32,25 @@
             bottom: '1%',
             right: '20%',
             // symbol: 'triangle',
-            symbolSize: 15,
+            symbol:{
+                image:(params)=>{
+                    switch (params.data.type){
+                        case 'datacenter':                            
+                            return {{ url_for('static',filename='image/dc.png') }};
+                            break;
+                        case 'cluster':
+                            return {{ url_for('static',filename='image/cluster.png') }};
+                            break;                            
+                        case 'host':
+                            return {{ url_for('static',filename='image/host.png') }};
+                            break;
+                        defualt:
+                            return {{ url_for('static',filename='image/vm.png') }};
+                            break;
+                    }
+                }
+            },
+            symbolSize: 20,
             label: {
                 position: 'left',
                 verticalAlign: 'middle',
