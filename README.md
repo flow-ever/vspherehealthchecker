@@ -9,6 +9,7 @@ a tools for gathering &amp; display vsphere information
 # 适用范围
 仅适用于具有vCenter Server管理的vSphere环境
 目前该版本仅在vSphere 7.0U3环境下测试通过
+已经测试通过的运行环境：Win10/11，注意：* Win7不适用 * 
 # 如何工作
 1. 程序启动后，将运行一个Web服务器
 2. 用户在数据收集的页面，填写相关凭据
