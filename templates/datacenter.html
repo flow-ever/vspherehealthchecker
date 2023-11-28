@@ -2,10 +2,9 @@
 
 {% block body %}
 <!-- <link rel="stylesheet" type="text/css" href="print.css" media="print"> -->
-<h1 style="display:flex; background-color: #00a8ff;height: 40px;text-align: center;align-items: center;justify-content: center;opacity:0.6"><font style="color: white;">Datacenter Name:{{ dc_data['name'] | safe }}</font></h1>
-<h2>Cluster(s)|Host(s)|VM(s)</h2>
+<h1 >Datacenter Name:{{ dc_data['name'] | safe }}</font></h1>
+<h2 class="dc_h2">Cluster(s)->Host(s)->VM(s)</h2>
 <div class="dc_tree" id="dc_tree" style="height: 1024px"></div>
-
 <script type="text/javascript">
     var dom = document.getElementById('dc_tree');
     var myChart = echarts.init(dom, null, {
@@ -26,44 +25,56 @@
             {
             // layout:'radial',
             type: 'tree',
-            data: {{ dc_tree | safe }},
+            
             top: '1%',
             left: '5%',
             bottom: '1%',
             right: '20%',
             // symbol: 'triangle',
-            symbol:{
-                image:(params)=>{
+            edgeForkPosition:'20%',
+            data: {{ dc_tree | safe }},
+            symbol: (value,params)=>{
+                    // console.log(params.data.type);
                     switch (params.data.type){
+                        
                         case 'datacenter':                            
-                            return {{ url_for('static',filename='image/dc.png') }};
+                            return 'image:/{{ url_for('static',filename='image/dc.png') }}';
                             break;
                         case 'cluster':
-                            return {{ url_for('static',filename='image/cluster.png') }};
+                            return 'image:/{{ url_for('static',filename='image/cluster.png') }}';
                             break;                            
                         case 'host':
-                            return {{ url_for('static',filename='image/host.png') }};
+                            return 'image:/{{ url_for('static',filename='image/host.png') }}';
+                            break;
+                        case 'vm':
+                            return 'image:/{{ url_for('static',filename='image/vm.png') }}';
                             break;
                         defualt:
-                            return {{ url_for('static',filename='image/vm.png') }};
+                            return 'image:/{{ url_for('static',filename='image/vm.png') }}';
                             break;
                     }
-                }
             },
-            symbolSize: 20,
+            symbolSize: [30,30],
+            
             label: {
                 position: 'left',
                 verticalAlign: 'middle',
                 align: 'right',
                 fontSize: 12,
                 fontFamily:'Microsoft YaHei',
-                fontWeight:'bold'
+                fontWeight:'bold',
+                // formatter:function(data){
+                //     return 'Type:'+data.type+'|Name:'+data.name;
+                // }
             },
             leaves: {
                 label: {
                 position: 'right',
                 verticalAlign: 'middle',
-                align: 'left'
+                align: 'left',
+                color:'#6c5ce7',
+                fontWeight:'bold',
+                fontSize: 12,
                 }
             },
             emphasis: {
@@ -84,7 +95,7 @@
     }
 
     myChart.on('click',function(params){
-        console.log(params.data.path);
+        // console.log(params.data.path);
         var path=params.data.path;
         var ids=path.split('-');
 
@@ -102,8 +113,473 @@
 
     window.addEventListener('resize', myChart.resize);
   </script>
-<h2>Networks</h2>
-<h2>Datastores</h2>
+<h2 class="dc_h2">Networks</h2>
+<div class="dc_network_tree" id="dc_network_tree" style="height: 1024px"></div>
+
+<script type="text/javascript">
+    var dom = document.getElementById('dc_network_tree');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+
+    var option;
+
+    myChart.setOption(
+        (option = {
+        tooltip: {
+            trigger: 'item',
+            triggerOn: 'mousemove'
+        },
+        
+        series: [
+            {
+            // layout:'radial',
+            type: 'tree',
+            data: {{ dc_network_tree | safe }},
+            top: '10%',
+            left: '5%',
+            bottom: '10%',
+            right: '5%',
+            // symbol: 'triangle',
+            layout:'radial',
+            // orient:'vertical',
+            symbol: (value,params)=>{
+                    
+                    switch (params.data.type){
+                        
+                        case 'datacenter':                            
+                            return 'image:/{{ url_for('static',filename='image/dc.png') }}';
+                            break;
+                        case 'network':
+                            return 'image:/{{ url_for('static',filename='image/network.png') }}';
+                            break;                            
+                        case 'portgroup':
+                            return 'image:/{{ url_for('static',filename='image/portgroup.png') }}';
+                            break;
+                        case 'vm':
+                            return 'image:/{{ url_for('static',filename='image/vm.png') }}';
+                            break;
+                        defualt:
+                            return 'image:/{{ url_for('static',filename='image/vm.png') }}';
+                            break;
+                    }
+            },
+            symbolSize: [25,25],
+            label: {
+                // position: 'left',
+                // verticalAlign: 'middle',
+                // align: 'right',
+                fontSize: 10,
+                fontFamily:'Microsoft YaHei',
+                // fontWeight:'bold'
+            },
+            leaves: {
+                label: {
+                // position: 'right',
+                // verticalAlign: 'middle',
+                // align: 'left',
+                color:'#6c5ce7',
+                fontWeight:'bold',
+                fontSize: 12,
+                }
+            },
+            emphasis: {
+                focus: 'descendant'
+            },
+            expandAndCollapse: true,
+            animationDuration: 550,
+            animationDurationUpdate: 750
+            }
+        ]
+        })
+    );
+
+
+
+    if (option && typeof option === 'object') {
+    myChart.setOption(option);
+    }
+
+    myChart.on('click',function(params){
+        // console.log(params.data.path);
+        // var path=params.data.path;
+        // var ids=path.split('-');
+
+        // 点击在label，不是在图标上
+        if (params.event.target.culling===false){ 
+            if (params.data.type=='vm'){
+                top.location.href=`/inventory?vm_name=${params.data.name}`;
+            }
+            
+        }
+        
+    });
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+<h2 class="dc_h2">Datastores</h2>
+<div id="datastore" class="dashboard">
+    <div style="height: 800px;width: 45%;" id="shareds_capacity" class="wedget"></div>
+    <div style="height: 800px;width: 45%;" id="shareds_util_percent" class="wedget"></div>
+    <div style="height: 800px;width: 45%;" id="localds_capacity" class="wedget"></div>
+    <div style="height: 800px;width: 45%;" id="localds_util_percent" class="wedget"></div>
+</div>
+<script type="text/javascript">
+    var share_divCap=document.getElementById('shareds_capacity');
+    var share_divUtiPct=document.getElementById('shareds_util_percent');
+    var local_divCap=document.getElementById('localds_capacity');
+    var local_divUtiPct=document.getElementById('localds_util_percent');
+
+    var share_capacityarr=Array.from(Array(2), () => new Array(4));
+    share_capacityarr[0]=['name','CapacityGB','FreeGB','ProvisionedGB'];
+    var share_pctArr=Array.from(Array(2), () => new Array(3));
+    share_pctArr[0]=['name','usage','over_provision_pct'];
+
+    var local_capacityarr=Array.from(Array(2), () => new Array(4));
+    local_capacityarr[0]=['name','CapacityGB','FreeGB','ProvisionedGB'];
+    var local_pctArr=Array.from(Array(2), () => new Array(3));
+    local_pctArr[0]=['name','usage','over_provision_pct'];
+
+    {% set dss=dc_data['datastores'] %}
+
+    {% set s_index=namespace(value=0) %}
+    {% set l_index=namespace(value=0) %}
+    {% for ds in dss %}
+        {% if ds['multipleHostAccess'] %} //共享存储
+            {% set s_index.value=s_index.value+1 %}  
+            share_capacityarr[{{ s_index.value }}]=[];//需要为二元数组第一层进行初始化，否则不能直接给第二层赋值
+            share_capacityarr[{{ s_index.value }}][0]='{{ ds['name'] }}';
+            share_capacityarr[{{ s_index.value }}][1]={{ ds['capacity']/1024/1024/1024  }}.toFixed(1);
+            share_capacityarr[{{ s_index.value }}][2]={{ ds['freeSpace']/1024/1024/1024 }}.toFixed(1);
+            share_capacityarr[{{ s_index.value }}][3]={{ ds['provisioned']/1024/1024/1024 }}.toFixed(1);
+            share_pctArr[{{ s_index.value }}]=[]; 
+            share_pctArr[{{ s_index.value }}][0]='{{ ds['name'] }}'; 
+            share_pctArr[{{ s_index.value }}][1]={{ (ds['capacity']-ds['freeSpace'])/ds['capacity']*100 }}.toFixed(1);  
+            {% if (ds['provisioned']-ds['capacity'])<=0 %}
+                share_pctArr[{{ s_index.value }}][2]=0;
+            {% else %}
+                share_pctArr[{{ s_index.value }}][2]={{ (ds['provisioned']-ds['capacity'])/ds['capacity']*100 }}.toFixed(1);
+            {% endif %} 
+        {% else %} //本地存储
+            {% set l_index.value=l_index.value+1 %}  
+            local_capacityarr[{{ l_index.value }}]=[];//需要为二元数组第一层进行初始化，否则不能直接给第二层赋值
+            local_capacityarr[{{ l_index.value }}][0]='{{ ds['name'] }}';
+            local_capacityarr[{{ l_index.value }}][1]={{ ds['capacity']/1024/1024/1024  }}.toFixed(1);
+            local_capacityarr[{{ l_index.value }}][2]={{ ds['freeSpace']/1024/1024/1024 }}.toFixed(1);
+            local_capacityarr[{{ l_index.value }}][3]={{ ds['provisioned']/1024/1024/1024 }}.toFixed(1);
+            local_pctArr[{{ l_index.value }}]=[]; 
+            local_pctArr[{{ l_index.value }}][0]='{{ ds['name'] }}'; 
+            local_pctArr[{{ l_index.value }}][1]={{ (ds['capacity']-ds['freeSpace'])/ds['capacity']*100 }}.toFixed(1);  
+            {% if (ds['provisioned']-ds['capacity'])<=0 %}
+                local_pctArr[{{ l_index.value }}][2]=0;
+            {% else %}
+                local_pctArr[{{ l_index.value }}][2]={{ (ds['provisioned']-ds['capacity'])/ds['capacity']*100 }}.toFixed(1);
+            {% endif %}         
+        {% endif %}     
+    {% endfor %}
+
+    var share_div_height=20*3*1.1*1.2*{{ s_index.value }};
+    share_divCap.style.height=(share_div_height+200)+'px';
+    share_divUtiPct.style.height=share_divCap.style.height
+
+    var local_div_height=20*3*1.1*1.2*{{ l_index.value }};
+    local_divCap.style.height=(local_div_height+200)+'px';
+    local_divUtiPct.style.height=local_divCap.style.height
+
+    console.log("width:")
+    console.log(share_divCap.style.height)
+    console.log(local_divCap.style.height)
+
+    
+    var share_divCapChart = echarts.init(share_divCap, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+
+    var share_divUtiPctChart = echarts.init(share_divUtiPct, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });  
+    
+    var local_divCapChart = echarts.init(local_divCap, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+
+    var local_divUtiPctChart = echarts.init(local_divUtiPct, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });   
+    
+    share_divCapoption = {
+        legend: {},
+        grid:{ left:150},
+        tooltip: {},
+        title:{text:'共享存储空间(GB)'},
+        color:['#55efc4','#81ecec','#74b9ff'],
+        dataset: {
+            source: share_capacityarr
+        },
+        xAxis: { name:'GB' },
+        yAxis: {
+            type: 'category', 
+            axisLabel:{
+              rotate: 45,
+              // interval: 4,
+              show:true,
+              clickable:true,
+              fontSize: 10,
+              overflow:'truncate',
+              width: 100,
+              ellipsis: '...'     
+          }
+        },
+        // Declare several bar series, each will be mapped
+        // to a column of dataset.source by default.
+        series: [
+            { 
+                type: 'bar' ,
+                barWidth:20,
+
+                itemStyle:{
+                borderRadius:[0,5,5,0] //顺时针左上、右上，右下，左下
+                },
+                label: {
+                    show: true,
+                    position: 'outside',
+                    overflow:'truncate',
+                    width: 60,
+                    ellipsis: '...'                
+                },
+            }, 
+            { 
+                type: 'bar' ,
+                barWidth:25,
+                itemStyle:{
+                borderRadius:[0,5,5,0] //顺时针左上、右上，右下，左下
+                },
+                label: {
+                    show: true,
+                    position: 'outside',
+                    overflow:'truncate',
+                    width: 60,
+                    ellipsis: '...'                
+                },
+            }, 
+            { 
+                type: 'bar' ,
+                barWidth:25,
+                barGap:'10%', //不同系列的柱间距离，为百分比（如 '30%'，表示柱子宽度的 30%）
+                barCategoryGap: '10%', //同一系列的柱间距离，默认为类目间距的20%
+                itemStyle:{
+                borderRadius:[0,5,5,0] //顺时针左上、右上，右下，左下
+                },
+                label: {
+                    show: true,
+                    position: 'outside',
+                    overflow:'truncate',
+                    width: 60,
+                    ellipsis: '...'                
+                },
+            },    
+        ]
+    };
+
+    share_divCapChart.setOption(share_divCapoption);
+
+    share_divUtiPctoption = {
+        legend: {},
+        grid:{left:150},
+        title:{text:'共享存储空间利用率(%)'},
+        tooltip: {},
+        color:['#81ecec','#74b9ff'],
+        dataset: {
+            source: share_pctArr
+        },
+        xAxis: { name:'%' },
+        yAxis: {            
+            type: 'category', 
+
+            axisLabel:{
+              rotate: 45,
+              // interval: 4,
+              show:true,
+              clickable:true,
+              fontSize: 10,
+              overflow:'truncate',
+              width: 160,
+              ellipsis: '...'     
+          }},
+        // Declare several bar series, each will be mapped
+        // to a column of dataset.source by default.
+        series: [
+        { 
+                type: 'bar' ,
+                barWidth:25,
+                itemStyle:{
+                borderRadius:[0,5,5,0] //顺时针左上、右上，右下，左下
+                },
+                label: {
+                    show: true,
+                    position: 'outside',
+                    overflow:'truncate',
+                    width: 60,
+                    ellipsis: '...'                
+                },
+            }, 
+            { 
+                type: 'bar' ,
+                barWidth:25,
+                itemStyle:{
+                borderRadius:[0,5,5,0] //顺时针左上、右上，右下，左下
+                },
+                label: {
+                    show: true,
+                    position: 'outside',
+                    overflow:'truncate',
+                    width: 60,
+                    ellipsis: '...'                
+                },
+            }
+    ]
+    };
+
+    share_divUtiPctChart.setOption(share_divUtiPctoption);
+
+    local_divCapoption = {
+        legend: {},
+        grid:{ left:150},
+        tooltip: {},
+        title:{text:'本地存储空间（GB）'},
+        color:['#55efc4','#81ecec','#74b9ff'],
+        dataset: {
+            source: local_capacityarr
+        },
+        xAxis: { name:'GB' },
+        yAxis: {
+            type: 'category', 
+            axisLabel:{
+              rotate: 45,
+              // interval: 4,
+              show:true,
+              clickable:true,
+              fontSize: 10,
+              overflow:'truncate',
+              width: 160,
+              ellipsis: '...'     
+          }
+        },
+        // Declare several bar series, each will be mapped
+        // to a column of dataset.source by default.
+        series: [
+            { 
+                type: 'bar' ,
+                barWidth:25,
+                itemStyle:{
+                borderRadius:[0,5,5,0] //顺时针左上、右上，右下，左下
+                },
+                label: {
+                    show: true,
+                    position: 'outside',
+                    overflow:'truncate',
+                    width: 60,
+                    ellipsis: '...'                
+                },
+            }, 
+            { 
+                type: 'bar' ,
+                barWidth:25,
+                itemStyle:{
+                borderRadius:[0,5,5,0] //顺时针左上、右上，右下，左下
+                },
+                label: {
+                    show: true,
+                    position: 'outside',
+                    overflow:'truncate',
+                    width: 60,
+                    ellipsis: '...'                
+                },
+            }, 
+            { 
+                type: 'bar' ,
+                barWidth:25,
+                itemStyle:{
+                borderRadius:[0,5,5,0] //顺时针左上、右上，右下，左下
+                },
+                label: {
+                    show: true,
+                    position: 'outside',
+                    overflow:'truncate',
+                    width: 60,
+                    ellipsis: '...'                
+                },
+            },    
+        ]
+    };
+
+    local_divCapChart.setOption(local_divCapoption);
+
+    local_divUtiPctoption = {
+        legend: {},
+        grid:{left:150},
+        title:{text:'本地存储空间利用率(%)'},
+        tooltip: {},
+        color:['#81ecec','#74b9ff'],
+        dataset: {
+            source: local_pctArr
+        },
+        xAxis: { name:'%' },
+        yAxis: {            
+            type: 'category', 
+
+            axisLabel:{
+              rotate: 45,
+              // interval: 4,
+              show:true,
+              clickable:true,
+              fontSize: 10,
+              overflow:'truncate',
+              width: 160,
+              ellipsis: '...'     
+          }},
+        // Declare several bar series, each will be mapped
+        // to a column of dataset.source by default.
+        series: [
+        { 
+                type: 'bar' ,
+                barWidth:25,
+                itemStyle:{
+                borderRadius:[0,5,5,0] //顺时针左上、右上，右下，左下
+                },
+                label: {
+                    show: true,
+                    position: 'outside',
+                    overflow:'truncate',
+                    width: 60,
+                    ellipsis: '...'                
+                },
+            }, 
+            { 
+                type: 'bar' ,
+                barWidth:25,
+                itemStyle:{
+                borderRadius:[0,5,5,0] //顺时针左上、右上，右下，左下
+                },
+                label: {
+                    show: true,
+                    position: 'outside',
+                    overflow:'truncate',
+                    width: 60,
+                    ellipsis: '...'                
+                },
+            }
+    ]
+    };
+
+    local_divUtiPctChart.setOption(local_divUtiPctoption);
+
+</script>
 
 <!-- javascript脚本要在endblock之前 -->
 {% endblock %}

@@ -27,18 +27,7 @@ import pytz
 #                                 va--vapp
 #                                 nw--network
 #                                 ds--datastore
-cwd = os.getcwd()
-current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-dc_json_file=os.path.join(cwd,'data',"dc-"+current_time+".json")
 
-logfile_path=os.path.join(cwd,'data','log',"dcInfo_gathering.log")
-log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
-logger=logging.getLogger('DC_logger')
-fh=logging.FileHandler(filename=logfile_path,mode='a')
-fh.setLevel(logging.INFO)
-fh.setFormatter(log_formatter)
-logger.addHandler(fh)
-logger.setLevel(logging.INFO)
 
 
 def str2list(string):
@@ -216,6 +205,19 @@ def get_all_objs(content, vimtype):
     return obj
 
 def QueryDCsInfo(vchost,vcuser,vcpassword):
+    cwd = os.getcwd()
+    current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+    dc_json_file=os.path.join(cwd,'data',"dc-"+current_time+".json")
+
+    logfile_path=os.path.join(cwd,'data','log',"dcInfo_gathering.log")
+    log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
+    logger=logging.getLogger('DC_logger')
+    fh=logging.FileHandler(filename=logfile_path,mode='w')
+    fh.setLevel(logging.INFO)
+    fh.setFormatter(log_formatter)
+    logger.addHandler(fh)
+    logger.setLevel(logging.INFO)
+
     si=establish_connection(vchost,vcuser,vcpassword)
     content=si.content
     print("Gathering vSphere Datacenters information")
@@ -250,23 +252,38 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                 vds['name']=cls.name
                 nw_no+=1
                 vds['id']='nw'+str(nw_no)
+                vds['path']=dc_config['path']+'-'+vds['id']
                 vds['type']='network'
                 vds['parent']=dc_config['id']
                 
                 portgroups=[]
+                pg_no=0
                 for pg in  cls.portgroup:
                     portgroup={}     # Portgroups that are defined on the switch.[]
                     # print(pg.name)
                     # print(pg.key) 
                     # print(pg.config)
                     portgroup['name']=pg.name
-                    portgroup['key']=pg.key
+                    pg_no+=1
+                    portgroup['id']='pg'+str(pg_no)
+                    portgroup['path']=vds['path']+'-'+portgroup['id']
                     portgroup['parent']=vds['id']
-                    vlanId=pg.config.defaultPortConfig.vlan.vlanId
-                    if isinstance(vlanId,list):
-                        if vlanId[0].start==0 and vlanId[0].end==4094:
-                            vlanId=4095
-                    portgroup['vlan']=vlanId
+                    vlaninfo=pg.config.defaultPortConfig.vlan
+                    if isinstance(vlaninfo,vim.dvs.VmwareDistributedVirtualSwitch.TrunkVlanSpec):  #端口组为trunk类型
+                        vlanlist=[]
+                        for item in vlaninfo.vlanId:
+                            if item.start==item.end:
+                                vlanlist.append(str(item.start))
+                            else:
+                                vlanlist.append(str(item.start)+'-'+str(item.end))
+                        portgroup['vlan_id']=','.join(vlanlist)
+                    else:
+                        portgroup['vlan_id']=str(vlaninfo.vlanId)
+
+                    # if isinstance(vlanId,list):
+                    #     if vlanId[0].start==0 and vlanId[0].end==4094:
+                    #         vlanId=4095
+                    # portgroup['vlan']=vlanId
 
                     # print(vlanId)
                     portgroup['uplinkTeamingPolicy']={"value":pg.config.defaultPortConfig.uplinkTeamingPolicy.policy.value,"inherited":pg.config.defaultPortConfig.uplinkTeamingPolicy.policy.inherited}
@@ -285,6 +302,28 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                     connectedHosts.append(host.config.host.name)
                 vds['connectedHosts']=connectedHosts
                 vdss.append(vds)
+
+        ds_no=0
+        datastores=[]
+        for ds in dc.datastoreFolder.childEntity:
+            ds_info={}
+            ds_info['name']=ds.name
+            ds_no+=1
+            ds_info['id']='ds'+str(ds_no)
+            ds_info['path']=dc_config['path']+'-'+ds_info['id']
+            ds_info['hosts']=ds.host #Hosts attached to this datastore.
+            ds_info['vm']=ds.vm
+            ds_info['maxVirtualDiskCapacity']=ds.info.maxVirtualDiskCapacity #The maximum capacity of a virtual disk which can be created on this volume.
+            ds_info['capacity']=ds.summary.capacity  #Maximum capacity of this datastore, in bytes. 
+            ds_info['freeSpace']=ds.summary.freeSpace #Free space of this datastore, in bytes.
+            ds_info['multipleHostAccess']=ds.summary.multipleHostAccess
+            ds_info['fstype']=ds.summary.type
+            ds_info['type']='datastore'
+            ds_info['uncommited']=ds.summary.uncommitted if ds.summary.uncommitted else 0 #Total additional storage space, in bytes, potentially used by all virtual machines on this datastore. 
+            ds_info['provisioned']=ds.summary.capacity-ds.summary.freeSpace+ds.summary.uncommitted
+
+            datastores.append(ds_info)
+
         cl_no=0
         for cls in dc.hostFolder.childEntity:
             if isinstance(cls,vim.ClusterComputeResource):
@@ -1303,6 +1342,7 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
         
         dc_config['clusters']=sub_clusters
         dc_config['dvs']=vdss
+        dc_config['datastores']=datastores
         datacenters.append(dc_config)
     vcenter['datacenters']=datacenters
     vcenters=[]

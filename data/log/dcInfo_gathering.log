@@ -1,0 +1,20 @@
+20231128 16:40:45 - DC_logger - INFO - 开始收集Datacenter信息!
+20231128 16:40:45 - DC_logger - INFO - 开始收集Datacenter：LaoChang 信息
+20231128 16:40:45 - DC_logger - INFO - 开始收集Datacenter：Datacenter 信息
+20231128 16:40:49 - DC_logger - INFO - 开始收集esxi主机信息：10.2.8.2
+20231128 16:40:49 - DC_logger - INFO - 开始收集esxi主机10.2.8.2证书信息：
+20231128 16:41:17 - DC_logger - INFO - 开始收集esxi主机信息：10.2.8.5
+20231128 16:41:17 - DC_logger - INFO - 开始收集esxi主机10.2.8.5证书信息：
+20231128 16:41:45 - DC_logger - INFO - 开始收集esxi主机信息：10.2.8.4
+20231128 16:41:46 - DC_logger - INFO - 开始收集esxi主机10.2.8.4证书信息：
+20231128 16:42:20 - DC_logger - INFO - 开始收集esxi主机信息：10.2.8.6
+20231128 16:42:20 - DC_logger - INFO - 开始收集esxi主机10.2.8.6证书信息：
+20231128 16:42:53 - DC_logger - INFO - 开始收集esxi主机信息：10.2.8.3
+20231128 16:42:53 - DC_logger - INFO - 开始收集esxi主机10.2.8.3证书信息：
+20231128 16:43:25 - DC_logger - INFO - 开始收集esxi主机信息：10.2.8.1
+20231128 16:43:25 - DC_logger - INFO - 开始收集esxi主机10.2.8.1证书信息：
+20231128 16:43:51 - DC_logger - INFO - 开始收集集群：Cluster HA信息
+20231128 16:43:52 - DC_logger - INFO - 开始收集集群：Cluster DRS信息
+20231128 16:43:52 - DC_logger - INFO - 开始收集集群：Cluster EVC信息
+20231128 16:43:53 - DC_logger - INFO - DC信息写入文件：D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\dc-20231128164041.json
+20231128 16:43:53 - DC_logger - INFO - the information acquisition of datacenter(s) is finished!

@@ -1,0 +1,13 @@
+20231128 16:40:41 - vcsa_logger - INFO - 开始收集VCSA虚拟机内部信息
+20231128 16:40:41 - vcsa_logger - INFO - Connecting to VCSA...
+20231128 16:40:45 - vcsa_logger - INFO - Executing command:shell.set --enabled true
+
+20231128 16:40:47 - vcsa_logger - INFO - Executing command:shell
+20231128 16:40:49 - vcsa_logger - INFO - Executing command:free -h
+20231128 16:40:51 - vcsa_logger - INFO - Executing command:df -h
+20231128 16:40:53 - vcsa_logger - INFO - Executing command:for store in $(/usr/lib/vmware-vmafd/bin/vecs-cli store list | grep -v TRUSTED_ROOT_CRLS);                 do echo "[*] Store :" $store; /usr/lib/vmware-vmafd/bin/vecs-cli entry list --store $store --text                 | grep -ie "Alias" -ie "Not After";done;
+20231128 16:40:55 - vcsa_logger - INFO - Executing command:service-control --list-services
+20231128 16:40:57 - vcsa_logger - INFO - Executing command:for i in $(/usr/lib/vmware-vmon/vmon-cli -l);do /usr/lib/vmware-vmon/vmon-cli -s $i;done
+20231128 16:40:59 - vcsa_logger - INFO - Executing command:chage -l root
+20231128 16:41:01 - vcsa_logger - INFO - 收集的信息写入文件：D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\vcsa-20231128164041.log
+20231128 16:41:01 - vcsa_logger - INFO - the information acquisition of vcsa is finished!

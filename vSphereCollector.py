@@ -1,6 +1,5 @@
 import time,datetime
 import os
-import subprocess
 import multiprocessing 
 import sys
 import re
@@ -8,12 +7,30 @@ import json
 # from decimal import Decimal
 import logging
 import requests
-import importlib.util
-
+from QueryVCSAInfo import QueryVCSAInfo
+from QueryAlarmInfo import QueryAlarmInfo
+from QueryDCInfo import QueryDCsInfo
+from QueryVMInfo import QueryVMsInfo
+from DellPowerEdgeQuery import QueryiDRAC
 
 
 from flask import Flask,render_template,request,Response,redirect,url_for
 
+class MyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime.datetime):
+            print("MyEncoder-datetime.datetime")
+            return obj.strftime("%Y-%m-%d %H:%M:%S")
+        if isinstance(obj, bytes):
+            return str(obj, encoding='utf-8')
+        if isinstance(obj, int):
+            return int(obj)
+        elif isinstance(obj, float):
+            return float(obj)
+        #elif isinstance(obj, array):
+        #    return obj.tolist()
+        else:
+            return super(MyEncoder, self).default(obj)
 
 mainlogfile_path=os.path.join(os.getcwd(),"main.log")
 log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
@@ -37,8 +54,6 @@ python_path=sys.executable
 
 logger.info(app.name+" 开始运行")
 
-max_wait_time = 300  # 5分钟
-data_collection_results = {}
 
 data_dir=os.path.join(os.getcwd(),'data')
 log_dir=os.path.join(data_dir,'log')
@@ -70,55 +85,6 @@ def log_subprocess_output(pipe):
         print(repr(line))
         logger.info(line.decode('utf-8',errors='ignore').strip())
 
-def run_script(script_path,function_name, args):
-    try:
-        # Load the script as a module
-        spec = importlib.util.spec_from_file_location("script_module", script_path)
-        script_module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(script_module)
-
-        # Call the specified function in the loaded script with arguments
-        getattr(script_module, function_name)(*args)
-        # script_module.run(*args)
-        print(f"Script {script_path} executed successfully with args.")
-        # logger.info(f"Script {script_path} executed successfully with args: {args}")
-    except Exception as e:
-        print(f"Error executing script {script_path}: {e}")
-        # logger.error(f"Error executing script {script_path}: {e}")
-
-
-def run_command(command):
-    try:
-      # print(command)
-      # result = subprocess.run(command, shell=True, capture_output=True, text=True)
-      # sub_process=subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)  #shell=true 命令在后台非阻塞运行  pyinstaller 打包之后运行失败
-      sub_process=subprocess.Popen(command,shell=True,stdout=subprocess.PIPE, stderr=subprocess.STDOUT, stdin=subprocess.PIPE)  #shell=true 命令在后台非阻塞运行
-      # logger.info("start to execute command:"+command+"!")
-      with sub_process.stdout:
-        log_subprocess_output(sub_process.stdout)
-      if sub_process.stderr is not None:
-        with sub_process.stderr:
-          log_subprocess_output(sub_process.stderr)
-
-      exitcode=sub_process.wait(timeout=60) #timeout=60确保子进程有足够的执行时间
-
-      if exitcode==0:
-        logger.info(f"{command} executed successfully!")
-      else:
-        logger.error(f"{command} executed failed with exit code {exitcode}!")
-    except Exception as e:
-        logger.error(f"An error occurred while executing {command}: {e}")
-
-# def run_command(command):
-#     print(f"start to execute Command: {command}")
-#     exitcode = os.system(command)
-#     if exitcode == 0:
-#         print(f"Command executed successfully: {command}")
-#         logger.info(f"Command executed successfully: {command}")
-#     else:
-#         print(f"Command execution failed with exit code {exitcode}: {command}")
-#         logger.error(f"Command execution failed with exit code {exitcode}: {command}")
-#     return exitcode
 
 def get_value(findstr,strlist):
     ll=[]
@@ -202,8 +168,8 @@ def BuildInventoryTree():
       inventory_tree.append(vcenter)
   return inventory_tree
 
-#构建整个指定的数据中心（datacenter）的树状清单
-def BuildDCInventoryTree(dc_id:str):  
+#构建整个指定的数据中心（datacenter）的主机、虚拟机树状清单
+def BuildDCHostInventoryTree(dc_id:str):  
   dc_file=file_search(data_dir,'dc-','.json')
   with open(dc_file,'r') as f:
     vcenter_data=json.load(f)
@@ -214,6 +180,7 @@ def BuildDCInventoryTree(dc_id:str):
     vcenter={}
     vcenter['name']=vc['name']
     vcenter['path']=vc['id']
+    vcenter['type']=vc['type']
     vcenter['children']=[]
 
     
@@ -222,24 +189,28 @@ def BuildDCInventoryTree(dc_id:str):
         clusters=[]   
         
         dc_tree['name']=dc['name']
+        dc_tree['type']=dc['type']
         dc_tree['path']=dc['parent']+'-'+dc['id']
         if dc_tree['path']==dc_id:        
           if len(dc['clusters'])>0:          
               for cls in dc['clusters']:
                   cluster={}
                   cluster['name']=cls['name']
-                  cluster['path']=dc_tree['path']+'-'+cls['id']
+                  cluster['path']=cls['path']
+                  cluster['type']=cls['type']
                   hosts=[]
                   if len(cls['hosts'])>0:
                       for item in cls['hosts']:
                           host={}
                           host['name']=item['name']
-                          host['path']=cluster['path']+'-'+item['id']
+                          host['path']=item['path']
+                          host['type']='host'
                           host['children']=[]
                           for v in item['vm_list']:
                               vm={}
                               vm['name']=v['name']
-                              vm['path']=host['path']+'-'+v['id']
+                              vm['path']=v['path']
+                              vm['type']='vm'
                               vm['children']=[]
                               host['children'].append(vm)
                           hosts.append(host)
@@ -254,6 +225,111 @@ def BuildDCInventoryTree(dc_id:str):
           inventory_tree.append(dc_tree)
           break
           
+  return inventory_tree
+
+#从vms-xxx.json生成虚拟机网络信息文件vms-xxxx-network.json
+def create_vm_network_info(vms_file:str):
+  if len(vms_file)>0:
+    with open(vms_file,'r') as f:
+      vm_data=json.load(f)
+    f.close()
+
+    vms=[]
+    
+    for vm in vm_data:
+      vm_network={}
+      vm_network['Display_name']=vm['Display_name']  
+      vm_network['vnics']=vm['vnics']
+      vms.append(vm_network)
+    rx=re.search('vms-(?P<time_stamp>\d+).json',vms_file)
+    vms_network_file=os.path.join(data_dir,'vms-network-'+rx.group('time_stamp')+'.json')
+    if os.path.exists(vms_network_file):
+      return vms_network_file
+    else:
+      with open(vms_network_file,'w') as f:
+        json.dump(vms,f,indent=4,ensure_ascii=False,default=str,cls=MyEncoder)
+      f.close()    
+      return vms_network_file
+
+
+
+
+#构建整个指定的数据中心（datacenter）的网络结构树状清单
+def BuildDCNetworkInventoryTree(dc_id:str):  
+  dc_file=file_search(data_dir,'dc-','.json')
+  with open(dc_file,'r') as f:
+    vcenter_data=json.load(f)
+  f.close()
+
+  vm_file=file_search(data_dir,'vms-','.json')
+  if vm_file:
+    vm_network_file=create_vm_network_info(vm_file)
+    with open(vm_network_file) as f:
+      vm_network_info=json.load(f)
+    f.close()
+  else:
+     vm_network_info=""
+  
+  inventory_tree=[]
+  for vc in vcenter_data:
+    vcenter={}
+    vcenter['name']=vc['name']
+    vcenter['path']=vc['id']
+    vcenter['type']=vc['type']
+    vcenter['children']=[]
+
+    
+    for dc in vc['datacenters']:
+        dc_tree={} 
+        vdss=[]   
+        
+        dc_tree['name']=dc['name']
+        dc_tree['type']=dc['type']
+        dc_tree['path']=dc['parent']+'-'+dc['id']
+        if dc_tree['path']==dc_id:        
+          if len(dc['dvs'])>0:   
+                     
+              for vs in dc['dvs']:
+                  vds={}
+                  vds['name']=vs['name']
+                  vds['path']=vs['path']
+                  vds['type']=vs['type']
+                  vds['children']=[]
+                  portgroups=[]
+                  if len(vs['portgroups'])>0:
+                      for item in vs['portgroups']:
+                          pg={}
+                          pg['name']=item['name']
+                          pg['path']=item['path']
+                          pg['type']='portgroup'
+                          pg['children']=[]
+                          if len(vm_network_info)>0: 
+                             for vm in vm_network_info:                                
+                                for vnic in vm['vnics']:
+                                  if vnic['portGroup']==pg['name']:
+                                    vm_net={}
+                                    vm_net['name']=vm['Display_name']
+                                    print(vm['Display_name'])
+                                    vm_net['type']='vm'
+                                    vm_net['children']=[]
+                                    
+                                    pg['children'].append(vm_net)
+                                    break
+
+                                    
+
+
+                          portgroups.append(pg)
+
+                      vds['children']=portgroups            
+
+                  vdss.append(vds)          
+              dc_tree['children']=vdss         
+          else:
+              dc_tree['children']=[]
+          inventory_tree.append(dc_tree)
+          break
+  # print(inventory_tree)        
   return inventory_tree
 
 
@@ -272,18 +348,6 @@ def check_url(url:str):
       return False
 
 
-
-def data_collection_task(scriptname,vchost, vcuser, vcpassword, result_key):
-    command = f"{python_path} {scriptname} {vchost} {vcuser} {vcpassword}"
-    try:
-        result = run_command(command)
-        data_collection_results[result_key] = result
-    except subprocess.CalledProcessError as e:
-        data_collection_results[result_key] = f"Command execution error: {e}"
-        logger.error(f"Command execution error: {e}, Command: {command}")
-    except Exception as e:
-        data_collection_results[result_key] = f"An unexpected error occurred: {e}"
-        logger.error(f"An unexpected error occurred: {e}, Command: {command}")
 
 
 #数据收集首页，输入vcenter的SSO登录凭据以及vcsa虚拟机root用户密码等
@@ -305,27 +369,23 @@ def index():
     # vcsa = request.form.get('vcsa')
     vcrootpassword = request.form.get('vcrootpassword')
     add_ipmi_host = request.form.get('add_ipmi_host')
+    process=multiprocessing.Process
 
     # #获取VCSA 虚拟机内部信息，文件系统使用情况、证书等
-    # logger.info("VCSA信息收集开启")
-    # cmd=f"{python_path} QueryVCSAInfo.py {vchost} {vcrootpassword}"
-    # logger.info("运行脚本："+f"{python_path} QueryVCSAInfo.py {vchost}")
-    # run_command(cmd)
+    p1=process(target=QueryVCSAInfo,args=(vchost,vcrootpassword))  
+    p2=process(target=QueryAlarmInfo,args=(vchost,vcuser,vcpassword))   
+    p3=process(target=QueryDCsInfo,args=(vchost,vcuser,vcpassword))   
+    p4=process(target=QueryVMsInfo,args=(vchost,vcuser,vcpassword))    
 
-    scripts_to_run=[
-       ('QueryVCSAInfo.py', 'QueryVCSAInfo',(vchost,vcrootpassword)),
-       ('QueryAlarmInfo.py', 'QueryAlarmInfo',(vchost,vcuser,vcpassword)),
-       ('QueryVMInfo.py','QueryVMsInfo', (vchost,vcuser,vcpassword)),
-       ('QueryDCInfo.py', 'QueryDCsInfo',(vchost,vcuser,vcpassword)),
-    ]
+    p1.start()
+    p2.start()
+    p3.start()
+    p4.start()
 
-    # #获取Dell服务器的IPMI日志
-    # current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-    # ipmi_file=os.path.join(data_dir,"ipmi-"+current_time+".json")
-    
-    # if (os.path.exists(ipmi_file) == False):
-    #   f = open(ipmi_file, "w")
-    #   logger.info("create file:"+ipmi_file)
+    p1.join()
+    p2.join()
+    p3.join()
+    p4.join()
        
     if add_ipmi_host=='on':
       logger.info("IPMI信息收集开启")
@@ -333,68 +393,27 @@ def index():
       ipmiuser_list=get_value('ipmiuser',form_data_list)
       ipmipass_list=get_value('ipmipass',form_data_list)
 
-      
+      ipmi_ps=[]
       for i in range(len(ipmihost_list)):
         # cmd = ["python", "DellPowerEdgeQuery.py", ipmihost_list[i],ipmiuser_list[i],ipmipass_list[i]]
         # cmd = f"{python_path} DellPowerEdgeQuery.py {ipmihost_list[i]} {ipmiuser_list[i]} {ipmipass_list[i]} {ipmi_file}"
         # logger.info("运行脚本："+f"{python_path} DellPowerEdgeQuery.py {ipmihost_list[i]} {ipmiuser_list[i]} {ipmi_file}")
         # run_command(cmd)
-        cmd=('DellPowerEdgeQuery.py','QueryiDRAC',( ipmihost_list[i], ipmiuser_list[i],ipmipass_list[i]))
-        scripts_to_run.append(cmd)
-
-    # logger.info(f"运行脚本： QueryAlarmInfo.py {vchost} {vcuser} ")
-    # cmd=f"{python_path} QueryAlarmInfo.py {vchost} {vcuser} {vcpassword}"
-    # logger.info("运行脚本："+f"{python_path} QueryAlarmInfo.py {vchost}")
-    # run_command(cmd)  
-
-    # logger.info(f"运行脚本： QueryDCInfo.py  {vchost} {vcuser} ")
-    # cmd=f"{python_path} QueryDCInfo.py  {vchost} {vcuser} {vcpassword}"
-    # logger.info("运行脚本："+f"{python_path} QueryDCInfo.py  {vchost}")
-    # run_command(cmd)  
-
-    # logger.info(f"运行脚本： QueryVMInfo.py  {vchost} {vcuser} ")
-    # cmd=f"{python_path} QueryVMInfo.py  {vchost} {vcuser} {vcpassword}"
-    # logger.info("运行脚本："+f"{python_path} QueryVMInfo.py  {vchost}")
-    # run_command(cmd)  
+        # cmd=('DellPowerEdgeQuery.py','QueryiDRAC',( ipmihost_list[i], ipmiuser_list[i],ipmipass_list[i]))
+        ipmi_ps.append(process(target=QueryiDRAC,args=( ipmihost_list[i], ipmiuser_list[i],ipmipass_list[i])))
+      for i in range(len(ipmi_ps)):
+         ipmi_ps[i].start()
+      
+      for i in range(len(ipmi_ps)):
+         ipmi_ps[i].join()
 
 
-  #利用多进程并行发起信息收集任务
-    # processes = []
-
-    # logger.info(f"运行脚本： QueryAlarmInfo.py {vchost} {vcuser} ")
-    # scriptname="QueryAlarmInfo.py"
-    # process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'alarm_info'))
-    # process.start()
-    # processes.append(process)
-
-    # logger.info(f"运行脚本： QueryVMInfo.py {vchost} {vcuser}")
-    # scriptname="QueryVMInfo.py"
-    # process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'vms_info'))
-    # process.start()
-    # processes.append(process)
-
-    # # logger.info(f"运行脚本： QueryClusterInfo.py {vchost} {vcuser}")
-    # # scriptname="QueryHostInfo.py"
-    # # process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'hosts_info'))
-    # # process.start()
-    # # processes.append(process)
-
-    # logger.info(f"运行脚本： QueryDCInfo.py {vchost} {vcuser}")
-    # scriptname="QueryDCInfo.py"
-    # process = multiprocessing.Process(target=data_collection_task, args=(scriptname,vchost, vcuser, vcpassword, 'datacenter_info'))
-    # process.start()
-    # processes.append(process)
-
-    # for process in processes:
-    #     process.join()
+    
 
 
-    num_processes=len(scripts_to_run)
 
-    # Create a multiprocessing pool
-    with multiprocessing.Pool(processes=num_processes) as pool:
-        # Map the run_script function to the list of script paths and arguments
-        pool.starmap(run_script, scripts_to_run)    
+
+
   
 
     return redirect(url_for('datacenter'))
@@ -716,10 +735,20 @@ def show_datacenter(path_list:list):
              if dc['id']==datacenter_id:
                 dc_data=dc
     # return dc_data 
+    dss=[]
+    for item in dc_data['datastores']:
+       ds={}
+       ds['name']=item['name']
+       ds['type']=item['type']
+       ds['path']=item['path']
+       
+
 
     inventory_id='-'.join(path_list)
-    dc_tree=BuildDCInventoryTree(inventory_id)
-    return [dc_tree,dc_data]
+    dc_tree=BuildDCHostInventoryTree(inventory_id)
+    dc_network_tree=BuildDCNetworkInventoryTree(inventory_id)
+
+    return [dc_tree,dc_data,dc_network_tree]
 
 
 
@@ -1056,7 +1085,7 @@ def datacenter():
         return redirect('inventory')
      elif path_len==2:
         para_list=show_datacenter(path_list)
-        return render_template('datacenter.html',dc_tree=para_list[0],dc_data=para_list[1],tree=BuildInventoryTree())
+        return render_template('datacenter.html',dc_tree=para_list[0],dc_data=para_list[1],dc_network_tree=para_list[2],tree=BuildInventoryTree())
      elif path_len==3:
         cls_data=show_cluster(path_list)
         return render_template('clusters.html',cluster=cls_data,tree=BuildInventoryTree())
