@@ -1,0 +1,3211 @@
+[
+    {
+        "Display_name": "ActiveIQUnifiedManager-9.13",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:b0:5e",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "BASIC_WIN2K16_STD_CHS",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:00:b8",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Centos-RepositoryTEST",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:b4:f5",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Centos8",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:ec:d7",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "vCLS-f754c319-c0b7-494f-8f10-c3034b3428b7",
+        "vnics": []
+    },
+    {
+        "Display_name": "ldap-lsf-master",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:ff:09",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "NIS01",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:9b:4a",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Smokeping",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:e7:84",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "MESFileSrv 172.17.1.2-文件服务器",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:a0:0a:29",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN21",
+                "VLANID": 21,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "TVremote_SaleCount",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:5d:7a",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "SFTP",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:61:a6",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Synopsys",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:61:5c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:80:d7",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "VIEWCS01",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:72:b1",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "DX_MES_VM01",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:16:59",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN22",
+                "VLANID": 22,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "FEI-2K8",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:b3:ad:ba",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "MESSQL2008R2 172.17.1.6",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:0c:29:4c:07:47",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN21",
+                "VLANID": 21,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "ANSIBLE",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:41:50",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:1f:f2",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "VEEAM-Linuxrepo",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:a9:dd",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "PXE",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:77:11",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:5e:19",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "MES-172.17.1.12",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:9d:55",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN21",
+                "VLANID": 21,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "FEI-AD2",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:f2:f8",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "bitnami-erpnext20200327",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:93:a1",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN22",
+                "VLANID": 22,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "CRM",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:7e:27",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "webDX",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:c6:18",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN22",
+                "VLANID": 22,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "DevWin10",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:a8:7d",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "vCLS-17f8ae90-8afb-49c7-8d94-8ea347a3d972",
+        "vnics": []
+    },
+    {
+        "Display_name": "172.17.1.10-密码未知",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:a9:2b:b2",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN21",
+                "VLANID": 21,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "NTPServer",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:69:23",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Pass-Mgr",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:e9:0a",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "VEEAM12",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:5e:04",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Tech-VDI-02",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:33:f9",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Jump-chen",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:ad:c2",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:2c:26",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Printer-scan",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:7d:06",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "YUM",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:54:a5",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:22:d3",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "RDS-Host1",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:e7:28",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:d1:10",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Avi-controller",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:ef:c2",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "lab-H-test",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:88:43",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:96:3e",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 3",
+                "macAddress": "00:50:56:88:9c:c8",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "vCenter Server 8",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:f7:d3",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Remote-s",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:67:0e",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Tech-VDI-04",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:40:59",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "DX_MES_VM01 172.17.1.181-SQL",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:43:56",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN21",
+                "VLANID": 21,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "CRM_DX",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:a9:56:d1",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN22",
+                "VLANID": 22,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "NetAppDOT-simulate",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:d4:f8",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:f8:67",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 3",
+                "macAddress": "00:50:56:88:56:dd",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 4",
+                "macAddress": "00:50:56:88:e8:6d",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "AppVolumes",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:d0:12",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "DXERP",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:a9:1c:47",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN24",
+                "VLANID": 24,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Veeam",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:89:c0",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "AD-ISCSI-Server",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:e3:5b",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "LDAP",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:db:61",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:c6:87",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Oracle-DB",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:9c:14",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "vsim-NetAppDOT-simulate",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:e2:2c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:81:e0",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 3",
+                "macAddress": "00:50:56:88:d7:03",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 4",
+                "macAddress": "00:50:56:88:cf:2b",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "ZXL-erpnext_restored",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:14:86",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN22",
+                "VLANID": 22,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "VIEWDATA",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:48:81",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "ERPNext",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:43:59",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "ESXi-002",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:0b:2f",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_Trunk",
+                "VLANID": "0-4094",
+                "connected": false
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:cb:17",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_Trunk",
+                "VLANID": "0-4094",
+                "connected": false
+            },
+            {
+                "name": "Network adapter 3",
+                "macAddress": "00:50:56:88:b5:1d",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_Trunk",
+                "VLANID": "0-4094",
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "NFS-Server",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:0c:d7",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Veeam-s",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:04:28",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "RDS-Host2",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:d5:e7",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:6b:1c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "VIEWUAG01",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:fd:09",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "ApacheDS",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:fb:9c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "NSXMGR-01",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:fb:d2",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "windows 2022 Veeam",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:07:b7",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "DX_bakDC",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:45:8e",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN22",
+                "VLANID": 22,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "ldap-tools",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:4b:05",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "LSF-Master",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:de:9c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Zabbix",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:2a:1b",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "OpenLAVA-Master",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:1d:ad",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "OCS-Report",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:ee:1d",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "OpenLAVA-Node1",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:13:cd",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "rsyslog",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:06:9a",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Avi-Mgmt",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:5d:ae",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "license",
+        "vnics": [
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:c7:93",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "VCSA",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:0c:29:da:60:5a",
+                "vSwitch_name": "VDS01",
+                "portGroup": "MGMT",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Jenkins",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:99:bc",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:2d:1e",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Tech-VDI-11",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:f6:d3",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Avi-se-rdatm",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:df:0c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:21:37",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 3",
+                "macAddress": "00:50:56:88:d7:2c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 4",
+                "macAddress": "00:50:56:88:00:57",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 5",
+                "macAddress": "00:50:56:88:31:f0",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 6",
+                "macAddress": "00:50:56:88:41:2d",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 7",
+                "macAddress": "00:50:56:88:c4:a5",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 8",
+                "macAddress": "00:50:56:88:15:47",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 9",
+                "macAddress": "00:50:56:88:2c:61",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 10",
+                "macAddress": "00:50:56:88:e1:95",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "FEI-WEB",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:09:f3",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Avi-se-lnyad",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:c7:08",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:b8:f3",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 3",
+                "macAddress": "00:50:56:88:6f:99",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 4",
+                "macAddress": "00:50:56:88:6e:78",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 5",
+                "macAddress": "00:50:56:88:63:1c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 6",
+                "macAddress": "00:50:56:88:fd:da",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 7",
+                "macAddress": "00:50:56:88:e5:b7",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 8",
+                "macAddress": "00:50:56:88:72:92",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 9",
+                "macAddress": "00:50:56:88:c0:dd",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 10",
+                "macAddress": "00:50:56:88:0d:5c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "gitlab-ee",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:67:f1",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:60:36",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "MES01-XU 172.17.1.3",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:46:09",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN21",
+                "VLANID": 21,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "NIS02",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:99:02",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Teslamate",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:28:24",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN18",
+                "VLANID": 18,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "KMS",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:45:65",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "demo-Client(NFS、rsyslog、zabbix)",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:73:24",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:04:31",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "vCLS-7c43d747-440b-41b5-87c7-bad2cb51b64b",
+        "vnics": []
+    },
+    {
+        "Display_name": "VEEAM Recovery Orchestratar",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:f8:aa",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "win10-rds-remote",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:66:aa",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "CentOS7.9",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:1f:e3",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Exch02.red-apricot.top",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:1f:f5",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:50:6a",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Exch01.red-apricot.top",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:d5:4a",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:30:9c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "VMware vCenter Server",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:0c:29:de:38:3d",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "DC-S",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:12:d2",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "SVN",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:c8:fd",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "webtest",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:11:50",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Redhat-Repo",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:18:f9",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "HCIBench_2.8.2",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:02:27",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:a3:39",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "RealVNC",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:51:88",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:3a:58",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "MES12-APPS_172.17.1.17-IIS服务器",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:6b:a7",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN21",
+                "VLANID": 21,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "MES02-SVN 172.17.1.1",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:0c:29:f3:2d:69",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN21",
+                "VLANID": 21,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Samba",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:87:a1",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Centos7TEST",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:77:22",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:e1:f4",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VM-Trunk",
+                "VLANID": "0-4094",
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "VEEAM-ansible",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:0a:a5",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Mof-VDI-03",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:a0:50",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "2. DX-DB2 ERP IP8",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:6e:6c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN22",
+                "VLANID": 22,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:51:6a",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN22",
+                "VLANID": 22,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "iscsi1",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:fc:f0",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "MES03-APPS 172.17.1.5",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:0c:29:9d:64:b8",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN21",
+                "VLANID": 21,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Centos7.9",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:02:d3",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Centos7-New",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:9a:8f",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "DC-DA",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:69:21",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Centos8.3",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:2f:7f",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "vsim-NetAppDOT-simulate",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:61:e8",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:ef:ad",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 3",
+                "macAddress": "00:50:56:88:48:f3",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 4",
+                "macAddress": "00:50:56:88:68:5e",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "VEEAM12-Windows2022",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:06:76",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "BASIC_WIN2K12R2_DC_CHS",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:28:be",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Redhat7.9",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:4d:84",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "DS3622",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:dd:dd",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:43:14",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VM-Trunk",
+                "VLANID": "0-4094",
+                "connected": false
+            },
+            {
+                "name": "Network adapter 3",
+                "macAddress": "00:50:56:88:66:52",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VM-Trunk",
+                "VLANID": "0-4094",
+                "connected": false
+            },
+            {
+                "name": "Network adapter 4",
+                "macAddress": "00:50:56:88:9e:6c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VM-Trunk",
+                "VLANID": "0-4094",
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "WDS-DX",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:db:0d",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN18",
+                "VLANID": 18,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "DX_DC",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:a9:46:63",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN22",
+                "VLANID": 22,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Examination-S",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:01:f1",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Ubuntu22.04",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:c0:e2",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "NEWERP",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:0c:29:53:02:53",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN22",
+                "VLANID": 22,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Matlab-Win",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:af:fe",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "cp-template-4d945c9c-0485-4d73-8e61-7030b5fb59d5",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:2a:17",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "cp-replica-3df5eda1-7c80-4ef2-9fbe-b6bbe76ea0ea",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:a2:33",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "vrni-collector-01",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:21:6d",
+                "vSwitch_name": "VDS01",
+                "portGroup": "MGMT",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "AD01.red-apricot.top",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:73:8c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:81:ed",
+                "vSwitch_name": "vSwitch0",
+                "portGroup": "VM Network",
+                "VLANID": 0,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "TigerVNC",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:f4:91",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "DX_ERPNext",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:08:f1",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN22",
+                "VLANID": 22,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "storeonce-vsa",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:96:62",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Matlab-Linux",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:0f:29",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "AD",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:f4:a5",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:57:f3",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 3",
+                "macAddress": "00:50:56:88:56:0b",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "huawei-lab",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:16:bd",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "nfs",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:a8:88",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:95:0d",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "FEI-002",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:b5:53:fa",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "vCLS-1e2b470b-7ae0-4547-b877-611a6b498bf2",
+        "vnics": []
+    },
+    {
+        "Display_name": "Tech-VDI-01",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:78:2b",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Sale-VDI-01",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:2d:0f",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "cp-replica-f65e1e0d-e136-4af9-b26d-7437878b1f33",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:ea:24",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "ESXi-001",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:29:c0",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_Trunk",
+                "VLANID": "0-4094",
+                "connected": false
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:d9:16",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_Trunk",
+                "VLANID": "0-4094",
+                "connected": false
+            },
+            {
+                "name": "Network adapter 3",
+                "macAddress": "00:50:56:88:7b:e1",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_Trunk",
+                "VLANID": "0-4094",
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "FEI-015",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:b3:1d:6d",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "iTop",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:82:ee",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "DX-WDS",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:30:71",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN18",
+                "VLANID": 18,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "ESXi-003",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:cb:8a",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_Trunk",
+                "VLANID": "0-4094",
+                "connected": false
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:68:c2",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_Trunk",
+                "VLANID": "0-4094",
+                "connected": false
+            },
+            {
+                "name": "Network adapter 3",
+                "macAddress": "00:50:56:88:c0:03",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_Trunk",
+                "VLANID": "0-4094",
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "CTX-RDS-01",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:f3:2b",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "vrni-platform-01",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:3c:cb",
+                "vSwitch_name": "VDS01",
+                "portGroup": "MGMT",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "WIN10.LTSC.ENT.2021",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:07:3c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "cp-template-556c5fe7-ad4c-4261-b39e-f2dfd0f2d6a6",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:24:f4",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "ManageEngine_ServiceDesk_Plus",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:a8:10",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Gophish",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:92:7d",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "CTX-NSVPX",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "86:f8:96:09:3d:56",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "DevWin7",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:5f:24",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "PCNS_en",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:3f:b6",
+                "vSwitch_name": "VDS01",
+                "portGroup": "MGMT",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "VRLogInsight",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:83:a2",
+                "vSwitch_name": "VDS01",
+                "portGroup": "MGMT",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Avi-se-otxrm",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:34:21",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:08:bc",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Avi Internal",
+                "VLANID": 0,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 3",
+                "macAddress": "00:50:56:88:77:be",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Avi Internal",
+                "VLANID": 0,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 4",
+                "macAddress": "00:50:56:88:d2:ec",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Avi Internal",
+                "VLANID": 0,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 5",
+                "macAddress": "00:50:56:88:07:35",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 6",
+                "macAddress": "00:50:56:88:95:e8",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Avi Internal",
+                "VLANID": 0,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 7",
+                "macAddress": "00:50:56:88:e7:a9",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Avi Internal",
+                "VLANID": 0,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 8",
+                "macAddress": "00:50:56:88:2d:7f",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Avi Internal",
+                "VLANID": 0,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 9",
+                "macAddress": "00:50:56:88:a4:28",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Avi Internal",
+                "VLANID": 0,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 10",
+                "macAddress": "00:50:56:88:f5:90",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Avi Internal",
+                "VLANID": 0,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Nginx-01",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:b3:02",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN101",
+                "VLANID": 101,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "DDC01",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:5f:a0",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "bitnami-erpnext-13.36.3-0-linux-vm-debian-11-x86_64-nami",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:a3:aa",
+                "vSwitch_name": "VDS01",
+                "portGroup": "DX_VLAN22",
+                "VLANID": 22,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "VIEWCS02",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:28:0c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "ra-nsx",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:b1:14",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN033",
+                "VLANID": 33,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "RockyLinux-9.1-Core",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:d5:d5",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Redhat6.9",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:bb:b0",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Mof-VDI-02",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:f4:db",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "W10.1909.BUS.X64.CN.2020",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:fc:0d",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Redhat8.3-Workstation",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:06:a7",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "iscsi2",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:6c:a9",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "ubuntu22.04.1",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:ba:ce",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "BASIC_WIN10_BUS_20H2_CHS",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:4f:39",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "WIN11.21H2.BUS.X64.CN.2021.11",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:93:32",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "BASIC_WIN2K8R2_DC_CHS",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:2d:08",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Windows2022",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:ae:a8",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "BASIC_WIN2K12R2_STD_CHS",
+        "vnics": [
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:95:6e:96",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "netapp-ontap-tools",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:99:0c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "BASIC_WIN2K19_STD_CHS",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:c7:c8",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "CentOS6.9",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:56:65",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "BASIC_WIN10_1709_PRO_CHS",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:38:f7",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "BASIC_WIN7_ULT_CHS",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:14:e2",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "windows server2012 r2",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:a7:77",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:24:b2",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "W10.21H2.BUS.X64.CN.2021.12",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:4c:7c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "CTX-W10-01",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:bc:f6",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Tech-VDI-03",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:51:eb",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "CentOS7.7",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:e8:3e",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Redhat8.8",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:51:69",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "BASIC_WIN10_BUS_21H2_CHS_2021.12",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:16:b6",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "RockyLinux-8-Core",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:7f:f5",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Tech-VDI-06",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:35:5d",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "ad",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:83:6c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:9c:e6",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Centos7.9-Core",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:a4:00",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Linux7.1",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:33:d8",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "LogServer",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:a2:79",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Tech-VDI-05",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:ad:b5",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Mof-VDI-04",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:52:3c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "TVremote_PowerBI",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:20:1c",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Tech-VDI-07",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:6a:d8",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Avi-se-bagyp",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:68:cf",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 2",
+                "macAddress": "00:50:56:88:2d:0b",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Avi Internal",
+                "VLANID": 0,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 3",
+                "macAddress": "00:50:56:88:a4:a2",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Avi Internal",
+                "VLANID": 0,
+                "connected": true
+            },
+            {
+                "name": "Network adapter 4",
+                "macAddress": "00:50:56:88:72:c4",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Avi Internal",
+                "VLANID": 0,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 5",
+                "macAddress": "00:50:56:88:22:95",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Avi Internal",
+                "VLANID": 0,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 6",
+                "macAddress": "00:50:56:88:7e:3d",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Avi Internal",
+                "VLANID": 0,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 7",
+                "macAddress": "00:50:56:88:cf:6b",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Avi Internal",
+                "VLANID": 0,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 8",
+                "macAddress": "00:50:56:88:c9:9e",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Avi Internal",
+                "VLANID": 0,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 9",
+                "macAddress": "00:50:56:88:66:47",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Avi Internal",
+                "VLANID": 0,
+                "connected": false
+            },
+            {
+                "name": "Network adapter 10",
+                "macAddress": "00:50:56:88:19:a8",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Mof-VDI-01",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:21:96",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "esxi1",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:08:0f",
+                "vSwitch_name": "VDS01",
+                "portGroup": "Lab-VLAN29",
+                "VLANID": 29,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "RockyLinux-9.1",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:7d:8d",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "Tech-VDI-10",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:be:c0",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "Tech-VDI-08",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:bf:86",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "GitLab",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:95:3a:fb",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN29",
+                "VLANID": 29,
+                "connected": true
+            }
+        ]
+    },
+    {
+        "Display_name": "vcsa.red-apricot.top",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:78:58",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VLAN033",
+                "VLANID": 33,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "DC",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:0b:ca",
+                "vSwitch_name": "VDS01",
+                "portGroup": "PG_VM",
+                "VLANID": 23,
+                "connected": false
+            }
+        ]
+    },
+    {
+        "Display_name": "FTP",
+        "vnics": [
+            {
+                "name": "Network adapter 1",
+                "macAddress": "00:50:56:88:60:b3",
+                "vSwitch_name": "VDS01",
+                "portGroup": "VLAN27",
+                "VLANID": 55,
+                "connected": true
+            }
+        ]
+    }
+]

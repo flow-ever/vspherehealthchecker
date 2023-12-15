@@ -488,7 +488,7 @@ def log_stream():
     vcsa_log_end_flag='the information acquisition of vcsa is finished!'
     log_end_flags=[vm_log_end_flag,ipmi_log_end_flag,dc_log_end_flag,vcsa_log_end_flag]
 
-    eventType=['VM','CLUSTER','DATACENTER','VCSA']
+    eventType=['VM','IPMI','DATACENTER','VCSA']
 
     #收集结束标识
     subs_end=[[key,False] for key in ['vm_end','ipmi_end','datacenter_end','vcsa_end']]
@@ -677,7 +677,7 @@ def show_vcenter():
   for line in data:
       rx=re.search(']#.*chage -l root',line)
       if rx:
-          print('find')
+          # print('find')
           find_flag=True
       if find_flag:
           root_pass_lines.append(line.strip())   

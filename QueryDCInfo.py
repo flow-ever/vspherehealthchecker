@@ -320,7 +320,7 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
             ds_info['fstype']=ds.summary.type
             ds_info['type']='datastore'
             ds_info['uncommited']=ds.summary.uncommitted if ds.summary.uncommitted else 0 #Total additional storage space, in bytes, potentially used by all virtual machines on this datastore. 
-            ds_info['provisioned']=ds.summary.capacity-ds.summary.freeSpace+ds.summary.uncommitted
+            ds_info['provisioned']=ds.summary.capacity-ds.summary.freeSpace+ds_info['uncommited']
 
             datastores.append(ds_info)
 

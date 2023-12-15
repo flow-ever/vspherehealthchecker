@@ -1,0 +1,27 @@
+{% extends "header.html" %}
+{% block body %}
+
+<h2>服务器硬件基本信息</h2>
+<div class="mid_table_container">
+    <table class="table2">
+        <tr>
+            
+            <th scope="col">hostname/IP</th>
+            <th scope="col">CPU配置</th>
+            <th scope="col">内存配置</th>
+            <th scope="col">日志告警情况</th>
+            <th scope="col">总体健康状况</th>
+
+        </tr>    
+        <tr>        
+            <td>{{ host_data['basic_info'][0]['esxi'] }}</td>
+            <td>{{ host_data['basic_info'][0]['vendor'] }}</td>
+            <td>{{ host_data['basic_info'][0]['model'] }}</td>
+            <td>{{ host_data['basic_info'][0]['sn'] }}</td>
+            <td>{{ host_data['basic_info'][0]['uptime'] }}</td>
+        </tr>
+        
+    </table>
+</div>  
+
+{% endblock %}

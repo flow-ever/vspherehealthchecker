@@ -1,140 +1,82 @@
-from pyVmomi import vim
-import os 
+import argparse
+import getpass
 import json
-import datetime
 import logging
-from pyVim.connect import Disconnect,SmartConnectNoSSL
-import atexit
+import requests
 import sys
-import vsanmgmtObjects
-import vsanapiutils
-from packaging.version import Version
-from decimal import Decimal
-from cryptography import x509
-from cryptography.hazmat.backends import default_backend
-import pytz
+import time
+import warnings
 
 
-class BColors(object):
-    """A class used to represent ANSI escape sequences
-       for console color output.
-    """
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-    reset = "\033[0m"
-    bold = "\033[1m"
-    white = "\033[38;2;255;255;255m"
-    black = "\033[38;2;0;0;0m"
-    red = "\033[38;2;255;0;0m"
-    green = "\033[38;2;0;255;0m"
-    blue = "\033[38;2;0;0;255m"
-    white_bg = "\033[48;2;255;255;255m"
-    black_bg = "\033[48;2;0;0;0m"
-    red_bg = "\033[48;2;255;0;0m"
-    green_bg = "\033[48;2;0;255;0m"
-    blue_bg = "\033[48;2;0;0;255m"
+logging.basicConfig(format='%(message)s', stream=sys.stdout, level=logging.INFO)
 
-def establish_connection(vchost,vcuser,vcpassword):
+def get_redfish_version(idrac_ip,idrac_username,idrac_password):
+    global session_uri
+    response = requests.get('https://%s/redfish/v1' % idrac_ip,verify=False, auth=(idrac_username, idrac_password))
+    data = response.json()
+    if response.status_code == 401:
+            logging.warning("\n- WARNING, status code %s returned. Incorrect iDRAC username/password or invalid privilege detected." % response.status_code)
+            sys.exit(0)
+    elif response.status_code != 200:
+        logging.warning("\n- WARNING, GET request failed to get Redfish version, status code %s returned" % response.status_code)
+        sys.exit(0)
+    redfish_version = int(data["RedfishVersion"].replace(".",""))
+    if redfish_version >= 160:
+        session_uri = "redfish/v1/SessionService/Sessions"
+    elif redfish_version < 160:
+        session_uri = "redfish/v1/Sessions"
+    else:
+        logging.error("- ERROR, unable to select URI based off Redfish version")
+        sys.exit(0)
+
+
+def create_x_auth_session(idrac_ip,idrac_username,idrac_password):
+    url = 'https://%s/%s' % (idrac_ip, session_uri)
+    payload = {"UserName":idrac_username,"Password":idrac_password}
+    headers = {'content-type': 'application/json'}
+    response = requests.post(url, data=json.dumps(payload), headers=headers, verify=False)
+    data = response.json()
+    if response.status_code == 201:
+        logging.info("\n- PASS, successfully created X auth session")
+    else:
+        try:
+            logging.error("\n- FAIL, unable to create X-auth_token session, status code %s returned, detailed error results:\n %s" % (response.status_code, data))
+        except:
+            logging.error("\n- FAIL, unable to create X-auth_token session, status code %s returned" % (response.status_code))
+        sys.exit(0)
+    logging.info("\n- INFO, created session details -\n")
+    # for i in response.headers.items():
+    #     print("%s: %s" % (i[0],i[1]))
+    return response.headers.get("x-auth-token")
+
+def delete_x_auth_session(idrac_ip,idrac_username,idrac_password):
+    url = 'https://%s/%s/%s' % (idrac_ip, session_uri, "delete")
     try:
-        si = SmartConnectNoSSL(host=vchost, user=vcuser, pwd=vcpassword)
-        atexit.register(Disconnect, si)
-        return si
-    except Exception as e:
-        print(f"Failed to connect to vCenter at {vchost}: {e}")
-        return None
+        headers = {'content-type': 'application/json'}
+        response = requests.delete(url, headers=headers, verify=False,auth=(idrac_username,idrac_password))
+    except requests.ConnectionError as error_message:
+        logging.error("- FAIL, requests command failed to GET job status, detailed error information: \n%s" % error_message)
+        sys.exit(0)
+    if response.status_code == 200:
+        logging.info("\n- PASS, successfully deleted iDRAC session ID %s" % "delete")
+    else:
+        data = response.json()
+        logging.info("\n- FAIL, unable to delete iDRAC session, status code %s returned, detailed error results:\n %s" % (response.status_code, data))
+        sys.exit(0)
+
+idrac_ip,idrac_username,idrac_password='192.168.10.230','root','calvin'
+
+get_redfish_version(idrac_ip,idrac_username,idrac_password)
+token=create_x_auth_session(idrac_ip,idrac_username,idrac_password)
+print('token:'+token)
+
+response = requests.get('https://%s/redfish/v1/Systems/System.Embedded.1/NetworkInterfaces/NIC.Embedded.1' % idrac_ip, verify=False, headers={'X-Auth-Token': token}) 
+print(response.json())
+
+# # 'https://'+host+'/redfish/v1/Systems/System.Embedded.1/Storage'
+# response = requests.get('https://%s/redfish/v1/Systems/System.Embedded.1/Storage' % idrac_ip, verify=False, headers={'X-Auth-Token': token}) 
+# print(response)
+
+# delete_x_auth_session(idrac_ip,idrac_username,idrac_password)
 
 
-def get_all_objs(content, vimtype):
-    obj = []
-    container = content.viewManager.CreateContainerView(content.rootFolder, vimtype, True)
-    for managed_object_ref in container.view:
-        # obj.update({managed_object_ref: managed_object_ref.name})
-        obj.append(managed_object_ref)
-    container.Destroy()
-    return obj
-
-vcuser='administrator@vsphere.local'
-# vchost='192.168.10.82'
-# vcpassword='123Qwe,.'
-vchost='192.168.83.212'
-vcpassword='eRB$i5PUl@20211101'
-
-si=establish_connection(vchost,vcuser,vcpassword)
-content=si.content
-dcs=get_all_objs(content,[vim.Datacenter])
-for dc in dcs:
-    #list network type objects
-    vdss=[]
-    for netobj in dc.networkFolder.childEntity:
-        if isinstance(netobj,vim.DistributedVirtualSwitch):
-            vds={}
-            vds['name']=netobj.name
-            
-            vds['portgroups']=[]
-            #get portgroup information
-            for ptgrp in netobj.portgroup:
-                if ptgrp.config.name=='PG_VM' or ptgrp.config.name=='PG_Trunk' :
-                    pass
-                pg={}
-                pg['name']=ptgrp.config.name
-                pg['uplink']=ptgrp.config.uplink
-                if hasattr(ptgrp,'backingType'):
-                    pg['backingType']=ptgrp.config.backingType  #since vsphere vpi 7.0
-                else:
-                    pg['backingType']=None
-                vlaninfo=ptgrp.defaultPortConfig.vlan
-                if isinstance(vlaninfo,'vim.dvs.VmwareDistributedVirtualSwitch.TrunkVlanSpec'):  #端口组为trunk类型
-                    vlanlist=[]
-                    for item in vlaninfo.vlanId:
-                        if item.start==item.end:
-                            vlanlist.append(str(item.start))
-                        else:
-                            vlanlist.append(str(item.start)+'-'+str(item.end))
-                    pg['vlan_id']=','.join(vlanlist)
-                else:
-                    pg['vlan_id']=str(vlaninfo.vlanId)
-                uplinkpolicy=ptgrp.defaultPortConfig.uplinkTeamingPolicy
-                uplinkportorder=uplinkpolicy.uplinkPortOrder
-                activeUplinkPort=uplinkportorder.activeUplinkPort #[]
-                standbyUplinkPort=uplinkportorder.standbyUplinkPort #[]
-                pg['activeUplinkPort']=activeUplinkPort
-                pg['standbyUplinkPort']=standbyUplinkPort
-                vds['portgroups'].append(pg)
-            #get hosts that connected to the vds
-            connectedHosts=[]
-            for host in netobj.config.host:
-                connectedHosts.append(host.config.host.name)
-            vds['connectedHosts']=connectedHosts
-            
-            vdss.append(vds)
-
-    datastores=[]
-    for ds in dc.datastoreFolder.childEntity:
-        ds_info={}
-        ds_info['name']=ds.name
-        ds_info['hosts']=ds.host #Hosts attached to this datastore.
-        ds_info['vm']=ds.vm
-        ds_info['maxVirtualDiskCapacity']=ds.info.maxVirtualDiskCapacity #The maximum capacity of a virtual disk which can be created on this volume.
-        ds_info['capacity']=ds.summary.capacity  #Maximum capacity of this datastore, in bytes. 
-        ds_info['freeSpace']=ds.summary.freeSpace #Free space of this datastore, in bytes.
-        ds_info['multipleHostAccess']=ds.summary.multipleHostAccess
-        ds_info['fstype']=ds.summary.type
-        ds_info['type']='datastore'
-        ds_info['uncommited']=ds.summary.uncommitted if ds.summary.uncommitted else 0 #Total additional storage space, in bytes, potentially used by all virtual machines on this datastore. 
-        ds_info['over_provision']=ds.summary.capacity-ds.summary.freeSpace+ds.summary.uncommitted
-
-                
-
-
-            
-
-    # #list datastore type objects
-    # for dsobj in dc.datastore:
-    #     if dsobj.type=="VmwareDistributedVirtualSwitch":
-    #         print(dsobj.name)        

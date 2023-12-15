@@ -1,0 +1,455 @@
+Last login: Thu Dec 14 14:41:07 2023 from 192.168.11.138
+shell.set --enabled true
+
+Connected to service
+
+    * List APIs: "help api list"
+    * List Plugins: "help pi list"
+    * Launch BASH: "shell"
+
+Command> shell.set --enabled true
+Command> 
+Command> shell
+Shell access is granted to root
+[1;31mroot@vcsa [ [0m~[1;31m ]# [0mfree -h
+              total        used        free      shared  buff/cache   available
+Mem:           15Gi        12Gi       239Mi       566Mi       3.0Gi       2.5Gi
+Swap:          24Gi       3.2Gi        21Gi
+[1;31mroot@vcsa [ [0m~[1;31m ]# [0mdf -h
+Filesystem                                   Size  Used Avail Use% Mounted on
+devtmpfs                                     7.9G     0  7.9G   0% /dev
+tmpfs                                        7.9G 1012K  7.9G   1% /dev/shm
+tmpfs                                        7.9G  1.3M  7.9G   1% /run
+tmpfs                                        7.9G     0  7.9G   0% /sys/fs/cgroup
+/dev/mapper/vg_root_0-lv_root_0               47G   11G   34G  25% /
+tmpfs                                        7.9G   11M  7.9G   1% /tmp
+/dev/sda3                                    488M   30M  423M   7% /boot
+/dev/sda2                                     10M  2.2M  7.9M  22% /boot/efi
+/dev/mapper/vg_lvm_snapshot-lv_lvm_snapshot  147G   61M  140G   1% /storage/lvm_snapshot
+/dev/mapper/core_vg-core                      25G  4.6G   19G  20% /storage/core
+/dev/mapper/log_vg-log                       9.8G  6.2G  3.1G  67% /storage/log
+/dev/mapper/db_vg-db                         9.8G  2.8G  6.5G  30% /storage/db
+/dev/mapper/dblog_vg-dblog                    15G  169M   14G   2% /storage/dblog
+/dev/mapper/seat_vg-seat                     9.8G  1.4G  8.0G  15% /storage/seat
+/dev/mapper/netdump_vg-netdump               985M  2.5M  915M   1% /storage/netdump
+/dev/mapper/autodeploy_vg-autodeploy         9.8G   37M  9.3G   1% /storage/autodeploy
+/dev/mapper/imagebuilder_vg-imagebuilder     9.8G   37M  9.3G   1% /storage/imagebuilder
+/dev/mapper/updatemgr_vg-updatemgr            98G  3.8G   90G   5% /storage/updatemgr
+/dev/mapper/archive_vg-archive                49G   45G  2.4G  95% /storage/archive
+/dev/mapper/lifecycle_vg-lifecycle            98G  4.3G   89G   5% /storage/lifecycle
+/dev/mapper/vtsdb_vg-vtsdb                   9.8G   68M  9.2G   1% /storage/vtsdb
+/dev/mapper/vtsdblog_vg-vtsdblog             4.9G   52M  4.6G   2% /storage/vtsdblog
+[1;31mroot@vcsa [ [0m~[1;31m ]# [0mfor store in $(/usr/lib/vmware-vmafd/bin/vecs-cli store list | ggrep -v TRUSTED_ROOT_CRLS);                 do echo "[*] Store :" $store; /usr/liib/vmware-vmafd/bin/vecs-cli entry list --store $store --text                 | ggrep -ie "Alias" -ie "Not After";done;
+[*] Store : MACHINE_SSL_CERT
+[01;31m[KAlias[m[K :	__MACHINE_CERT
+            [01;31m[KNot After[m[K : Aug  6 02:00:03 2025 GMT
+[*] Store : TRUSTED_ROOTS
+[01;31m[KAlias[m[K :	8db2d2b889e84feb57720fc22494747b3cee4b94
+            [01;31m[KNot After[m[K : Nov  8 02:22:02 2031 GMT
+[*] Store : machine
+[01;31m[KAlias[m[K :	machine
+            [01;31m[KNot After[m[K : Nov  8 02:22:02 2031 GMT
+[*] Store : vsphere-webclient
+[01;31m[KAlias[m[K :	vsphere-webclient
+            [01;31m[KNot After[m[K : Nov  8 02:22:02 2031 GMT
+[*] Store : vpxd
+[01;31m[KAlias[m[K :	vpxd
+            [01;31m[KNot After[m[K : Nov  8 02:22:02 2031 GMT
+[*] Store : vpxd-extension
+[01;31m[KAlias[m[K :	vpxd-extension
+            [01;31m[KNot After[m[K : Nov  8 02:22:02 2031 GMT
+[*] Store : hvc
+[01;31m[KAlias[m[K :	hvc
+            [01;31m[KNot After[m[K : Nov  8 02:22:02 2031 GMT
+[*] Store : data-encipherment
+[01;31m[KAlias[m[K :	data-encipherment
+            [01;31m[KNot After[m[K : Nov  8 02:22:02 2031 GMT
+[*] Store : APPLMGMT_PASSWORD
+[*] Store : SMS
+[01;31m[KAlias[m[K :	sms_self_signed
+            [01;31m[KNot After[m[K : Nov 13 02:28:15 2031 GMT
+[*] Store : wcp
+[01;31m[KAlias[m[K :	wcp
+            [01;31m[KNot After[m[K : Nov  8 02:22:02 2031 GMT
+[*] Store : BACKUP_STORE
+[01;31m[KAlias[m[K :	__MACHINE_CERT
+            [01;31m[KNot After[m[K : Nov 13 14:22:02 2023 GMT
+[1;31mroot@vcsa [ [0m~[1;31m ]# [0mservice-control --list-services
+vmware-vmon (VMware Service Lifecycle Manager)
+vmonapi (VMware Service Lifecycle Manager API)
+vmafdd (VMware Authentication Framework)
+vmdird (VMware Directory Service)
+vmcad (VMware Certificate Service)
+lookupsvc (VMware Lookup Service)
+sca (VMware Service Control Agent)
+sts (VMware Security Token Service)
+rhttpproxy (VMware HTTP Reverse Proxy)
+envoy (VMware Envoy Proxy)
+netdumper (VMware vSphere ESXi Dump Collector)
+vapi-endpoint (VMware vAPI Endpoint)
+vpxd-svcs (VMware vCenter-Services)
+perfcharts (VMware Performance Charts)
+applmgmt (VMware Appliance Management Service)
+statsmonitor (VMware Appliance Monitoring Service)
+cis-license (VMware License Service)
+vmware-vpostgres (VMware Postgres)
+vmware-postgres-archiver (VMware Postgres Archiver)
+vmware-vdtc (VMware vSphere Distrubuted Tracing Collector)
+vpxd (VMware vCenter Server)
+eam (VMware ESX Agent Manager)
+vsm (VMware vService Manager)
+sps (VMware vSphere Profile-Driven Storage Service)
+pschealth (VMware Platform Services Controller Health Monitor)
+rbd (VMware vSphere Auto Deploy Waiter)
+content-library (VMware Content Library Service)
+imagebuilder (VMware Image Builder Manager)
+lwsmd (Likewise Service Manager)
+vmcam (VMware vSphere Authentication Proxy)
+vcha (VMware vCenter High Availability)
+updatemgr (VMware Update Manager)
+vsan-health (VMware VSAN Health Service)
+vsphere-ui (VMware vSphere Client)
+hvc (VMware Hybrid VC Service)
+trustmanagement (VMware Trust Management Service)
+certificatemanagement (VMware Certificate Management Service)
+certificateauthority (VMware Certificate Authority Service)
+vmware-pod (VMware Patching and Host Management Service)
+vlcm (VMware vCenter Lifecycle API)
+analytics (VMware Analytics Service)
+topologysvc (VMware Topology Service)
+infraprofile (VMware Infraprofile Service)
+wcp (Workload Control Plane)
+vtsdb (VMware vTsdb Service)
+vstats (VMware vStats Service)
+observability (VMware VCSA Observability Service)
+observability-vapi (VMware VCSA Observability VAPI Service)
+[1;31mroot@vcsa [ [0m~[1;31m ]# [0mfor i in $(/usr/lib/vmware-vmon/vmon-cli -l);do /usr/lib/vmware--vmon/vmon-cli -s $i;done
+Name: analytics
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040068958
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 14519
+Name: applmgmt
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040322494
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 3534
+Name: certificateauthority
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040250267
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 7191
+Name: certificatemanagement
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040253400
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 7065
+Name: cis-license
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: cis-license
+CurrentRunStateDuration(ms): 6040318381
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 4781
+Name: content-library
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: content-library
+CurrentRunStateDuration(ms): 6039884305
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 17243
+Name: eam
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: eam
+CurrentRunStateDuration(ms): 6040400690
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 2329
+Name: envoy
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: envoy
+CurrentRunStateDuration(ms): 6040407697
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 2199
+Name: hvc
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040245050
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 7061
+Name: imagebuilder
+Starttype: MANUAL
+RunState: STOPPED
+RunAsUser: imagebuilder
+CurrentRunStateDuration(ms): 6040419291
+HealthState: UNHEALTHY
+FailStop: FALSE
+MainProcessId: N/A
+Name: infraprofile
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040243995
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 7057
+Name: lookupsvc
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040392596
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 2542
+Name: netdumper
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: netdumper
+CurrentRunStateDuration(ms): 6040416797
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 2214
+Name: observability-vapi
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040235206
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 7070
+Name: perfcharts
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: perfcharts
+CurrentRunStateDuration(ms): 6040056397
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 14452
+Name: pschealth
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040137143
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 14454
+Name: rbd
+Starttype: MANUAL
+RunState: STOPPED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040419055
+HealthState: UNHEALTHY
+FailStop: FALSE
+MainProcessId: N/A
+Name: rhttpproxy
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040416800
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 2303
+Name: sca
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040349692
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 2977
+Name: sps
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040020268
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 14497
+Name: statsmonitor
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040376978
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 2212
+Name: sts
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040347435
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 3050
+Name: topologysvc
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040252860
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 7176
+Name: trustmanagement
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040376940
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 2947
+Name: updatemgr
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: updatemgr
+CurrentRunStateDuration(ms): 6040135637
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 14610
+Name: vapi-endpoint
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: vapiEndpoint
+CurrentRunStateDuration(ms): 6040350152
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 2939
+Name: vcha
+Starttype: DISABLED
+RunState: STOPPED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040419073
+HealthState: UNHEALTHY
+FailStop: FALSE
+MainProcessId: N/A
+Name: vlcm
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040101970
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 14455
+Name: vmcam
+Starttype: MANUAL
+RunState: STOPPED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040419078
+HealthState: UNHEALTHY
+FailStop: FALSE
+MainProcessId: N/A
+Name: vmonapi
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040343877
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 4696
+Name: vmware-postgres-archiver
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: vpostgres
+CurrentRunStateDuration(ms): 6039271540
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 35095
+Name: vmware-vpostgres
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: vpostgres
+CurrentRunStateDuration(ms): 6040412899
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 2497
+Name: vpxd
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040138794
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 7252
+Name: vpxd-svcs
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040265085
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 5058
+Name: vsan-health
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: vsan-health
+CurrentRunStateDuration(ms): 6040019947
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 14611
+Name: vsm
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: vsm
+CurrentRunStateDuration(ms): 6040120749
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 14486
+Name: vsphere-ui
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: vsphere-ui
+CurrentRunStateDuration(ms): 6040204691
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 7225
+Name: vstats
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: vstatsuser
+CurrentRunStateDuration(ms): 6040099895
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 14785
+Name: vtsdb
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: vtsdbuser
+CurrentRunStateDuration(ms): 6040411656
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 2528
+Name: wcp
+Starttype: AUTOMATIC
+RunState: STARTED
+RunAsUser: root
+CurrentRunStateDuration(ms): 6040062366
+HealthState: HEALTHY
+FailStop: N/A
+MainProcessId: 14813
+[1;31mroot@vcsa [ [0m~[1;31m ]# [0mchage -l root
+Last password change					: Nov 13, 2021
+Password expires					: never
+Password inactive					: never
+Account expires						: never
+Minimum number of days between password change		: 0
+Maximum number of days between password change		: -1
+Number of days of warning before password expires	: 7
+[1;31mroot@vcsa [ [0m~[1;31m ]# [0m

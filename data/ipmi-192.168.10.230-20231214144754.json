@@ -1,0 +1,536 @@
+[
+    {
+        "host": "192.168.10.230",
+        "systemData": {
+            "@odata.context": "/redfish/v1/$metadata#ComputerSystem.ComputerSystem",
+            "@odata.id": "/redfish/v1/Systems/System.Embedded.1",
+            "@odata.type": "#ComputerSystem.v1_5_0.ComputerSystem",
+            "Actions": {
+                "#ComputerSystem.Reset": {
+                    "ResetType@Redfish.AllowableValues": [
+                        "On",
+                        "ForceOff",
+                        "ForceRestart",
+                        "GracefulShutdown",
+                        "PushPowerButton",
+                        "Nmi"
+                    ],
+                    "target": "/redfish/v1/Systems/System.Embedded.1/Actions/ComputerSystem.Reset"
+                }
+            },
+            "AssetTag": "",
+            "Bios": {
+                "@odata.id": "/redfish/v1/Systems/System.Embedded.1/Bios"
+            },
+            "BiosVersion": "2.13.0",
+            "Boot": {
+                "BootOptions": {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/BootOptions"
+                },
+                "BootOrder": [
+                    "Boot0000",
+                    "Boot0008",
+                    "Boot0009"
+                ],
+                "BootOrder@odata.count": 3,
+                "BootSourceOverrideEnabled": "Once",
+                "BootSourceOverrideMode": "UEFI",
+                "BootSourceOverrideTarget": "None",
+                "BootSourceOverrideTarget@Redfish.AllowableValues": [
+                    "None",
+                    "Pxe",
+                    "Cd",
+                    "Floppy",
+                    "Hdd",
+                    "BiosSetup",
+                    "Utilities",
+                    "UefiTarget",
+                    "SDCard",
+                    "UefiHttp"
+                ],
+                "UefiTargetBootSourceOverride": ""
+            },
+            "Description": "Computer System which represents a machine (physical or virtual) and the local resources such as memory, cpu and other devices that can be accessed from that machine.",
+            "EthernetInterfaces": {
+                "@odata.id": "/redfish/v1/Systems/System.Embedded.1/EthernetInterfaces"
+            },
+            "HostName": "vsan01",
+            "HostWatchdogTimer": {
+                "FunctionEnabled": false,
+                "Status": {
+                    "State": "Disabled"
+                },
+                "TimeoutAction": "None"
+            },
+            "Id": "System.Embedded.1",
+            "IndicatorLED": "Off",
+            "Links": {
+                "Chassis": [
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1"
+                    }
+                ],
+                "Chassis@odata.count": 1,
+                "CooledBy": [
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.1A"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.1B"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.2A"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.2B"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.3A"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.3B"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.4A"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.4B"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.5A"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.5B"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.6A"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.6B"
+                    }
+                ],
+                "CooledBy@odata.count": 12,
+                "ManagedBy": [
+                    {
+                        "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1"
+                    }
+                ],
+                "ManagedBy@odata.count": 1,
+                "Oem": {
+                    "DELL": {
+                        "@odata.type": "#DellComputerSystem.v1_0_0.DellComputerSystem",
+                        "BootOrder": {
+                            "@odata.id": "/redfish/v1/Systems/System.Embedded.1/BootSources"
+                        }
+                    }
+                },
+                "PoweredBy": [
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Power/PowerSupplies/PSU.Slot.1"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Power/PowerSupplies/PSU.Slot.2"
+                    }
+                ],
+                "PoweredBy@odata.count": 2
+            },
+            "Manufacturer": "Dell Inc.",
+            "Memory": {
+                "@odata.id": "/redfish/v1/Systems/System.Embedded.1/Memory"
+            },
+            "MemorySummary": {
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "TotalSystemMemoryGiB": 256.0
+            },
+            "Model": "PowerEdge R430",
+            "Name": "System",
+            "NetworkInterfaces": {
+                "@odata.id": "/redfish/v1/Systems/System.Embedded.1/NetworkInterfaces"
+            },
+            "PCIeDevices": [
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/4-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/1-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/2-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/10-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/0-23"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/0-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/0-29"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/0-31"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/0-49"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/0-26"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/3-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/0-3"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/0-28"
+                }
+            ],
+            "PCIeDevices@odata.count": 13,
+            "PCIeFunctions": [
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/4-0-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/4-0-1"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/1-0-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/2-0-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/10-0-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-23-4"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-0-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-29-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-31-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-49-2"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/2-0-1"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-26-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/3-0-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/3-0-1"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-3-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-28-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-28-2"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-28-3"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-28-1"
+                }
+            ],
+            "PCIeFunctions@odata.count": 19,
+            "PartNumber": "0CN7X8A04",
+            "PowerState": "On",
+            "ProcessorSummary": {
+                "Count": 2,
+                "LogicalProcessorCount": 56,
+                "Model": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz",
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                }
+            },
+            "Processors": {
+                "@odata.id": "/redfish/v1/Systems/System.Embedded.1/Processors"
+            },
+            "SKU": "8DJ84J2",
+            "SecureBoot": {
+                "@odata.id": "/redfish/v1/Systems/System.Embedded.1/SecureBoot"
+            },
+            "SerialNumber": "CN779216CQ01H4",
+            "SimpleStorage": {
+                "@odata.id": "/redfish/v1/Systems/System.Embedded.1/SimpleStorage/Controllers"
+            },
+            "Status": {
+                "Health": "OK",
+                "HealthRollup": "OK",
+                "State": "Enabled"
+            },
+            "Storage": {
+                "@odata.id": "/redfish/v1/Systems/System.Embedded.1/Storage"
+            },
+            "SystemType": "Physical",
+            "UUID": "4c4c4544-0044-4a10-8038-b8c04f344a32"
+        },
+        "storageData": {},
+        "LogData": {
+            "@odata.context": "/redfish/v1/$metadata#LogEntryCollection.LogEntryCollection",
+            "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel",
+            "@odata.type": "#LogEntryCollection.LogEntryCollection",
+            "Description": "System Event Logs for this manager",
+            "Members": [
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/9",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-08-25T01:06:15-05:00",
+                    "Description": " Log Entry 9",
+                    "EntryCode": [
+                        {
+                            "Member": "Upper Non-critical - going high"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "9",
+                    "Links": {},
+                    "Message": "The system inlet temperature is within range.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "57a8aa",
+                    "Name": " Log Entry 9",
+                    "SensorNumber": 4,
+                    "SensorType": [
+                        {
+                            "Member": "Temperature"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/8",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-08-24T18:18:51-05:00",
+                    "Description": " Log Entry 8",
+                    "EntryCode": [
+                        {
+                            "Member": "Upper Non-critical - going high"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "8",
+                    "Links": {},
+                    "Message": "The system inlet temperature is greater than the upper warning threshold.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "57aaaa",
+                    "Name": " Log Entry 8",
+                    "SensorNumber": 4,
+                    "SensorType": [
+                        {
+                            "Member": "Temperature"
+                        }
+                    ],
+                    "Severity": "Warning"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/7",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2021-11-12T15:34:48-06:00",
+                    "Description": " Log Entry 7",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "7",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is off.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "802ff",
+                    "Name": " Log Entry 7",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/6",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2021-11-12T15:34:43-06:00",
+                    "Description": " Log Entry 6",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "6",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is off.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "802ff",
+                    "Name": " Log Entry 6",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/5",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2021-11-08T10:14:32-06:00",
+                    "Description": " Log Entry 5",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "5",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is off.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "802ff",
+                    "Name": " Log Entry 5",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/4",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2021-11-08T10:14:27-06:00",
+                    "Description": " Log Entry 4",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "4",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is off.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "802ff",
+                    "Name": " Log Entry 4",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/3",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2021-11-08T10:03:27-06:00",
+                    "Description": " Log Entry 3",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "3",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is off.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "802ff",
+                    "Name": " Log Entry 3",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/2",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2021-11-08T10:03:22-06:00",
+                    "Description": " Log Entry 2",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "2",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is off.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "802ff",
+                    "Name": " Log Entry 2",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2021-11-05T10:53:06-05:00",
+                    "Description": " Log Entry 1",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1",
+                    "Links": {},
+                    "Message": "Log cleared.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "2ffff",
+                    "Name": " Log Entry 1",
+                    "SensorNumber": 114,
+                    "SensorType": [
+                        {
+                            "Member": "Event Logging Disabled"
+                        }
+                    ],
+                    "Severity": "OK"
+                }
+            ],
+            "Members@odata.count": 9,
+            "Name": "Log Entry Collection"
+        }
+    }
+]

@@ -1,0 +1,1604 @@
+[
+    {
+        "host": "192.168.10.237",
+        "systemData": {
+            "@odata.context": "/redfish/v1/$metadata#ComputerSystem.ComputerSystem",
+            "@odata.id": "/redfish/v1/Systems/System.Embedded.1",
+            "@odata.type": "#ComputerSystem.v1_5_0.ComputerSystem",
+            "Actions": {
+                "#ComputerSystem.Reset": {
+                    "ResetType@Redfish.AllowableValues": [
+                        "On",
+                        "ForceOff",
+                        "ForceRestart",
+                        "GracefulShutdown",
+                        "PushPowerButton",
+                        "Nmi"
+                    ],
+                    "target": "/redfish/v1/Systems/System.Embedded.1/Actions/ComputerSystem.Reset"
+                }
+            },
+            "AssetTag": "",
+            "Bios": {
+                "@odata.id": "/redfish/v1/Systems/System.Embedded.1/Bios"
+            },
+            "BiosVersion": "2.10.5",
+            "Boot": {
+                "BootOptions": {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/BootOptions"
+                },
+                "BootOrder": [
+                    "Boot0009",
+                    "Boot0000",
+                    "Boot0003",
+                    "Boot0001"
+                ],
+                "BootOrder@odata.count": 4,
+                "BootSourceOverrideEnabled": "Once",
+                "BootSourceOverrideMode": "UEFI",
+                "BootSourceOverrideTarget": "None",
+                "BootSourceOverrideTarget@Redfish.AllowableValues": [
+                    "None",
+                    "Pxe",
+                    "Cd",
+                    "Floppy",
+                    "Hdd",
+                    "BiosSetup",
+                    "Utilities",
+                    "UefiTarget",
+                    "SDCard",
+                    "UefiHttp"
+                ],
+                "UefiTargetBootSourceOverride": ""
+            },
+            "Description": "Computer System which represents a machine (physical or virtual) and the local resources such as memory, cpu and other devices that can be accessed from that machine.",
+            "EthernetInterfaces": {
+                "@odata.id": "/redfish/v1/Systems/System.Embedded.1/EthernetInterfaces"
+            },
+            "HostName": "vsan04",
+            "HostWatchdogTimer": {
+                "FunctionEnabled": false,
+                "Status": {
+                    "State": "Disabled"
+                },
+                "TimeoutAction": "None"
+            },
+            "Id": "System.Embedded.1",
+            "IndicatorLED": "Off",
+            "Links": {
+                "Chassis": [
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1"
+                    }
+                ],
+                "Chassis@odata.count": 1,
+                "CooledBy": [
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.1A"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.1B"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.2A"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.2B"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.3A"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.3B"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.4A"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.4B"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.5A"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.5B"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.6A"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.6B"
+                    }
+                ],
+                "CooledBy@odata.count": 12,
+                "ManagedBy": [
+                    {
+                        "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1"
+                    }
+                ],
+                "ManagedBy@odata.count": 1,
+                "Oem": {
+                    "DELL": {
+                        "@odata.type": "#DellComputerSystem.v1_0_0.DellComputerSystem",
+                        "BootOrder": {
+                            "@odata.id": "/redfish/v1/Systems/System.Embedded.1/BootSources"
+                        }
+                    }
+                },
+                "PoweredBy": [
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Power/PowerSupplies/PSU.Slot.1"
+                    },
+                    {
+                        "@odata.id": "/redfish/v1/Chassis/System.Embedded.1/Power/PowerSupplies/PSU.Slot.2"
+                    }
+                ],
+                "PoweredBy@odata.count": 2
+            },
+            "Manufacturer": "Dell Inc.",
+            "Memory": {
+                "@odata.id": "/redfish/v1/Systems/System.Embedded.1/Memory"
+            },
+            "MemorySummary": {
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "TotalSystemMemoryGiB": 238.418688
+            },
+            "Model": "PowerEdge R430",
+            "Name": "System",
+            "NetworkInterfaces": {
+                "@odata.id": "/redfish/v1/Systems/System.Embedded.1/NetworkInterfaces"
+            },
+            "PCIeDevices": [
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/2-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/10-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/0-23"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/0-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/0-29"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/0-31"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/1-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/4-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/0-49"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/0-26"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/3-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/0-3"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeDevice/0-28"
+                }
+            ],
+            "PCIeDevices@odata.count": 13,
+            "PCIeFunctions": [
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/2-0-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/10-0-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-23-4"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-0-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-29-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-31-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/1-0-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/4-0-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/4-0-1"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-49-2"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/2-0-1"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-26-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/3-0-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/3-0-1"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-3-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-28-0"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-28-2"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-28-3"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Systems/System.Embedded.1/PCIeFunction/0-28-1"
+                }
+            ],
+            "PCIeFunctions@odata.count": 19,
+            "PartNumber": "0CN7X8A00",
+            "PowerState": "On",
+            "ProcessorSummary": {
+                "Count": 2,
+                "LogicalProcessorCount": 56,
+                "Model": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz",
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                }
+            },
+            "Processors": {
+                "@odata.id": "/redfish/v1/Systems/System.Embedded.1/Processors"
+            },
+            "SKU": "662KCD2",
+            "SecureBoot": {
+                "@odata.id": "/redfish/v1/Systems/System.Embedded.1/SecureBoot"
+            },
+            "SerialNumber": "CN77921647000Z",
+            "SimpleStorage": {
+                "@odata.id": "/redfish/v1/Systems/System.Embedded.1/SimpleStorage/Controllers"
+            },
+            "Status": {
+                "Health": "OK",
+                "HealthRollup": "OK",
+                "State": "Enabled"
+            },
+            "Storage": {
+                "@odata.id": "/redfish/v1/Systems/System.Embedded.1/Storage"
+            },
+            "SystemType": "Physical",
+            "UUID": "4c4c4544-0036-3210-804b-b6c04f434432"
+        },
+        "storageData": {},
+        "LogData": {
+            "@odata.context": "/redfish/v1/$metadata#LogEntryCollection.LogEntryCollection",
+            "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel",
+            "@odata.type": "#LogEntryCollection.LogEntryCollection",
+            "Description": "System Event Logs for this manager",
+            "Members": [
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1024",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:44:32-06:00",
+                    "Description": " Log Entry 1024",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1024",
+                    "Links": {},
+                    "Message": "System event log (SEL) is full.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "4ffff",
+                    "Name": " Log Entry 1024",
+                    "SensorNumber": 114,
+                    "SensorType": [
+                        {
+                            "Member": "Event Logging Disabled"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1023",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:44:32-06:00",
+                    "Description": " Log Entry 1023",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1023",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1023",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1022",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:44:22-06:00",
+                    "Description": " Log Entry 1022",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1022",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1022",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1021",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:44:17-06:00",
+                    "Description": " Log Entry 1021",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1021",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1021",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1020",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:44:02-06:00",
+                    "Description": " Log Entry 1020",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1020",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1020",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1019",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:42:57-06:00",
+                    "Description": " Log Entry 1019",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1019",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1019",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1018",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:42:37-06:00",
+                    "Description": " Log Entry 1018",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1018",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1018",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1017",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:41:32-06:00",
+                    "Description": " Log Entry 1017",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1017",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1017",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1016",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:41:12-06:00",
+                    "Description": " Log Entry 1016",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1016",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1016",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1015",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:40:17-06:00",
+                    "Description": " Log Entry 1015",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1015",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1015",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1014",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:40:02-06:00",
+                    "Description": " Log Entry 1014",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1014",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1014",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1013",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:39:12-06:00",
+                    "Description": " Log Entry 1013",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1013",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1013",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1012",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:38:57-06:00",
+                    "Description": " Log Entry 1012",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1012",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1012",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1011",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:38:07-06:00",
+                    "Description": " Log Entry 1011",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1011",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1011",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1010",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:37:42-06:00",
+                    "Description": " Log Entry 1010",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1010",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1010",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1009",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:36:57-06:00",
+                    "Description": " Log Entry 1009",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1009",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1009",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1008",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:36:52-06:00",
+                    "Description": " Log Entry 1008",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1008",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1008",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1007",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:36:47-06:00",
+                    "Description": " Log Entry 1007",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1007",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1007",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1006",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:36:12-06:00",
+                    "Description": " Log Entry 1006",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1006",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1006",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1005",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:34:57-06:00",
+                    "Description": " Log Entry 1005",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1005",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1005",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1004",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:34:37-06:00",
+                    "Description": " Log Entry 1004",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1004",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1004",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1003",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:33:57-06:00",
+                    "Description": " Log Entry 1003",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1003",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1003",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1002",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:33:52-06:00",
+                    "Description": " Log Entry 1002",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1002",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1002",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1001",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:33:47-06:00",
+                    "Description": " Log Entry 1001",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1001",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1001",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/1000",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:33:27-06:00",
+                    "Description": " Log Entry 1000",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "1000",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 1000",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/999",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:32:27-06:00",
+                    "Description": " Log Entry 999",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "999",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 999",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/998",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:32:22-06:00",
+                    "Description": " Log Entry 998",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "998",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 998",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/997",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:32:17-06:00",
+                    "Description": " Log Entry 997",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "997",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 997",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/996",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:31:57-06:00",
+                    "Description": " Log Entry 996",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "996",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 996",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/995",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:31:07-06:00",
+                    "Description": " Log Entry 995",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "995",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 995",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/994",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:30:57-06:00",
+                    "Description": " Log Entry 994",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "994",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 994",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/993",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:30:12-06:00",
+                    "Description": " Log Entry 993",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "993",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 993",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/992",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:29:57-06:00",
+                    "Description": " Log Entry 992",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "992",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 992",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/991",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:29:52-06:00",
+                    "Description": " Log Entry 991",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "991",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 991",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/990",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:29:37-06:00",
+                    "Description": " Log Entry 990",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "990",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 990",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/989",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:28:12-06:00",
+                    "Description": " Log Entry 989",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "989",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 989",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/988",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:27:47-06:00",
+                    "Description": " Log Entry 988",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "988",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 988",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/987",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:26:36-06:00",
+                    "Description": " Log Entry 987",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "987",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 987",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/986",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:26:21-06:00",
+                    "Description": " Log Entry 986",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "986",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 986",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/985",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:26:16-06:00",
+                    "Description": " Log Entry 985",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "985",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 985",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/984",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:25:56-06:00",
+                    "Description": " Log Entry 984",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "984",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 984",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/983",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:24:21-06:00",
+                    "Description": " Log Entry 983",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "983",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 983",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/982",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:23:51-06:00",
+                    "Description": " Log Entry 982",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "982",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 982",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/981",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:22:51-06:00",
+                    "Description": " Log Entry 981",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "981",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 981",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/980",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:22:21-06:00",
+                    "Description": " Log Entry 980",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "980",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 980",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/979",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:20:31-06:00",
+                    "Description": " Log Entry 979",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "979",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 979",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/978",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:20:26-06:00",
+                    "Description": " Log Entry 978",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "978",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 978",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/977",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:20:21-06:00",
+                    "Description": " Log Entry 977",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "977",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 977",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/976",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:19:56-06:00",
+                    "Description": " Log Entry 976",
+                    "EntryCode": [
+                        {
+                            "Member": "Assert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "976",
+                    "Links": {},
+                    "Message": "The chassis is open while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 976",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "Critical"
+                },
+                {
+                    "@odata.id": "/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel/975",
+                    "@odata.type": "#LogEntry.v1_3_0.LogEntry",
+                    "Created": "2022-12-22T13:19:10-06:00",
+                    "Description": " Log Entry 975",
+                    "EntryCode": [
+                        {
+                            "Member": "Deassert"
+                        }
+                    ],
+                    "EntryType": "SEL",
+                    "Id": "975",
+                    "Links": {},
+                    "Message": "The chassis is closed while the power is on.",
+                    "MessageArgs": [],
+                    "MessageArgs@odata.count": 0,
+                    "MessageId": "801ff",
+                    "Name": " Log Entry 975",
+                    "SensorNumber": 115,
+                    "SensorType": [
+                        {
+                            "Member": "Physical Chassis Security"
+                        }
+                    ],
+                    "Severity": "OK"
+                }
+            ],
+            "Members@odata.count": 1024,
+            "Members@odata.nextLink": "",
+            "Name": "Log Entry Collection"
+        }
+    }
+]

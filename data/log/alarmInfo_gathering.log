@@ -1,3 +1,3 @@
-20231128 16:40:41 - alarm_logger - INFO - 开始收集Alarm信息!
-20231128 16:40:45 - alarm_logger - INFO - Alarm信息写入文件：D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\alarm-20231128164041.json
-20231128 16:40:45 - alarm_logger - INFO - the information acquisition of alarm(s) is finished!
+20231214 14:44:57 - alarm_logger - INFO - 开始收集Alarm信息!
+20231214 14:44:57 - alarm_logger - INFO - Alarm信息写入文件：D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\alarm-20231214144457.json
+20231214 14:44:57 - alarm_logger - INFO - the information acquisition of alarm(s) is finished!
