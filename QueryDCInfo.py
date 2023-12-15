@@ -470,7 +470,10 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                     host_bios_info={}
                     #    host_bios_info['host']=host.summary.config.name
                     host_bios_info['biosVersion']=sub_host.hardware.biosInfo.biosVersion
-                    host_bios_info['releaseDate']=str(sub_host.hardware.biosInfo.releaseDate.strftime("%m/%d/%Y"))
+                    if not isinstance(sub_host.hardware.biosInfo.releaseDate,type(None)):
+                        host_bios_info['releaseDate']=str(sub_host.hardware.biosInfo.releaseDate.strftime("%m/%d/%Y"))
+                    else:
+                        host_bios_info['releaseDate']=''
                     host_bios_info['firmwareMajorRelease']=sub_host.hardware.biosInfo.firmwareMajorRelease
                     host_bios_info['firmwareMinorRelease']=sub_host.hardware.biosInfo.firmwareMinorRelease
                     #    host_bios_info['majorRelease']=host.hardware.biosInfo.majorRelease
