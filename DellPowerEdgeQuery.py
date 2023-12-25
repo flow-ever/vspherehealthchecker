@@ -10,13 +10,18 @@ from pathlib import Path
 
 urllib3.disable_warnings()
 
+
 cwd=os.getcwd()
 data_dir=os.path.join(cwd,'data')
+if not os.path.exists(data_dir):
+    os.mkdir(data_dir)
 current_time=datetime.now().strftime('%Y%m%d%H%M%S')
 logfile_path=os.path.join(data_dir,'log',"IPMIInfo_gathering.log")
 #create log File
 filename=Path(logfile_path)
 filename.touch(exist_ok=True)
+
+
 log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
 logger=logging.getLogger('ipmi_logger')
 fh=logging.FileHandler(filename=logfile_path,mode='a')
