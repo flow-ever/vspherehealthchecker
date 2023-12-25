@@ -10,20 +10,7 @@ from pathlib import Path
 
 urllib3.disable_warnings()
 
-cwd=os.getcwd()
-data_dir=os.path.join(cwd,'data')
-current_time=datetime.now().strftime('%Y%m%d%H%M%S')
-logfile_path=os.path.join(data_dir,'log',"IPMIInfo_gathering.log")
-#create log File
-filename=Path(logfile_path)
-filename.touch(exist_ok=True)
-log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
-logger=logging.getLogger('ipmi_logger')
-fh=logging.FileHandler(filename=logfile_path,mode='a')
-fh.setLevel(logging.INFO)
-fh.setFormatter(log_formatter)
-logger.addHandler(fh)
-logger.setLevel(logging.INFO)
+
 
 # def api_call(url,user,password):
 #     try:
@@ -74,7 +61,20 @@ def api_call(url,session):
 
 
 def QueryiDRAC(host,ipmiuser,ipmi_password):
-
+    cwd=os.getcwd()
+    data_dir=os.path.join(cwd,'data')
+    log_dir=os.path.join(data_dir,'log')
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+    current_time=datetime.now().strftime('%Y%m%d%H%M%S')
+    logfile_path=os.path.join(log_dir,"IPMIInfo_gathering.log")
+    log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
+    logger=logging.getLogger('ipmi_logger')
+    fh=logging.FileHandler(filename=logfile_path,mode='a')
+    fh.setLevel(logging.INFO)
+    fh.setFormatter(log_formatter)
+    logger.addHandler(fh)
+    logger.setLevel(logging.INFO)
 
     logger.info('登录主机：'+host+" 获取IPMI日志信息。")
     print('登录主机：'+host+" 获取IPMI日志信息。")
