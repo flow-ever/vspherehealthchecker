@@ -109,23 +109,27 @@ def get_value(findstr,strlist):
 #       return False
 
 def file_search(dir,prefix,surfix):
+  file_list=[]
   find_flag=False
   files=os.listdir(dir)
   for file in files:
     if file.startswith(prefix) and file.endswith(surfix):
       find_flag=True
-      return os.path.join(dir,file)
+      file_list.append(os.path.join(dir,file))
   if not find_flag:
     return find_flag
+  else:
+     return file_list
     
 
     
 #构建整个vcenter的树状清单
 def BuildInventoryTree():  
   dc_file=file_search(data_dir,'dc-','.json')
-  with open(dc_file,'r') as f:
-    vcenter_data=json.load(f)
-  f.close
+  if len(dc_file)==1:
+    with open(dc_file[0],'r') as f:
+      vcenter_data=json.load(f)
+    f.close
   
   inventory_tree=[]
   
@@ -171,9 +175,10 @@ def BuildInventoryTree():
 #构建整个指定的数据中心（datacenter）的主机、虚拟机树状清单
 def BuildDCHostInventoryTree(dc_id:str):  
   dc_file=file_search(data_dir,'dc-','.json')
-  with open(dc_file,'r') as f:
-    vcenter_data=json.load(f)
-  f.close
+  if len(dc_file)==1:
+    with open(dc_file[0],'r') as f:
+      vcenter_data=json.load(f)
+    f.close
   
   inventory_tree=[]
   for vc in vcenter_data:
@@ -242,7 +247,7 @@ def create_vm_network_info(vms_file:str):
       vm_network['vnics']=vm['vnics']
       vms.append(vm_network)
     rx=re.search('vms-(?P<time_stamp>\d+).json',vms_file)
-    vms_network_file=os.path.join(data_dir,'vms-network-'+rx.group('time_stamp')+'.json')
+    vms_network_file=os.path.join(data_dir,'vms_network-'+rx.group('time_stamp')+'.json')
     if os.path.exists(vms_network_file):
       return vms_network_file
     else:
@@ -252,21 +257,22 @@ def create_vm_network_info(vms_file:str):
       return vms_network_file
 
 
-
-
 #构建整个指定的数据中心（datacenter）的网络结构树状清单
-def BuildDCNetworkInventoryTree(dc_id:str):  
+def BuildDCNetworkInventoryTree(dc_id:str):    
   dc_file=file_search(data_dir,'dc-','.json')
-  with open(dc_file,'r') as f:
-    vcenter_data=json.load(f)
-  f.close()
+  if len(dc_file)==1:
+    with open(dc_file[0],'r') as f:
+      vcenter_data=json.load(f)
+    f.close()
 
   vm_file=file_search(data_dir,'vms-','.json')
+  
   if vm_file:
-    vm_network_file=create_vm_network_info(vm_file)
-    with open(vm_network_file) as f:
-      vm_network_info=json.load(f)
-    f.close()
+    if len(vm_file)==1:
+      vm_network_file=create_vm_network_info(vm_file[0])
+      with open(vm_network_file) as f:
+        vm_network_info=json.load(f)
+      f.close()
   else:
      vm_network_info=""
   
@@ -354,7 +360,7 @@ def check_url(url:str):
 @app.route('/', methods=['GET','POST'])
 def index():
   if request.method=='GET':
-     release=request.args.get('version',default="1.0",type=str)
+     release=request.args.get('version',default="1.1",type=str)
      return render_template('login.html',release=release)
 
   if request.method == 'POST':
@@ -407,19 +413,41 @@ def index():
       for i in range(len(ipmi_ps)):
          ipmi_ps[i].join()
 
-
-    
-
-
-
-
-
   
 
     return redirect(url_for('datacenter'))
 
   return redirect(url_for('index'))
   
+
+def ipmi_data_merge():
+   all_hosts_ipmi_data=[]
+   host_ipmi_data=[]
+   ipmi_merge_file=os.path.join(data_dir,'hosts_hardware_info.json')
+   ipmi_files=file_search(data_dir,'ipmi','json')
+
+   for file in ipmi_files:
+      print(file)
+      with open(file,'r') as f:
+        host_ipmi_data=json.load(f)
+      all_hosts_ipmi_data.append(host_ipmi_data[0])
+   with open(ipmi_merge_file,'w') as f:
+      json.dump(all_hosts_ipmi_data,f,indent=4,ensure_ascii=False,default=str) 
+   f.close()
+   return os.path.join(data_dir,ipmi_merge_file)
+
+def show_ipmi_data(file):
+   with open(file,'r') as f:
+    data=json.load(f)
+   f.close()
+   
+
+
+   return data
+
+
+
+
 
 
 # @app.route('/check_updates')
@@ -539,14 +567,16 @@ def sse():
 def show_vcenter():
   vcsa_file=file_search(data_dir,'vcsa-','.log')
   # print(vcsa_file)
-  with open(vcsa_file,'r') as f:
-    data=f.readlines()
-  f.close()
+  if len(vcsa_file)==1:
+    with open(vcsa_file[0],'r') as f:
+      data=f.readlines()
+    f.close()
 
   alarm_file=file_search(data_dir,'alarm-','.json')
-  with open(alarm_file,'r') as f:
-    alarm_list=json.load(f)
-  f.close()
+  if len(alarm_file)==1:
+    with open(alarm_file[0],'r') as f:
+      alarm_list=json.load(f)
+    f.close()
   alarm_acked=0
   alrm_noacked=0
   for alarm in alarm_list:
@@ -718,14 +748,14 @@ def show_vcenter():
           alarm_ack ]
 
 
-
 def show_datacenter(path_list:list):
     vcenter_id=path_list[0]
     datacenter_id=path_list[1]
     dc_file=file_search(data_dir,'dc-','.json')
-    with open(dc_file,) as f:
-      vc_data=json.load(f)
-    f.close
+    if len(dc_file)==1:
+      with open(dc_file[0],) as f:
+        vc_data=json.load(f)
+      f.close
 
     dc_data={}
 
@@ -751,15 +781,15 @@ def show_datacenter(path_list:list):
     return [dc_tree,dc_data,dc_network_tree]
 
 
-
 def show_cluster(path_list:list):
     vcenter_id=path_list[0]
     datacenter_id=path_list[1]
     cls_id=path_list[2]
     dc_file=file_search(data_dir,'dc-','.json')
-    with open(dc_file,) as f:
-      vc_data=json.load(f)
-    f.close
+    if len(dc_file)==1:
+      with open(dc_file[0],) as f:
+        vc_data=json.load(f)
+      f.close
 
     cls_data={}
 
@@ -773,16 +803,16 @@ def show_cluster(path_list:list):
     return cls_data                  
 
 
-
 def show_host(path_list:list):
     vcenter_id=path_list[0]
     datacenter_id=path_list[1]
     cls_id=path_list[2]
     host_id=path_list[3]
     dc_file=file_search(data_dir,'dc-','.json')
-    with open(dc_file,) as f:
-      vc_data=json.load(f)
-    f.close
+    if len(dc_file)==1:
+      with open(dc_file[0],) as f:
+        vc_data=json.load(f)
+      f.close
 
     host_data={}
 
@@ -802,9 +832,12 @@ def show_host(path_list:list):
 # @app.route('/virtualmachine')
 def show_VMSummary():
   vms_file=file_search(data_dir,'vms-','.json')
-  with open(vms_file,) as f:
-    data=json.load(f)
-  f.close
+  if len(vms_file)==1:
+    print(vms_file[0])
+    with open(vms_file[0],) as f:
+      data=json.load(f)
+    f.close
+
   vms_total_num=len(data)
   vms_powerOn_num=0
   vms_powerOff_num=0
@@ -1039,13 +1072,13 @@ def show_VMSummary():
           ]
 
 
-
 # @app.route('/virtualmachine/<vm_name>')
 def show_vm(vm_name:str):
   vms_file=file_search(data_dir,'vms-','.json')
-  with open(vms_file,) as f:
-    data=json.load(f)
-  f.close
+  if len(vms_file)==1:
+    with open(vms_file[0],) as f:
+      data=json.load(f)
+    f.close
   vm_info=[]
   vm_perf_metric=[]
   for vm in data:
@@ -1053,6 +1086,7 @@ def show_vm(vm_name:str):
       vm_info.append(vm)
       vm_perf_metric=vm["vm_perf_metric"]
   return [vm_info,vm_perf_metric]
+
 
 #数据展现页面
 @app.route('/inventory',methods=['GET','POST'])
@@ -1112,6 +1146,51 @@ def datacenter():
   else:
      para_list=show_vm(vm_name)
      return render_template('virtualmachine.html',tree=BuildInventoryTree(),vm_info=para_list[0],vm_perf_metric=para_list[1])
+
+@app.route('/hardwareStatus',methods=['GET','POST'])
+def hardwareStatus():
+   host_id=request.args.get('host_id',default="",type=str)
+   
+   ipmi_merge_file=os.path.join(data_dir,'hosts_hardware_info.json')
+   if not os.path.exists(ipmi_merge_file):
+      ipmi_merge_file=ipmi_data_merge()
+   data=show_ipmi_data(ipmi_merge_file)
+
+   #host hardware summary data 
+   hosts_hardware_summary_data=[]   
+   for host in data:
+      host_hardware_summary={}
+      host_hardware_summary['host']=host['host']
+      host_hardware_summary['systemData']={}
+      host_hardware_summary['systemData']['Model']=host['systemData']['Model']
+      host_hardware_summary['systemData']['Manufacturer']=host['systemData']['Manufacturer']
+      host_hardware_summary['systemData']['BiosVersion']=host['systemData']['BiosVersion']
+      host_hardware_summary['systemData']['SerialNumber']=host['systemData']['SerialNumber']
+      host_hardware_summary['systemData']['ProcessorSummary']={}
+      host_hardware_summary['systemData']['ProcessorSummary']['Model']=host['systemData']['ProcessorSummary']['Model']
+      host_hardware_summary['systemData']['ProcessorSummary']['Count']=host['systemData']['ProcessorSummary']['Count']
+      host_hardware_summary['systemData']['ProcessorSummary']['Status']={}
+      host_hardware_summary['systemData']['ProcessorSummary']['Status']['Health']=host['systemData']['ProcessorSummary']['Status']['Health']
+      host_hardware_summary['systemData']['MemorySummary']={}
+      host_hardware_summary['systemData']['MemorySummary']['TotalSystemMemoryGiB']=host['systemData']['MemorySummary']['TotalSystemMemoryGiB']
+      host_hardware_summary['systemData']['MemorySummary']['Status']={}
+      host_hardware_summary['systemData']['MemorySummary']['Status']['Health']=host['systemData']['MemorySummary']['Status']['Health']
+      host_hardware_summary['systemData']['Status']=host['systemData']['Status']
+      hosts_hardware_summary_data.append(host_hardware_summary)   
+   
+   single_host_detail={}
+   if host_id=="":
+      host_id=data[0]['host']
+   
+  
+
+   for host in data:
+      if host['host']==host_id:
+        single_host_detail=host
+   
+   
+   
+   return render_template('ipmi.html',data=hosts_hardware_summary_data,single_host_detail=single_host_detail)
 
 if __name__=='__main__':
     app.run(debug=True,port=9999)

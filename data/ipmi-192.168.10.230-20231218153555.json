@@ -50,7 +50,7 @@
                     "UpperThresholdCritical": null,
                     "UpperThresholdFatal": null,
                     "UpperThresholdNonCritical": null,
-                    "Reading": 5520
+                    "Reading": 5280
                 },
                 "System Board Fan2B": {
                     "LowerThresholdCritical": 720,
@@ -65,7 +65,7 @@
                     "UpperThresholdCritical": null,
                     "UpperThresholdFatal": null,
                     "UpperThresholdNonCritical": null,
-                    "Reading": 5280
+                    "Reading": 5160
                 },
                 "System Board Fan3A": {
                     "LowerThresholdCritical": 720,
@@ -80,7 +80,7 @@
                     "UpperThresholdCritical": null,
                     "UpperThresholdFatal": null,
                     "UpperThresholdNonCritical": null,
-                    "Reading": 4800
+                    "Reading": 5160
                 },
                 "System Board Fan3B": {
                     "LowerThresholdCritical": 720,
@@ -95,7 +95,7 @@
                     "UpperThresholdCritical": null,
                     "UpperThresholdFatal": null,
                     "UpperThresholdNonCritical": null,
-                    "Reading": 4440
+                    "Reading": 4800
                 },
                 "System Board Fan4A": {
                     "LowerThresholdCritical": 720,
@@ -110,7 +110,7 @@
                     "UpperThresholdCritical": null,
                     "UpperThresholdFatal": null,
                     "UpperThresholdNonCritical": null,
-                    "Reading": 4800
+                    "Reading": 5160
                 },
                 "System Board Fan4B": {
                     "LowerThresholdCritical": 720,
@@ -125,7 +125,7 @@
                     "UpperThresholdCritical": null,
                     "UpperThresholdFatal": null,
                     "UpperThresholdNonCritical": null,
-                    "Reading": 4440
+                    "Reading": 4800
                 },
                 "System Board Fan5A": {
                     "LowerThresholdCritical": 720,
@@ -140,7 +140,7 @@
                     "UpperThresholdCritical": null,
                     "UpperThresholdFatal": null,
                     "UpperThresholdNonCritical": null,
-                    "Reading": 4920
+                    "Reading": 5280
                 },
                 "System Board Fan5B": {
                     "LowerThresholdCritical": 720,
@@ -155,7 +155,7 @@
                     "UpperThresholdCritical": null,
                     "UpperThresholdFatal": null,
                     "UpperThresholdNonCritical": null,
-                    "Reading": 4440
+                    "Reading": 5040
                 },
                 "System Board Fan6A": {
                     "LowerThresholdCritical": 720,
@@ -170,7 +170,7 @@
                     "UpperThresholdCritical": null,
                     "UpperThresholdFatal": null,
                     "UpperThresholdNonCritical": null,
-                    "Reading": 4800
+                    "Reading": 5160
                 },
                 "System Board Fan6B": {
                     "LowerThresholdCritical": 720,
@@ -185,12 +185,22 @@
                     "UpperThresholdCritical": null,
                     "UpperThresholdFatal": null,
                     "UpperThresholdNonCritical": null,
-                    "Reading": 4440
+                    "Reading": 4920
                 }
             },
             "psCount": 2,
-            "ps": {
-                "Name": {
+            "PowerSupply": {
+                "PS1 Status": {
+                    "Health": "OK",
+                    "present": "Enabled",
+                    "PowerInputWatts": 666,
+                    "OutputWattage": 550,
+                    "InputType": "AC",
+                    "Model": "PWR SPLY,550W,RDNT,LTON       ",
+                    "SparePartNumber": "0NCNFFA00",
+                    "SerialNumber": "CNLOD007C43762"
+                },
+                "PS2 Status": {
                     "Health": "OK",
                     "present": "Enabled",
                     "PowerInputWatts": 666,
@@ -307,6 +317,74 @@
                     "Status": "OK"
                 }
             },
+            "interface": {
+                "NIC.Embedded.1": {
+                    "NIC.Embedded.1-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "1",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    },
+                    "NIC.Embedded.2-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "2",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    },
+                    "NIC.Embedded.3-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "3",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    },
+                    "NIC.Embedded.4-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "4",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    }
+                }
+            },
             "ProcessorSummary": {
                 "Count": 2,
                 "LogicalProcessorCount": 56,
@@ -315,6 +393,35 @@
                     "Health": "OK",
                     "HealthRollup": "OK",
                     "State": "Enabled"
+                }
+            },
+            "Processor": {
+                "ProcessorsCount": 2,
+                "CPU 1": {
+                    "InstructionSet": "x86-64",
+                    "Manufacturer": "Intel",
+                    "MaxSpeedMHz": 4000,
+                    "Model": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz",
+                    "ProcessorArchitecture": "x86",
+                    "TotalCores": 14,
+                    "TotalThreads": 28,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    }
+                },
+                "CPU 2": {
+                    "InstructionSet": "x86-64",
+                    "Manufacturer": "Intel",
+                    "MaxSpeedMHz": 4000,
+                    "Model": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz",
+                    "ProcessorArchitecture": "x86",
+                    "TotalCores": 14,
+                    "TotalThreads": 28,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    }
                 }
             },
             "SerialNumber": "CN779216CQ01H4",

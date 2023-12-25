@@ -7,10 +7,11 @@ html,body{
 
 }
 h1{
-  font-size: 22px;
+  font-size: 24px;
 }
 h2{
-  font-size: 18px;
+  font-size: 20px;
+  color:#0984e3 ;
 }
 
 
@@ -671,23 +672,24 @@ right connector from last child*/
 
 
 /* 超链接格式 */
-a:link { text-decoration: none;color: blue}
+a:link { text-decoration: none;color: #0984e3}
 a:active { text-decoration:blink}
-a:hover { text-decoration:underline;color: red} 
-a:visited { text-decoration: none;color: }
+a:hover { text-decoration:underline;color: #6c5ce7} 
+a:visited { text-decoration: none;color:#b2bec3 }
 
 
-.onButton {
+.vmpowerstate {
   /* margin-top: auto;
   margin-bottom: auto;
   margin-left: auto;
   margin-right: auto; */
-  margin: auto;
-  border-style: solid;
+  /* margin: auto; */
+  /* border-style: solid;
   border-width: 8px 12px 8px 12px;
   width:0px;
   height: 0px;
-  border-color: transparent transparent transparent green;
+  border-color: transparent transparent transparent green; */
+  margin-top: 10px;
 }
 
 .offButton {
@@ -796,6 +798,7 @@ a:visited { text-decoration: none;color: }
   overflow: hidden;
   word-break:break-all;
   border-radius: 8px;
+  padding: 10px;
   
 }
 
@@ -873,5 +876,17 @@ a:visited { text-decoration: none;color: }
   opacity:0.6;
   border-radius: 5px;
   font-weight: 800;
+  
+}
+
+.host_inventory {
+  margin-left: 10px;
+  line-height: 30px;
+  font-size: 18px;
+  font-weight: 600;
+  padding-left: 10px;
+  border-radius: 5px;
+  width: 80%;
+  background-color: #f4f4fa;
   
 }

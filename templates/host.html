@@ -7,7 +7,7 @@
 </script> -->
 
     <div class="table-container">
-    <h1>Hostname:{{ host_data['name'] }}</h1>
+        <h1><img src='{{ url_for('static',filename='image/server32.png') }}'>{{ host_data['name'] }}</h1>
     <h2>ESXi主机基本信息</h2>
     <div class="mid_table_container">
         <table class="table2">
@@ -310,9 +310,9 @@
         
         <div class="vm_container">
             {% if vm['Powerstate']=='poweredOn' %}
-                <div class="onButton"> </div> <div class="vm_name"> <a href="?vm_name={{ vm['name'] }}">{{ vm['name'] }}</a></div>
+                <div class="vmpowerstate" ><img src='{{ url_for('static',filename='image/running32.png') }}'> </div> <div class="vm_name"> <img src='{{ url_for('static',filename='image/vm32.png') }}'><a href="?vm_name={{ vm['name'] }}">{{ vm['name'] }}</a></div>
            {% else %}
-                <div class="offButton"> </div> <div class="vm_name"><a href="?vm_name={{ vm['name'] }}">{{ vm['name'] }}</a></div>
+                <div class="vmpowerstate"><img src='{{ url_for('static',filename='image/stop32.png') }}'> </div> <div class="vm_name"><img src='{{ url_for('static',filename='image/vm32.png') }}'><a href="?vm_name={{ vm['name'] }}">{{ vm['name'] }}</a></div>
            {% endif %}
         </div>
 

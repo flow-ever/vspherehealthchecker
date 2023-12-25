@@ -2,7 +2,7 @@
 
 {% block body %}
 <!-- <link rel="stylesheet" type="text/css" href="print.css" media="print"> -->
-<h1 >Datacenter Name:{{ dc_data['name'] | safe }}</font></h1>
+<h1 ><img src='{{ url_for('static',filename='image/DC32.png') }}'>{{ dc_data['name'] | safe }}</font></h1>
 <h2 class="dc_h2">Cluster(s)->Host(s)->VM(s)</h2>
 <div class="dc_tree" id="dc_tree" style="height: 1024px"></div>
 <script type="text/javascript">
@@ -41,16 +41,16 @@
                             return 'image:/{{ url_for('static',filename='image/dc.png') }}';
                             break;
                         case 'cluster':
-                            return 'image:/{{ url_for('static',filename='image/cluster.png') }}';
+                            return 'image:/{{ url_for('static',filename='image/cluster32.png') }}';
                             break;                            
                         case 'host':
-                            return 'image:/{{ url_for('static',filename='image/host.png') }}';
+                            return 'image:/{{ url_for('static',filename='image/server16.png') }}';
                             break;
                         case 'vm':
-                            return 'image:/{{ url_for('static',filename='image/vm.png') }}';
+                            return 'image:/{{ url_for('static',filename='image/vm16.png') }}';
                             break;
                         defualt:
-                            return 'image:/{{ url_for('static',filename='image/vm.png') }}';
+                            return 'image:/{{ url_for('static',filename='image/vm16.png') }}';
                             break;
                     }
             },
@@ -218,6 +218,8 @@
 
     window.addEventListener('resize', myChart.resize);
   </script>
+
+  
 <h2 class="dc_h2">Datastores</h2>
 <div id="datastore" class="dashboard">
     <div style="height: 800px;width: 45%;" id="shareds_capacity" class="wedget"></div>

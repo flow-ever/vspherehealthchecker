@@ -222,7 +222,12 @@
                                         <td>SSD</td>
                                         <td>{{ ssd_disk['model'] }}</td>
                                         <td>{{ ssd_disk['serialNumber'] }}</td>
-                                        <td>{{ ssd_disk['operationalState'] }}</td>
+                                        
+                                        {% if (ssd_disk['operationalState']=='ok') %}
+                                            <td><img src='{{ url_for('static',filename='image/hook16.png') }}'></td>
+                                        {% else %}
+                                            <td><img src='{{ url_for('static',filename='image/error16.png') }}'></td>
+                                        {% endif %}
                                         <td>{{ ssd_disk['capacity'] }}</td>
                                         <td>{{ ssd_disk['physicalLocation'] }}</td>
                                         <td>{{ ssd_disk['formatVersion'] }}</td>
@@ -237,7 +242,12 @@
                                         <td>HDD</td>
                                         <td>{{ nossd_disk['model'] }}</td>
                                         <td>{{ nossd_disk['serialNumber'] }}</td>
-                                        <td>{{ nossd_disk['operationalState'] }}</td>
+                                        
+                                        {% if (nossd_disk['operationalState']=='ok') %}
+                                            <td><img src='{{ url_for('static',filename='image/hook16.png') }}'></td>
+                                        {% else %}
+                                            <td><img src='{{ url_for('static',filename='image/error16.png') }}'></td>
+                                        {% endif %}
                                         <td>{{ nossd_disk['capacity'] }}</td>
                                         <td>{{ nossd_disk['physicalLocation'] }}</td>
                                         <td>{{ nossd_disk['formatVersion'] }}</td>
@@ -846,11 +856,11 @@
                                     <td style="word-wrap: break-word;">{{ test.testShortDescription }}</td>
                                     {% if test.testHealth %}
                                         {% if test.testHealth=='green' %}
-                                            <td ><div class="correct">&#10004; </div></td>
+                                            <td ><img src='{{ url_for('static',filename='image/hook16.png') }}'></td>
                                         {% elif test.testHealth=='red' %}
-                                        <td ><div class="incorrect">&#10008;</div></td>
+                                            <td ><img src='{{ url_for('static',filename='image/error16.png') }}'></td>
                                         {% elif test.testHealth=='yellow' %}
-                                            <td ><div class="warnning">&#161;</div></td>
+                                            <td ><img src='{{ url_for('static',filename='image/warn16.png') }}'></td>
                                         {% else %}
                                         {% endif %}
                                         <!-- <td class="narrow" width="10%">{{ test.testHealth }}</td> -->
@@ -866,11 +876,11 @@
                                     <td style="word-wrap: break-word;">{{ test.testShortDescription }}</td>
                                     {% if test.testHealth %}
                                         {% if test.testHealth=='green' %}
-                                            <td ><div class="correct">&#10004; </div></td>
+                                            <td ><img src='{{ url_for('static',filename='image/hook16.png') }}'></td>
                                         {% elif test.testHealth=='red' %}
-                                        <td ><div class="incorrect">&#10008;</div></td>
+                                        <td ><img src='{{ url_for('static',filename='image/error16.png') }}'></td>
                                         {% elif test.testHealth=='yellow' %}
-                                            <td ><div class="warnning">&#161;</div></td>
+                                            <td ><img src='{{ url_for('static',filename='image/warn16.png') }}'></td>
                                         {% else %}
                                         {% endif %}
                                         <!-- <td class="narrow" width="10%">{{ test.testHealth }}</td> -->

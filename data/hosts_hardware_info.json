@@ -1,0 +1,2884 @@
+[
+    {
+        "host": "192.168.10.230",
+        "systemData": {
+            "BiosVersion": "2.13.0",
+            "Model": "PowerEdge R430",
+            "Manufacturer": "Dell Inc.",
+            "fanCount": 12,
+            "fans": {
+                "System Board Fan1A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4920
+                },
+                "System Board Fan1B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4440
+                },
+                "System Board Fan2A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 5280
+                },
+                "System Board Fan2B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 5160
+                },
+                "System Board Fan3A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 5160
+                },
+                "System Board Fan3B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4800
+                },
+                "System Board Fan4A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 5160
+                },
+                "System Board Fan4B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4800
+                },
+                "System Board Fan5A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 5280
+                },
+                "System Board Fan5B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 5040
+                },
+                "System Board Fan6A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 5160
+                },
+                "System Board Fan6B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4920
+                }
+            },
+            "psCount": 2,
+            "PowerSupply": {
+                "PS1 Status": {
+                    "Health": "OK",
+                    "present": "Enabled",
+                    "PowerInputWatts": 666,
+                    "OutputWattage": 550,
+                    "InputType": "AC",
+                    "Model": "PWR SPLY,550W,RDNT,LTON       ",
+                    "SparePartNumber": "0NCNFFA00",
+                    "SerialNumber": "CNLOD007C43762"
+                },
+                "PS2 Status": {
+                    "Health": "OK",
+                    "present": "Enabled",
+                    "PowerInputWatts": 666,
+                    "OutputWattage": 550,
+                    "InputType": "AC",
+                    "Model": "PWR SPLY,550W,RDNT,LTON       ",
+                    "SparePartNumber": "0NCNFFA00",
+                    "SerialNumber": "CNLOD007C43549"
+                }
+            },
+            "MemorySummary": {
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "TotalSystemMemoryGiB": 256.0
+            },
+            "DIMM": {
+                "DIMM A1": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "41610E49",
+                    "Status": "OK"
+                },
+                "DIMM A2": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "4161100F",
+                    "Status": "OK"
+                },
+                "DIMM A3": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "4198BDA6",
+                    "Status": "OK"
+                },
+                "DIMM A4": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "41610F43",
+                    "Status": "OK"
+                },
+                "DIMM B1": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "4160CD41",
+                    "Status": "OK"
+                },
+                "DIMM B2": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "415BF68F",
+                    "Status": "OK"
+                },
+                "DIMM B3": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "416B6A2B",
+                    "Status": "OK"
+                },
+                "DIMM B4": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "416B485A",
+                    "Status": "OK"
+                }
+            },
+            "interface": {
+                "NIC.Embedded.1": {
+                    "NIC.Embedded.1-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "1",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    },
+                    "NIC.Embedded.2-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "2",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    },
+                    "NIC.Embedded.3-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "3",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    },
+                    "NIC.Embedded.4-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "4",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    }
+                }
+            },
+            "ProcessorSummary": {
+                "Count": 2,
+                "LogicalProcessorCount": 56,
+                "Model": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz",
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                }
+            },
+            "Processor": {
+                "ProcessorsCount": 2,
+                "CPU 1": {
+                    "InstructionSet": "x86-64",
+                    "Manufacturer": "Intel",
+                    "MaxSpeedMHz": 4000,
+                    "Model": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz",
+                    "ProcessorArchitecture": "x86",
+                    "TotalCores": 14,
+                    "TotalThreads": 28,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    }
+                },
+                "CPU 2": {
+                    "InstructionSet": "x86-64",
+                    "Manufacturer": "Intel",
+                    "MaxSpeedMHz": 4000,
+                    "Model": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz",
+                    "ProcessorArchitecture": "x86",
+                    "TotalCores": 14,
+                    "TotalThreads": 28,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    }
+                }
+            },
+            "SerialNumber": "CN779216CQ01H4",
+            "Status": "OK",
+            "ServiceTag": "8DJ84J2"
+        },
+        "storageData": {
+            "Solid State Disk 0:1:0": {
+                "SerialNumber": "S5RRNF0R750539M",
+                "PartNumber": "",
+                "Manufacturer": "ATA",
+                "MediaType": "SSD",
+                "Model": "Samsung SSD 870",
+                "FailurePredicted": false,
+                "CapacityBytes": 1000204886016,
+                "RotationSpeedRPM": 1,
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "PredictedMediaLifeLeftPercent": null,
+                "Revision": "SVQ02B6Q",
+                "Controller": "PERC H730 Mini"
+            },
+            "Physical Disk 0:1:1": {
+                "SerialNumber": "WSE0Q7DJ",
+                "PartNumber": "",
+                "Manufacturer": "ATA",
+                "MediaType": "HDD",
+                "Model": "ST6000NM021A 2R7",
+                "FailurePredicted": false,
+                "CapacityBytes": 6000606183424,
+                "RotationSpeedRPM": 7200,
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "PredictedMediaLifeLeftPercent": null,
+                "Revision": "SN03",
+                "Controller": "PERC H730 Mini"
+            },
+            "Physical Disk 0:1:2": {
+                "SerialNumber": "WSE0VTCM",
+                "PartNumber": "",
+                "Manufacturer": "ATA",
+                "MediaType": "HDD",
+                "Model": "ST6000NM021A 2R7",
+                "FailurePredicted": false,
+                "CapacityBytes": 6000606183424,
+                "RotationSpeedRPM": 7200,
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "PredictedMediaLifeLeftPercent": null,
+                "Revision": "SN03",
+                "Controller": "PERC H730 Mini"
+            },
+            "Physical Disk 0:1:3": {
+                "SerialNumber": "",
+                "PartNumber": "",
+                "Manufacturer": "SEAGATE",
+                "MediaType": "HDD",
+                "Model": "ST9600205SS",
+                "FailurePredicted": false,
+                "CapacityBytes": 599550590976,
+                "RotationSpeedRPM": 0,
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "PredictedMediaLifeLeftPercent": null,
+                "Revision": "XRC1",
+                "Controller": "PERC H730 Mini"
+            }
+        },
+        "LogData": {
+            "9": {
+                "Created": "2022-08-25T01:06:15-05:00",
+                "Message": "The system inlet temperature is within range.",
+                "SensorType": [
+                    {
+                        "Member": "Temperature"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "8": {
+                "Created": "2022-08-24T18:18:51-05:00",
+                "Message": "The system inlet temperature is greater than the upper warning threshold.",
+                "SensorType": [
+                    {
+                        "Member": "Temperature"
+                    }
+                ],
+                "Severity": "Warning",
+                "EntryType": "SEL"
+            },
+            "7": {
+                "Created": "2021-11-12T15:34:48-06:00",
+                "Message": "The chassis is closed while the power is off.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "6": {
+                "Created": "2021-11-12T15:34:43-06:00",
+                "Message": "The chassis is open while the power is off.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "5": {
+                "Created": "2021-11-08T10:14:32-06:00",
+                "Message": "The chassis is closed while the power is off.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "4": {
+                "Created": "2021-11-08T10:14:27-06:00",
+                "Message": "The chassis is open while the power is off.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "3": {
+                "Created": "2021-11-08T10:03:27-06:00",
+                "Message": "The chassis is closed while the power is off.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "2": {
+                "Created": "2021-11-08T10:03:22-06:00",
+                "Message": "The chassis is open while the power is off.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "1": {
+                "Created": "2021-11-05T10:53:06-05:00",
+                "Message": "Log cleared.",
+                "SensorType": [
+                    {
+                        "Member": "Event Logging Disabled"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            }
+        }
+    },
+    {
+        "host": "192.168.10.231",
+        "systemData": {
+            "BiosVersion": "2.13.0",
+            "Model": "PowerEdge R430",
+            "Manufacturer": "Dell Inc.",
+            "fanCount": 12,
+            "fans": {
+                "System Board Fan1A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4920
+                },
+                "System Board Fan1B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4440
+                },
+                "System Board Fan2A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 5640
+                },
+                "System Board Fan2B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 5160
+                },
+                "System Board Fan3A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4800
+                },
+                "System Board Fan3B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4440
+                },
+                "System Board Fan4A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4920
+                },
+                "System Board Fan4B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4440
+                },
+                "System Board Fan5A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 5040
+                },
+                "System Board Fan5B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4800
+                },
+                "System Board Fan6A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 5160
+                },
+                "System Board Fan6B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4800
+                }
+            },
+            "psCount": 2,
+            "PowerSupply": {
+                "PS1 Status": {
+                    "Health": "OK",
+                    "present": "Enabled",
+                    "PowerInputWatts": 666,
+                    "OutputWattage": 550,
+                    "InputType": "AC",
+                    "Model": "PWR SPLY,550W,RDNT,DELTA      ",
+                    "SparePartNumber": "0X185VA00",
+                    "SerialNumber": "CN179726C5590U"
+                },
+                "PS2 Status": {
+                    "Health": "OK",
+                    "present": "Enabled",
+                    "PowerInputWatts": 666,
+                    "OutputWattage": 550,
+                    "InputType": "AC",
+                    "Model": "PWR SPLY,550W,RDNT,DELTA      ",
+                    "SparePartNumber": "0X185VA00",
+                    "SerialNumber": "CN179726C555PD"
+                }
+            },
+            "MemorySummary": {
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "TotalSystemMemoryGiB": 256.0
+            },
+            "DIMM": {
+                "DIMM A1": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "418E63CF",
+                    "Status": "OK"
+                },
+                "DIMM A2": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "416110B3",
+                    "Status": "OK"
+                },
+                "DIMM A3": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "416112C6",
+                    "Status": "OK"
+                },
+                "DIMM A4": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "41610F8D",
+                    "Status": "OK"
+                },
+                "DIMM B1": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "4154FFD8",
+                    "Status": "OK"
+                },
+                "DIMM B2": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "413F2D6C",
+                    "Status": "OK"
+                },
+                "DIMM B3": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "4154FC55",
+                    "Status": "OK"
+                },
+                "DIMM B4": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "41621D09",
+                    "Status": "OK"
+                }
+            },
+            "interface": {
+                "NIC.Embedded.1": {
+                    "NIC.Embedded.1-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "1",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    },
+                    "NIC.Embedded.2-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "2",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    },
+                    "NIC.Embedded.3-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "3",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    },
+                    "NIC.Embedded.4-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "4",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    }
+                }
+            },
+            "ProcessorSummary": {
+                "Count": 2,
+                "LogicalProcessorCount": 56,
+                "Model": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz",
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                }
+            },
+            "Processor": {
+                "ProcessorsCount": 2,
+                "CPU 1": {
+                    "InstructionSet": "x86-64",
+                    "Manufacturer": "Intel",
+                    "MaxSpeedMHz": 4000,
+                    "Model": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz",
+                    "ProcessorArchitecture": "x86",
+                    "TotalCores": 14,
+                    "TotalThreads": 28,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    }
+                },
+                "CPU 2": {
+                    "InstructionSet": "x86-64",
+                    "Manufacturer": "Intel",
+                    "MaxSpeedMHz": 4000,
+                    "Model": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz",
+                    "ProcessorArchitecture": "x86",
+                    "TotalCores": 14,
+                    "TotalThreads": 28,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    }
+                }
+            },
+            "SerialNumber": "CNFCP007CK00PB",
+            "Status": "OK",
+            "ServiceTag": "2809LN2"
+        },
+        "storageData": {
+            "Solid State Disk 0:1:0": {
+                "SerialNumber": "S5RRNF0R750537F",
+                "PartNumber": "",
+                "Manufacturer": "ATA",
+                "MediaType": "SSD",
+                "Model": "Samsung SSD 870",
+                "FailurePredicted": false,
+                "CapacityBytes": 1000204886016,
+                "RotationSpeedRPM": 1,
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "PredictedMediaLifeLeftPercent": null,
+                "Revision": "SVQ02B6Q",
+                "Controller": "PERC H730 Mini"
+            },
+            "Physical Disk 0:1:1": {
+                "SerialNumber": "WSE0Q6Y4",
+                "PartNumber": "",
+                "Manufacturer": "ATA",
+                "MediaType": "HDD",
+                "Model": "ST6000NM021A 2R7",
+                "FailurePredicted": false,
+                "CapacityBytes": 6000606183424,
+                "RotationSpeedRPM": 7200,
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "PredictedMediaLifeLeftPercent": null,
+                "Revision": "SN03",
+                "Controller": "PERC H730 Mini"
+            },
+            "Physical Disk 0:1:2": {
+                "SerialNumber": "WSE0Q88Y",
+                "PartNumber": "",
+                "Manufacturer": "ATA",
+                "MediaType": "HDD",
+                "Model": "ST6000NM021A 2R7",
+                "FailurePredicted": false,
+                "CapacityBytes": 6000606183424,
+                "RotationSpeedRPM": 7200,
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "PredictedMediaLifeLeftPercent": null,
+                "Revision": "SN03",
+                "Controller": "PERC H730 Mini"
+            },
+            "Physical Disk 0:1:3": {
+                "SerialNumber": "",
+                "PartNumber": "",
+                "Manufacturer": "SEAGATE",
+                "MediaType": "HDD",
+                "Model": "ST9600205SS",
+                "FailurePredicted": false,
+                "CapacityBytes": 599550590976,
+                "RotationSpeedRPM": 0,
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "PredictedMediaLifeLeftPercent": null,
+                "Revision": "XQB6",
+                "Controller": "PERC H730 Mini"
+            }
+        },
+        "LogData": {
+            "3": {
+                "Created": "2023-05-06T17:02:56-05:00",
+                "Message": "The input power for power supply 2 has been restored.",
+                "SensorType": [
+                    {
+                        "Member": "Power Supply / Converter"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "2": {
+                "Created": "2023-05-06T16:08:28-05:00",
+                "Message": "The power input for power supply 2 is lost.",
+                "SensorType": [
+                    {
+                        "Member": "Power Supply / Converter"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "1": {
+                "Created": "2022-12-02T07:17:09-06:00",
+                "Message": "Log cleared.",
+                "SensorType": [
+                    {
+                        "Member": "Event Logging Disabled"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            }
+        }
+    },
+    {
+        "host": "192.168.10.232",
+        "systemData": {
+            "BiosVersion": "2.13.0",
+            "Model": "PowerEdge R430",
+            "Manufacturer": "Dell Inc.",
+            "fanCount": 12,
+            "fans": {
+                "System Board Fan1A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4920
+                },
+                "System Board Fan1B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4320
+                },
+                "System Board Fan2A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 5640
+                },
+                "System Board Fan2B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 5160
+                },
+                "System Board Fan3A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 5280
+                },
+                "System Board Fan3B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4920
+                },
+                "System Board Fan4A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 5280
+                },
+                "System Board Fan4B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4920
+                },
+                "System Board Fan5A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 5640
+                },
+                "System Board Fan5B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 5160
+                },
+                "System Board Fan6A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 5520
+                },
+                "System Board Fan6B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 5280
+                }
+            },
+            "psCount": 2,
+            "PowerSupply": {
+                "PS1 Status": {
+                    "Health": "OK",
+                    "present": "Enabled",
+                    "PowerInputWatts": 666,
+                    "OutputWattage": 550,
+                    "InputType": "AC",
+                    "Model": "PWR SPLY,550W,RDNT,LTON       ",
+                    "SparePartNumber": "0NCNFFA00",
+                    "SerialNumber": "CNLOD007C4326F"
+                },
+                "PS2 Status": {
+                    "Health": "OK",
+                    "present": "Enabled",
+                    "PowerInputWatts": 666,
+                    "OutputWattage": 550,
+                    "InputType": "AC",
+                    "Model": "PWR SPLY,550W,RDNT,LTON       ",
+                    "SparePartNumber": "0NCNFFA00",
+                    "SerialNumber": "CNLOD007C433A6"
+                }
+            },
+            "MemorySummary": {
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "TotalSystemMemoryGiB": 256.0
+            },
+            "DIMM": {
+                "DIMM A1": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "41921E49",
+                    "Status": "OK"
+                },
+                "DIMM A2": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "416B3818",
+                    "Status": "OK"
+                },
+                "DIMM A3": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "416B489C",
+                    "Status": "OK"
+                },
+                "DIMM A4": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "41921F30",
+                    "Status": "OK"
+                },
+                "DIMM B1": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "4162199C",
+                    "Status": "OK"
+                },
+                "DIMM B2": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "416B4B23",
+                    "Status": "OK"
+                },
+                "DIMM B3": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "4161100A",
+                    "Status": "OK"
+                },
+                "DIMM B4": {
+                    "CapacityMiB": 32768,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "418E73AC",
+                    "Status": "OK"
+                }
+            },
+            "interface": {
+                "NIC.Embedded.1": {
+                    "NIC.Embedded.1-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "1",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    },
+                    "NIC.Embedded.2-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "2",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    },
+                    "NIC.Embedded.3-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "3",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    },
+                    "NIC.Embedded.4-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "4",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    }
+                }
+            },
+            "ProcessorSummary": {
+                "Count": 2,
+                "LogicalProcessorCount": 56,
+                "Model": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz",
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                }
+            },
+            "Processor": {
+                "ProcessorsCount": 2,
+                "CPU 1": {
+                    "InstructionSet": "x86-64",
+                    "Manufacturer": "Intel",
+                    "MaxSpeedMHz": 4000,
+                    "Model": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz",
+                    "ProcessorArchitecture": "x86",
+                    "TotalCores": 14,
+                    "TotalThreads": 28,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    }
+                },
+                "CPU 2": {
+                    "InstructionSet": "x86-64",
+                    "Manufacturer": "Intel",
+                    "MaxSpeedMHz": 4000,
+                    "Model": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz",
+                    "ProcessorArchitecture": "x86",
+                    "TotalCores": 14,
+                    "TotalThreads": 28,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    }
+                }
+            },
+            "SerialNumber": "CNFCP007CR02G0",
+            "Status": "OK",
+            "ServiceTag": "2CP6LN2"
+        },
+        "storageData": {
+            "Solid State Disk 0:1:0": {
+                "SerialNumber": "S5RRNF0R750536N",
+                "PartNumber": "",
+                "Manufacturer": "ATA",
+                "MediaType": "SSD",
+                "Model": "Samsung SSD 870",
+                "FailurePredicted": false,
+                "CapacityBytes": 1000204886016,
+                "RotationSpeedRPM": 1,
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "PredictedMediaLifeLeftPercent": null,
+                "Revision": "SVQ02B6Q",
+                "Controller": "PERC H730 Mini"
+            },
+            "Physical Disk 0:1:1": {
+                "SerialNumber": "",
+                "PartNumber": "",
+                "Manufacturer": "ATA",
+                "MediaType": "HDD",
+                "Model": "ST6000NM021A 2R",
+                "FailurePredicted": false,
+                "CapacityBytes": 6000606183424,
+                "RotationSpeedRPM": 7200,
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "PredictedMediaLifeLeftPercent": null,
+                "Revision": "SN03",
+                "Controller": "PERC H730 Mini"
+            },
+            "Physical Disk 0:1:2": {
+                "SerialNumber": "",
+                "PartNumber": "",
+                "Manufacturer": "ATA",
+                "MediaType": "HDD",
+                "Model": "ST6000NM021A 2R",
+                "FailurePredicted": false,
+                "CapacityBytes": 6000606183424,
+                "RotationSpeedRPM": 7200,
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "PredictedMediaLifeLeftPercent": null,
+                "Revision": "SN03",
+                "Controller": "PERC H730 Mini"
+            },
+            "Physical Disk 0:1:3": {
+                "SerialNumber": "",
+                "PartNumber": "",
+                "Manufacturer": "SEAGATE",
+                "MediaType": "HDD",
+                "Model": "ST9600205SS",
+                "FailurePredicted": false,
+                "CapacityBytes": 599550590976,
+                "RotationSpeedRPM": 0,
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "PredictedMediaLifeLeftPercent": null,
+                "Revision": "XQB6",
+                "Controller": "PERC H730 Mini"
+            }
+        },
+        "LogData": {
+            "16": {
+                "Created": "2022-08-25T01:13:03-05:00",
+                "Message": "The system inlet temperature is within range.",
+                "SensorType": [
+                    {
+                        "Member": "Temperature"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "15": {
+                "Created": "2022-08-24T18:29:17-05:00",
+                "Message": "The system inlet temperature is greater than the upper warning threshold.",
+                "SensorType": [
+                    {
+                        "Member": "Temperature"
+                    }
+                ],
+                "Severity": "Warning",
+                "EntryType": "SEL"
+            },
+            "14": {
+                "Created": "2022-07-12T09:24:37-05:00",
+                "Message": "The input power for power supply 2 has been restored.",
+                "SensorType": [
+                    {
+                        "Member": "Power Supply / Converter"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "13": {
+                "Created": "2022-07-12T09:24:31-05:00",
+                "Message": "The power input for power supply 2 is lost.",
+                "SensorType": [
+                    {
+                        "Member": "Power Supply / Converter"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "12": {
+                "Created": "2022-07-12T09:15:35-05:00",
+                "Message": "The input power for power supply 1 has been restored.",
+                "SensorType": [
+                    {
+                        "Member": "Power Supply / Converter"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "11": {
+                "Created": "2022-07-12T09:15:29-05:00",
+                "Message": "The power input for power supply 1 is lost.",
+                "SensorType": [
+                    {
+                        "Member": "Power Supply / Converter"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "10": {
+                "Created": "2021-11-08T09:52:47-06:00",
+                "Message": "The chassis is closed while the power is off.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "9": {
+                "Created": "2021-11-08T09:52:41-06:00",
+                "Message": "The chassis is open while the power is off.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "8": {
+                "Created": "2021-11-08T09:40:25-06:00",
+                "Message": "The system performance restored.",
+                "SensorType": [
+                    {
+                        "Member": null
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "7": {
+                "Created": "2021-11-08T09:34:10-06:00",
+                "Message": "The system halted because system power exceeds capacity.",
+                "SensorType": [
+                    {
+                        "Member": null
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "6": {
+                "Created": "2021-11-08T09:29:40-06:00",
+                "Message": "The chassis is closed while the power is off.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "5": {
+                "Created": "2021-11-08T09:29:35-06:00",
+                "Message": "The chassis is open while the power is off.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "4": {
+                "Created": "2021-11-08T09:18:49-06:00",
+                "Message": "The power input for power supply 2 is lost.",
+                "SensorType": [
+                    {
+                        "Member": "Power Supply / Converter"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "3": {
+                "Created": "2021-11-08T09:15:49-06:00",
+                "Message": "The chassis is closed while the power is off.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "2": {
+                "Created": "2021-11-08T09:15:43-06:00",
+                "Message": "The chassis is open while the power is off.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "1": {
+                "Created": "2021-11-06T10:52:19-05:00",
+                "Message": "Log cleared.",
+                "SensorType": [
+                    {
+                        "Member": "Event Logging Disabled"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            }
+        }
+    },
+    {
+        "host": "192.168.10.237",
+        "systemData": {
+            "BiosVersion": "2.10.5",
+            "Model": "PowerEdge R430",
+            "Manufacturer": "Dell Inc.",
+            "fanCount": 12,
+            "fans": {
+                "System Board Fan1A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4680
+                },
+                "System Board Fan1B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4440
+                },
+                "System Board Fan2A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 9240
+                },
+                "System Board Fan2B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 8760
+                },
+                "System Board Fan3A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 9360
+                },
+                "System Board Fan3B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 8760
+                },
+                "System Board Fan4A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 9360
+                },
+                "System Board Fan4B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 8760
+                },
+                "System Board Fan5A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 9480
+                },
+                "System Board Fan5B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 8880
+                },
+                "System Board Fan6A": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4680
+                },
+                "System Board Fan6B": {
+                    "LowerThresholdCritical": 720,
+                    "LowerThresholdFatal": 720,
+                    "LowerThresholdNonCritical": 840,
+                    "MaxReadingRange": null,
+                    "MinReadingRange": 720,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    },
+                    "UpperThresholdCritical": null,
+                    "UpperThresholdFatal": null,
+                    "UpperThresholdNonCritical": null,
+                    "Reading": 4440
+                }
+            },
+            "psCount": 2,
+            "PowerSupply": {
+                "PS1 Status": {
+                    "Health": "OK",
+                    "present": "Enabled",
+                    "PowerInputWatts": 666,
+                    "OutputWattage": 550,
+                    "InputType": "AC",
+                    "Model": "PWR SPLY,550W,RDNT,LTON       ",
+                    "SparePartNumber": "0NCNFFA00",
+                    "SerialNumber": "CNLOD0078D49CF"
+                },
+                "PS2 Status": {
+                    "Health": "OK",
+                    "present": "Enabled",
+                    "PowerInputWatts": 666,
+                    "OutputWattage": 550,
+                    "InputType": "AC",
+                    "Model": "PWR SPLY,550W,RDNT,LTON       ",
+                    "SparePartNumber": "0NCNFFA00",
+                    "SerialNumber": "CNLOD0078D34DE"
+                }
+            },
+            "MemorySummary": {
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "TotalSystemMemoryGiB": 238.418688
+            },
+            "DIMM": {
+                "DIMM A1": {
+                    "CapacityMiB": 31250,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "71C4818B",
+                    "Status": "OK"
+                },
+                "DIMM A2": {
+                    "CapacityMiB": 31250,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "728A85E1",
+                    "Status": "OK"
+                },
+                "DIMM A3": {
+                    "CapacityMiB": 31250,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "7268D592",
+                    "Status": "OK"
+                },
+                "DIMM A4": {
+                    "CapacityMiB": 31250,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "409CCCE4",
+                    "Status": "OK"
+                },
+                "DIMM B1": {
+                    "CapacityMiB": 31250,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "7268FC40",
+                    "Status": "OK"
+                },
+                "DIMM B2": {
+                    "CapacityMiB": 31250,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "728C38FD",
+                    "Status": "OK"
+                },
+                "DIMM B3": {
+                    "CapacityMiB": 31250,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "728FC863",
+                    "Status": "OK"
+                },
+                "DIMM B4": {
+                    "CapacityMiB": 31250,
+                    "DataWidthBits": 64,
+                    "ErrorCorrection": "MultiBitECC",
+                    "Manufacturer": "Samsung",
+                    "MemoryDeviceType": "DDR4",
+                    "OperatingSpeedMhz": 2133,
+                    "PartNumber": "M386A4G40DM0-CPB",
+                    "RankCount": 4,
+                    "SerialNumber": "32780B22",
+                    "Status": "OK"
+                }
+            },
+            "interface": {
+                "NIC.Embedded.1": {
+                    "NIC.Embedded.1-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "1",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    },
+                    "NIC.Embedded.2-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "2",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    },
+                    "NIC.Embedded.3-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "3",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    },
+                    "NIC.Embedded.4-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "4",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    }
+                }
+            },
+            "ProcessorSummary": {
+                "Count": 2,
+                "LogicalProcessorCount": 56,
+                "Model": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz",
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                }
+            },
+            "Processor": {
+                "ProcessorsCount": 2,
+                "CPU 1": {
+                    "InstructionSet": "x86-64",
+                    "Manufacturer": "Intel",
+                    "MaxSpeedMHz": 4000,
+                    "Model": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz",
+                    "ProcessorArchitecture": "x86",
+                    "TotalCores": 14,
+                    "TotalThreads": 28,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    }
+                },
+                "CPU 2": {
+                    "InstructionSet": "x86-64",
+                    "Manufacturer": "Intel",
+                    "MaxSpeedMHz": 4000,
+                    "Model": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz",
+                    "ProcessorArchitecture": "x86",
+                    "TotalCores": 14,
+                    "TotalThreads": 28,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    }
+                }
+            },
+            "SerialNumber": "CN77921647000Z",
+            "Status": "Critical",
+            "ServiceTag": "662KCD2"
+        },
+        "storageData": {
+            "Physical Disk 0:1:1": {
+                "SerialNumber": "WSD5A3K8",
+                "PartNumber": "",
+                "Manufacturer": "ATA",
+                "MediaType": "HDD",
+                "Model": "ST6000NM021A 2R7",
+                "FailurePredicted": false,
+                "CapacityBytes": 6001175125504,
+                "RotationSpeedRPM": 7200,
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "PredictedMediaLifeLeftPercent": 0,
+                "Revision": "SN03",
+                "Controller": "Dell HBA330 Mini"
+            },
+            "Solid State Disk 0:1:0": {
+                "SerialNumber": "S5RRNF0T246413B",
+                "PartNumber": "",
+                "Manufacturer": "ATA",
+                "MediaType": "SSD",
+                "Model": "Samsung SSD 870",
+                "FailurePredicted": false,
+                "CapacityBytes": 1000204885504,
+                "RotationSpeedRPM": 1,
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "PredictedMediaLifeLeftPercent": null,
+                "Revision": "SVQ02B6Q",
+                "Controller": "Dell HBA330 Mini"
+            },
+            "Physical Disk 0:1:3": {
+                "SerialNumber": "WSD5A4B5",
+                "PartNumber": "",
+                "Manufacturer": "SEAGATE",
+                "MediaType": "HDD",
+                "Model": "ST9600205SS",
+                "FailurePredicted": false,
+                "CapacityBytes": 600127266304,
+                "RotationSpeedRPM": 7200,
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "PredictedMediaLifeLeftPercent": 0,
+                "Revision": "XRC2",
+                "Controller": "Dell HBA330 Mini"
+            },
+            "Physical Disk 0:1:2": {
+                "SerialNumber": "WSD5A4B5",
+                "PartNumber": "",
+                "Manufacturer": "ATA",
+                "MediaType": "HDD",
+                "Model": "ST6000NM021A 2R7",
+                "FailurePredicted": false,
+                "CapacityBytes": 6001175125504,
+                "RotationSpeedRPM": 7200,
+                "Status": {
+                    "Health": "OK",
+                    "HealthRollup": "OK",
+                    "State": "Enabled"
+                },
+                "PredictedMediaLifeLeftPercent": 0,
+                "Revision": "SN03",
+                "Controller": "Dell HBA330 Mini"
+            }
+        },
+        "LogData": {
+            "1024": {
+                "Created": "2022-12-22T13:44:32-06:00",
+                "Message": "System event log (SEL) is full.",
+                "SensorType": [
+                    {
+                        "Member": "Event Logging Disabled"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "1023": {
+                "Created": "2022-12-22T13:44:32-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "1022": {
+                "Created": "2022-12-22T13:44:22-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "1021": {
+                "Created": "2022-12-22T13:44:17-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "1020": {
+                "Created": "2022-12-22T13:44:02-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "1019": {
+                "Created": "2022-12-22T13:42:57-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "1018": {
+                "Created": "2022-12-22T13:42:37-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "1017": {
+                "Created": "2022-12-22T13:41:32-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "1016": {
+                "Created": "2022-12-22T13:41:12-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "1015": {
+                "Created": "2022-12-22T13:40:17-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "1014": {
+                "Created": "2022-12-22T13:40:02-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "1013": {
+                "Created": "2022-12-22T13:39:12-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "1012": {
+                "Created": "2022-12-22T13:38:57-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "1011": {
+                "Created": "2022-12-22T13:38:07-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "1010": {
+                "Created": "2022-12-22T13:37:42-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "1009": {
+                "Created": "2022-12-22T13:36:57-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "1008": {
+                "Created": "2022-12-22T13:36:52-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "1007": {
+                "Created": "2022-12-22T13:36:47-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "1006": {
+                "Created": "2022-12-22T13:36:12-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "1005": {
+                "Created": "2022-12-22T13:34:57-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "1004": {
+                "Created": "2022-12-22T13:34:37-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "1003": {
+                "Created": "2022-12-22T13:33:57-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "1002": {
+                "Created": "2022-12-22T13:33:52-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "1001": {
+                "Created": "2022-12-22T13:33:47-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "1000": {
+                "Created": "2022-12-22T13:33:27-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "999": {
+                "Created": "2022-12-22T13:32:27-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "998": {
+                "Created": "2022-12-22T13:32:22-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "997": {
+                "Created": "2022-12-22T13:32:17-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "996": {
+                "Created": "2022-12-22T13:31:57-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "995": {
+                "Created": "2022-12-22T13:31:07-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "994": {
+                "Created": "2022-12-22T13:30:57-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "993": {
+                "Created": "2022-12-22T13:30:12-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "992": {
+                "Created": "2022-12-22T13:29:57-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "991": {
+                "Created": "2022-12-22T13:29:52-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "990": {
+                "Created": "2022-12-22T13:29:37-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "989": {
+                "Created": "2022-12-22T13:28:12-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "988": {
+                "Created": "2022-12-22T13:27:47-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "987": {
+                "Created": "2022-12-22T13:26:36-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "986": {
+                "Created": "2022-12-22T13:26:21-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "985": {
+                "Created": "2022-12-22T13:26:16-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "984": {
+                "Created": "2022-12-22T13:25:56-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "983": {
+                "Created": "2022-12-22T13:24:21-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "982": {
+                "Created": "2022-12-22T13:23:51-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "981": {
+                "Created": "2022-12-22T13:22:51-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "980": {
+                "Created": "2022-12-22T13:22:21-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "979": {
+                "Created": "2022-12-22T13:20:31-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "978": {
+                "Created": "2022-12-22T13:20:26-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "977": {
+                "Created": "2022-12-22T13:20:21-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            },
+            "976": {
+                "Created": "2022-12-22T13:19:56-06:00",
+                "Message": "The chassis is open while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "Critical",
+                "EntryType": "SEL"
+            },
+            "975": {
+                "Created": "2022-12-22T13:19:10-06:00",
+                "Message": "The chassis is closed while the power is on.",
+                "SensorType": [
+                    {
+                        "Member": "Physical Chassis Security"
+                    }
+                ],
+                "Severity": "OK",
+                "EntryType": "SEL"
+            }
+        }
+    }
+]

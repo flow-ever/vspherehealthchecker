@@ -1,6 +1,6 @@
 [
     {
-        "host": "192.168.10.230",
+        "host": "192.168.10.231",
         "systemData": {
             "BiosVersion": "2.13.0",
             "Model": "PowerEdge R430",
@@ -50,7 +50,7 @@
                     "UpperThresholdCritical": null,
                     "UpperThresholdFatal": null,
                     "UpperThresholdNonCritical": null,
-                    "Reading": 5520
+                    "Reading": 5640
                 },
                 "System Board Fan2B": {
                     "LowerThresholdCritical": 720,
@@ -65,7 +65,7 @@
                     "UpperThresholdCritical": null,
                     "UpperThresholdFatal": null,
                     "UpperThresholdNonCritical": null,
-                    "Reading": 5280
+                    "Reading": 5160
                 },
                 "System Board Fan3A": {
                     "LowerThresholdCritical": 720,
@@ -140,7 +140,7 @@
                     "UpperThresholdCritical": null,
                     "UpperThresholdFatal": null,
                     "UpperThresholdNonCritical": null,
-                    "Reading": 4920
+                    "Reading": 5040
                 },
                 "System Board Fan5B": {
                     "LowerThresholdCritical": 720,
@@ -155,7 +155,7 @@
                     "UpperThresholdCritical": null,
                     "UpperThresholdFatal": null,
                     "UpperThresholdNonCritical": null,
-                    "Reading": 4440
+                    "Reading": 4800
                 },
                 "System Board Fan6A": {
                     "LowerThresholdCritical": 720,
@@ -170,7 +170,7 @@
                     "UpperThresholdCritical": null,
                     "UpperThresholdFatal": null,
                     "UpperThresholdNonCritical": null,
-                    "Reading": 4920
+                    "Reading": 5160
                 },
                 "System Board Fan6B": {
                     "LowerThresholdCritical": 720,
@@ -185,20 +185,30 @@
                     "UpperThresholdCritical": null,
                     "UpperThresholdFatal": null,
                     "UpperThresholdNonCritical": null,
-                    "Reading": 4440
+                    "Reading": 4800
                 }
             },
             "psCount": 2,
-            "ps": {
-                "Name": {
+            "PowerSupply": {
+                "PS1 Status": {
                     "Health": "OK",
                     "present": "Enabled",
                     "PowerInputWatts": 666,
                     "OutputWattage": 550,
                     "InputType": "AC",
-                    "Model": "PWR SPLY,550W,RDNT,LTON       ",
-                    "SparePartNumber": "0NCNFFA00",
-                    "SerialNumber": "CNLOD007C43549"
+                    "Model": "PWR SPLY,550W,RDNT,DELTA      ",
+                    "SparePartNumber": "0X185VA00",
+                    "SerialNumber": "CN179726C5590U"
+                },
+                "PS2 Status": {
+                    "Health": "OK",
+                    "present": "Enabled",
+                    "PowerInputWatts": 666,
+                    "OutputWattage": 550,
+                    "InputType": "AC",
+                    "Model": "PWR SPLY,550W,RDNT,DELTA      ",
+                    "SparePartNumber": "0X185VA00",
+                    "SerialNumber": "CN179726C555PD"
                 }
             },
             "MemorySummary": {
@@ -219,7 +229,7 @@
                     "OperatingSpeedMhz": 2133,
                     "PartNumber": "M386A4G40DM0-CPB",
                     "RankCount": 4,
-                    "SerialNumber": "41610E49",
+                    "SerialNumber": "418E63CF",
                     "Status": "OK"
                 },
                 "DIMM A2": {
@@ -231,7 +241,7 @@
                     "OperatingSpeedMhz": 2133,
                     "PartNumber": "M386A4G40DM0-CPB",
                     "RankCount": 4,
-                    "SerialNumber": "4161100F",
+                    "SerialNumber": "416110B3",
                     "Status": "OK"
                 },
                 "DIMM A3": {
@@ -243,7 +253,7 @@
                     "OperatingSpeedMhz": 2133,
                     "PartNumber": "M386A4G40DM0-CPB",
                     "RankCount": 4,
-                    "SerialNumber": "4198BDA6",
+                    "SerialNumber": "416112C6",
                     "Status": "OK"
                 },
                 "DIMM A4": {
@@ -255,7 +265,7 @@
                     "OperatingSpeedMhz": 2133,
                     "PartNumber": "M386A4G40DM0-CPB",
                     "RankCount": 4,
-                    "SerialNumber": "41610F43",
+                    "SerialNumber": "41610F8D",
                     "Status": "OK"
                 },
                 "DIMM B1": {
@@ -267,7 +277,7 @@
                     "OperatingSpeedMhz": 2133,
                     "PartNumber": "M386A4G40DM0-CPB",
                     "RankCount": 4,
-                    "SerialNumber": "4160CD41",
+                    "SerialNumber": "4154FFD8",
                     "Status": "OK"
                 },
                 "DIMM B2": {
@@ -279,7 +289,7 @@
                     "OperatingSpeedMhz": 2133,
                     "PartNumber": "M386A4G40DM0-CPB",
                     "RankCount": 4,
-                    "SerialNumber": "415BF68F",
+                    "SerialNumber": "413F2D6C",
                     "Status": "OK"
                 },
                 "DIMM B3": {
@@ -291,7 +301,7 @@
                     "OperatingSpeedMhz": 2133,
                     "PartNumber": "M386A4G40DM0-CPB",
                     "RankCount": 4,
-                    "SerialNumber": "416B6A2B",
+                    "SerialNumber": "4154FC55",
                     "Status": "OK"
                 },
                 "DIMM B4": {
@@ -303,8 +313,76 @@
                     "OperatingSpeedMhz": 2133,
                     "PartNumber": "M386A4G40DM0-CPB",
                     "RankCount": 4,
-                    "SerialNumber": "416B485A",
+                    "SerialNumber": "41621D09",
                     "Status": "OK"
+                }
+            },
+            "interface": {
+                "NIC.Embedded.1": {
+                    "NIC.Embedded.1-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "1",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    },
+                    "NIC.Embedded.2-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "2",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    },
+                    "NIC.Embedded.3-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "3",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    },
+                    "NIC.Embedded.4-1": {
+                        "ActiveLinkTechnology": "Ethernet",
+                        "LinkStatus": "Down",
+                        "PhysicalPortNumber": "4",
+                        "Status": {
+                            "Health": null,
+                            "HealthRollup": null,
+                            "State": "Enabled"
+                        },
+                        "SupportedLinkCapabilities": [
+                            {
+                                "LinkNetworkTechnology": "Ethernet",
+                                "LinkSpeedMbps": 0
+                            }
+                        ]
+                    }
                 }
             },
             "ProcessorSummary": {
@@ -317,13 +395,42 @@
                     "State": "Enabled"
                 }
             },
-            "SerialNumber": "CN779216CQ01H4",
+            "Processor": {
+                "ProcessorsCount": 2,
+                "CPU 1": {
+                    "InstructionSet": "x86-64",
+                    "Manufacturer": "Intel",
+                    "MaxSpeedMHz": 4000,
+                    "Model": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz",
+                    "ProcessorArchitecture": "x86",
+                    "TotalCores": 14,
+                    "TotalThreads": 28,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    }
+                },
+                "CPU 2": {
+                    "InstructionSet": "x86-64",
+                    "Manufacturer": "Intel",
+                    "MaxSpeedMHz": 4000,
+                    "Model": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz",
+                    "ProcessorArchitecture": "x86",
+                    "TotalCores": 14,
+                    "TotalThreads": 28,
+                    "Status": {
+                        "Health": "OK",
+                        "State": "Enabled"
+                    }
+                }
+            },
+            "SerialNumber": "CNFCP007CK00PB",
             "Status": "OK",
-            "ServiceTag": "8DJ84J2"
+            "ServiceTag": "2809LN2"
         },
         "storageData": {
             "Solid State Disk 0:1:0": {
-                "SerialNumber": "S5RRNF0R750539M",
+                "SerialNumber": "S5RRNF0R750537F",
                 "PartNumber": "",
                 "Manufacturer": "ATA",
                 "MediaType": "SSD",
@@ -341,7 +448,7 @@
                 "Controller": "PERC H730 Mini"
             },
             "Physical Disk 0:1:1": {
-                "SerialNumber": "WSE0Q7DJ",
+                "SerialNumber": "WSE0Q6Y4",
                 "PartNumber": "",
                 "Manufacturer": "ATA",
                 "MediaType": "HDD",
@@ -359,7 +466,7 @@
                 "Controller": "PERC H730 Mini"
             },
             "Physical Disk 0:1:2": {
-                "SerialNumber": "WSE0VTCM",
+                "SerialNumber": "WSE0Q88Y",
                 "PartNumber": "",
                 "Manufacturer": "ATA",
                 "MediaType": "HDD",
@@ -391,101 +498,35 @@
                     "State": "Enabled"
                 },
                 "PredictedMediaLifeLeftPercent": null,
-                "Revision": "XRC1",
+                "Revision": "XQB6",
                 "Controller": "PERC H730 Mini"
             }
         },
         "LogData": {
-            "9": {
-                "Created": "2022-08-25T01:06:15-05:00",
-                "Message": "The system inlet temperature is within range.",
-                "SensorType": [
-                    {
-                        "Member": "Temperature"
-                    }
-                ],
-                "Severity": "OK",
-                "EntryType": "SEL"
-            },
-            "8": {
-                "Created": "2022-08-24T18:18:51-05:00",
-                "Message": "The system inlet temperature is greater than the upper warning threshold.",
-                "SensorType": [
-                    {
-                        "Member": "Temperature"
-                    }
-                ],
-                "Severity": "Warning",
-                "EntryType": "SEL"
-            },
-            "7": {
-                "Created": "2021-11-12T15:34:48-06:00",
-                "Message": "The chassis is closed while the power is off.",
-                "SensorType": [
-                    {
-                        "Member": "Physical Chassis Security"
-                    }
-                ],
-                "Severity": "OK",
-                "EntryType": "SEL"
-            },
-            "6": {
-                "Created": "2021-11-12T15:34:43-06:00",
-                "Message": "The chassis is open while the power is off.",
-                "SensorType": [
-                    {
-                        "Member": "Physical Chassis Security"
-                    }
-                ],
-                "Severity": "Critical",
-                "EntryType": "SEL"
-            },
-            "5": {
-                "Created": "2021-11-08T10:14:32-06:00",
-                "Message": "The chassis is closed while the power is off.",
-                "SensorType": [
-                    {
-                        "Member": "Physical Chassis Security"
-                    }
-                ],
-                "Severity": "OK",
-                "EntryType": "SEL"
-            },
-            "4": {
-                "Created": "2021-11-08T10:14:27-06:00",
-                "Message": "The chassis is open while the power is off.",
-                "SensorType": [
-                    {
-                        "Member": "Physical Chassis Security"
-                    }
-                ],
-                "Severity": "Critical",
-                "EntryType": "SEL"
-            },
             "3": {
-                "Created": "2021-11-08T10:03:27-06:00",
-                "Message": "The chassis is closed while the power is off.",
+                "Created": "2023-05-06T17:02:56-05:00",
+                "Message": "The input power for power supply 2 has been restored.",
                 "SensorType": [
                     {
-                        "Member": "Physical Chassis Security"
+                        "Member": "Power Supply / Converter"
                     }
                 ],
                 "Severity": "OK",
                 "EntryType": "SEL"
             },
             "2": {
-                "Created": "2021-11-08T10:03:22-06:00",
-                "Message": "The chassis is open while the power is off.",
+                "Created": "2023-05-06T16:08:28-05:00",
+                "Message": "The power input for power supply 2 is lost.",
                 "SensorType": [
                     {
-                        "Member": "Physical Chassis Security"
+                        "Member": "Power Supply / Converter"
                     }
                 ],
                 "Severity": "Critical",
                 "EntryType": "SEL"
             },
             "1": {
-                "Created": "2021-11-05T10:53:06-05:00",
+                "Created": "2022-12-02T07:17:09-06:00",
                 "Message": "Log cleared.",
                 "SensorType": [
                     {

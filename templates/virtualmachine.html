@@ -7,7 +7,7 @@
 <!-- <script>
     includenav();
 </script> -->
-<div class="dashboard" ><h1>Virtual Machine:<strong>{{ vm_info[0]['Display_name'] }}</strong></h1></div>
+<div class="dashboard" ><h1><img src='{{ url_for('static',filename='image/vm32.png') }}'><strong>{{ vm_info[0]['Display_name'] }}</strong></h1></div>
 
 {% if vm_perf_metric | length %}
     <h2>虚拟机关键性能指标</h2>

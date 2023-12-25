@@ -1,27 +1,371 @@
-{% extends "header.html" %}
-{% block body %}
+<!DOCTYPE html>
+<head>
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='main.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='print.css') }}" media="print">
+  <script type="text/javascript" src="{{ url_for('static',filename='main.js') }}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='echarts.js')}}"></script>
+</head>
 
-<h2>服务器硬件基本信息</h2>
-<div class="mid_table_container">
-    <table class="table2">
-        <tr>
-            
-            <th scope="col">hostname/IP</th>
-            <th scope="col">CPU配置</th>
-            <th scope="col">内存配置</th>
-            <th scope="col">日志告警情况</th>
-            <th scope="col">总体健康状况</th>
+  <body >
+    <div id="head_memu">
+      <ul id="nav_head">
+        <li><a href='/'>数据收集</a></li>
+        <li><a href='/inventory'>数据中心</a></li>
+        <li><a href='{{ url_for('datacenter',vm_name='all') }}'>虚拟机总览</a></li>
+        <li><a href='/hardwareStatus'>主机硬件状况</a></li>
+      </ul>
+    </div>
 
-        </tr>    
-        <tr>        
-            <td>{{ host_data['basic_info'][0]['esxi'] }}</td>
-            <td>{{ host_data['basic_info'][0]['vendor'] }}</td>
-            <td>{{ host_data['basic_info'][0]['model'] }}</td>
-            <td>{{ host_data['basic_info'][0]['sn'] }}</td>
-            <td>{{ host_data['basic_info'][0]['uptime'] }}</td>
-        </tr>
+    {% block body %}
+    <div id="overview">
+        <h1>主机硬件状态总览</h1>
+        <div class="long_table_container">
+            <table class="table2">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">hostname/IP</th>
+                    <th scope="col">主机型号</th>
+                    <th scope="col">生产商</th>
+                    <th scope="col">BIOS</th>
+                    <th scope="col">SN</th>
+                    <th scope="col">CPU型号</th>
+                    <th scope="col">CPU数量</th>
+                    <th scope="col">CPU状态</th>
+                    <th scope="col">内存容量(GB)</th>
+                    <th scope="col">内存状态</th>
+                    <th scope="col">总体健康状况</th>
         
+                </tr>    
+                {% for item in data %}
+                <tr>        
+                    <td>{{ loop.index }}</td>
+                    <td>{{ item.host }} </td>
+                    <td>{{ item.systemData.Model }} </td>
+                    <td>{{ item.systemData.Manufacturer }} </td>
+                    <td>{{ item.systemData.BiosVersion }} </td>
+                    <td>{{ item.systemData.SerialNumber }} </td>
+                    <td>{{ item.systemData.ProcessorSummary.Model }}</td>
+                    <td>{{ item.systemData.ProcessorSummary.Count }}</td>
+                    <td>{{ item.systemData.ProcessorSummary.Status.Health }}</td>
+                    <td>{{ item.systemData.MemorySummary.TotalSystemMemoryGiB }}</td>
+                    <td>{{ item.systemData.ProcessorSummary.Status.Health }}</td>
+
+                    {% if (item.systemData.Status=='OK') %}
+                        <td><img src='{{ url_for('static',filename='image/hook16.png') }}'</td>
+                    {% elif (item.systemData.Status=='Warning') %}
+                        <td><img src='{{ url_for('static',filename='image/warn16.png') }}'</td>
+                    {% elif (item.systemData.Status=='Critical') %}
+                        <td><img src='{{ url_for('static',filename='image/error16.png') }}'</td>
+                    {% endif %}                    
+                </tr>
+                {% endfor %}
+            </table>
+        </div>  
+        
+    </div>
+    <h1>主机详细信息</h1>
+    
+    <div id="single_host_detial" class="wrapper">
+        <div id="host_list" class="aside">
+            <div><p>主机清单：</p></div>
+            {% for item in data %}
+                <div class="host_inventory"><img src='{{ url_for('static',filename='image/server16.png') }}'><a href="/hardwareStatus?host_id={{ item.host }}">{{ item.host }}</a></div><br>
+            {% endfor %}
+        </div>
+        <div id="host_detail" class="main">
+            <h1><img src='{{ url_for('static',filename='image/server32.png') }}'>{{ single_host_detail.host }}</h1>
+            
+            <h2><img src='{{ url_for('static',filename='image/cpu16.png') }}'>CPU</h2>
+            <div class="mid_table_container">
+                
+                <table class="table2">
+                    <tr>
+                        
+                        <th scope="col">Name</th>
+                        <th scope="col">型号</th>
+                        <th scope="col">生产商</th>
+                        <th scope="col">架构</th>
+                        <th scope="col">Core#</th>
+                        <th scope="col">线程#</th>
+                        <th scope="col">状态</th>            
+                    </tr>  
+                    {% for key,value in single_host_detail.systemData.Processor.items() %}
+                        {% if ( 'CPU' in key) %}
+                            <tr>
+                            <td>{{ key }}</td>
+                            <td>{{ value.Model }}</td>
+                            <td>{{ value.Manufacturer }}</td>
+                            <td>{{ value.InstructionSet }}</td>
+                            <td>{{ value.TotalCores }}</td>
+                            <td>{{ value.TotalThreads }}</td>
+                            {% if (value.Status.Health=='OK') %}
+                                <td><img src='{{ url_for('static',filename='image/hook16.png') }}'</td>
+                            {% elif (value.Status.Health=='Warning') %}
+                                <td><img src='{{ url_for('static',filename='image/warn16.png') }}'</td>
+                            {% elif (value.Status.Health=='Critical') %}
+                                <td><img src='{{ url_for('static',filename='image/error16.png') }}'</td>
+                            {% endif %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+            </table>
+            </div>
+
+            <h2><img src='{{ url_for('static',filename='image/mem16.png') }}'>内存</h2>
+            <div class="mid_table_container">
+                
+                <table class="table2">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">槽位</th>
+                        <th scope="col">容量（GB）</th>
+                        <th scope="col">位宽</th>
+                        <th scope="col">纠错类型</th>
+                        <th scope="col">制造商</th>
+                        <th scope="col">设备类型</th>
+                        <th scope="col">操作频率</th>
+                        <th scope="col">产品编号</th> 
+                        <th scope="col">列数</th> 
+                        <th scope="col">SN</th> 
+                        <th scope="col">状态</th>             
+                    </tr>  
+            {% for key,value in single_host_detail.systemData.DIMM.items() %}
+            
+            <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ key }}</td>
+            <td>{{ value.CapacityMiB/1024 }}</td>
+            <td>{{ value.DataWidthBits }}</td>
+            <td>{{ value.ErrorCorrection }}</td>
+            <td>{{ value.Manufacturer }}</td>
+            <td>{{ value.MemoryDeviceType }}</td>
+            <td>{{ value.OperatingSpeedMhz }}</td>
+            <td>{{ value.PartNumber }}</td>
+            <td>{{ value.RankCount }}</td>
+            <td>{{ value.SerialNumber }}</td>
+            {% if (value.Status=='OK') %}
+                <td><img src='{{ url_for('static',filename='image/hook16.png') }}'</td>
+            {% elif (value.Status=='Warning') %}
+                <td><img src='{{ url_for('static',filename='image/warn16.png') }}'</td>
+            {% elif (value.Status=='Critical') %}
+                <td><img src='{{ url_for('static',filename='image/error16.png') }}'</td>
+            {% endif %}
+            </tr>
+            
+        {% endfor %}    
+                </table>
+            </div>
+
+            <h2><img src='{{ url_for('static',filename='image/drive16.png') }}'>存储</h2>            
+            <div class="mid_table_container">
+                
+                <table class="table2">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">驱动器名称</th>
+                        <th scope="col">SN</th>
+                        <th scope="col">产品号</th>
+                        <th scope="col">制造商</th>
+                        <th scope="col">介质类型</th>
+                        <th scope="col">型号</th>
+                        <th scope="col">容量（GB）</th>
+                        <th scope="col">转速</th> 
+                        <th scope="col">控制器</th> 
+                        <th scope="col">固件版本</th> 
+                        <th scope="col">状态</th>             
+                    </tr>  
+            {% for key,value in single_host_detail.storageData.items() %}
+            
+            <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ key }}</td>
+            <td>{{ value.SerialNumber }}</td>
+            <td>{{ value.PartNumber }}</td>
+            <td>{{ value.Manufacturer }}</td>
+            <td>{{ value.MediaType }}</td>
+            <td>{{ value.Model }}</td>
+            <td>{{ value.CapacityBytes/1000/1000/1000 | round(1) }}</td>
+            <td>{{ value.RotationSpeedRPM }}</td>
+            <td>{{ value.Controller }}</td>
+            <td>{{ value.Revision }}</td>
+            {% if (value.Status.Health=='OK') %}
+                <td><img src='{{ url_for('static',filename='image/hook16.png') }}'</td>
+            {% elif (value.Status.Health=='Warning') %}
+                <td><img src='{{ url_for('static',filename='image/warn16.png') }}'</td>
+            {% elif (value.Status.Health=='Critical') %}
+                <td><img src='{{ url_for('static',filename='image/error16.png') }}'</td>
+            {% endif %}
+            </tr>
+            
+        {% endfor %} 
+            </table>
+            </div>
+            
+            <h2><img src='{{ url_for('static',filename='image/network16.png') }}'>网络</h2>
+            <div class="mid_table_container">
+                
+                <table class="table2">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">端口编号</th>
+                        <th scope="col">连接类型</th>
+                        <th scope="col">连接状态</th>
+                        <th scope="col">物理端口编号</th>
+                        <th scope="col">连接速率（Mbps）</th>
+                        <th scope="col">健康状态</th>         
+                    </tr>  
+            {% for networkset,networkset_value in single_host_detail.systemData.interface.items() %}
+            
+            <tr>
+            <td>{{ loop.index }}</td>
+            {% set groupindex=loop.index %}
+            <td colspan="6">{{ networkset }}</td>
+            </tr>
+            {% for portname,port_detail in networkset_value.items() %}
+            <tr>
+            <td>{{ groupindex }}.{{ loop.index }}</td>
+            <td>{{ portname }}</td>
+            <td>{{ port_detail.ActiveLinkTechnology }}</td>
+            <td>{{ port_detail.LinkStatus }}</td>
+            <td>{{ port_detail.PhysicalPortNumber }}</td>
+            <td>{{ port_detail.SupportedLinkCapabilities[0].LinkSpeedMbps }}</td>
+            <td>{{ port_detail.Status.Health }}</td>
+            </tr>
+            {% endfor %}
+            
+        {% endfor %} 
     </table>
-</div>  
+            </div>
+
+            <h2><img src='{{ url_for('static',filename='image/fan16.png') }}'>风扇</h2>
+            <div class="mid_table_container">
+                
+                <table class="table2">
+                    <tr>
+                        
+                        <th scope="col" rowspan="2">#</th>
+                        <th scope="col" rowspan="2">风扇名称</th>
+                        <th scope="col" rowspan="2">RPM</th>
+                        <th scope="col" colspan="2">警告阈值（RPM）</th>
+                        <th scope="col" colspan="2">错误阈值（RPM）</th> 
+                        <th scope="col" rowspan="2">状态</th>             
+                    </tr>  
+                    <tr>
+                        <th scope="col">Min</th>
+                        <th scope="col">Max</th>
+                        <th scope="col">Min</th> 
+                        <th scope="col">max</th> 
+                                    
+                    </tr>  
+            {% for key,value in single_host_detail.systemData.fans.items() %}
+            
+            <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ key }}</td>
+            <td>{{ value.Reading }}</td>
+            <td>{{ value.LowerThresholdNonCritical }}</td>
+            <td>{{ value.UpperThresholdNonCritical }}</td>
+            <td>{{ value.LowerThresholdCritical }}</td>
+            <td>{{ value.UpperThresholdCritical }}</td>
+            {% if (value.Status.Health=='OK') %}
+                <td><img src='{{ url_for('static',filename='image/hook16.png') }}'</td>
+            {% elif (value.Status.Health=='Warning') %}
+                <td><img src='{{ url_for('static',filename='image/warn16.png') }}'</td>
+            {% elif (value.Status.Health=='Critical') %}
+                <td><img src='{{ url_for('static',filename='image/error16.png') }}'</td>
+            {% endif %}
+
+            </tr>
+            
+        {% endfor %}               
+                </table>
+            </div>   
+            
+            <h2><img src='{{ url_for('static',filename='image/power16.png') }}'>电源</h2>
+            <div class="mid_table_container">
+                
+                <table class="table2">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">电源适配器名称</th>
+                        <th scope="col">是否在线</th>
+                        <th scope="col">输入功率（W）</th>
+                        <th scope="col">输出功率（W）</th>
+                        <th scope="col">输入类型</th> 
+                        <th scope="col">型号</th> 
+                        <th scope="col">备件编号</th> 
+                        <th scope="col">SN</th>
+                        <th scope="col">状态</th>
+                                      
+                    </tr>  
+            {% for key,value in single_host_detail.systemData.PowerSupply.items() %}
+            
+            <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ key }}</td>
+            <td>{{ value.present }}</td>
+            <td>{{ value.PowerInputWatts }}</td>
+            <td>{{ value.OutputWattage }}</td>
+            <td>{{ value.InputType }}</td>
+            <td>{{ value.Model }}</td>
+            <td>{{ value.SparePartNumber }}</td>
+            <td>{{ value.SerialNumber }}</td>
+            
+            {% if (value.Health=='OK') %}
+            <td><img src='{{ url_for('static',filename='image/hook16.png') }}'</td>
+            {% elif (value.Health=='Warning') %}
+                <td><img src='{{ url_for('static',filename='image/warn16.png') }}'</td>
+            {% elif (value.Health=='Critical') %}
+                <td><img src='{{ url_for('static',filename='image/error16.png') }}'</td>
+            {% endif %}
+            </tr>
+            
+        {% endfor %}     
+                </table>
+            </div>
+
+            <h2>日志</h2>
+            <div class="mid_table_container">
+                
+                <table class="table2">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">时间</th>
+                        <th scope="col">内容</th>
+                        <th scope="col">传感器类型</th>
+                        <th scope="col">严重级别</th>
+                        
+                                      
+                    </tr>  
+            {% for key,value in single_host_detail.LogData.items() %}
+            
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ value.Created }}</td>
+                <td>{{ value.Message }}</td>
+                {% for e in value.SensorType %}
+                <td>{{ e.Member }}</td>
+                {% endfor %}
+                {% if (value.Severity=='OK') %}
+                <td><img src='{{ url_for('static',filename='image/hook16.png') }}'</td>
+                {% elif (value.Severity=='Warning') %}
+                    <td><img src='{{ url_for('static',filename='image/warn16.png') }}'</td>
+                {% elif (value.Severity=='Critical') %}
+                    <td><img src='{{ url_for('static',filename='image/error16.png') }}'</td>
+                {% endif %}
+
+
+            </tr>
+            
+        {% endfor %}             
+                </table>
+            </div>            
+        </div>
+    </div>
+
+
+
 
 {% endblock %}
+  </body>
+</html>
