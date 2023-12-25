@@ -12,29 +12,6 @@ urllib3.disable_warnings()
 
 
 
-# def api_call(url,user,password):
-#     try:
-#         response = requests.get(url,verify=False,auth=(user,password),timeout=12)
-#         if response.status_code==401:
-#             logger.error('connect to '+ url +' failed! status code:'+str(response.status_code)+',authentication failed!')
-#             sys.exit(0)
-#         elif  response.status_code==200:
-#             logger.info('Successfully connected to '+ url +'!')
-#             if response.json() is not None:
-#                 response_Data = response.json()
-#             else:
-#                 logger.error('response.json() is None')
-#                 response_Data={}
-#         elif not response.ok:
-#             logger.error('connect to '+ url +' failed! status code:'+str(response.status_code)+'!')
-#             response_Data={}
-#     except requests.exceptions.RequestException as e:
-#         logger.error("Access "+url+" Error:")
-#         logger.error(e)  
-#         response_Data={}
-#     finally:
-#         return response_Data
-
     
 def api_call(url,session):
     try:
