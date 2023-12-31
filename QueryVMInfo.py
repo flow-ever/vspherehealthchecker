@@ -410,6 +410,9 @@ def QueryVMsInfo(vchost,vcuser,vcpassword):
 
         # vm_perf_metric[]={}
 
+        vm_create_time=""
+        if not isinstance(vm.config.createDate,type(None)):
+            vm_create_time=vm.config.createDate.strftime("%m/%d/%Y, %H:%M:%S")
 
 
         vmindex=[
@@ -459,7 +462,7 @@ def QueryVMsInfo(vchost,vcuser,vcpassword):
             vm.config.tools.syncTimeWithHost,
             vm.config.tools.toolsVersion,
             vmtools_status_check(vm),
-            vm.config.createDate.strftime("%m/%d/%Y, %H:%M:%S"),
+            vm_create_time,
             #  vm.config.files,
             vm.config.guestFullName,
             vm.guest.guestFullName,

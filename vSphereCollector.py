@@ -57,15 +57,15 @@ logger.info(app.name+" 开始运行")
 
 data_dir=os.path.join(os.getcwd(),'data')
 log_dir=os.path.join(data_dir,'log')
-if not os.path.exists(data_dir):
+if os.path.exists(data_dir):
+   logger.error('delte legacy data dir')
+   os.rmdir(data_dir)
    os.mkdir(data_dir)
    logger.info("创建文件夹："+data_dir)
-# else:
-#     try:
-#         shutil.rmtree(data_dir)
-#         os.mkdir(data_dir)
-#     except OSError as e:
-#        logger.error("删除 "+data_dir+" 出错,错误原因："+str(e))
+else:
+   os.mkdir(data_dir)
+   logger.info("创建文件夹："+data_dir)
+
        
 
 if not os.path.exists(log_dir):
@@ -571,12 +571,21 @@ def show_vcenter():
     with open(vcsa_file[0],'r') as f:
       data=f.readlines()
     f.close()
+  elif isinstance(vcsa_file,bool):
+     print('没有找到VCSA虚拟机文件')
+     logger.error('没有找到VCSA虚拟机文件')
+     sys.exit(0)
 
   alarm_file=file_search(data_dir,'alarm-','.json')
   if len(alarm_file)==1:
     with open(alarm_file[0],'r') as f:
       alarm_list=json.load(f)
     f.close()
+  elif isinstance(vcsa_file,bool):
+     print('没有找到告警文件')
+     logger.error('没有找到告警文件')
+     sys.exit(0)
+
   alarm_acked=0
   alrm_noacked=0
   for alarm in alarm_list:
