@@ -138,3 +138,27 @@
 20231225 10:04:52 - main_logger - INFO - vSphereCollector 开始运行
 20231225 10:04:53 - main_logger - INFO - vSphereCollector 开始运行
 20231225 10:07:57 - main_logger - INFO - vSphereCollector 开始运行
+20240102 14:44:08 - main_logger - INFO - vSphereCollector 开始运行
+20240102 14:44:08 - main_logger - ERROR - delte legacy data dir
+20240102 14:44:31 - main_logger - INFO - vSphereCollector 开始运行
+20240102 14:44:31 - main_logger - INFO - 创建文件夹：D:\OneDrive\Documents\Py_project\vspherehealthcheck\data
+20240102 14:44:31 - main_logger - INFO - 创建文件夹：D:\OneDrive\Documents\Py_project\vspherehealthcheck\data
+20240102 14:44:34 - main_logger - INFO - vSphereCollector 开始运行
+20240102 14:44:34 - main_logger - ERROR - delte legacy data dir
+20240102 14:45:27 - main_logger - INFO - vSphereCollector 开始运行
+20240102 14:45:27 - main_logger - ERROR - delte legacy data dir
+20240102 15:11:52 - main_logger - INFO - vSphereCollector 开始运行
+20240102 15:11:52 - main_logger - INFO - vSphereCollector 开始运行
+20240102 15:13:34 - main_logger - INFO - __mp_main__ 开始运行
+20240102 15:13:34 - main_logger - INFO - 创建文件夹：D:\OneDrive\Documents\Py_project\vspherehealthcheck\data
+20240102 15:13:34 - main_logger - INFO - 创建文件夹：D:\OneDrive\Documents\Py_project\vspherehealthcheck\data
+20240102 15:13:34 - main_logger - INFO - __mp_main__ 开始运行
+20240102 15:13:34 - main_logger - INFO - __mp_main__ 开始运行
+20240102 15:13:34 - main_logger - INFO - __mp_main__ 开始运行
+20240102 15:16:19 - main_logger - INFO - IPMI信息收集开启
+20240102 15:16:20 - main_logger - INFO - __mp_main__ 开始运行
+20240102 15:16:20 - main_logger - INFO - __mp_main__ 开始运行
+20240102 15:16:20 - main_logger - INFO - __mp_main__ 开始运行
+20240102 15:16:20 - main_logger - INFO - __mp_main__ 开始运行
+20240102 15:23:30 - main_logger - INFO - vSphereCollector 开始运行
+20240102 15:26:52 - main_logger - INFO - vSphereCollector 开始运行

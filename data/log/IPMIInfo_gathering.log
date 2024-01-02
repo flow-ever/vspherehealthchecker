@@ -1,0 +1,99 @@
+20240102 15:16:20 - ipmi_logger - INFO - 登录主机：192.168.10.232 获取IPMI日志信息。
+20240102 15:16:20 - ipmi_logger - INFO - 登录主机：192.168.10.231 获取IPMI日志信息。
+20240102 15:16:20 - ipmi_logger - INFO - 登录主机：192.168.10.237 获取IPMI日志信息。
+20240102 15:16:20 - ipmi_logger - INFO - 登录主机：192.168.10.230 获取IPMI日志信息。
+20240102 15:24:24 - ipmi_logger - INFO - 登录主机：192.168.10.230 获取IPMI日志信息。
+20240102 15:26:56 - ipmi_logger - INFO - 登录主机：192.168.10.230 获取IPMI日志信息。
+20240102 15:27:00 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1!
+20240102 15:27:03 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.1A!
+20240102 15:27:07 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.1B!
+20240102 15:27:11 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.2A!
+20240102 15:27:15 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.2B!
+20240102 15:27:21 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.3A!
+20240102 15:27:25 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.3B!
+20240102 15:27:29 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.4A!
+20240102 15:27:32 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.4B!
+20240102 15:27:36 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.5A!
+20240102 15:27:40 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.5B!
+20240102 15:27:46 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.6A!
+20240102 15:27:50 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.6B!
+20240102 15:27:56 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Chassis/System.Embedded.1/Power/PowerSupplies/PSU.Slot.1!
+20240102 15:28:00 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Chassis/System.Embedded.1/Power/PowerSupplies/PSU.Slot.2!
+20240102 15:28:03 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Memory!
+20240102 15:28:07 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Memory/iDRAC.Embedded.1%23DIMMSLOTA1!
+20240102 15:28:13 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Memory/iDRAC.Embedded.1%23DIMMSLOTA2!
+20240102 15:28:17 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Memory/iDRAC.Embedded.1%23DIMMSLOTA3!
+20240102 15:28:21 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Memory/iDRAC.Embedded.1%23DIMMSLOTA4!
+20240102 15:28:25 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Memory/iDRAC.Embedded.1%23DIMMSLOTB1!
+20240102 15:28:29 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Memory/iDRAC.Embedded.1%23DIMMSLOTB2!
+20240102 15:28:33 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Memory/iDRAC.Embedded.1%23DIMMSLOTB3!
+20240102 15:28:39 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Memory/iDRAC.Embedded.1%23DIMMSLOTB4!
+20240102 15:28:42 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/NetworkInterfaces!
+20240102 15:28:46 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/NetworkInterfaces/NIC.Embedded.1!
+20240102 15:28:50 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/NetworkInterfaces/NIC.Embedded.1/NetworkPorts!
+20240102 15:28:53 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/NetworkAdapters/NIC.Embedded.1/NetworkPorts/NIC.Embedded.1-1!
+20240102 15:28:57 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/NetworkAdapters/NIC.Embedded.2/NetworkPorts/NIC.Embedded.2-1!
+20240102 15:29:01 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/NetworkAdapters/NIC.Embedded.3/NetworkPorts/NIC.Embedded.3-1!
+20240102 15:29:07 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/NetworkAdapters/NIC.Embedded.4/NetworkPorts/NIC.Embedded.4-1!
+20240102 15:29:11 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Processors!
+20240102 15:29:14 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Processors/CPU.Socket.1!
+20240102 15:29:18 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Processors/CPU.Socket.2!
+20240102 15:29:22 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Storage!
+20240102 15:29:31 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Storage/RAID.Integrated.1-1!
+20240102 15:29:35 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Storage/AHCI.Embedded.1-1!
+20240102 15:29:39 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Storage/AHCI.Embedded.2-1!
+20240102 15:29:42 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Storage/Drives/Disk.Bay.0:Enclosure.Internal.0-1:RAID.Integrated.1-1!
+20240102 15:29:46 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Storage/Drives/Disk.Bay.1:Enclosure.Internal.0-1:RAID.Integrated.1-1!
+20240102 15:29:50 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Storage/Drives/Disk.Bay.2:Enclosure.Internal.0-1:RAID.Integrated.1-1!
+20240102 15:29:53 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Systems/System.Embedded.1/Storage/Drives/Disk.Bay.3:Enclosure.Internal.0-1:RAID.Integrated.1-1!
+20240102 15:30:00 - ipmi_logger - INFO - Successfully connected to https://192.168.10.230/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel!
+20240102 15:30:00 - ipmi_logger - INFO - create file:D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\ipmi-192.168.10.230-20240102152656.json
+20240102 15:30:00 - ipmi_logger - INFO - write data to json file:D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\ipmi-192.168.10.230-20240102152656.json
+20240102 15:30:00 - ipmi_logger - INFO - the information acquisition of ipmi host(s) is finished!
+20240102 15:50:22 - ipmi_logger - INFO - 登录主机：192.168.10.231 获取IPMI日志信息。
+20240102 15:50:27 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1!
+20240102 15:50:32 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.1A!
+20240102 15:50:36 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.1B!
+20240102 15:50:43 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.2A!
+20240102 15:50:47 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.2B!
+20240102 15:50:52 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.3A!
+20240102 15:50:57 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.3B!
+20240102 15:51:01 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.4A!
+20240102 15:51:05 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.4B!
+20240102 15:51:11 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.5A!
+20240102 15:51:16 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.5B!
+20240102 15:51:20 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.6A!
+20240102 15:51:24 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Chassis/System.Embedded.1/Sensors/Fans/0x17%7C%7CFan.Embedded.6B!
+20240102 15:51:31 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Chassis/System.Embedded.1/Power/PowerSupplies/PSU.Slot.1!
+20240102 15:51:37 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Chassis/System.Embedded.1/Power/PowerSupplies/PSU.Slot.2!
+20240102 15:51:42 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Memory!
+20240102 15:51:46 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Memory/iDRAC.Embedded.1%23DIMMSLOTA1!
+20240102 15:51:50 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Memory/iDRAC.Embedded.1%23DIMMSLOTA2!
+20240102 15:51:55 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Memory/iDRAC.Embedded.1%23DIMMSLOTA3!
+20240102 15:52:02 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Memory/iDRAC.Embedded.1%23DIMMSLOTA4!
+20240102 15:52:06 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Memory/iDRAC.Embedded.1%23DIMMSLOTB1!
+20240102 15:52:10 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Memory/iDRAC.Embedded.1%23DIMMSLOTB2!
+20240102 15:52:15 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Memory/iDRAC.Embedded.1%23DIMMSLOTB3!
+20240102 15:52:19 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Memory/iDRAC.Embedded.1%23DIMMSLOTB4!
+20240102 15:52:24 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/NetworkInterfaces!
+20240102 15:52:31 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/NetworkInterfaces/NIC.Embedded.1!
+20240102 15:52:35 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/NetworkInterfaces/NIC.Embedded.1/NetworkPorts!
+20240102 15:52:39 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/NetworkAdapters/NIC.Embedded.1/NetworkPorts/NIC.Embedded.1-1!
+20240102 15:52:44 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/NetworkAdapters/NIC.Embedded.2/NetworkPorts/NIC.Embedded.2-1!
+20240102 15:52:48 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/NetworkAdapters/NIC.Embedded.3/NetworkPorts/NIC.Embedded.3-1!
+20240102 15:52:55 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/NetworkAdapters/NIC.Embedded.4/NetworkPorts/NIC.Embedded.4-1!
+20240102 15:53:01 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Processors!
+20240102 15:53:06 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Processors/CPU.Socket.1!
+20240102 15:53:10 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Processors/CPU.Socket.2!
+20240102 15:53:14 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Storage!
+20240102 15:53:20 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Storage/RAID.Integrated.1-1!
+20240102 15:53:25 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Storage/AHCI.Embedded.1-1!
+20240102 15:53:29 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Storage/AHCI.Embedded.2-1!
+20240102 15:53:34 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Storage/Drives/Disk.Bay.0:Enclosure.Internal.0-1:RAID.Integrated.1-1!
+20240102 15:53:38 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Storage/Drives/Disk.Bay.1:Enclosure.Internal.0-1:RAID.Integrated.1-1!
+20240102 15:53:42 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Storage/Drives/Disk.Bay.2:Enclosure.Internal.0-1:RAID.Integrated.1-1!
+20240102 15:53:48 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Systems/System.Embedded.1/Storage/Drives/Disk.Bay.3:Enclosure.Internal.0-1:RAID.Integrated.1-1!
+20240102 15:53:53 - ipmi_logger - INFO - Successfully connected to https://192.168.10.231/redfish/v1/Managers/iDRAC.Embedded.1/Logs/Sel!
+20240102 15:53:53 - ipmi_logger - INFO - create file:D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\ipmi-192.168.10.231-20240102155022.json
+20240102 15:53:53 - ipmi_logger - INFO - write data to json file:D:\OneDrive\Documents\Py_project\vspherehealthcheck\data\ipmi-192.168.10.231-20240102155022.json
+20240102 15:53:53 - ipmi_logger - INFO - the information acquisition of ipmi host(s) is finished!
