@@ -14,6 +14,7 @@ from QueryVMInfo import QueryVMsInfo
 from DellPowerEdgeQuery import QueryiDRAC
 
 
+
 from flask import Flask,render_template,request,Response,redirect,url_for
 
 class MyEncoder(json.JSONEncoder):
@@ -57,12 +58,7 @@ logger.info(app.name+" 开始运行")
 
 data_dir=os.path.join(os.getcwd(),'data')
 log_dir=os.path.join(data_dir,'log')
-if os.path.exists(data_dir):
-   logger.error('delte legacy data dir')
-   os.rmdir(data_dir)
-   os.mkdir(data_dir)
-   logger.info("创建文件夹："+data_dir)
-else:
+if not os.path.exists(data_dir):
    os.mkdir(data_dir)
    logger.info("创建文件夹："+data_dir)
 
@@ -426,15 +422,20 @@ def ipmi_data_merge():
    ipmi_merge_file=os.path.join(data_dir,'hosts_hardware_info.json')
    ipmi_files=file_search(data_dir,'ipmi','json')
 
-   for file in ipmi_files:
-      print(file)
-      with open(file,'r') as f:
-        host_ipmi_data=json.load(f)
-      all_hosts_ipmi_data.append(host_ipmi_data[0])
-   with open(ipmi_merge_file,'w') as f:
-      json.dump(all_hosts_ipmi_data,f,indent=4,ensure_ascii=False,default=str) 
-   f.close()
-   return os.path.join(data_dir,ipmi_merge_file)
+   if not ipmi_files:
+      ##ipmi 文件不存在
+      return False
+   else:
+      for file in ipmi_files:
+          print(file)
+          with open(file,'r') as f:
+            host_ipmi_data=json.load(f)
+          all_hosts_ipmi_data.append(host_ipmi_data[0])
+      with open(ipmi_merge_file,'w') as f:
+          json.dump(all_hosts_ipmi_data,f,indent=4,ensure_ascii=False,default=str) 
+      f.close()
+      return os.path.join(data_dir,ipmi_merge_file)
+
 
 def show_ipmi_data(file):
    with open(file,'r') as f:
