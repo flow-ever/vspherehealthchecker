@@ -1,0 +1,12 @@
+20240104 18:28:26 - DC_logger - INFO - 开始收集Datacenter信息!
+20240104 18:28:26 - DC_logger - INFO - 开始收集Datacenter：Datacenter 信息
+20240104 18:28:26 - DC_logger - INFO - 开始收集esxi主机信息：192.168.0.221
+20240104 18:28:26 - DC_logger - INFO - 开始收集esxi主机192.168.0.221证书信息：
+20240104 18:28:31 - DC_logger - INFO - 开始收集esxi主机信息：192.168.0.222
+20240104 18:28:31 - DC_logger - INFO - 开始收集esxi主机192.168.0.222证书信息：
+20240104 18:28:37 - DC_logger - INFO - 开始收集esxi主机信息：192.168.0.223
+20240104 18:28:37 - DC_logger - INFO - 开始收集esxi主机192.168.0.223证书信息：
+20240104 18:28:46 - DC_logger - INFO - 开始收集集群：Cluster HA信息
+20240104 18:28:47 - DC_logger - INFO - 开始收集集群：Cluster DRS信息
+20240104 18:28:47 - DC_logger - INFO - 开始收集集群：Cluster EVC信息
+20240104 18:28:47 - DC_logger - INFO - 开始收集集群：Cluster VSAN信息

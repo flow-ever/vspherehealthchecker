@@ -3,7 +3,7 @@ import os
 import json
 import datetime
 import logging
-from pyVim.connect import Disconnect,SmartConnectNoSSL
+from pyVim.connect import Disconnect,SmartConnect
 import atexit
 import sys
 import vsanmgmtObjects
@@ -13,6 +13,7 @@ from decimal import Decimal
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
 import pytz
+import ssl
 
 # vc 11
 # -- --
@@ -27,7 +28,23 @@ import pytz
 #                                 va--vapp
 #                                 nw--network
 #                                 ds--datastore
+cwd = os.getcwd()
+data_dir=os.path.join(cwd,'data')
+log_dir=os.path.join(data_dir,'log')
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir)
 
+current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+dc_json_file=os.path.join(data_dir,"dc-"+current_time+".json")
+
+logfile_path=os.path.join(log_dir,"dcInfo_gathering.log")
+log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
+logger=logging.getLogger('DC_logger')
+fh=logging.FileHandler(filename=logfile_path,mode='w')
+fh.setLevel(logging.INFO)
+fh.setFormatter(log_formatter)
+logger.addHandler(fh)
+logger.setLevel(logging.INFO)
 
 
 def str2list(string):
@@ -36,7 +53,8 @@ def str2list(string):
 
 def establish_connection(vchost,vcuser,vcpassword):
     try:
-        si = SmartConnectNoSSL(host=vchost, user=vcuser, pwd=vcpassword)
+        context = ssl._create_unverified_context()
+        si = SmartConnect(host=vchost, user=vcuser, pwd=vcpassword,sslContext=context)
         atexit.register(Disconnect, si)
         return si
     except Exception as e:
@@ -205,19 +223,6 @@ def get_all_objs(content, vimtype):
     return obj
 
 def QueryDCsInfo(vchost,vcuser,vcpassword):
-    cwd = os.getcwd()
-    current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-    dc_json_file=os.path.join(cwd,'data',"dc-"+current_time+".json")
-
-    logfile_path=os.path.join(cwd,'data','log',"dcInfo_gathering.log")
-    log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
-    logger=logging.getLogger('DC_logger')
-    fh=logging.FileHandler(filename=logfile_path,mode='w')
-    fh.setLevel(logging.INFO)
-    fh.setFormatter(log_formatter)
-    logger.addHandler(fh)
-    logger.setLevel(logging.INFO)
-
     si=establish_connection(vchost,vcuser,vcpassword)
     content=si.content
     print("Gathering vSphere Datacenters information")
