@@ -5,31 +5,49 @@ import socket
 import sys
 import time
 import logging
-
+import mysql.connector
+from mysql.connector import errorcode
 
 
 
 # paramiko.util.log_to_file( 'ssh.log' )
 
-# cmds=[]
+cwd = os.getcwd()
+current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+vcsa_json_file=os.path.join(cwd,'data',"vcsa-"+current_time+".log")   
+logfile_path=os.path.join(cwd,'data','log',"vcsaInfo_gathering.log")
 
+log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
+logger=logging.getLogger('vcsa_logger')
+fh=logging.FileHandler(filename=logfile_path,mode='a')
+fh.setLevel(logging.INFO)
+fh.setFormatter(log_formatter)
+logger.addHandler(fh)
+logger.setLevel(logging.INFO)
 
+def connectdb(db_host,db_user,db_passwd,db_name):
+    try:
+        mydb = mysql.connector.connect(host=db_host,user=db_user,password=db_passwd,database=db_name)
+        logger.info('Succesfully connect DB HOST:'+db_host)
+        return mydb
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Invalid username or password")
+            logger.error("Invalid username or password to connect to "+db_host)
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database "+ db_name +" does not exist")
+            logger.error("Database "+ db_name +" does not exist")
+        elif err.errno == errorcode.CR_SERVER_GONE_ERROR:
+            print("Server "+ db_host +" is unavailable")
+            logger.error("Server "+ db_host +" is unavailable")
+        else:
+            print("Unknown connection error:", err)
+            logger.error("Unknown connection error:", err)
+        return err.errno
 
 # print("write retrieved information abouts vcenter Server in to json file {}".format(vcsa_json_file))
 
 def QueryVCSAInfo(vchost,rootPassword):
-    cwd = os.getcwd()
-    current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-    vcsa_json_file=os.path.join(cwd,'data',"vcsa-"+current_time+".log")   
-    logfile_path=os.path.join(cwd,'data','log',"vcsaInfo_gathering.log")
-
-    log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
-    logger=logging.getLogger('vcsa_logger')
-    fh=logging.FileHandler(filename=logfile_path,mode='a')
-    fh.setLevel(logging.INFO)
-    fh.setFormatter(log_formatter)
-    logger.addHandler(fh)
-    logger.setLevel(logging.INFO)
     
     logger.info("开始收集VCSA虚拟机内部信息")
     cmd_enable_shell='shell.set --enabled true\n'
