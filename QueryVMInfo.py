@@ -5,22 +5,60 @@ from pyVmomi import vim
 import re
 import json
 import logging
-from pyVim.connect import  Disconnect,SmartConnectNoSSL
+from pyVim.connect import  Disconnect,SmartConnect
 import atexit
 import sys
+import ssl
+import mysql.connector
+from mysql.connector import errorcode
 
+
+cwd = os.getcwd()
+current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+vm_json_file=os.path.join(cwd,'data',"vms-"+current_time+".json")
+
+logfile_path=os.path.join(cwd,'data','log',"vmsInfo_gathering.log")
+log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
+logger=logging.getLogger('vms_logger')
+fh=logging.FileHandler(filename=logfile_path,mode='a')
+fh.setLevel(logging.INFO)
+fh.setFormatter(log_formatter)
+logger.addHandler(fh)
+logger.setLevel(logging.INFO)   
+logger.info("The information acquisition of virtual machine(s) is started!")
+
+
+def connectdb(db_host,db_user,db_passwd,db_name):
+    try:
+        mydb = mysql.connector.connect(host=db_host,user=db_user,password=db_passwd,database=db_name)
+        logger.info('Succesfully connect DB HOST:'+db_host)
+        return mydb
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Invalid username or password")
+            logger.error("Invalid username or password to connect to "+db_host)
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database "+ db_name +" does not exist")
+            logger.error("Database "+ db_name +" does not exist")
+        elif err.errno == errorcode.CR_SERVER_GONE_ERROR:
+            print("Server "+ db_host +" is unavailable")
+            logger.error("Server "+ db_host +" is unavailable")
+        else:
+            print("Unknown connection error:", err)
+            logger.error("Unknown connection error:", err)
+        return err.errno
 
 
 def establish_connection(vchost,vcuser,vcpassword):
     try:
-        si = SmartConnectNoSSL(host=vchost, user=vcuser, pwd=vcpassword)
+        context = ssl._create_unverified_context()
+        si = SmartConnect(host=vchost, user=vcuser, pwd=vcpassword,sslContext=context)
         atexit.register(Disconnect, si)
         return si
     except Exception as e:
         print(f"Failed to connect to vCenter at {vchost}: {e}")
         logger.error(f"Failed to connect to vCenter at {vchost}: {e}")
         return None
-
 
 
 
@@ -290,23 +328,18 @@ def buildQuery(content, vchtime, counternames, instance, obj):
         print(query)
         exit()
 
-def QueryVMsInfo(vchost,vcuser,vcpassword): 
-    cwd = os.getcwd()
-    current_time=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
-    vm_json_file=os.path.join(cwd,'data',"vms-"+current_time+".json")
+def QueryVMsInfo(vchost,vcuser,vcpassword,db_host,db_user,db_passwd,db_name): 
 
-    logfile_path=os.path.join(cwd,'data','log',"vmsInfo_gathering.log")
-    log_formatter=logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s','%Y%m%d %H:%M:%S')
-    logger=logging.getLogger('vms_logger')
-    fh=logging.FileHandler(filename=logfile_path,mode='a')
-    fh.setLevel(logging.INFO)
-    fh.setFormatter(log_formatter)
-    logger.addHandler(fh)
-    logger.setLevel(logging.INFO)   
-    logger.info("The information acquisition of virtual machine(s) is started!")
     vmlist=[]
     si=establish_connection(vchost,vcuser,vcpassword)
     content=si.content    
+
+    mydb=connectdb(db_host,db_user,db_passwd,db_name)
+    if isinstance(mydb,mysql.connector.MySQLConnection):
+        mycursor = mydb.cursor()
+    else:        
+        logger.error('connect to '+db_host+" failed,error no:"+str(mydb))
+        raise ValueError('connect to '+db_host+" failed,error no:"+str(mydb))
 
     getallvms=get_all_objs(content,[vim.VirtualMachine])
     for vm in getallvms:
@@ -492,11 +525,75 @@ def QueryVMsInfo(vchost,vcuser,vcpassword):
             oldest_snap_createTime,
             vm_perf_metrics,       
             ]
+        
+        sql='insert into vsphere_vms(Display_name,DNS_name,powerState,isTemplate,isSyncTimeWithHost,toolsVersion,tools_status,createDate,config_guestFullName,VMwareTools_guestFullName,numCPU,numCoresPerSocket,cpuHotAddEnabled,memoryMB,\
+            memoryHotAddEnabled,TotalUsedSpace,TotalProvisionedSpace,uuid,hardwareVersion,datastores,vmPath,bootOrder,bootDelay,firmware,bootTime,consolidationNeeded,guestState,guestHeartbeatStatus,esxihostname,guest_ipAddress,Snapshot_num,oldest_snap_createTime) \
+            values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+        val=(vm.config.name,vm.guest.hostName,str(vm.runtime.powerState),vm.config.template,vm.config.tools.syncTimeWithHost,vm.config.tools.toolsVersion,vmtools_status_check(vm),vm_create_time,\
+                vm.config.guestFullName,vm.guest.guestFullName,vm.config.hardware.numCPU,vm.config.hardware.numCoresPerSocket,vm.config.cpuHotAddEnabled,vm.config.hardware.memoryMB,vm.config.memoryHotAddEnabled,\
+                TotalUsedSpace,TotalProvisionedSpace,vm.config.uuid,vm.config.version,'|'.join(datastores), vm.summary.config.vmPathName,'|'.join(vm.config.bootOptions.bootOrder),vm.config.bootOptions.bootDelay,vm.config.firmware, \
+                boot_time,vm.runtime.consolidationNeeded,vm.guest.guestState,str(vm.guestHeartbeatStatus),vm.runtime.host.name,vm.guest.ipAddress,len(snap_createTime),oldest_snap_createTime)
+        print(val)
+        try:
+            mycursor.execute(sql,val)
+            mydb.commit()
+            logger.info(sql+" "+str(val))
+        except mysql.connector.Error as err:
+            
+            print("Error:", err)
+            logger.error("Error:", err)
+            print(sql,val)
+            mydb.rollback() 
+
+        #虚拟机磁盘信息写入数据库
+        for disk in vm_disk_info:
+            print(disk)
+            sql='insert into vsphere_vms_disks(Display_name,uuid,disk_name,disk_path,used_disk_size,disk_snap_num,disk_snap_size,provisioned_disk_size) \
+                values (%s,%s,%s,%s,%s,%s,%s,%s)'
+            val=(vm.config.name,vm.config.uuid,disk['disk_name'],disk['disk_path'],disk['used_disk_size'],disk['disk_snap_num'],disk['disk_snap_size'],disk.get('provisioned_disk_size'))  #VDI桌面没有provisioned_disk_size属性，返回None            
+            print(val)
+            try:
+                mycursor.execute(sql,val)
+                mydb.commit()
+                logger.info(sql+" "+str(val))
+            except mysql.connector.Error as err:
+                
+                print("Error:", err)
+                logger.error("Error:", err)
+                print(sql,val)
+                mydb.rollback() 
+
+        #虚拟机网卡信息写入数据库
+        for vnic in vm_nics:
+            print(vnic)
+            sql='insert into vsphere_vms_vnics(Display_name,uuid,name,macAddress,vSwitch_name,portGroup,VLANID,connected) \
+                values (%s,%s,%s,%s,%s,%s,%s,%s)'
+            val=(vm.config.name,vm.config.uuid,vnic['name'],vnic['macAddress'],vnic['vSwitch_name'],vnic['portGroup'],vnic['VLANID'],vnic['connected'])
+            mycursor.execute(sql,val)
+        
+        #虚拟机性能数据写入数据库
+        if len(vm_perf_metrics)>0:
+            for metric in vm_perf_metrics:            
+                for i in range(len(metric['value'])):
+                    sql='insert into vsphere_vms_perf_metric(Display_name,uuid,counterId,countername,value,endtime) \
+                        values (%s,%s,%s,%s,%s,%s)'
+                    val=(vm.config.name,vm.config.uuid,metric['counterId'],metric['countername'],metric['value'][i],metric['endTime'][i])
+                    try:
+                        mycursor.execute(sql,val)
+                        mydb.commit()
+                        logger.info(sql+" "+str(val))
+                    except mysql.connector.Error as err:
+                        
+                        print("Error:", err)
+                        logger.error("Error:", err)
+                        print(sql,val)
+                        mydb.rollback() 
+
 
         for i in range(len(vmvalue)):
-            vm_info[vmindex[i]]=vmvalue[i]
+            vm_info[vmindex[i]]=vmvalue[i]            
         vmlist.append(vm_info)
-    
+
 
     
     with open(vm_json_file,'w') as f:
@@ -507,17 +604,21 @@ def QueryVMsInfo(vchost,vcuser,vcpassword):
 
 if __name__=="__main__":
     # Check if the command-line arguments are provided
-    if len(sys.argv) != 4:
-        print("Usage: "+ os.path.basename(__file__)+" <vchost> <vcuser> <vcpassword>")
+    if len(sys.argv) != 8:
+        print("Usage: "+ os.path.basename(__file__)+" <vchost> <vcuser> <vcpassword> <db_host> <db_user> <db_passwd> <db_name>")
         sys.exit(1)
 
     # Retrieve the arguments
     vchost = sys.argv[1]
     vcuser = sys.argv[2]
     vcpassword = sys.argv[3]
+    db_host = sys.argv[4]
+    db_user = sys.argv[5]
+    db_passwd = sys.argv[6]
+    db_name = sys.argv[7]
 
     # s = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
     # s.verify_mode = ssl.CERT_NONE
 
 
-    QueryVMsInfo(vchost=vchost,vcuser=vcuser,vcpassword=vcpassword)
+    QueryVMsInfo(vchost=vchost,vcuser=vcuser,vcpassword=vcpassword,db_host=db_host,db_user=db_user,db_passwd=db_passwd,db_name=db_name)

@@ -1,8 +1,9 @@
 import os
+from decimal import Decimal
 
-data_dir= os.path.join(os.getcwd(),'data')
-log_dir=os.path.join(data_dir,'log')
+x = round(5.76543, 1)
+print(x)
 
-if not os.path.exists(log_dir):
-    # os.mkdir(log_dir)
-    os.makedirs(log_dir)
+value=1.00023
+y=Decimal(value).quantize(Decimal('0'))
+print(y)

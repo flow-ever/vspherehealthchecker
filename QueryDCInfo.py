@@ -14,6 +14,8 @@ from cryptography import x509
 from cryptography.hazmat.backends import default_backend
 import pytz
 import ssl
+import mysql.connector
+from mysql.connector import errorcode
 
 # vc 11
 # -- --
@@ -46,6 +48,26 @@ fh.setFormatter(log_formatter)
 logger.addHandler(fh)
 logger.setLevel(logging.INFO)
 
+
+def connectdb(db_host,db_user,db_passwd,db_name):
+    try:
+        mydb = mysql.connector.connect(host=db_host,user=db_user,password=db_passwd,database=db_name)
+        logger.info('Succesfully connect DB HOST:'+db_host)
+        return mydb
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Invalid username or password")
+            logger.error("Invalid username or password to connect to "+db_host)
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database "+ db_name +" does not exist")
+            logger.error("Database "+ db_name +" does not exist")
+        elif err.errno == errorcode.CR_SERVER_GONE_ERROR:
+            print("Server "+ db_host +" is unavailable")
+            logger.error("Server "+ db_host +" is unavailable")
+        else:
+            print("Unknown connection error:", err)
+            logger.error("Unknown connection error:", err)
+        return err.errno
 
 def str2list(string):
     li=list(string.split(","))
@@ -222,12 +244,19 @@ def get_all_objs(content, vimtype):
         obj.append(managed_object_ref)
     return obj
 
-def QueryDCsInfo(vchost,vcuser,vcpassword):
+def QueryDCsInfo(vchost,vcuser,vcpassword,db_host,db_user,db_passwd,db_name):
     si=establish_connection(vchost,vcuser,vcpassword)
     content=si.content
     print("Gathering vSphere Datacenters information")
     logger.info("开始收集Datacenter信息!")
-
+    
+    mydb=connectdb(db_host,db_user,db_passwd,db_name)
+    if isinstance(mydb,mysql.connector.MySQLConnection):
+        mycursor = mydb.cursor()
+    else:        
+        logger.error('connect to '+db_host+" failed,error no:"+str(mydb))
+        raise ValueError('connect to '+db_host+" failed,error no:"+str(mydb))
+    
     vcenter={}
     vcenter['name']=vchost
     vcenter['id']='vc1'
@@ -245,6 +274,22 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
         dc_config['id']='dc'+str(dc_no)
         dc_config['path']=vcenter['path']+'-'+dc_config['id']
         dc_config['parent']=vcenter['id']
+
+        sql='insert into vsphere_datacenters(dc_id,name,path,type,parent) values (%s,%s,%s,%s,%s)'
+        val=( dc_config['id'], dc.name, dc_config['path'], dc_config['type'], dc_config['parent'] )
+        print(val)
+        try:
+            mycursor.execute(sql,val)
+            mydb.commit()
+            logger.info(sql+" "+str(val))
+        except mysql.connector.Error as err:
+            
+            print("Error:", err)
+            logger.error("Error:", err)
+            print(sql,val)
+            mydb.rollback()         
+
+
         sub_clusters=[]
         
         
@@ -260,6 +305,20 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                 vds['path']=dc_config['path']+'-'+vds['id']
                 vds['type']='network'
                 vds['parent']=dc_config['id']
+
+                sql='insert into vsphere_dvs(name,path,type,parent,connectedhosts,id) values (%s,%s,%s,%s,%s,%s)'
+                val=(vds['name'],vds.get('path'),dc_config['type'],vds['type'],vds['parent'],vds['id'])
+                print(val)
+                try:
+                    mycursor.execute(sql,val)
+                    mydb.commit()
+                    logger.info(sql+" "+str(val))
+                except mysql.connector.Error as err:                    
+                    print("Error:", err)
+                    logger.error("Error:", err)
+                    print(sql,val)
+                    mydb.rollback()  
+
                 
                 portgroups=[]
                 pg_no=0
@@ -298,6 +357,23 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
 
                     portgroup['uplink']=pg.config.uplink
                     portgroups.append(portgroup)
+
+                    sql='insert into vsphere_portgroups(pg_id,name,path,type,parent,vlan_id,uplinkTeamingPolicy_value,uplinkTeamingPolicy_inherited,uplinkPortOrder_activeUplinkPort,uplinkPortOrder_standbyUplinkPort,uplinkPortOrder_inherited,uplink) \
+                          values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+                    val=(portgroup['id'],portgroup['name'],portgroup['path'],'',portgroup['parent'],portgroup['vlan_id'],portgroup['uplinkTeamingPolicy']['value'],portgroup['uplinkTeamingPolicy']['inherited'],\
+                         '|'.join(portgroup['uplinkPortOrder']['activeUplinkPort']),'|'.join(portgroup['uplinkPortOrder']['standbyUplinkPort']),portgroup['uplinkPortOrder']['inherited'],portgroup['uplink'])
+                    print(val)
+                    try:
+                        mycursor.execute(sql,val)
+                        mydb.commit()
+                        logger.info(sql+" "+str(val))
+                    except mysql.connector.Error as err:
+                        
+                        print("Error:", err)
+                        logger.error("Error:", err)
+                        print(sql,val)
+                        mydb.rollback()  
+
                 vds['portgroups']=portgroups
                 
                 # for hostmember in cls.config.host:
@@ -316,6 +392,7 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
             ds_no+=1
             ds_info['id']='ds'+str(ds_no)
             ds_info['path']=dc_config['path']+'-'+ds_info['id']
+            ds_info['parent']=dc_config['id']
             ds_info['hosts']=ds.host #Hosts attached to this datastore.
             ds_info['vm']=ds.vm
             ds_info['maxVirtualDiskCapacity']=ds.info.maxVirtualDiskCapacity #The maximum capacity of a virtual disk which can be created on this volume.
@@ -326,6 +403,20 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
             ds_info['type']='datastore'
             ds_info['uncommited']=ds.summary.uncommitted if ds.summary.uncommitted else 0 #Total additional storage space, in bytes, potentially used by all virtual machines on this datastore. 
             ds_info['provisioned']=ds.summary.capacity-ds.summary.freeSpace+ds_info['uncommited']
+
+            sql='insert into vsphere_datastores(ds_id,name,path,type,parent,maxVirtualDiskCapacity,capacity,freeSpace,multipleHostAccess,fstype,uncommited,provisioned) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+            val=(ds_info['id'],ds_info['name'],ds_info['path'],ds_info['type'],ds_info['parent'],ds_info['maxVirtualDiskCapacity'],ds_info['capacity'],ds_info['freeSpace'],ds_info['multipleHostAccess'],ds_info['fstype'],ds_info['uncommited'],ds_info['provisioned'])
+            print(val)
+            try:
+                mycursor.execute(sql,val)
+                mydb.commit()
+                logger.info(sql+" "+str(val))
+            except mysql.connector.Error as err:
+                
+                print("Error:", err)
+                logger.error("Error:", err)
+                print(sql,val)
+                mydb.rollback()  
 
             datastores.append(ds_info)
 
@@ -469,6 +560,21 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                     host_basic_info['biosInfo']=sub_host.hardware.biosInfo.biosVersion+"|"+str(sub_host.hardware.biosInfo.releaseDate)
                     host_basic_info['esxi']=sub_host.config.product.fullName
                     host_basic_info['uptime']=Decimal(sub_host.summary.quickStats.uptime/3600).quantize(Decimal("0.0"))
+
+                    sql='insert into vsphere_hosts_basic_info(hostname,mgmtIP,vendor,model,sn,biosInfo,esxi,uptime) values (%s,%s,%s,%s,%s,%s,%s,%s)'
+                    val=(host['name'],host_basic_info['mgmtIP'],host_basic_info['vendor'],host_basic_info['model'],host_basic_info['sn'],host_basic_info['biosInfo'],host_basic_info['esxi'],host_basic_info['uptime'])
+                    print(val)
+                    try:
+                        mycursor.execute(sql,val)
+                        mydb.commit()
+                        logger.info(sql+" "+str(val))
+                    except mysql.connector.Error as err:
+                        
+                        print("Error:", err)
+                        logger.error("Error:", err)
+                        print(sql,val)
+                        mydb.rollback()  
+
                     host_BASIC.append(host_basic_info)
                     host['basic_info']=host_BASIC
 
@@ -487,13 +593,15 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                     host['bios_info']=host_BIOSINFO
                     #    print(host_bios_info) 
 
+ 
+
                     cpu_ram_config={}
                     #    cpu_ram_config['host']=host.summary.config.name
                     cpu_ram_config['cpuModel']=sub_host.summary.hardware.cpuModel
                     cpu_ram_config['cpuMhz']=sub_host.summary.hardware.cpuMhz
                     cpu_ram_config['numCpuCores']=sub_host.summary.hardware.numCpuCores
                     cpu_ram_config['numCpuThreads']=sub_host.summary.hardware.numCpuThreads
-                    cpu_ram_config['ramSize']=Decimal(sub_host.summary.hardware.memorySize/1024/1024/1024).quantize(Decimal("0.0"))
+                    cpu_ram_config['ramSize']=Decimal(sub_host.summary.hardware.memorySize/1024/1024/1024).quantize(Decimal("0"))
                     host_CPU_RAM_CONFIG.append(cpu_ram_config)
                     host['cpu_ram_config']=host_CPU_RAM_CONFIG
                     
@@ -502,11 +610,27 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                     cpu_ram_usage['consolidate_ratio']=Decimal(numvCPUs/sub_host.summary.hardware.numCpuCores).quantize(Decimal("0.0"))
                     cpu_ram_usage['cpu_usage']=Decimal(sub_host.summary.quickStats.overallCpuUsage/sub_host.summary.hardware.cpuMhz/sub_host.summary.hardware.numCpuCores).quantize(Decimal("0.000"))
                     cpu_ram_usage['ram_usage']=Decimal(sub_host.summary.quickStats.overallMemoryUsage*1024*1024/sub_host.summary.hardware.memorySize).quantize(Decimal("0.000"))
-                    #    print(cpu_ram_usage)
+                    
+
+                    # print(cpu_ram_usage)
 
                     host_CPU_RAM_USAGE.append(cpu_ram_usage)
                     host['cpu_ram_usage']=host_CPU_RAM_USAGE      
 
+                    sql='insert into vsphere_hosts_cpuram(hostname,cpumodel,cpuMhz,numCpuCores,numCpuThreads,ramSize,cpu_usage,ram_usage,consolidate_ratio) values (%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+                    val=(host['name'],cpu_ram_config['cpuModel'],cpu_ram_config['cpuMhz'],int(cpu_ram_config['numCpuCores']),int(cpu_ram_config['numCpuThreads']),cpu_ram_config['ramSize'],\
+                         cpu_ram_usage['cpu_usage'],cpu_ram_usage['ram_usage'],cpu_ram_usage['consolidate_ratio'])
+                    print(val)
+                    try:
+                        mycursor.execute(sql,val)
+                        mydb.commit()
+                        logger.info(sql+" "+str(val))
+                    except mysql.connector.Error as err:
+                        
+                        print("Error:", err)
+                        logger.error("Error:", err)
+                        print(sql,val)
+                        mydb.rollback() 
 
                     for ds in sub_host.datastore:
                             datastore={}
@@ -523,6 +647,21 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                             datastore['type']=ds.summary.type
                             
                             host_STORAGE_DS.append(datastore)
+
+                            sql='insert into vsphere_hosts_datastores(hostname,datatore_name,capacity_gb,free_space_gb,multipleHostAccess,fstype) values (%s,%s,%s,%s,%s,%s)'
+                            val=(host['name'],datastore['datatore name'],datastore['capacity'],datastore['free space'],datastore['multipleHostAccess'],datastore['type'])
+                            print(val)
+                            try:
+                                mycursor.execute(sql,val)
+                                mydb.commit()
+                                logger.info(sql+" "+str(val))
+                            except mysql.connector.Error as err:
+                                
+                                print("Error:", err)
+                                logger.error("Error:", err)
+                                print(sql,val)
+                                mydb.rollback()  
+
                     host['datastores']=host_STORAGE_DS
 
 
@@ -543,6 +682,21 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                             hba['driver']=adpt.driver
                             hba['protocol']=adpt.storageProtocol
                             host_STORAGE_HBA.append(hba)
+
+                            sql='insert into vsphere_hosts_hbas(hostname,name,model,driver,protocol) values (%s,%s,%s,%s,%s)'
+                            val=(host['name'],hba['name'],hba['model'],hba['driver'],hba['protocol'])
+                            print(val)
+                            try:
+                                mycursor.execute(sql,val)
+                                mydb.commit()
+                                logger.info(sql+" "+str(val))
+                            except mysql.connector.Error as err:
+                                
+                                print("Error:", err)
+                                logger.error("Error:", err)
+                                print(sql,val)
+                                mydb.rollback() 
+
                     host['hbas']=host_STORAGE_HBA
                     
                     
@@ -555,6 +709,20 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                             scsilun['lunType']=scsi_lun.lunType
                             scsilun['model']=scsi_lun.model
                             host_STORAGE_LUN.append(scsilun)
+
+                            sql='insert into vsphere_hosts_lun(hostname,displayname,luntype,model) values (%s,%s,%s,%s)'
+                            val=(host['name'],scsilun['displayName'],scsilun['lunType'],scsilun['model'])
+                            print(val)
+                            try:
+                                mycursor.execute(sql,val)
+                                mydb.commit()
+                                logger.info(sql+" "+str(val))
+                            except mysql.connector.Error as err:
+                                
+                                print("Error:", err)
+                                logger.error("Error:", err)
+                                print(sql,val)
+                                mydb.rollback() 
                     host['scsi_lun']=host_STORAGE_LUN   
 
 
@@ -566,6 +734,21 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                         multipath['path name']=path.name
                         multipath['path state']=path.pathState
                         host_STORAGE_MULTIPATH.append(multipath)
+
+                        sql='insert into vsphere_hosts_multipaths(hostname,pathname,pathstate) values (%s,%s,%s)'
+                        val=(host['name'],multipath['path name'],multipath['path state'])
+                        print(val)
+                        try:
+                            mycursor.execute(sql,val)
+                            mydb.commit()
+                            logger.info(sql+" "+str(val))
+                        except mysql.connector.Error as err:
+                            
+                            print("Error:", err)
+                            logger.error("Error:", err)
+                            print(sql,val)
+                            mydb.rollback() 
+
                     host['multipaths']=host_STORAGE_MULTIPATH
                     
                     # for vsw in host.config.network.vswitch:
@@ -602,9 +785,37 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                                 p_nic['speedMb']=""
                                 p_nic['duplex']=""
                             host_PNIC.append(p_nic)
+
+                            sql='insert into vsphere_hosts_pnics(hostname,name,mac,driver,autoNego,SpeedMb,duplex) values (%s,%s,%s,%s,%s,%s,%s)'
+                            val=(host['name'],p_nic['name'],p_nic['mac'],p_nic['driver'],p_nic['autoNego'],p_nic['speedMb'],p_nic['duplex'])
+                            print(val)
+                            try:
+                                mycursor.execute(sql,val)
+                                mydb.commit()
+                                logger.info(sql+" "+str(val))
+                            except mysql.connector.Error as err:
+                                
+                                print("Error:", err)
+                                logger.error("Error:", err)
+                                print(sql,val)
+                                mydb.rollback() 
                     host['pnics']=host_PNIC       
                         
                     host['vnics']=get_host_vnics(sub_host)
+                    for vnic in host['vnics']:
+                        sql='insert into vsphere_hosts_vnics(hostname,name,mac,portgroup,dhcp,ipaddress,subnetmask,mtu) values (%s,%s,%s,%s,%s,%s,%s,%s)'
+                        val=(host['name'],vnic['device'],vnic['mac'],vnic['portgroup'],vnic['dhcp'],vnic['ipAddress'],vnic['subnetMask'],vnic['mtu'])
+                        print(val)
+                        try:
+                            mycursor.execute(sql,val)
+                            mydb.commit()
+                            logger.info(sql+" "+str(val))
+                        except mysql.connector.Error as err:
+                            
+                            print("Error:", err)
+                            logger.error("Error:", err)
+                            print(sql,val)
+                            mydb.rollback()                       
                     
                     CPU_disk_metrics=[]
                     network_metrics=[]
@@ -648,6 +859,21 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                                     metric_time.append((endTime-datetime.timedelta(seconds=i*20)).strftime("%m/%d/%Y %H:%M:%S"))
                                 metric_time.reverse()
                                 network_metric['endTime']=metric_time
+
+                                for i in range(len(network_metric["value"])):
+                                    sql='insert into vsphere_hosts_network_metrics(hostname,countername,counterId,endtime,instance,value) \
+                                        values (%s,%s,%s,%s,%s,%s)'
+                                    val=(host['name'],network_metric["countername"],network_metric["counterId"],network_metric['endTime'][i],network_metric.get("instance"),network_metric["value"][i])
+                                    try:
+                                        mycursor.execute(sql,val)
+                                        mydb.commit()
+                                        logger.info(sql+" "+str(val))
+                                    except mysql.connector.Error as err:
+                                        
+                                        print("Error:", err)
+                                        logger.error("Error:", err)
+                                        print(sql,val)
+                                        mydb.rollback() 
                                 network_metrics.append(network_metric)
                     #    print(network_metrics)
                     host['network_metrics']=network_metrics               
@@ -667,9 +893,9 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                                     metric["counterId"]=v.id.counterId
                                     metric["countername"]=counterID2Name(content,v.id.counterId)
                                     if v.id.counterId==6:
-                                        metric["value"]=[Decimal(value*100/(sub_host.summary.hardware.numCpuCores*sub_host.summary.hardware.cpuMhz)).quantize(Decimal(0.00)) for value in v.value]
+                                        metric["value"]=[Decimal(value*100/(sub_host.summary.hardware.numCpuCores*sub_host.summary.hardware.cpuMhz)).quantize(Decimal('0.00')) for value in v.value]
                                     elif v.id.counterId==12:
-                                        metric["value"]=[Decimal(value*100/(20*1000)).quantize(Decimal(0.00)) for value in v.value]
+                                        metric["value"]=[Decimal(value*100/(20*1000)).quantize(Decimal('0.00')) for value in v.value]
                                     else:
                                         metric["value"]=[value for value in v.value]
                                     metric_time=[]
@@ -678,13 +904,42 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                                         metric_time.append((endTime-datetime.timedelta(seconds=i*20)).strftime("%m/%d/%Y %H:%M:%S"))
                                     metric_time.reverse()    
                                     metric['endTime']=metric_time
+
+                                    for i in range(len(metric["value"])):
+                                        sql='insert into vsphere_hosts_cpu_disk_metrics(hostname,countername,counterId,endtime,value) \
+                                            values (%s,%s,%s,%s,%s)'
+                                        val=(host['name'],metric["countername"],metric["counterId"],metric['endTime'][i],metric["value"][i])
+                                        try:
+                                            mycursor.execute(sql,val)
+                                            mydb.commit()
+                                            logger.info(sql+" "+str(val))
+                                        except mysql.connector.Error as err:
+                                            
+                                            print("Error:", err)
+                                            logger.error("Error:", err)
+                                            print(sql,val)
+                                            mydb.rollback()
                                     CPU_disk_metrics.append(metric)
                     #    print(CPU_disk_metrics)
                     host['CPU_disk_metrics']=CPU_disk_metrics
 
                     hosts.append(host)
+                    if len(hosts)>0:
+                        sql='insert into vsphere_hosts(host_id,name,path,type,parent,timezone,deviation,cert_subject,cert_signdate,cert_expireddate,ntp_servers,numvms,numpoweronvms) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+                        val=(host['id'],host['name'],host['path'],'host',host['parent'],host['timezone'],host['deviation'],cert['subject'],cert['sign_date'],cert['expired_date'],'|'.join(host['datetime_info']['ntpServer']),host['numVms'],host['numPoweronVMs'])
+                        print(val)
+                        try:
+                            mycursor.execute(sql,val)
+                            mydb.commit()
+                            logger.info(sql+" "+str(val))
+                        except mysql.connector.Error as err:
+                            
+                            print("Error:", err)
+                            logger.error("Error:", err)
+                            print(sql,val)
+                            mydb.rollback()  
                 
-                
+                    
 
                 #收集集群信息
                 logger.info("开始收集集群："+ cls.name +" HA信息")
@@ -775,6 +1030,27 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                 cluster_config['evc_config']=evc_config
             #    print(cluster_config['ha_config'])
                 # clusters.append(cluster_config)
+                adv_setings=''
+                for item in ha_config['advancedSettings']:
+                    adv_setings=adv_setings+''.join(item.keys())+":"+''.join(item.values())+';'
+                sql='insert into vsphere_clusters(name,path,type,parent,ha_admissionControlEnabled,ha_resourceReductionToToleratePercent,ha_cpuFailoverResourcesPercent,ha_memoryFailoverResourcesPercent,\
+                    ha_vmRestartPriority,ha_vmRestartPriorityTimeout,ha_vmIsolationResponse,ha_enabled,ha_heartbeatDatastore,ha_hostMonitoring,ha_vmMonitoring,ha_advancedSettings,\
+                        drs_vmotionRate,drs_defaultVmBehavior,drs_enableVmBehaviorOverrides,evc_mode,evc_enabled) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+                val=(cluster_config['name'],cluster_config['path'],cluster_config['type'],dc_config['id'],ha_config['admissionControlEnabled'],ha_config['resourceReductionToToleratePercent'],\
+                     ha_config['cpuFailoverResourcesPercent'],ha_config['memoryFailoverResourcesPercent'],ha_config['vmRestartPriority'],ha_config['vmRestartPriorityTimeout'],ha_config['vmIsolationResponse'],\
+                        ha_config['enabled'],'|'.join(ha_config['heartbeatDatastore']),ha_config['hostMonitoring'],ha_config['vmMonitoring'],adv_setings,\
+                            drs_config['vmotionRate'],str(drs_config['defaultVmBehavior']),drs_config['enableVmBehaviorOverrides'],evc_config['EVCMode'],evc_config['enabled'])
+                print(val)
+                try:
+                    mycursor.execute(sql,val)
+                    mydb.commit()
+                    logger.info(sql+" "+str(val))
+                except mysql.connector.Error as err:
+                    
+                    print("Error:", err)
+                    logger.error("Error:", err)
+                    print(sql,val)
+                    mydb.rollback()                 
 
             #######################################################################################
             ##
@@ -795,10 +1071,23 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
 
                 vccs=vcMos['vsan-cluster-config-system']
                 config=vccs.GetConfigInfoEx(cls)
+
+                sql='update vsphere_clusters set vsan_enabled=%s where name=%s'
+                val=(config.enabled,cluster_config['name'])
+                print(val)
+                try:
+                    mycursor.execute(sql,val)
+                    mydb.commit()
+                    logger.info(sql+" "+str(val))
+                except mysql.connector.Error as err:
+                    
+                    print("Error:", err)
+                    logger.error("Error:", err)
+                    print(sql,val)
+                    mydb.rollback()   
+
                 if config.enabled:
-                    logger.info("开始收集集群："+ cls.name +" VSAN信息")   
-
-
+                    logger.info("开始收集集群："+ cls.name +" VSAN信息") 
                     # vsan cluster health check result
                     test_list=[]
                     vhs=vcMos['vsan-cluster-health-system']  #关联VSAN的群集健康管理对象
@@ -844,6 +1133,22 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                             test["testShortDescription"]=""
                             test["testHealth"]=""
                             test["overallHealth"]=""
+
+                        sql='insert into vsphere_vsan_healthtest(groupname,groupid,testname,testid,groupHealth,testShortDescription,testHealth,overallHealth,clustername,cluster_path) \
+                            values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+                        val=(test_dict['groupName'],test_dict['groupId'],test_dict['testName'],test_dict['testId'],test["groupHealth"],test["testShortDescription"],test["testHealth"],test["overallHealth"],cluster_config['name'],cluster_config['path'])
+                        print(val)
+                        try:
+                            mycursor.execute(sql,val)
+                            mydb.commit()
+                            logger.info(sql+" "+str(val))
+                        except mysql.connector.Error as err:                            
+                            print("Error:", err)
+                            logger.error("Error:", err)
+                            print(sql,val)
+                            mydb.rollback()   
+                        
+                        
                     # print(test_list)
                     test_list.sort(key=lambda e:e['groupName']) #基于测试组名排序
                     vsan_info["health_test"]=test_list
@@ -860,6 +1165,21 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                     dataEfficientState_dict['dedupMetadataSize']=dataEfficientState.spaceEfficiencyMetadataSize.dedupMetadataSize
                     dataEfficientState_dict['compressionMetadataSize']=dataEfficientState.spaceEfficiencyMetadataSize.compressionMetadataSize
                     vsan_info['dataEfficientState']=dataEfficientState_dict
+
+                    sql='insert into vsphere_vsan_dataefficientstate(clustername,cluster_path,logicalCapacity,logicalCapacityUsed,physicalCapacity,physicalCapacityUsed,dedupMetadataSize,compressionMetadataSize) \
+                        values(%s,%s,%s,%s,%s,%s,%s,%s)'
+                    val=(cluster_config['name'],cluster_config['path'],dataEfficientState_dict['logicalCapacity'],dataEfficientState_dict['logicalCapacityUsed'],dataEfficientState_dict['physicalCapacity'],\
+                         dataEfficientState_dict['physicalCapacityUsed'],dataEfficientState_dict['dedupMetadataSize'],dataEfficientState_dict['compressionMetadataSize'])
+                    print(val)
+                    try:
+                        mycursor.execute(sql,val)
+                        mydb.commit()
+                        logger.info(sql+" "+str(val))
+                    except mysql.connector.Error as err:                            
+                        print("Error:", err)
+                        logger.error("Error:", err)
+                        print(sql,val)
+                        mydb.rollback()  
 
                     #get disk map info 
                     cluster_diskMapInfo=[]
@@ -894,6 +1214,23 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                                 ssdDiskMapInfo_dict['vsanUuid']=ssd_info.vsanDiskInfo.vsanUuid
                                 ssdDiskMapInfo_dict['formatVersion']=ssd_info.vsanDiskInfo.formatVersion
 
+                                sql='insert into vsphere_vsan_diskmapinfo(clustername,cluster_path,hostname,canonicalName,displayName,deviceType,uuid,model,serialNumber,queueDepth,operationalState,capacityGB,physicalLocation,vsanUuid,\
+                                    formatVersion,isSSD) \
+                                    values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+                                val=(cluster_config['name'],cluster_config['path'],host.name,ssdDiskMapInfo_dict['canonicalName'],ssdDiskMapInfo_dict['displayName'],ssdDiskMapInfo_dict['deviceType'],ssdDiskMapInfo_dict['uuid'],ssdDiskMapInfo_dict['model'],\
+                                     ssdDiskMapInfo_dict['serialNumber'],ssdDiskMapInfo_dict['queueDepth'],ssdDiskMapInfo_dict['operationalState'],ssdDiskMapInfo_dict['capacity'],ssdDiskMapInfo_dict['physicalLocation'],ssdDiskMapInfo_dict['vsanUuid'],\
+                                        ssdDiskMapInfo_dict['formatVersion'],'True')
+                                print(val)
+                                try:
+                                    mycursor.execute(sql,val)
+                                    mydb.commit()
+                                    logger.info(sql+" "+str(val))
+                                except mysql.connector.Error as err:                            
+                                    print("Error:", err)
+                                    logger.error("Error:", err)
+                                    print(sql,val)
+                                    mydb.rollback()
+
                                 ssdMapInfo_list.append(ssdDiskMapInfo_dict)
 
                                 for noSsddisk in noSsd_info:
@@ -910,21 +1247,55 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                                     noSsdDiskMapInfo_dict['vsanUuid']=noSsddisk.vsanDiskInfo.vsanUuid
                                     noSsdDiskMapInfo_dict['formatVersion']=noSsddisk.vsanDiskInfo.formatVersion
 
+                                sql='insert into vsphere_vsan_diskmapinfo(clustername,cluster_path,hostname,canonicalName,displayName,deviceType,uuid,model,serialNumber,queueDepth,operationalState,capacityGB,physicalLocation,vsanUuid,\
+                                    formatVersion,isSSD) \
+                                    values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+                                val=(cluster_config['name'],cluster_config['path'],host.name,noSsdDiskMapInfo_dict['canonicalName'],noSsdDiskMapInfo_dict['displayName'],noSsdDiskMapInfo_dict['deviceType'],noSsdDiskMapInfo_dict['uuid'],noSsdDiskMapInfo_dict['model'],\
+                                     noSsdDiskMapInfo_dict['serialNumber'],noSsdDiskMapInfo_dict['queueDepth'],noSsdDiskMapInfo_dict['operationalState'],noSsdDiskMapInfo_dict['capacity'],noSsdDiskMapInfo_dict['physicalLocation'],noSsdDiskMapInfo_dict['vsanUuid'],\
+                                        noSsdDiskMapInfo_dict['formatVersion'],'False')
+                                print(val)
+                                try:
+                                    mycursor.execute(sql,val)
+                                    mydb.commit()
+                                    logger.info(sql+" "+str(val))
+                                except mysql.connector.Error as err:                            
+                                    print("Error:", err)
+                                    logger.error("Error:", err)
+                                    print(sql,val)
+                                    mydb.rollback()
+
                                     noSsdMapInfo_list.append(noSsdDiskMapInfo_dict)
                             else:
                                 for ssddisk in  ssd_info:
-                                    ssdDiskMapInfo_dict['canonicalName']=ssd_info.canonicalName
-                                    ssdDiskMapInfo_dict['displayName']=ssd_info.displayName
-                                    ssdDiskMapInfo_dict['deviceType']=ssd_info.deviceType
-                                    ssdDiskMapInfo_dict['uuid']=ssd_info.uuid
-                                    ssdDiskMapInfo_dict['model']=ssd_info.model
-                                    ssdDiskMapInfo_dict['serialNumber']=ssd_info.serialNumber
-                                    ssdDiskMapInfo_dict['queueDepth']=ssd_info.queueDepth
-                                    ssdDiskMapInfo_dict['operationalState']=''.join(ssd_info.operationalState)  #[]
-                                    ssdDiskMapInfo_dict['capacity']=Decimal(ssd_info.capacity.blockSize*ssd_info.capacity.block/1000/1000/1000).quantize(Decimal(0)) #GB
-                                    ssdDiskMapInfo_dict['physicalLocation']=''.join(ssd_info.physicalLocation)  #[]
-                                    ssdDiskMapInfo_dict['vsanUuid']=ssd_info.vsanDiskInfo.vsanUuid
-                                    ssdDiskMapInfo_dict['formatVersion']=ssd_info.vsanDiskInfo.formatVersion
+                                    ssdDiskMapInfo_dict['canonicalName']=ssddisk.canonicalName
+                                    ssdDiskMapInfo_dict['displayName']=ssddisk.displayName
+                                    ssdDiskMapInfo_dict['deviceType']=ssddisk.deviceType
+                                    ssdDiskMapInfo_dict['uuid']=ssddisk.uuid
+                                    ssdDiskMapInfo_dict['model']=ssddisk.model
+                                    ssdDiskMapInfo_dict['serialNumber']=ssddisk.serialNumber
+                                    ssdDiskMapInfo_dict['queueDepth']=ssddisk.queueDepth
+                                    ssdDiskMapInfo_dict['operationalState']=''.join(ssddisk.operationalState)  #[]
+                                    ssdDiskMapInfo_dict['capacity']=Decimal(ssddisk.capacity.blockSize*ssddisk.capacity.block/1000/1000/1000).quantize(Decimal(0)) #GB
+                                    ssdDiskMapInfo_dict['physicalLocation']=''.join(ssddisk.physicalLocation)  #[]
+                                    ssdDiskMapInfo_dict['vsanUuid']=ssddisk.vsanDiskInfo.vsanUuid
+                                    ssdDiskMapInfo_dict['formatVersion']=ssddisk.vsanDiskInfo.formatVersion
+
+                                    sql='insert into vsphere_vsan_diskmapinfo(clustername,cluster_path,hostname,canonicalName,displayName,deviceType,uuid,model,serialNumber,queueDepth,operationalState,capacityGB,physicalLocation,vsanUuid,\
+                                        formatVersion,isSSD) \
+                                        values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+                                    val=(cluster_config['name'],cluster_config['path'],host.name,ssdDiskMapInfo_dict['canonicalName'],ssdDiskMapInfo_dict['displayName'],ssdDiskMapInfo_dict['deviceType'],ssdDiskMapInfo_dict['uuid'],ssdDiskMapInfo_dict['model'],\
+                                        ssdDiskMapInfo_dict['serialNumber'],ssdDiskMapInfo_dict['queueDepth'],ssdDiskMapInfo_dict['operationalState'],ssdDiskMapInfo_dict['capacity'],ssdDiskMapInfo_dict['physicalLocation'],ssdDiskMapInfo_dict['vsanUuid'],\
+                                            ssdDiskMapInfo_dict['formatVersion'],'True')
+                                    print(val)
+                                    try:
+                                        mycursor.execute(sql,val)
+                                        mydb.commit()
+                                        logger.info(sql+" "+str(val))
+                                    except mysql.connector.Error as err:                            
+                                        print("Error:", err)
+                                        logger.error("Error:", err)
+                                        print(sql,val)
+                                        mydb.rollback()
 
                                     ssdMapInfo_list.append(ssdDiskMapInfo_dict)
                                 
@@ -1020,22 +1391,38 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                     cls_frontend_metric={}
                     for item in cls_frontend_perf:
                         cls_frontend_metric['sampleInfo']=str2list(item.sampleInfo)
+                        sampletime_list=str2list(item.sampleInfo)
                         for metric in item.value:
+                            v_list=str2list(metric.values)
                             if metric.metricId.label=='iopsRead':
-                                cls_frontend_metric['iopsRead']= str2list(metric.values)
+                                cls_frontend_metric['iopsRead']= v_list
                             if metric.metricId.label=='iopsWrite':
-                                cls_frontend_metric['iopsWrite']= str2list(metric.values)
+                                cls_frontend_metric['iopsWrite']= v_list
                             if metric.metricId.label=='throughputRead':
-                                cls_frontend_metric['throughputRead']= str2list(metric.values)              
+                                cls_frontend_metric['throughputRead']= v_list              
                             if metric.metricId.label=='throughputWrite':
-                                cls_frontend_metric['throughputWrite']= str2list(metric.values)    
+                                cls_frontend_metric['throughputWrite']= v_list    
                             if metric.metricId.label=='latencyAvgRead':
-                                cls_frontend_metric['latencyAvgRead']= str2list(metric.values)  
+                                cls_frontend_metric['latencyAvgRead']= v_list  
                             if metric.metricId.label=='latencyAvgWrite':
-                                cls_frontend_metric['latencyAvgWrite']= str2list(metric.values) 
+                                cls_frontend_metric['latencyAvgWrite']= v_list 
                             if metric.metricId.label=='congestion':
-                                cls_frontend_metric['congestion']= str2list(metric.values)  
+                                cls_frontend_metric['congestion']= v_list  
                     # vsan_perf.append({"cls_frontend_metric":cls_frontend_metric})
+                            for i in range(len(sampletime_list)):
+                                sql='insert into vsphere_vsan_perf_metric(clustername,cluster_path,hostname,metric_category,countername,sampletime,samplevalue) \
+                                    values(%s,%s,%s,%s,%s,%s)'
+                                val=(cluster_config['name'],cluster_config['path'],'cls_frontend',metric.metricId.label,sampletime_list[i],v_list[i])
+                                print(val)
+                                try:
+                                    mycursor.execute(sql,val)
+                                    mydb.commit()
+                                    logger.info(sql+" "+str(val))
+                                except mysql.connector.Error as err:                            
+                                    print("Error:", err)
+                                    logger.error("Error:", err)
+                                    print(sql,val)
+                                    mydb.rollback()                            
                     vsan_perf["cls_frontend_metric"]=cls_frontend_metric
 
                     #VSAN 后端perf
@@ -1044,22 +1431,39 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                     cls_backend_metric={}
                     for item in cls_backend_perf:
                         cls_backend_metric['sampleInfo']=str2list(item.sampleInfo) 
+                        sampletime_list=str2list(item.sampleInfo)
                         for metric in item.value:
+                            v_list=str2list(metric.values)
                             if metric.metricId.label=='iopsRead':
-                                cls_backend_metric['iopsRead']= str2list(metric.values) 
+                                cls_backend_metric['iopsRead']= v_list 
                             if metric.metricId.label=='iopsWrite':
-                                cls_backend_metric['iopsWrite']= str2list(metric.values)  
+                                cls_backend_metric['iopsWrite']= v_list  
                             if metric.metricId.label=='throughputRead':
-                                cls_backend_metric['throughputRead']= str2list(metric.values)               
+                                cls_backend_metric['throughputRead']= v_list               
                             if metric.metricId.label=='throughputWrite':
-                                cls_backend_metric['throughputWrite']= str2list(metric.values)    
+                                cls_backend_metric['throughputWrite']= v_list    
                             if metric.metricId.label=='latencyAvgRead':
-                                cls_backend_metric['latencyAvgRead']= str2list(metric.values)  
+                                cls_backend_metric['latencyAvgRead']= v_list  
                             if metric.metricId.label=='latencyAvgWrite':
-                                cls_backend_metric['latencyAvgWrite']= str2list(metric.values)  
+                                cls_backend_metric['latencyAvgWrite']= v_list  
                             if metric.metricId.label=='congestion':
-                                cls_backend_metric['congestion']= str2list(metric.values) 
+                                cls_backend_metric['congestion']= v_list 
                     # vsan_perf.append({"cls_backend_metric":cls_backend_metric})
+
+                            for i in range(len(sampletime_list)):
+                                sql='insert into vsphere_vsan_perf_metric(clustername,cluster_path,metric_category,countername,sampletime,samplevalue) \
+                                    values(%s,%s,%s,%s,%s,%s)'
+                                val=(cluster_config['name'],cluster_config['path'],'cls_backend',metric.metricId.label,sampletime_list[i],v_list[i])
+                                print(val)
+                                try:
+                                    mycursor.execute(sql,val)
+                                    mydb.commit()
+                                    logger.info(sql+" "+str(val))
+                                except mysql.connector.Error as err:                            
+                                    print("Error:", err)
+                                    logger.error("Error:", err)
+                                    print(sql,val)
+                                    mydb.rollback()                                  
                     vsan_perf["cls_backend_metric"]=cls_backend_metric
 
                     hosts_frontend_metric=[]
@@ -1070,45 +1474,63 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                         host_frontend_perf=vpm.QueryVsanPerf(querySpecs=[Spec],cluster=cls)
                         for item in host_frontend_perf:
                             host_frontend_metric['sampleInfo']=str2list(item.sampleInfo) 
+                            sampletime_list=str2list(item.sampleInfo)
                             for metric in item.value:
+                                v_list=str2list(metric.values)
                                 if metric.metricId.label=='iops':
-                                    host_frontend_metric['iops']=str2list(metric.values) 
+                                    host_frontend_metric['iops']=v_list 
                                 if metric.metricId.label=='throughput':
-                                    host_frontend_metric['throughput']=str2list(metric.values)    
+                                    host_frontend_metric['throughput']=v_list    
                                 if metric.metricId.label=='latencyAvg':
-                                    host_frontend_metric['latencyAvg']=str2list(metric.values) 
+                                    host_frontend_metric['latencyAvg']=v_list 
                                 if metric.metricId.label=='latencyStddev':
-                                    host_frontend_metric['latencyStddev']=str2list(metric.values) 
+                                    host_frontend_metric['latencyStddev']=v_list 
                                 if metric.metricId.label=='ioCount':
-                                    host_frontend_metric['ioCount']=str2list(metric.values) 
+                                    host_frontend_metric['ioCount']=v_list 
                                 if metric.metricId.label=='congestion':
-                                    host_frontend_metric['congestion']=str2list(metric.values)   
+                                    host_frontend_metric['congestion']=v_list   
                                 if metric.metricId.label=='iopsRead':
-                                    host_frontend_metric['iopsRead']=str2list(metric.values) 
+                                    host_frontend_metric['iopsRead']=v_list 
                                 if metric.metricId.label=='throughputRead':
-                                    host_frontend_metric['throughputRead']=str2list(metric.values) 
+                                    host_frontend_metric['throughputRead']=v_list 
                                 if metric.metricId.label=='latencyAvgRead':
-                                    host_frontend_metric['readCount']=str2list(metric.values) 
+                                    host_frontend_metric['readCount']=v_list 
                                 if metric.metricId.label=='iopsWrite':
-                                    host_frontend_metric['iopsWrite']=str2list(metric.values) 
+                                    host_frontend_metric['iopsWrite']=v_list 
                                 if metric.metricId.label=='throughputWrite':
-                                    host_frontend_metric['throughputWrite']=str2list(metric.values) 
+                                    host_frontend_metric['throughputWrite']=v_list 
                                 if metric.metricId.label=='latencyAvgWrite':
-                                    host_frontend_metric['latencyAvgWrite']=str2list(metric.values) 
+                                    host_frontend_metric['latencyAvgWrite']=v_list 
                                 if metric.metricId.label=='writeCount':
-                                    host_frontend_metric['writeCount']=str2list(metric.values) 
+                                    host_frontend_metric['writeCount']=v_list 
                                 if metric.metricId.label=='clientCacheHits':
-                                    host_frontend_metric['clientCacheHits']=str2list(metric.values) 
+                                    host_frontend_metric['clientCacheHits']=v_list 
                                 if metric.metricId.label=='clientCacheHitRate':
-                                    host_frontend_metric['clientCacheHitRate']=str2list(metric.values) 
+                                    host_frontend_metric['clientCacheHitRate']=v_list 
                                 if metric.metricId.label=='readCongestion':
-                                    host_frontend_metric['readCongestion']=str2list(metric.values) 
+                                    host_frontend_metric['readCongestion']=v_list 
                                 if metric.metricId.label=='writeCongestion':
-                                    host_frontend_metric['writeCongestion']=str2list(metric.values) 
+                                    host_frontend_metric['writeCongestion']=v_list 
                                 if metric.metricId.label=='latencyMaxRead':
-                                    host_frontend_metric['latencyMaxRead']=str2list(metric.values) 
+                                    host_frontend_metric['latencyMaxRead']=v_list 
                                 if metric.metricId.label=='latencyMaxWrite':
-                                    host_frontend_metric['latencyMaxWrite']=str2list(metric.values) 
+                                    host_frontend_metric['latencyMaxWrite']=v_list
+
+                                for i in range(len(sampletime_list)):
+                                    sql='insert into vsphere_vsan_perf_metric(clustername,cluster_path,hostname,metric_category,countername,sampletime,samplevalue) \
+                                        values(%s,%s,%s,%s,%s,%s,%s)'
+                                    val=(cluster_config['name'],cluster_config['path'],host['hostname'],'host_frontend',metric.metricId.label,sampletime_list[i],v_list[i])
+                                    print(val)
+                                    try:
+                                        mycursor.execute(sql,val)
+                                        mydb.commit()
+                                        logger.info(sql+" "+str(val))
+                                    except mysql.connector.Error as err:                            
+                                        print("Error:", err)
+                                        logger.error("Error:", err)
+                                        print(sql,val)
+                                        mydb.rollback()  
+
                         hosts_frontend_metric.append(host_frontend_metric)
                     # vsan_perf.append({"hosts_frontend_metric":hosts_frontend_metric})
                     vsan_perf["hosts_frontend_metric"]=hosts_frontend_metric
@@ -1122,47 +1544,63 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                         host_backend_perf=vpm.QueryVsanPerf(querySpecs=[Spec],cluster=cls)
                         for item in host_backend_perf:
                             host_backend_metric['sampleInfo']=str2list(item.sampleInfo) 
+                            sampletime_list=str2list(item.sampleInfo)
                             for metric in item.value:
+                                v_list=str2list(metric.values)
                                 if metric.metricId.label=='iops':
-                                    host_backend_metric['iops']=str2list(metric.values) 
+                                    host_backend_metric['iops']=v_list 
                                 if metric.metricId.label=='throughput':
-                                    host_backend_metric['throughput']=str2list(metric.values)    
+                                    host_backend_metric['throughput']=v_list    
                                 if metric.metricId.label=='latencyAvg':
-                                    host_backend_metric['latencyAvg']=str2list(metric.values) 
+                                    host_backend_metric['latencyAvg']=v_list 
                                 if metric.metricId.label=='latencyStddev':
-                                    host_backend_metric['latencyStddev']=str2list(metric.values) 
+                                    host_backend_metric['latencyStddev']=v_list 
                                 if metric.metricId.label=='ioCount':
-                                    host_backend_metric['ioCount']=str2list(metric.values) 
+                                    host_backend_metric['ioCount']=v_list 
                                 if metric.metricId.label=='congestion':
-                                    host_backend_metric['congestion']=str2list(metric.values)     
+                                    host_backend_metric['congestion']=v_list     
                                 if metric.metricId.label=='iopsRead':
-                                    host_backend_metric['iopsRead']=str2list(metric.values) 
+                                    host_backend_metric['iopsRead']=v_list 
                                 if metric.metricId.label=='throughputRead':
-                                    host_backend_metric['throughputRead']=str2list(metric.values) 
+                                    host_backend_metric['throughputRead']=v_list 
                                 if metric.metricId.label=='latencyAvgRead':
-                                    host_backend_metric['readCount']=str2list(metric.values) 
+                                    host_backend_metric['readCount']=v_list 
                                 if metric.metricId.label=='iopsWrite':
-                                    host_backend_metric['iopsWrite']=str2list(metric.values) 
+                                    host_backend_metric['iopsWrite']=v_list 
                                 if metric.metricId.label=='throughputWrite':
-                                    host_backend_metric['throughputWrite']=str2list(metric.values) 
+                                    host_backend_metric['throughputWrite']=v_list 
                                 if metric.metricId.label=='latencyAvgWrite':
-                                    host_backend_metric['latencyAvgWrite']=str2list(metric.values) 
+                                    host_backend_metric['latencyAvgWrite']=v_list 
                                 if metric.metricId.label=='writeCount':
-                                    host_backend_metric['writeCount']=str2list(metric.values) 
+                                    host_backend_metric['writeCount']=v_list 
                                 if metric.metricId.label=='clientCacheHits':
-                                    host_backend_metric['clientCacheHits']=str2list(metric.values) 
+                                    host_backend_metric['clientCacheHits']=v_list 
                                 if metric.metricId.label=='clientCacheHitRate':
-                                    host_backend_metric['clientCacheHitRate']=str2list(metric.values) 
+                                    host_backend_metric['clientCacheHitRate']=v_list 
                                 if metric.metricId.label=='readCongestion':
-                                    host_backend_metric['readCongestion']=str2list(metric.values) 
+                                    host_backend_metric['readCongestion']=v_list 
                                 if metric.metricId.label=='writeCongestion':
-                                    host_backend_metric['writeCongestion']=str2list(metric.values) 
+                                    host_backend_metric['writeCongestion']=v_list 
                                 if metric.metricId.label=='latencyMaxRead':
-                                    host_backend_metric['latencyMaxRead']=str2list(metric.values) 
+                                    host_backend_metric['latencyMaxRead']=v_list 
                                 if metric.metricId.label=='latencyMaxWrite':
-                                    host_backend_metric['latencyMaxWrite']=str2list(metric.values) 
-                        hosts_backend_metric.append(host_backend_metric)
-                    # vsan_perf.append({"hosts_backend_metric":hosts_backend_metric})
+                                    host_backend_metric['latencyMaxWrite']=v_list 
+
+                                for i in range(len(sampletime_list)):
+                                    sql='insert into vsphere_vsan_perf_metric(clustername,cluster_path,hostname,metric_category,countername,sampletime,samplevalue) values (%s,%s,%s,%s,%s,%s,%s)'
+                                    val=(cluster_config['name'],cluster_config['path'],host['hostname'],'host_backend',metric.metricId.label,sampletime_list[i],v_list[i])
+                                    print(val)
+                                    try:
+                                        mycursor.execute(sql,val)
+                                        mydb.commit()
+                                        logger.info(sql+" "+str(val))
+                                    except mysql.connector.Error as err:                            
+                                        print("Error:", err)
+                                        logger.error("Error:", err)
+                                        print(sql,val)
+                                        mydb.rollback()
+                                                               
+                            hosts_backend_metric.append(host_backend_metric)
                     vsan_perf["hosts_backend_metric"]=hosts_backend_metric
 
 
@@ -1173,6 +1611,7 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                     for item in host_cacheDisk_perf:
                         host_cacheDisk_metric={}
                         host_cacheDisk_metric['sampleInfo']=str2list(item.sampleInfo) 
+                        sampletime_list=str2list(item.sampleInfo)
                         cachedisk_entityRefId=item.entityRefId.split(":")[1]  #'cache-disk:52c23c1b-c407-d9b3-2c5e-4b6540d2b15d'
                         for host in cluster_diskMapInfo:  #从cluster_diskMapInfo中找到cachedisk_entityRefId所属的主机
                             for map_info in host["hostDiskMapInfo"]:
@@ -1180,30 +1619,47 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                                     if ssd_disk["vsanUuid"]==cachedisk_entityRefId:
                                         host_cacheDisk_metric['hostname']=host["hostname"]
                         for metric in item.value:
+                            v_list=str2list(metric.values)
                             if metric.metricId.label=='rcHitRate':
-                                host_cacheDisk_metric['rcHitRate']=str2list(metric.values) 
+                                host_cacheDisk_metric['rcHitRate']=v_list 
                             if metric.metricId.label=='wbFreePct':
-                                host_cacheDisk_metric['wbFreePct']=str2list(metric.values) 
+                                host_cacheDisk_metric['wbFreePct']=v_list 
                             if metric.metricId.label=='iopsRcRead':
-                                host_cacheDisk_metric['iopsRcRead']=str2list(metric.values)  
+                                host_cacheDisk_metric['iopsRcRead']=v_list  
                             if metric.metricId.label=='iopsRcWrite':
-                                host_cacheDisk_metric['iopsRcWrite']=str2list(metric.values) 
+                                host_cacheDisk_metric['iopsRcWrite']=v_list 
                             if metric.metricId.label=='iopsWbRead':
-                                host_cacheDisk_metric['iopsWbRead']=str2list(metric.values)     
+                                host_cacheDisk_metric['iopsWbRead']=v_list     
                             if metric.metricId.label=='iopsWbWrite':
-                                host_cacheDisk_metric['iopsWbWrite']=str2list(metric.values) 
+                                host_cacheDisk_metric['iopsWbWrite']=v_list 
                             if metric.metricId.label=='latencyWbRead':
-                                host_cacheDisk_metric['latencyWbRead']=str2list(metric.values) 
+                                host_cacheDisk_metric['latencyWbRead']=v_list 
                             if metric.metricId.label=='latencyWbWrite':
-                                host_cacheDisk_metric['latencyWbWrite']=str2list(metric.values) 
+                                host_cacheDisk_metric['latencyWbWrite']=v_list 
                             if metric.metricId.label=='latencyRcRead':
-                                host_cacheDisk_metric['latencyRcRead']=str2list(metric.values)                    
+                                host_cacheDisk_metric['latencyRcRead']=v_list                    
                             if metric.metricId.label=='latencyRcWrite':
-                                host_cacheDisk_metric['latencyRcWrite']=str2list(metric.values) 
+                                host_cacheDisk_metric['latencyRcWrite']=v_list 
                             if metric.metricId.label=='checksumErrors':
-                                host_cacheDisk_metric['checksumErrors']=str2list(metric.values) 
+                                host_cacheDisk_metric['checksumErrors']=v_list 
                             if metric.metricId.label=='latencyWbRead':
-                                host_cacheDisk_metric['latencyWbRead']=str2list(metric.values) 
+                                host_cacheDisk_metric['latencyWbRead']=v_list 
+
+                            for i in range(len(sampletime_list)):            
+                                sql='insert into vsphere_vsan_perf_metric(clustername,cluster_path,hostname,metric_category,countername,sampletime,samplevalue) \
+                                    values(%s,%s,%s,%s,%s,%s,%s)'
+                                val=(cluster_config['name'],cluster_config['path'],host['hostname'],'cacheDisk',metric.metricId.label,sampletime_list[i],v_list[i])
+                                print(val)
+                                try:
+                                    mycursor.execute(sql,val)
+                                    mydb.commit()
+                                    logger.info(sql+" "+str(val))
+                                except mysql.connector.Error as err:                            
+                                    print("Error:", err)
+                                    logger.error("Error:", err)
+                                    print(sql,val)
+                                    mydb.rollback()  
+
                         cacheDisk_metric.append(host_cacheDisk_metric)
                     vsan_perf["cacheDisk_metric"]=cacheDisk_metric
 
@@ -1213,6 +1669,7 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                     for item in host_capacityDisk_perf:
                         host_capacityDisk_metric={}
                         host_capacityDisk_metric['sampleInfo']=str2list(item.sampleInfo) 
+                        sampletime_list=str2list(item.sampleInfo)
                         capacitydisk_entityRefId=item.entityRefId.split(":")[1]  #'cache-disk:52c23c1b-c407-d9b3-2c5e-4b6540d2b15d'
                         for host in cluster_diskMapInfo:  #从cluster_diskMapInfo中找到capacitydisk_entityRefId所属的主机
                             for map_info in host["hostDiskMapInfo"]:
@@ -1220,18 +1677,35 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                                     if nossd_disk["vsanUuid"]==capacitydisk_entityRefId:
                                         host_capacityDisk_metric['hostname']=host['hostname']  
                         for metric in item.value:
+                            v_list=str2list(metric.values)
                             if metric.metricId.label=='iopsRead':
-                                host_capacityDisk_metric['iopsRead']=str2list(metric.values) 
+                                host_capacityDisk_metric['iopsRead']=v_list 
                             if metric.metricId.label=='latencyRead':
-                                host_capacityDisk_metric['latencyRead']=str2list(metric.values)     
+                                host_capacityDisk_metric['latencyRead']=v_list     
                             if metric.metricId.label=='iopsWrite':
-                                host_capacityDisk_metric['iopsWrite']=str2list(metric.values) 
+                                host_capacityDisk_metric['iopsWrite']=v_list 
                             if metric.metricId.label=='latencyWrite':
-                                host_capacityDisk_metric['latencyWrite']=str2list(metric.values) 
+                                host_capacityDisk_metric['latencyWrite']=v_list 
                             if metric.metricId.label=='capacityUsed':
-                                host_capacityDisk_metric['capacityUsed']=str2list(metric.values) 
+                                host_capacityDisk_metric['capacityUsed']=v_list 
                             if metric.metricId.label=='checksumErrors':
-                                host_capacityDisk_metric['checksumErrors']=str2list(metric.values)     
+                                host_capacityDisk_metric['checksumErrors']=v_list  
+
+                            for i in range(len(sampletime_list)):
+                                sql='insert into vsphere_vsan_perf_metric(clustername,cluster_path,hostname,metric_category,countername,sampletime,samplevalue) \
+                                    values(%s,%s,%s,%s,%s,%s,%s)'
+                                val=(cluster_config['name'],cluster_config['path'],host['hostname'],'CapacityDisk',metric.metricId.label,sampletime_list[i],v_list[i])
+                                print(val)
+                                try:
+                                    mycursor.execute(sql,val)
+                                    mydb.commit()
+                                    logger.info(sql+" "+str(val))
+                                except mysql.connector.Error as err:                            
+                                    print("Error:", err)
+                                    logger.error("Error:", err)
+                                    print(sql,val)
+                                    mydb.rollback()                                 
+
                         capacityDisk_metric.append(host_capacityDisk_metric) 
                     vsan_perf["capacityDisk_metric"]=capacityDisk_metric
 
@@ -1243,47 +1717,65 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                         host_pnicNet_perf=vpm.QueryVsanPerf(querySpecs=[Spec],cluster=cls)
                         for item in host_pnicNet_perf:
                             host_pnicNet_metric['sampleInfo']=str2list(item.sampleInfo) 
+                            sampletime_list=str2list(item.sampleInfo)
                             for metric in item.value:
+                                v_list=str2list(metric.values)
                                 if metric.metricId.label=='rxThroughput':
-                                    host_pnicNet_metric['rxThroughput']=str2list(metric.values) 
+                                    host_pnicNet_metric['rxThroughput']=v_list 
                                 if metric.metricId.label=='rxPacketsLossRate':
-                                    host_pnicNet_metric['rxPacketsLossRate']=str2list(metric.values)     
+                                    host_pnicNet_metric['rxPacketsLossRate']=v_list     
                                 if metric.metricId.label=='txThroughput':
-                                    host_pnicNet_metric['txThroughput']=str2list(metric.values) 
+                                    host_pnicNet_metric['txThroughput']=v_list 
                                 if metric.metricId.label=='txPacketsLossRate':
-                                    host_pnicNet_metric['txPacketsLossRate']=str2list(metric.values) 
+                                    host_pnicNet_metric['txPacketsLossRate']=v_list 
                                 if metric.metricId.label=='portRxDrops':
-                                    host_pnicNet_metric['portRxDrops']=str2list(metric.values) 
+                                    host_pnicNet_metric['portRxDrops']=v_list 
                                 if metric.metricId.label=='portTxDrops':
-                                    host_pnicNet_metric['portTxDrops']=str2list(metric.values)     
+                                    host_pnicNet_metric['portTxDrops']=v_list     
                                 if metric.metricId.label=='rxErr':
-                                    host_pnicNet_metric['rxErr']=str2list(metric.values) 
+                                    host_pnicNet_metric['rxErr']=v_list 
                                 if metric.metricId.label=='rxDrp':
-                                    host_pnicNet_metric['rxDrp']=str2list(metric.values) 
+                                    host_pnicNet_metric['rxDrp']=v_list 
                                 if metric.metricId.label=='rxOvErr':
-                                    host_pnicNet_metric['rxOvErr']=str2list(metric.values) 
+                                    host_pnicNet_metric['rxOvErr']=v_list 
                                 if metric.metricId.label=='rxCrcErr':
-                                    host_pnicNet_metric['rxCrcErr']=str2list(metric.values) 
+                                    host_pnicNet_metric['rxCrcErr']=v_list 
                                 if metric.metricId.label=='rxFrmErr':
-                                    host_pnicNet_metric['rxFrmErr']=str2list(metric.values) 
+                                    host_pnicNet_metric['rxFrmErr']=v_list 
                                 if metric.metricId.label=='rxFifoErr':
-                                    host_pnicNet_metric['rxFifoErr']=str2list(metric.values) 
+                                    host_pnicNet_metric['rxFifoErr']=v_list 
                                 if metric.metricId.label=='rxMissErr':
-                                    host_pnicNet_metric['rxMissErr']=str2list(metric.values) 
+                                    host_pnicNet_metric['rxMissErr']=v_list 
                                 if metric.metricId.label=='txErr':
-                                    host_pnicNet_metric['txErr']=str2list(metric.values) 
+                                    host_pnicNet_metric['txErr']=v_list 
                                 if metric.metricId.label=='txDrp':
-                                    host_pnicNet_metric['txDrp']=str2list(metric.values) 
+                                    host_pnicNet_metric['txDrp']=v_list 
                                 if metric.metricId.label=='txAbortErr':
-                                    host_pnicNet_metric['txAbortErr']=str2list(metric.values) 
+                                    host_pnicNet_metric['txAbortErr']=v_list 
                                 if metric.metricId.label=='txCarErr':
-                                    host_pnicNet_metric['txCarErr']=str2list(metric.values) 
+                                    host_pnicNet_metric['txCarErr']=v_list 
                                 if metric.metricId.label=='txFifoErr':
-                                    host_pnicNet_metric['txFifoErr']=str2list(metric.values) 
+                                    host_pnicNet_metric['txFifoErr']=v_list 
                                 if metric.metricId.label=='txHeartErr':
-                                    host_pnicNet_metric['txHeartErr']=str2list(metric.values) 
+                                    host_pnicNet_metric['txHeartErr']=v_list 
                                 if metric.metricId.label=='txWinErr':
-                                    host_pnicNet_metric['txWinErr']=str2list(metric.values) 
+                                    host_pnicNet_metric['txWinErr']=v_list 
+
+                                for i in range(len(sampletime_list)):
+                                    sql='insert into vsphere_vsan_perf_metric(clustername,cluster_path,hostname,metric_category,countername,sampletime,samplevalue) \
+                                        values(%s,%s,%s,%s,%s,%s,%s)'
+                                    val=(cluster_config['name'],cluster_config['path'],host['hostname'],'PnicNet',metric.metricId.label,sampletime_list[i],v_list[i])
+                                    print(val)
+                                    try:
+                                        mycursor.execute(sql,val)
+                                        mydb.commit()
+                                        logger.info(sql+" "+str(val))
+                                    except mysql.connector.Error as err:                            
+                                        print("Error:", err)
+                                        logger.error("Error:", err)
+                                        print(sql,val)
+                                        mydb.rollback() 
+
 
                         hosts_pnicNet_metric.append(host_pnicNet_metric)
                     # vsan_perf.append({"hosts_pnicNet_metric":hosts_pnicNet_metric})
@@ -1297,13 +1789,30 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                         host_cpu_perf=vpm.QueryVsanPerf(querySpecs=[Spec],cluster=cls)
                         for item in host_cpu_perf:
                             host_cpu_metric['sampleInfo']=str2list(item.sampleInfo) 
+                            sampletime_list=str2list(item.sampleInfo)
                             for metric in item.value:
+                                v_list=str2list(metric.values)
                                 if metric.metricId.label=='usedPct':
-                                    host_cpu_metric['usedPct']=str2list(metric.values) 
+                                    host_cpu_metric['usedPct']=v_list 
                                 if metric.metricId.label=='readyPct':
-                                    host_cpu_metric['readyPct']=str2list(metric.values)     
+                                    host_cpu_metric['readyPct']=v_list     
                                 if metric.metricId.label=='runPct':
-                                    host_cpu_metric['runPct']=str2list(metric.values) 
+                                    host_cpu_metric['runPct']=v_list 
+
+                                for i in range(len(sampletime_list)):
+                                    sql='insert into vsphere_vsan_perf_metric(clustername,cluster_path,hostname,metric_category,countername,sampletime,samplevalue) \
+                                        values(%s,%s,%s,%s,%s,%s,%s)'
+                                    val=(cluster_config['name'],cluster_config['path'],host['hostname'],'host_cpu',metric.metricId.label,sampletime_list[i],v_list[i])
+                                    print(val)
+                                    try:
+                                        mycursor.execute(sql,val)
+                                        mydb.commit()
+                                        logger.info(sql+" "+str(val))
+                                    except mysql.connector.Error as err:                            
+                                        print("Error:", err)
+                                        logger.error("Error:", err)
+                                        print(sql,val)
+                                        mydb.rollback() 
 
                         hosts_cpu_metric.append(host_cpu_metric)
                     # vsan_perf.append({"hosts_cpu_metric":hosts_cpu_metric})
@@ -1320,17 +1829,34 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
                             kernelReservedSize=[]
                             uwReservedSize=[]
                             host_memory_metric['sampleInfo']=str2list(item.sampleInfo) 
+                            sampletime_list=str2list(item.sampleInfo)
                             for metric in item.value:
+                                v_list=str2list(metric.values)
                                 if metric.metricId.label=='kernelReservedSize':
-                                    kernelReservedSize=str2list(metric.values) 
+                                    kernelReservedSize=v_list 
                                     kernelReservedSize=[Decimal(int(k)/1024/1024).quantize(Decimal("0")) for k in kernelReservedSize]
                                 if metric.metricId.label=='uwReservedSize':
-                                    uwReservedSize=str2list(metric.values)
+                                    uwReservedSize=v_list
                                     uwReservedSize=[Decimal(int(k)/1024/1024).quantize(Decimal("0")) for k in uwReservedSize]
                             host_memory_metric['vsanReservedSize']=[]
                             for i in range(len(kernelReservedSize)):
                                 vsanReservedSize = kernelReservedSize[i]+uwReservedSize[i]
                                 host_memory_metric['vsanReservedSize'].append(vsanReservedSize)
+
+                            for i in range(len(sampletime_list)):
+                                sql='insert into  vsphere_vsan_perf_metric(clustername,cluster_path,hostname,metric_category,countername,sampletime,samplevalue) \
+                                    values(%s,%s,%s,%s,%s,%s,%s)'
+                                val=(cluster_config['name'],cluster_config['path'],host['hostname'],'host_vsan_mem',metric.metricId.label,sampletime_list[i],v_list[i])
+                                print(val)
+                                try:
+                                    mycursor.execute(sql,val)
+                                    mydb.commit()
+                                    logger.info(sql+" "+str(val))
+                                except mysql.connector.Error as err:                            
+                                    print("Error:", err)
+                                    logger.error("Error:", err)
+                                    print(sql,val)
+                                    mydb.rollback() 
 
                         hosts_memory_metric.append(host_memory_metric)
                     # vsan_perf.append({"hosts_memory_metric":hosts_memory_metric})
@@ -1354,7 +1880,10 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
         datacenters.append(dc_config)
     vcenter['datacenters']=datacenters
     vcenters=[]
-    vcenters.append(vcenter)    
+    vcenters.append(vcenter)  
+
+    mycursor.close()
+    mydb.close()  
 
     
     print("write retrieved information abouts vsphere datacenter(s) in to json file {}".format(dc_json_file))
@@ -1367,16 +1896,19 @@ def QueryDCsInfo(vchost,vcuser,vcpassword):
 
 if __name__=="__main__":
     # Check if the command-line arguments are provided
-    if len(sys.argv) != 4:
-        print("Usage: "+ os.path.basename(__file__)+" <vchost> <vcuser> <vcpassword>")
+    if len(sys.argv) != 8:
+        print("Usage: "+ os.path.basename(__file__)+" <vchost> <vcuser> <vcpassword> <db_host> <db_user> <db_passwd> <db_name>")
         sys.exit(1)
 
     # Retrieve the arguments
     vchost = sys.argv[1]
     vcuser = sys.argv[2]
     vcpassword = sys.argv[3]
-
+    db_host = sys.argv[4]
+    db_user = sys.argv[5]
+    db_passwd = sys.argv[6]
+    db_name = sys.argv[7]
     # print(sys.argv)
 
 
-    QueryDCsInfo(vchost=vchost,vcuser=vcuser,vcpassword=vcpassword)
+    QueryDCsInfo(vchost=vchost,vcuser=vcuser,vcpassword=vcpassword,db_host=db_host,db_user=db_user,db_passwd=db_passwd,db_name=db_name)
